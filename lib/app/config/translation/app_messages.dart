@@ -15,14 +15,9 @@ class Messages {
   static String alreadyHaveAccount = 'already_have_account';
 }
 
-class _MessagesWrapper {
-  final String accountType;
-  final String alreadyHaveAccount;
-
-  _MessagesWrapper({
-    required this.accountType,
-    required this.alreadyHaveAccount,
-  });
+abstract class BaseMessages {
+  String get accountType;
+  String get alreadyHaveAccount;
 
   Map<String, String> get messages => {
         Messages.accountType: accountType,
