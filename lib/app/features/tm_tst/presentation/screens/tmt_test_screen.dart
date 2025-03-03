@@ -1,23 +1,28 @@
 
-import '../../../../shared_components/header_text.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:msdtmt/app/features/tm_tst/presentation/components/tmt_game_board_controller.dart';
 
+void main() {
+  runApp(const MaterialApp(home: TmtTestPage()));
+}
 
-class TmtTestPage extends StatelessWidget {
+class TmtTestPage extends StatefulWidget {
   const TmtTestPage({super.key});
 
   @override
+  State<StatefulWidget> createState() {
+    return _DotToDotScreenState();
+  }
+}
+
+class _DotToDotScreenState extends State<TmtTestPage> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          children: [
-            const HeaderText("TMT Test"),
-            const SizedBox(height: 10),
-          ],
-        ),
+      appBar: AppBar(
+        title: const Text('TMT Test'),
       ),
+      body: const TmtGameBoardController(),
     );
   }
 }

@@ -8,7 +8,7 @@ part 'app_routes.dart';
 /// contains all configuration pages
 class AppPages {
   /// when the app is opened, this page will be the first to be shown
-  static const initial = Routes.home;
+  static const initial = Routes.tmt_test;
 
   static final routes = [
     GetPage(
