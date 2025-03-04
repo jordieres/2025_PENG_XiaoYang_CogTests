@@ -7,7 +7,7 @@ import '../controllers/random_grid_sampler.dart';
 class TmtGameBoardController extends StatefulWidget {
   const TmtGameBoardController({super.key});
 
-  static const int CIRCLE_NUMBER = 15;
+  static const int CIRCLE_NUMBER = 25;
   static const double TOUCH_MARGIN = 5;
   static const int BOARD_MARGIN = 10;
   static const double CONNECT_DISTANCE = TmtPainter.circleRadius;
@@ -23,9 +23,12 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
   final List<Offset> _connectedCircles = [];
   Offset? _currentDragPosition;
   int _nextCircleIndex = 0;
+  final List<Offset> _dragPath = [];
+  final List<List<Offset>> _paths = [];
 
   double _constraintsMaxWidth = 0;
   double _constraintsMaxHeight = 0;
+  Offset? _lastErrorCircle;
 
   @override
   void initState() {
@@ -41,6 +44,9 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
     _circles.clear();
     _connectedCircles.clear();
     _nextCircleIndex = 0;
+    _paths.clear();
+    _dragPath.clear();
+    _lastErrorCircle = null;
 
     final double minX =
         TmtPainter.circleRadius + TmtGameBoardController.BOARD_MARGIN;
@@ -81,25 +87,53 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
   void _onPanUpdate(DragUpdateDetails details) {
     setState(() {
       _currentDragPosition = details.localPosition;
+      _dragPath.add(details.localPosition);
     });
 
-    //all circles are connected
-    if (_nextCircleIndex >= TmtGameBoardController.CIRCLE_NUMBER) return;
-
-    final Offset target = _circles[_nextCircleIndex];
-    final double distance = (details.localPosition - target).distance;
-
-    if (distance < TmtGameBoardController.CONNECT_DISTANCE) {
-      setState(() {
-        _connectedCircles.add(target);
-        _nextCircleIndex++;
-        _currentDragPosition = target;
-
-        if (_nextCircleIndex == TmtGameBoardController.CIRCLE_NUMBER) {
-          _showCompletionDialog();
-        }
-      });
+    if (_nextCircleIndex >= TmtGameBoardController.CIRCLE_NUMBER) {
+      _showCompletionDialog();
+      return;
     }
+
+
+      for (int i = 0; i < _circles.length; i++) {
+        double distance = (details.localPosition - _circles[i]).distance;
+
+        if (i == _nextCircleIndex &&
+            distance < TmtGameBoardController.CONNECT_DISTANCE) {
+          setState(() {
+            _connectedCircles.add(_circles[i]);
+            _nextCircleIndex++;
+            _currentDragPosition = _circles[i];
+
+            _paths.add(List.from(_dragPath));
+            _dragPath.clear();
+            _lastErrorCircle = null;
+          });
+          return;
+        }
+
+        if (i != _nextCircleIndex &&
+            distance < TmtGameBoardController.CONNECT_DISTANCE) {
+          setState(() {
+            _dragPath.clear();
+            _lastErrorCircle = _circles[i];
+          });
+          return;
+        }
+      }
+    }
+
+
+
+  void _onPanEnd(DragEndDetails details) {
+    setState(() {
+      if (!_connectedCircles.contains(_currentDragPosition)) {
+        _dragPath.clear();
+      }
+      _currentDragPosition =
+          _connectedCircles.isNotEmpty ? _connectedCircles.last : null;
+    });
   }
 
   void _showCompletionDialog() {
@@ -113,7 +147,7 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
-                //_generateRandomCircle();
+                _generateRandomCircle();
               },
               child: const Text('Play Again'),
             ),
@@ -121,17 +155,6 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
         );
       },
     );
-  }
-
-  ///
-  /// When the user lifts their finger,
-  /// disappear drag line and
-  /// assign the last connected circle to the current drag position
-  void _onPanEnd(DragEndDetails details) {
-    setState(() {
-      _currentDragPosition =
-          _connectedCircles.isNotEmpty ? _connectedCircles.last : null;
-    });
   }
 
   @override
@@ -157,7 +180,12 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
                 child: CustomPaint(
                   size: Size.infinite,
                   painter: TmtPainter(
-                      _circles, _connectedCircles, _currentDragPosition),
+                      _circles,
+                      _connectedCircles,
+                      _currentDragPosition,
+                      _dragPath,
+                      _paths,
+                      _lastErrorCircle),
                 ),
               ),
             ),
