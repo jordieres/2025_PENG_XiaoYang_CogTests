@@ -7,9 +7,8 @@ class TmtPainter extends CustomPainter {
   final Offset? currentDragPosition;
   final List<Offset> dragPath;
   final List<List<Offset>> paths;
-  final Offset? lastErrorCircle;
 
-  TmtPainter(this.allPoints, this.connectedPoints, this.currentDragPosition, this.dragPath, this.paths, this.lastErrorCircle);
+  TmtPainter(this.allPoints, this.connectedPoints, this.currentDragPosition, this.dragPath, this.paths);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -23,7 +22,6 @@ class TmtPainter extends CustomPainter {
     _drawPaths(canvas, linePaint);
     _drawDragPath(canvas, linePaint);
     _drawCircles(canvas, circlePaint);
-    _drawErrorIndicator(canvas);
   }
 
   void _drawPaths(Canvas canvas, Paint linePaint) {
@@ -58,26 +56,6 @@ class TmtPainter extends CustomPainter {
     }
   }
 
-
-  void _drawErrorIndicator(Canvas canvas) {
-    if (lastErrorCircle != null) {
-      final Paint errorPaint = Paint()
-        ..color = Colors.red
-        ..strokeWidth = 4.0;
-
-      final double size = circleRadius * 0.8;
-      canvas.drawLine(
-        lastErrorCircle! - Offset(size, size),
-        lastErrorCircle! + Offset(size, size),
-        errorPaint,
-      );
-      canvas.drawLine(
-        lastErrorCircle! - Offset(size, -size),
-        lastErrorCircle! + Offset(size, -size),
-        errorPaint,
-      );
-    }
-  }
 
   @override
   bool shouldRepaint(CustomPainter oldDelegate) => true;
