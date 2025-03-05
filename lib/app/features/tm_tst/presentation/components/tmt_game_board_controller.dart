@@ -179,13 +179,8 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
                 onPanEnd: _onPanEnd,
                 child: CustomPaint(
                   size: Size.infinite,
-                  painter: TmtPainter(
-                      _circles,
-                      _connectedCircles,
-                      _currentDragPosition,
-                      _dragPath,
-                      _paths,
-                      _lastErrorCircle),
+                  painter: TmtPainter(_circles, _connectedCircles,
+                      _currentDragPosition, _dragPath, _paths),
                 ),
               ),
             ),
