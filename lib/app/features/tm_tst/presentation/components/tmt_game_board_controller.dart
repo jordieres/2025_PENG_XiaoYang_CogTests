@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:msdtmt/app/features/tm_tst/presentation/components/tmt_painter.dart';
 
-import '../controllers/random_grid_sampler.dart';
+import '../../data/datasources/random_grid_sampler.dart';
+import '../../domian/usecases/tmt_game_calculate.dart';
+import '../../domian/entities/tmt_game_variable.dart';
 
 /// This class manager logic of tmt test
 class TmtGameBoardController extends StatefulWidget {
   const TmtGameBoardController({super.key});
-
-  static const int CIRCLE_NUMBER = 25;
-  static const double TOUCH_MARGIN = 5;
-  static const int BOARD_MARGIN = 10;
-  static const double CONNECT_DISTANCE = TmtPainter.circleRadius;
-  static const double safeDistance =
-      TmtPainter.circleRadius * 2 + TOUCH_MARGIN + BOARD_MARGIN * 2;
 
   @override
   _TmtGameBoardControllerState createState() => _TmtGameBoardControllerState();
@@ -29,6 +24,7 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
   double _constraintsMaxWidth = 0;
   double _constraintsMaxHeight = 0;
   Offset? _lastErrorCircle;
+  bool _isDragging = false;
 
   @override
   void initState() {
@@ -47,92 +43,104 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
     _paths.clear();
     _dragPath.clear();
     _lastErrorCircle = null;
-
-    final double minX =
-        TmtPainter.circleRadius + TmtGameBoardController.BOARD_MARGIN;
-
-    final double maxX = _constraintsMaxWidth -
-        TmtPainter.circleRadius -
-        TmtGameBoardController.BOARD_MARGIN;
-
-    final double minY =
-        TmtPainter.circleRadius + TmtGameBoardController.BOARD_MARGIN;
-
-    final double maxY = _constraintsMaxHeight -
-        TmtPainter.circleRadius -
-        TmtGameBoardController.BOARD_MARGIN;
-
-    /*_circles = SimpleAlgorithm(
-            minDistance: TmtGameBoardController.safeDistance,
-            minX: minX,
-            maxX: maxX,
-            minY: minY,
-            maxY: maxY)
-        .generatePoints(
-      TmtGameBoardController.CIRCLE_NUMBER,
-    );*/
+    _isDragging = false;
 
     _circles = RandomGridSampler(
-            minDistance: TmtGameBoardController.safeDistance,
-            minX: minX,
-            maxX: maxX,
-            minY: minY,
-            maxY: maxY)
+            minDistance: TmtGameVariables.safeDistance,
+            minX: TmtGameCalculate.getBoardMinX(),
+            maxX: TmtGameCalculate.getBoardMaxX(_constraintsMaxWidth),
+            minY: TmtGameCalculate.getBoardMinY(),
+            maxY: TmtGameCalculate.getBoardMaxY(_constraintsMaxHeight))
         .generatePoints(
-      TmtGameBoardController.CIRCLE_NUMBER,
+      TmtGameVariables.CIRCLE_NUMBER,
     );
+  }
 
+  void _onPanStart(DragStartDetails details) {
+    if (_nextCircleIndex == 0) {
+      double distance = (details.localPosition - _circles[0]).distance;
+      if (distance < TmtGameVariables.CONNECT_DISTANCE) {
+        setState(() {
+          _isDragging = true;
+          _connectedCircles.add(_circles[0]);
+          _nextCircleIndex = 1;
+          _currentDragPosition = _circles[0];
+          _dragPath.clear();
+          _dragPath.add(_circles[0]);
+        });
+      }
+    } else if (_nextCircleIndex < TmtGameVariables.CIRCLE_NUMBER) {
+      double distance =
+          (details.localPosition - _connectedCircles.last).distance;
+      if (distance < TmtGameVariables.CONNECT_DISTANCE) {
+        setState(() {
+          _isDragging = true;
+          _currentDragPosition = _connectedCircles.last;
+          _dragPath.clear();
+          _dragPath.add(_connectedCircles.last);
+        });
+      }
+    }
   }
 
   void _onPanUpdate(DragUpdateDetails details) {
+    if (!_isDragging) return;
+
     setState(() {
       _currentDragPosition = details.localPosition;
       _dragPath.add(details.localPosition);
     });
 
-    if (_nextCircleIndex >= TmtGameBoardController.CIRCLE_NUMBER) {
+    if (_nextCircleIndex >= TmtGameVariables.CIRCLE_NUMBER) {
       _showCompletionDialog();
       return;
     }
 
+    for (int i = 0; i < _circles.length; i++) {
+      if (i == _nextCircleIndex || _connectedCircles.contains(_circles[i])) {
+        continue;
+      }
 
-      for (int i = 0; i < _circles.length; i++) {
-        double distance = (details.localPosition - _circles[i]).distance;
-
-        if (i == _nextCircleIndex &&
-            distance < TmtGameBoardController.CONNECT_DISTANCE) {
-          setState(() {
-            _connectedCircles.add(_circles[i]);
-            _nextCircleIndex++;
-            _currentDragPosition = _circles[i];
-
-            _paths.add(List.from(_dragPath));
-            _dragPath.clear();
-            _lastErrorCircle = null;
-          });
-          return;
-        }
-
-        if (i != _nextCircleIndex &&
-            distance < TmtGameBoardController.CONNECT_DISTANCE) {
-          setState(() {
-            _dragPath.clear();
-            _lastErrorCircle = _circles[i];
-          });
-          return;
-        }
+      //check if connect with other circle that is not next circle
+      if (TmtGameCalculate.isConnectWithCircle(
+          details.localPosition, _circles[i])) {
+        setState(() {
+          _isDragging = false;
+          _dragPath.clear();
+          _lastErrorCircle = _circles[i];
+          _currentDragPosition =
+              _connectedCircles.isNotEmpty ? _connectedCircles.last : null;
+        });
+        return;
       }
     }
 
-
+    //check if connect with next circle
+    if (TmtGameCalculate.isConnectWithCircle(
+        details.localPosition, _circles[_nextCircleIndex])) {
+      setState(() {
+        _connectedCircles.add(_circles[_nextCircleIndex]);
+        _dragPath.add(_circles[_nextCircleIndex]);
+        _nextCircleIndex++;
+        _currentDragPosition = _circles[_nextCircleIndex - 1];
+        _paths.add(List.from(_dragPath));
+        _dragPath.clear();
+        _dragPath.add(_currentDragPosition!);
+        _lastErrorCircle = null;
+      });
+      return;
+    }
+  }
 
   void _onPanEnd(DragEndDetails details) {
     setState(() {
-      if (!_connectedCircles.contains(_currentDragPosition)) {
+      _isDragging = false;
+      if (_dragPath.isNotEmpty) {
         _dragPath.clear();
       }
       _currentDragPosition =
           _connectedCircles.isNotEmpty ? _connectedCircles.last : null;
+      _lastErrorCircle = null;
     });
   }
 
@@ -175,12 +183,20 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
           children: [
             Expanded(
               child: GestureDetector(
+                onPanStart: _onPanStart,
                 onPanUpdate: _onPanUpdate,
                 onPanEnd: _onPanEnd,
                 child: CustomPaint(
                   size: Size.infinite,
-                  painter: TmtPainter(_circles, _connectedCircles,
-                      _currentDragPosition, _dragPath, _paths),
+                  painter: TmtPainter(
+                    _circles,
+                    _connectedCircles,
+                    _currentDragPosition,
+                    _dragPath,
+                    _paths,
+                    _lastErrorCircle,
+                    _nextCircleIndex,
+                  ),
                 ),
               ),
             ),

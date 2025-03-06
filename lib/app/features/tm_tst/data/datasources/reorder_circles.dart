@@ -1,9 +1,8 @@
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:msdtmt/app/features/tm_tst/presentation/controllers/random_grid_sampler.dart';
-
-import '../components/tmt_painter.dart';
+import 'package:msdtmt/app/features/tm_tst/data/datasources/random_grid_sampler.dart';
+import 'package:msdtmt/app/features/tm_tst/domian/entities/tmt_game_variable.dart';
 
 class ReorderCircles {
   static final int _maxRegenerateCircleAttemptsInPostProcessReorder =
@@ -175,7 +174,7 @@ class ReorderCircles {
   List<Offset> _buildConnectableOffsets(
       CircleGenerator c, List<CircleGenerator> all) {
     List<Offset> results = [];
-    double circleRadius = TmtPainter.circleRadius;
+    double circleRadius = TmtGameVariables.circleRadius;
 
     for (CircleGenerator other in all) {
       if (other == c) continue;
