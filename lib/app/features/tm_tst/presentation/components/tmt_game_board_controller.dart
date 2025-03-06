@@ -66,25 +66,6 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
     super.didChangeDependencies();
   }
 
-  void showError(Offset errorPosition) {
-    setState(() {
-      _errorCircle = errorPosition;
-      _hasError = true;
-      _lasTimeHasError = true;
-    });
-
-    // 1秒后自动清除错误状态
-    Future.delayed(const Duration(milliseconds: 500), () {
-      if (mounted) {
-        setState(() {
-          _errorCircle = null;
-          _errorPath = []; // Clear error path after 1 second
-          _hasError = false;
-        });
-      }
-    });
-  }
-
   _generateRandomCircle() {
     _circles.clear();
     _connectedCircles.clear();
@@ -111,9 +92,10 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
     // Don't allow new drag when in error state
     if (_hasError) return;
 
+    //Set First circle as starting point
     if (_nextCircleIndex == 0) {
-      double distance = (details.localPosition - _circles[0]).distance;
-      if (distance < TmtGameVariables.CONNECT_DISTANCE) {
+      if (TmtGameCalculate.isConnectWithCircle(
+          details.localPosition, _circles[0])) {
         setState(() {
           _isDragging = true;
           _connectedCircles.add(_circles[0]);
@@ -121,20 +103,20 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
           _currentDragPosition = _circles[0];
           _dragPath.clear();
           _dragPath.add(_circles[0]);
-          // 清除之前可能存在的错误状态
           _errorCircle = null;
         });
       }
-    } else if (_nextCircleIndex < TmtGameVariables.CIRCLE_NUMBER) {
-      double distance =
-          (details.localPosition - _connectedCircles.last).distance;
-      if (distance < TmtGameVariables.CONNECT_DISTANCE) {
+    }
+    //Avoid the start point of drag is other circle
+    // It must to be last connected circle
+    else if (_nextCircleIndex < TmtGameVariables.CIRCLE_NUMBER) {
+      if (TmtGameCalculate.isConnectWithCircle(
+          details.localPosition, _connectedCircles.last)) {
         setState(() {
           _isDragging = true;
           _currentDragPosition = _connectedCircles.last;
           _dragPath.clear();
           _dragPath.add(_connectedCircles.last);
-          // 清除之前可能存在的错误状态
           _errorCircle = null;
         });
       }
@@ -147,7 +129,6 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
     setState(() {
       _currentDragPosition = details.localPosition;
       _dragPath.add(details.localPosition);
-      print(details.toString());
     });
 
     if (_nextCircleIndex >= TmtGameVariables.CIRCLE_NUMBER) {
@@ -155,44 +136,74 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
       return;
     }
 
-    // 检查是否连接到了错误的圆圈
     for (int i = 0; i < _circles.length; i++) {
-      if (i == _nextCircleIndex || _connectedCircles.contains(_circles[i])) {
+      final currentOffset = _circles[i];
+
+      if (i == _nextCircleIndex || _connectedCircles.contains(currentOffset)) {
         continue;
       }
 
       if (TmtGameCalculate.isConnectWithCircle(
-          details.localPosition, _circles[i])) {
-        setState(() {
-          _isDragging = false;
-          _dragPath.add(_circles[i]);
-          _errorPath =
-              List.from(_dragPath); // Save the current path as error path
-          _dragPath.clear();
-          _currentDragPosition =
-              _connectedCircles.isNotEmpty ? _connectedCircles.last : null;
-        });
-
-        showError(_circles[i]);
+          details.localPosition, currentOffset)) {
+        _connectOtherIncorrectCircleConfig(currentOffset);
         return;
       }
     }
 
     if (TmtGameCalculate.isConnectWithCircle(
         details.localPosition, _circles[_nextCircleIndex])) {
-      setState(() {
-        _connectedCircles.add(_circles[_nextCircleIndex]);
-        _dragPath.add(_circles[_nextCircleIndex]);
-        _paths.add(List.from(_dragPath));
-        _nextCircleIndex++;
-        _currentDragPosition = _circles[_nextCircleIndex - 1];
-        _dragPath.clear();
-        _dragPath.add(_currentDragPosition!);
-        _errorCircle = null;
-        _lasTimeHasError = false;
-      });
+      _connectNextCorrectCircleConfig(details);
       return;
     }
+  }
+
+  _connectOtherIncorrectCircleConfig(Offset currentOffset) {
+    setState(() {
+      _isDragging = false;
+      _dragPath.add(currentOffset);
+      _errorPath = List.from(_dragPath); // Save the current path as error path
+      _dragPath.clear();
+      _currentDragPosition =
+          _connectedCircles.isNotEmpty ? _connectedCircles.last : null;
+    });
+    _showErrorStatus(currentOffset);
+  }
+
+  void _showErrorStatus(Offset errorOffset) {
+    setState(() {
+      _errorCircle = errorOffset;
+      _hasError = true;
+      _lasTimeHasError = true;
+    });
+
+    Future.delayed(
+        Duration(milliseconds: TmtGameVariables.ERROR_CIRLCLE_APPEAR_DURATION),
+        () {
+      if (mounted) {
+        setState(() {
+          _errorCircle = null;
+          _errorPath = []; // Clear error path after 1 second
+          _hasError = false;
+        });
+      }
+    });
+  }
+
+  _connectNextCorrectCircleConfig(DragUpdateDetails details) {
+    setState(() {
+      final nextCircle = _circles[_nextCircleIndex];
+      _connectedCircles.add(nextCircle);
+       _dragPath.add(nextCircle);
+      _paths.add(List.from(_dragPath));
+      _currentDragPosition = details.localPosition;
+          //nextCircle;
+      _dragPath.clear();
+
+      _dragPath.add(_currentDragPosition!);
+      _errorCircle = null;
+      _lasTimeHasError = false;
+      _nextCircleIndex++;
+    });
   }
 
   void _onPanEnd(DragEndDetails details) {
@@ -200,6 +211,10 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
     if (_hasError) return;
 
     setState(() {
+      // Show current circle when finger up
+      if (_connectedCircles.isNotEmpty) {
+        _lasTimeHasError = true;
+      }
       _isDragging = false;
       if (_dragPath.isNotEmpty) {
         _dragPath.clear();

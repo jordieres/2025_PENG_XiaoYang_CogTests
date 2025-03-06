@@ -32,34 +32,22 @@ class TmtPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final Paint linePaint = Paint()
-      ..color = AppColors.testTMTCorrect
-      ..strokeWidth = TmtGameVariables.LINE_STROKE_WIDTH
-      ..strokeCap = StrokeCap.round;
-
-    final Paint dragLinePaint = Paint()
-      ..color = AppColors.mainBlackText
-      ..strokeWidth = TmtGameVariables.LINE_STROKE_WIDTH
-      ..strokeCap = StrokeCap.round;
-
-    final Paint errorLinePaint = Paint()
-      ..color = AppColors.testTMTIncorrect
-      ..strokeWidth = TmtGameVariables.LINE_STROKE_WIDTH
-      ..strokeCap = StrokeCap.round;
-
-    _drawPaths(canvas, linePaint);
-
+    _drawCircles(canvas);
+    _drawCorrectPathsLines(canvas);
     // Draw error path if it exists
     if (hasError && errorPath.isNotEmpty) {
-      _drawErrorPath(canvas, errorLinePaint);
+      _drawErrorPath(canvas);
     } else {
-      _drawDragPath(canvas, dragLinePaint);
+      _drawDragPath(canvas);
     }
-
-    _drawCircles(canvas);
   }
 
-  void _drawPaths(Canvas canvas, Paint linePaint) {
+  void _drawCorrectPathsLines(Canvas canvas) {
+    final Paint linePaint = Paint()
+      ..color = AppColors.testTMTCorrect.withValues(alpha: 0.3)
+      ..strokeWidth = TmtGameVariables.LINE_STROKE_WIDTH
+      ..strokeCap = StrokeCap.round;
+
     for (var path in paths) {
       if (path.length > 1) {
         for (int i = 1; i < path.length; i++) {
@@ -69,18 +57,28 @@ class TmtPainter extends CustomPainter {
     }
   }
 
-  void _drawDragPath(Canvas canvas, Paint linePaint) {
+  void _drawDragPath(Canvas canvas) {
+    final Paint dragLinePaint = Paint()
+      ..color = AppColors.mainBlackText
+      ..strokeWidth = TmtGameVariables.LINE_STROKE_WIDTH
+      ..strokeCap = StrokeCap.round;
+
     if (dragPath.length > 1) {
       for (int i = 1; i < dragPath.length; i++) {
-        canvas.drawLine(dragPath[i - 1], dragPath[i], linePaint);
+        canvas.drawLine(dragPath[i - 1], dragPath[i], dragLinePaint);
       }
     }
   }
 
-  void _drawErrorPath(Canvas canvas, Paint linePaint) {
+  void _drawErrorPath(Canvas canvas) {
+    final Paint errorLinePaint = Paint()
+      ..color = AppColors.testTMTIncorrect
+      ..strokeWidth = TmtGameVariables.LINE_STROKE_WIDTH
+      ..strokeCap = StrokeCap.round;
+
     if (errorPath.length > 1) {
       for (int i = 1; i < errorPath.length; i++) {
-        canvas.drawLine(errorPath[i - 1], errorPath[i], linePaint);
+        canvas.drawLine(errorPath[i - 1], errorPath[i], errorLinePaint);
       }
     }
   }
@@ -233,5 +231,16 @@ class TmtPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(CustomPainter oldDelegate) => true;
+  bool shouldRepaint(covariant TmtPainter oldDelegate) {
+    return allPoints != oldDelegate.allPoints ||
+        connectedPoints != oldDelegate.connectedPoints ||
+        currentDragPosition != oldDelegate.currentDragPosition ||
+        dragPath != oldDelegate.dragPath ||
+        paths != oldDelegate.paths ||
+        errorCircle != oldDelegate.errorCircle ||
+        errorPath != oldDelegate.errorPath ||
+        hasError != oldDelegate.hasError ||
+        lasTimeHasError != oldDelegate.lasTimeHasError ||
+        isCheatModeEnabled != oldDelegate.isCheatModeEnabled;
+  }
 }

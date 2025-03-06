@@ -11,4 +11,6 @@ class TmtGameVariables {
   static double CIRCLE_NORMAL_STROKE_WIDTH = 2;
   static double CIRCLE_ERROR_CORRECT_STROKE_WIDTH = 4;
   static double CIRCLE_ERROR_CORRECT_FILL_ALPHA = 0.2;
+
+  static int ERROR_CIRLCLE_APPEAR_DURATION = 500; // ms
 }
