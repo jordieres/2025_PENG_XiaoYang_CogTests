@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:msdtmt/app/features/tm_tst/domian/entities/tmt_game_variable.dart';
+import 'package:msdtmt/app/features/tm_tst/domain/entities/tmt_game_variable.dart';
 
 class TmtGameCalculate {
 
