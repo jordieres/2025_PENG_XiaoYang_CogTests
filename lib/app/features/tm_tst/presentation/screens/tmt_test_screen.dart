@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:msdtmt/app/features/tm_tst/presentation/components/tmt_game_board_controller.dart';
 
+import '../../../../config/themes/AppColors.dart';
+
 void main() {
   runApp(const MaterialApp(home: TmtTestPage()));
 }
@@ -20,6 +22,7 @@ class _DotToDotScreenState extends State<TmtTestPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.testTMTBackground,
       appBar: AppBar(
         title: const Text('TMT Test'),
         actions: [
