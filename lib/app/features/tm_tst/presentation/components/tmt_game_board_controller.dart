@@ -7,10 +7,16 @@ import '../../domian/entities/tmt_game_variable.dart';
 
 /// This class manager logic of tmt test
 class TmtGameBoardController extends StatefulWidget {
-  const TmtGameBoardController({super.key});
+  TmtGameBoardController({super.key});
+
+  final _TmtGameBoardControllerState _state = _TmtGameBoardControllerState();
+
+  void regenerateCircles() {
+    _state.regenerateCircles();
+  }
 
   @override
-  _TmtGameBoardControllerState createState() => _TmtGameBoardControllerState();
+  _TmtGameBoardControllerState createState() => _state;
 }
 
 class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
@@ -165,6 +171,12 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
     );
   }
 
+  void regenerateCircles() {
+    setState(() {
+      _generateRandomCircle();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
@@ -199,15 +211,7 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
                   ),
                 ),
               ),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  _generateRandomCircle();
-                });
-              },
-              child: const Text('Reset'),
-            ),
+            )
           ],
         );
       },

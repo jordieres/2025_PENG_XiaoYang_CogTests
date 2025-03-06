@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:msdtmt/app/features/tm_tst/presentation/components/tmt_game_board_controller.dart';
 
@@ -16,13 +15,23 @@ class TmtTestPage extends StatefulWidget {
 }
 
 class _DotToDotScreenState extends State<TmtTestPage> {
+  final TmtGameBoardController _boardController = TmtGameBoardController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('TMT Test'),
+        actions: [
+          IconButton(
+            onPressed: () {
+              _boardController.regenerateCircles();
+            },
+            icon: const Icon(Icons.refresh),
+          )
+        ],
       ),
-      body: const TmtGameBoardController(),
+      body: _boardController,
     );
   }
 }
