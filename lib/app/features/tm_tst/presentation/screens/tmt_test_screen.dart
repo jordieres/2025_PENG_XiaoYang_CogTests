@@ -22,7 +22,7 @@ class _DotToDotScreenState extends State<TmtTestPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.testTMTBackground,
+      backgroundColor: AppColors.testTMTBoardBackground,
       appBar: AppBar(
         title: const Text('TMT Test'),
         actions: [

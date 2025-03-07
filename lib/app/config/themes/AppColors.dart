@@ -8,15 +8,15 @@ class AppColors {
   static const Color mainRed = Color(0xFFD74343); // Red color
 
   // Test TMT Colors
-  static const Color testTMTBackground =
+  static const Color testTMTBoardBackground =
       Color(0xFFE7E7E7); // Test TMT Background
   static const Color testTMTNormalLine =
       mainBlackText; // Test TMT Normal Circle Color
-  static const Color testTMTNormalCircleColor =
+  static const Color testTMTNormalCircleFill =
       Color(0xFFFFFFFF); // Test TMT Normal Circle Color
-  static const Color testTMTCurrent =
+  static const Color testTMTCurrentCircleStroke =
       Color(0xFFDCD74D); // Test TMT Current Circle Color
-  static const Color testTMTCorrect =
+  static const Color testTMTCorrectCircleStroke =
       Color(0xFF03BA03); // Green correct color (TMT)
-  static const Color testTMTIncorrect = mainRed; // Red incorrect color (TMT)
+  static const Color testTMTIncorrectCircleStroke = mainRed; // Red incorrect color (TMT)
 }

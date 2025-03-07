@@ -152,7 +152,7 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
 
     if (TmtGameCalculate.isConnectWithCircle(
         details.localPosition, _circles[_nextCircleIndex])) {
-      _connectNextCorrectCircleConfig(details);
+      _connectNextCorrectCircleConfig(details.localPosition);
       return;
     }
   }
@@ -189,17 +189,20 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
     });
   }
 
-  _connectNextCorrectCircleConfig(DragUpdateDetails details) {
+  _connectNextCorrectCircleConfig(Offset currentDragPosition) {
     setState(() {
       final nextCircle = _circles[_nextCircleIndex];
       _connectedCircles.add(nextCircle);
-       _dragPath.add(nextCircle);
-      _paths.add(List.from(_dragPath));
-      _currentDragPosition = details.localPosition;
-          //nextCircle;
-      _dragPath.clear();
 
-      _dragPath.add(_currentDragPosition!);
+      //Add the TOUCH_MARGIN to the last point of the path
+      _dragPath.add(TmtGameCalculate.closestPointOnCircle(
+          nextCircle, TmtGameVariables.circleRadius, _dragPath.last));
+
+      _paths.add(List.from(_dragPath));
+      _currentDragPosition = currentDragPosition;
+
+      _dragPath.clear();
+      _dragPath.add(currentDragPosition);
       _errorCircle = null;
       _lasTimeHasError = false;
       _nextCircleIndex++;
