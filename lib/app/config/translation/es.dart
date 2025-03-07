@@ -3,10 +3,10 @@ part of 'app_translations.dart';
 // spanish
 class SpanishMessages extends BaseMessages {
   @override
-  String get accountType => "Tipo de cuenta";
+  String get tmtGameCircleBegin => "Inicio";
 
   @override
-  String get alreadyHaveAccount => "¿Ya tienes una cuenta?";
+  String get tmtGameCircleEnd => "Fin";
 }
 
 final es = SpanishMessages();
