@@ -5,7 +5,6 @@ class DeviceHelper {
 
   void init(BuildContext context) {
     isTablet = _calculateIsTablet(context);
-    print("isTablet: $isTablet");
   }
 
   bool _calculateIsTablet(BuildContext context) {

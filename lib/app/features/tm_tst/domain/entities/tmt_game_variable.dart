@@ -11,9 +11,10 @@ class TmtGameVariables {
   // Percentage of all circles in the screen area
   static const double _CIRCLE_IN_SCREEN_AREA_PERCENTAGE = 0.10;
 
+  static const double TOUCH_MARGIN = 5;
+  static const int BOARD_MARGIN = 18;
+
   static int CIRCLE_NUMBER = 25;
-  static double TOUCH_MARGIN = 5;
-  static int BOARD_MARGIN = 10;
   static double circleRadius = 20;
 
   static double CONNECT_DISTANCE = circleRadius + TOUCH_MARGIN;
@@ -54,6 +55,5 @@ class TmtGameVariables {
     double calculatedRadius = sqrt(areaPerCircle / pi);
 
     circleRadius = calculatedRadius;
-
   }
 }

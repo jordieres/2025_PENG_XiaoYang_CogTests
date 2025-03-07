@@ -248,26 +248,38 @@ class TmtPainter extends CustomPainter {
 
     if (i == 0 || i == allPoints.length - 1) {
       TextPainter lastOrFirstPainter = TextPainter(
-        text: TextSpan(text: textLastOrFirst, style: AppTextStyle.tmtGameCircleBeginAndLastText),
+        text: TextSpan(
+            text: textLastOrFirst,
+            style: AppTextStyle.tmtGameCircleBeginAndLastText),
         textDirection: TextDirection.ltr,
       );
       lastOrFirstPainter.layout();
 
-      if (DeviceHelper.isTablet) {
-        lastOrFirstPainter.paint(
-          canvas,
-          allPoints[i] -
-              Offset(lastOrFirstPainter.width / 2.2,
-                  TmtGameVariables.circleRadius * 2.2),
-        );
+      // Check if the circle is too close to the top of the screen
+      bool isNearTopEdge =
+          allPoints[i].dy < TmtGameVariables.circleRadius * 2.5;
+
+      // Position offset - either above or below the circle based on position
+      Offset textPosition;
+      if (isNearTopEdge) {
+        // Place text below the circle if too close to top
+        textPosition = allPoints[i] +
+            Offset(-lastOrFirstPainter.width / 1.8,
+                TmtGameVariables.circleRadius * 1.2);
       } else {
-        lastOrFirstPainter.paint(
-          canvas,
-          allPoints[i] -
+        // Place text above the circle (original position)
+        if (DeviceHelper.isTablet) {
+          textPosition = allPoints[i] -
+              Offset(lastOrFirstPainter.width / 2.1,
+                  TmtGameVariables.circleRadius * 2.1);
+        }else{
+          textPosition = allPoints[i] -
               Offset(lastOrFirstPainter.width / 2.2,
-                  TmtGameVariables.circleRadius * 2.2),
-        );
+                  TmtGameVariables.circleRadius * 2.2);
+        }
       }
+
+      lastOrFirstPainter.paint(canvas, textPosition);
     }
   }
 

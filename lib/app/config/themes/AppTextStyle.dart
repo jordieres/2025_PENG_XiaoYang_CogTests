@@ -13,7 +13,7 @@ class AppTextStyle {
 
   static var tmtGameCircleBeginAndLastText = TextStyle(
     color: AppColors.mainBlackText,
-    fontSize: DeviceHelper.isTablet ? 26 : 18,
+    fontSize: DeviceHelper.isTablet ? 28 : 18,
     fontWeight: FontWeight.bold,
     fontStyle: FontStyle.normal,
   );
