@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:msdtmt/app/features/tm_tst/presentation/screens/tmt_test_screen.dart';
 import 'app/config/routes/app_pages.dart';
 import 'app/config/translation/app_translations.dart';
 import 'app/features/home/HomePage.dart';
+import 'app/utils/helpers/app_helpers.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,6 +14,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DeviceHelper().init(context);
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: AppPages.initial,

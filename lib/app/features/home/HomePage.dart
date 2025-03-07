@@ -11,13 +11,13 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(Messages.accountType.tr),
+        title: Text(TMTGame.tmtGameCircleBegin.tr),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(Messages.alreadyHaveAccount.tr),
+            Text(TMTGame.tmtGameCircleEnd.tr),
             ElevatedButton(
               onPressed: () => {
                 Get.toNamed(Routes.tmt_test),

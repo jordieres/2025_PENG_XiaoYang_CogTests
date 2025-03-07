@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:msdtmt/app/features/tm_tst/presentation/components/tmt_painter.dart';
 
+import '../../../../utils/helpers/app_helpers.dart';
 import '../../data/datasources/random_grid_sampler.dart';
 import '../../domain/usecases/tmt_game_calculate.dart';
 import '../../domain/entities/tmt_game_variable.dart';
@@ -256,6 +257,8 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
 
   @override
   Widget build(BuildContext context) {
+    DeviceHelper().init(context);
+
     return LayoutBuilder(
       builder: (context, constraints) {
         if (_constraintsMaxWidth != constraints.maxWidth ||

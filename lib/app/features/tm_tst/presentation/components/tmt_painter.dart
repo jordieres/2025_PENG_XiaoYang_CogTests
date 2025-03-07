@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:msdtmt/app/utils/helpers/app_helpers.dart';
 
 import '../../../../config/themes/AppColors.dart';
+import '../../../../config/themes/AppTextStyle.dart';
+import '../../../../config/translation/app_translations.dart';
 import '../../domain/entities/tmt_game_variable.dart';
 
 class TmtPainter extends CustomPainter {
@@ -222,14 +226,49 @@ class TmtPainter extends CustomPainter {
   }
 
   _drawCircleText(Canvas canvas, int i) {
-    TextPainter textPainter = TextPainter(
+    TextPainter numberPainter = TextPainter(
       text: TextSpan(
-          text: '${i + 1}',
-          style: const TextStyle(color: AppColors.mainBlackText, fontSize: 12)),
+        text: '${i + 1}',
+        style: AppTextStyle.tmtGameCircleText,
+      ),
       textDirection: TextDirection.ltr,
     );
-    textPainter.layout();
-    textPainter.paint(canvas, allPoints[i] - const Offset(6, 6));
+    numberPainter.layout();
+    numberPainter.paint(
+        canvas,
+        allPoints[i] -
+            Offset(numberPainter.width / 2, numberPainter.height / 2));
+
+    var textLastOrFirst = '';
+    if (i == 0) {
+      textLastOrFirst = TMTGame.tmtGameCircleBegin.tr;
+    } else if (i == allPoints.length - 1) {
+      textLastOrFirst = TMTGame.tmtGameCircleEnd.tr;
+    }
+
+    if (i == 0 || i == allPoints.length - 1) {
+      TextPainter lastOrFirstPainter = TextPainter(
+        text: TextSpan(text: textLastOrFirst, style: AppTextStyle.tmtGameCircleBeginAndLastText),
+        textDirection: TextDirection.ltr,
+      );
+      lastOrFirstPainter.layout();
+
+      if (DeviceHelper.isTablet) {
+        lastOrFirstPainter.paint(
+          canvas,
+          allPoints[i] -
+              Offset(lastOrFirstPainter.width / 2.2,
+                  TmtGameVariables.circleRadius * 2.2),
+        );
+      } else {
+        lastOrFirstPainter.paint(
+          canvas,
+          allPoints[i] -
+              Offset(lastOrFirstPainter.width / 2.2,
+                  TmtGameVariables.circleRadius * 2.2),
+        );
+      }
+    }
   }
 
   @override
