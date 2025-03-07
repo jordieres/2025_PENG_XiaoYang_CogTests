@@ -262,6 +262,10 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
             _constraintsMaxHeight != constraints.maxHeight) {
           _constraintsMaxWidth = constraints.maxWidth;
           _constraintsMaxHeight = constraints.maxHeight;
+
+          TmtGameVariables.calculateTMTGameVariables(
+              _constraintsMaxWidth, _constraintsMaxHeight);
+
           WidgetsBinding.instance.addPostFrameCallback((_) {
             setState(() {
               _generateRandomCircle();
