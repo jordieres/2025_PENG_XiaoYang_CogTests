@@ -2,11 +2,12 @@ part of 'app_translations.dart';
 
 /// English
 class EnglishMessages extends BaseMessages {
-  @override
-  String get accountType => "Account Type";
 
   @override
-  String get alreadyHaveAccount => "Already have an account?";
+  String get tmtGameCircleBegin => "Begin";
+
+  @override
+  String get tmtGameCircleEnd => "End";
 }
 
 final en = EnglishMessages();

@@ -1,13 +1,11 @@
-
 part of 'app_translations.dart';
-
 
 class ChineseMessages extends BaseMessages {
   @override
-  String get accountType => "帐户类型";
+  String get tmtGameCircleBegin => "起点";
 
   @override
-  String get alreadyHaveAccount => "已经有帐户了吗？";
+  String get tmtGameCircleEnd => "终点";
 }
 
 final zh = ChineseMessages();
