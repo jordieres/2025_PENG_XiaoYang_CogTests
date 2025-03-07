@@ -32,8 +32,9 @@ class TmtPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    _drawCircles(canvas);
     _drawCorrectPathsLines(canvas);
+    _drawCircles(canvas);
+
     // Draw error path if it exists
     if (hasError && errorPath.isNotEmpty) {
       _drawErrorPath(canvas);
@@ -44,9 +45,10 @@ class TmtPainter extends CustomPainter {
 
   void _drawCorrectPathsLines(Canvas canvas) {
     final Paint linePaint = Paint()
-      ..color = AppColors.testTMTCorrect.withValues(alpha: 0.3)
+      ..color = AppColors.testTMTCorrectCircleStroke.withAlpha(40)
       ..strokeWidth = TmtGameVariables.LINE_STROKE_WIDTH
-      ..strokeCap = StrokeCap.round;
+      ..strokeCap = StrokeCap.butt
+      ..blendMode = BlendMode.srcOver;
 
     for (var path in paths) {
       if (path.length > 1) {
@@ -72,7 +74,7 @@ class TmtPainter extends CustomPainter {
 
   void _drawErrorPath(Canvas canvas) {
     final Paint errorLinePaint = Paint()
-      ..color = AppColors.testTMTIncorrect
+      ..color = AppColors.testTMTIncorrectCircleStroke
       ..strokeWidth = TmtGameVariables.LINE_STROKE_WIDTH
       ..strokeCap = StrokeCap.round;
 
@@ -101,7 +103,7 @@ class TmtPainter extends CustomPainter {
 
     if (isLastConnectedCircle && lasTimeHasError) {
       final Paint lastCirclePaint = Paint()
-        ..color = AppColors.testTMTCurrent
+        ..color = AppColors.testTMTCurrentCircleStroke
         ..style = PaintingStyle.stroke
         ..strokeWidth = TmtGameVariables.CIRCLE_ERROR_CORRECT_STROKE_WIDTH;
 
@@ -109,7 +111,7 @@ class TmtPainter extends CustomPainter {
           currentOffset, TmtGameVariables.circleRadius, lastCirclePaint);
 
       final Paint fillPaint = Paint()
-        ..color = AppColors.testTMTCurrent.withValues(alpha: 0.2)
+        ..color = AppColors.testTMTCurrentCircleStroke.withValues(alpha: 0.2)
         ..style = PaintingStyle.fill;
       canvas.drawCircle(
           currentOffset, TmtGameVariables.circleRadius, fillPaint);
@@ -118,7 +120,7 @@ class TmtPainter extends CustomPainter {
 
   _drawNormalCircle(Canvas canvas, Offset circleOffset) {
     final Paint fillPaint = Paint()
-      ..color = AppColors.testTMTNormalCircleColor
+      ..color = AppColors.testTMTNormalCircleFill
       ..style = PaintingStyle.fill;
 
     final Paint strokePaint = Paint()
@@ -127,7 +129,7 @@ class TmtPainter extends CustomPainter {
       ..strokeWidth = TmtGameVariables.CIRCLE_NORMAL_STROKE_WIDTH;
 
     final Paint touchAreaPaint = Paint()
-      ..color = AppColors.testTMTBackground.withValues(alpha: 0.1);
+      ..color = AppColors.testTMTBoardBackground.withValues(alpha: 0.1);
 
     if (!connectedPoints.contains(circleOffset) &&
         !(errorCircle != null && circleOffset == errorCircle)) {
@@ -148,11 +150,11 @@ class TmtPainter extends CustomPainter {
     if (connectedPoints.contains(currentOffset)) {
       final Paint strokePaint = Paint()
         ..style = PaintingStyle.stroke
-        ..color = AppColors.testTMTCorrect
+        ..color = AppColors.testTMTCorrectCircleStroke
         ..strokeWidth = TmtGameVariables.CIRCLE_ERROR_CORRECT_STROKE_WIDTH;
 
       final Paint fillPaint = Paint()
-        ..color = AppColors.testTMTBackground
+        ..color = AppColors.testTMTBoardBackground
         ..style = PaintingStyle.fill;
 
       canvas.drawCircle(
@@ -166,14 +168,14 @@ class TmtPainter extends CustomPainter {
   _drawErrorCircle(Canvas canvas, Offset currentOffset) {
     if (errorCircle != null && currentOffset == errorCircle) {
       final Paint fillPaint = Paint()
-        ..color = AppColors.testTMTIncorrect.withValues(alpha: 0.3)
+        ..color = AppColors.testTMTIncorrectCircleStroke.withValues(alpha: 0.3)
         ..style = PaintingStyle.fill;
 
       canvas.drawCircle(
           currentOffset, TmtGameVariables.circleRadius, fillPaint);
 
       final Paint errorPaint = Paint()
-        ..color = AppColors.testTMTIncorrect
+        ..color = AppColors.testTMTIncorrectCircleStroke
         ..strokeWidth = TmtGameVariables.CIRCLE_ERROR_CORRECT_STROKE_WIDTH
         ..style = PaintingStyle.stroke;
 
@@ -181,7 +183,7 @@ class TmtPainter extends CustomPainter {
           currentOffset, TmtGameVariables.circleRadius, errorPaint);
 
       final Paint xPaint = Paint()
-        ..color = AppColors.testTMTIncorrect
+        ..color = AppColors.testTMTIncorrectCircleStroke
         ..strokeWidth = TmtGameVariables.CIRCLE_ERROR_CORRECT_STROKE_WIDTH
         ..strokeCap = StrokeCap.round
         ..style = PaintingStyle.stroke;

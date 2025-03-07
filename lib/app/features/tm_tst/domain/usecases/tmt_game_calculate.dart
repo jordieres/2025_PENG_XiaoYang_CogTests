@@ -3,8 +3,6 @@ import 'dart:ui';
 import 'package:msdtmt/app/features/tm_tst/domain/entities/tmt_game_variable.dart';
 
 class TmtGameCalculate {
-
-
   /// Checks whether a given point is located inside a specified circle.
   ///
   /// This method calculates the Euclidean distance between a point `(xp, yp)`
@@ -27,25 +25,47 @@ class TmtGameCalculate {
     return distanceSquared <= radius * radius;
   }
 
-  static bool isConnectWithCircle(Offset currentDragOffset,
-      Offset nextCircleOffset) {
+  static bool isConnectWithCircle(
+      Offset currentDragOffset, Offset nextCircleOffset) {
     double distance = (currentDragOffset - nextCircleOffset).distance;
     return distance <= TmtGameVariables.CONNECT_DISTANCE;
   }
 
-  static double getBoardMinX(){
+  static double getBoardMinX() {
     return TmtGameVariables.circleRadius + TmtGameVariables.BOARD_MARGIN;
   }
 
-  static double getBoardMaxX(double constraintsMaxWidth){
-    return constraintsMaxWidth - TmtGameVariables.circleRadius - TmtGameVariables.BOARD_MARGIN;
+  static double getBoardMaxX(double constraintsMaxWidth) {
+    return constraintsMaxWidth -
+        TmtGameVariables.circleRadius -
+        TmtGameVariables.BOARD_MARGIN;
   }
 
-  static double getBoardMinY(){
+  static double getBoardMinY() {
     return TmtGameVariables.circleRadius + TmtGameVariables.BOARD_MARGIN;
   }
 
-  static double getBoardMaxY(double constraintsMaxHeight){
-    return constraintsMaxHeight - TmtGameVariables.circleRadius - TmtGameVariables.BOARD_MARGIN;
+  static double getBoardMaxY(double constraintsMaxHeight) {
+    return constraintsMaxHeight -
+        TmtGameVariables.circleRadius -
+        TmtGameVariables.BOARD_MARGIN;
+  }
+
+  static Offset closestPointOnCircle(
+      Offset center, double radius, Offset point) {
+    // Calculate point vector from center to target
+    Offset vector = point - center;
+
+    // Calculate the length of the vector
+    double distance = vector.distance;
+
+    if (distance == 0) {
+      return center + Offset(radius, 0);
+    }
+
+    // Normalize the vector and scale it to the circle's radius
+    Offset normalizedVector = vector / distance * radius;
+
+    return center + normalizedVector;
   }
 }
