@@ -186,50 +186,60 @@ class ReorderCircles {
     return results;
   }
 
-  bool _isLineBlockedByAnyCircle(Offset start, Offset end,
+
+  bool _isLineBlockedByAnyCircle(
+      Offset center1, Offset center2,
       List<CircleGenerator> all, double circleRadius) {
-    for (CircleGenerator cg in all) {
-      if ((cg.offset - start).distance < 1e-8 ||
-          (cg.offset - end).distance < 1e-8) {
-        continue;
-      }
 
-      if (_lineBlockedByCircle(start, end, cg.offset, circleRadius)) {
-        return true;
-      }
-    }
-    return false;
-  }
+    // Calculate the vector from the center of the first circle to the center of the second circle
+    final Offset direction = center2 - center1;
+    final double distance = direction.distance;
 
-  bool _lineBlockedByCircle(
-      Offset A, Offset B, Offset center, double circleRadius) {
-    const double epsilon = 1e-8;
-    if ((center - A).distance < epsilon || (center - B).distance < epsilon) {
+    // if the circles are too close, return false
+    if (distance < 2 * circleRadius) {
       return false;
     }
 
-    final AB = B - A;
-    final AC = center - A;
-    final double ab2 = AB.dx * AB.dx + AB.dy * AB.dy; // |AB|^2
+    // Calculate the normalized direction vector
+    final Offset normalizedDir = Offset(direction.dx / distance, direction.dy / distance);
 
-    if (ab2 < 1e-12) {
-      return (A - center).distance <= circleRadius;
+    // Calculate the unit vector perpendicular to the direction
+    final Offset perpendicular = Offset(-normalizedDir.dy, normalizedDir.dx);
+
+    // Calculate the corridor width between the two circles (the sum of the radii of the two circles)
+    final double corridorWidth = 2 * circleRadius;
+
+    // Check all other circles
+    for (CircleGenerator cg in all) {
+      // Skip the start and end circles
+      if ((cg.offset - center1).distance < 1e-8 ||
+          (cg.offset - center2).distance < 1e-8) {
+        continue;
+      }
+
+      // Calculate the vector from the first circle center to the other circle center
+      final Offset toOtherCircle = cg.offset - center1;
+
+      // Calculate the projection distance of the other circle in the direction of the line
+      final double projAlongLine = toOtherCircle.dx * normalizedDir.dx + toOtherCircle.dy * normalizedDir.dy;
+
+      // if the projection is between the two circles
+      if (projAlongLine > 0 && projAlongLine < distance) {
+
+        // Calculate the perpendicular distance of the other circle to the line
+        final double projPerpendicular = (toOtherCircle.dx * perpendicular.dx + toOtherCircle.dy * perpendicular.dy).abs();
+
+        // If the perpendicular distance is less than half the corridor width plus the radius of the other circle, it is blocked
+        if (projPerpendicular < (corridorWidth / 2) + circleRadius) {
+          return true;
+        }
+      }
     }
 
-    final double dot = (AC.dx * AB.dx + AC.dy * AB.dy); // AC dot AB
-    final double t = dot / ab2;
-
-    Offset P;
-    if (t < 0.0) {
-      P = A;
-    } else if (t > 1.0) {
-      P = B;
-    } else {
-      P = Offset(A.dx + t * AB.dx, A.dy + t * AB.dy);
-    }
-    double distPC = (P - center).distance;
-    return distPC < circleRadius;
+    return false;
   }
+
+
 
   bool _reGenerateOneCircleInSameCell(
     CircleGenerator circle,
