@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DeviceHelper().init(context);
+    DeviceHelper.calculateAgain(context);
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: AppPages.initial,
