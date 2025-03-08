@@ -1,8 +1,19 @@
 import 'dart:ui';
 
+import 'package:msdtmt/app/features/tm_tst/domain/entities/tmt_game_variable.dart';
+
 enum TmtGameType {
-  TMTA,
-  TMTB,
+  TMT_TEST_A(),
+  TMT_TEST_B(),
+  TMT_PRACTICE_A(),
+  TMT_PRACTICE_B(),
+  TMT_BOTH_PRACTICE();
+
+}
+
+enum TmtGameCircleTextType {
+  NUMBER,
+  NUMBER_WITH_LETTER,
 }
 
 class TmtGameCircle {

@@ -17,6 +17,8 @@ class TmtGameVariables {
   static const double TOUCH_MARGIN = 5;
   static const int BOARD_MARGIN = 18;
 
+  static const int DEFAULT_CIRCLE_NUMBER = 25;
+
   static int CIRCLE_NUMBER = 25;
   static double circleRadius = 20;
 

@@ -3,10 +3,10 @@ import 'dart:ui';
 import '../../domain/entities/tmt_game_circle.dart';
 
 class GenerateCircleWithData {
-  final TmtGameType tmtGameType;
+  final TmtGameCircleTextType tmtGameCircleTextType;
 
   GenerateCircleWithData({
-    required this.tmtGameType,
+    required this.tmtGameCircleTextType,
   });
 
   List<TmtGameCircle> generateCircle(List<Offset> circles) {
@@ -22,7 +22,7 @@ class GenerateCircleWithData {
   }
 
   String _getCircleText(int index) {
-    if (tmtGameType == TmtGameType.TMTA) {
+    if (tmtGameCircleTextType == TmtGameCircleTextType.NUMBER) {
       return (index + 1).toString();
     } else {
       if (index % 2 == 0) {
