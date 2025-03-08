@@ -257,7 +257,7 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
 
   @override
   Widget build(BuildContext context) {
-    DeviceHelper().init(context);
+    DeviceHelper.init(context);
 
     return LayoutBuilder(
       builder: (context, constraints) {
