@@ -5,15 +5,16 @@ import 'package:msdtmt/app/utils/helpers/app_helpers.dart';
 import '../../../../config/themes/AppColors.dart';
 import '../../../../config/themes/AppTextStyle.dart';
 import '../../../../config/translation/app_translations.dart';
+import '../../domain/entities/tmt_game_circle.dart';
 import '../../domain/entities/tmt_game_variable.dart';
 
 class TmtPainter extends CustomPainter {
-  final List<Offset> allPoints;
-  final List<Offset> connectedPoints;
+  final List<TmtGameCircle> allCircles;
+  final List<TmtGameCircle> connectedCircles;
   final Offset? currentDragPosition;
   final List<Offset> dragPath;
   final List<List<Offset>> paths;
-  final Offset? errorCircle;
+  final TmtGameCircle? errorCircle;
   final int nextCircleIndex;
   final List<Offset> errorPath;
   final bool hasError;
@@ -21,8 +22,8 @@ class TmtPainter extends CustomPainter {
   final bool isCheatModeEnabled;
 
   TmtPainter({
-    required this.allPoints,
-    required this.connectedPoints,
+    required this.allCircles,
+    required this.connectedCircles,
     required this.currentDragPosition,
     required this.dragPath,
     required this.paths,
@@ -90,20 +91,20 @@ class TmtPainter extends CustomPainter {
   }
 
   void _drawCircles(Canvas canvas) {
-    for (int i = 0; i < allPoints.length; i++) {
-      final currentOffset = allPoints[i];
-      _drawNormalCircle(canvas, currentOffset);
-      _drawConnectCircle(canvas, currentOffset);
-      _drawModeCheatModeCircle(canvas, i, currentOffset);
-      _drawErrorCircle(canvas, currentOffset);
-      _drawWarningLastConnectCircle(canvas, currentOffset);
-      _drawCircleText(canvas, i);
+    for (int i = 0; i < allCircles.length; i++) {
+      final currentCircle = allCircles[i];
+      _drawNormalCircle(canvas, currentCircle);
+      _drawConnectCircle(canvas, currentCircle);
+      _drawModeCheatModeCircle(canvas, i, currentCircle);
+      _drawErrorCircle(canvas, currentCircle);
+      _drawWarningLastConnectCircle(canvas, currentCircle.offset);
+      _drawCircleText(canvas, currentCircle);
     }
   }
 
   _drawWarningLastConnectCircle(Canvas canvas, Offset currentOffset) {
     bool isLastConnectedCircle =
-        connectedPoints.isNotEmpty && currentOffset == connectedPoints.last;
+        connectedCircles.isNotEmpty && currentOffset == connectedCircles.last;
 
     if (isLastConnectedCircle && lasTimeHasError) {
       final Paint lastCirclePaint = Paint()
@@ -122,7 +123,7 @@ class TmtPainter extends CustomPainter {
     }
   }
 
-  _drawNormalCircle(Canvas canvas, Offset circleOffset) {
+  _drawNormalCircle(Canvas canvas, TmtGameCircle circle) {
     final Paint fillPaint = Paint()
       ..color = AppColors.testTMTNormalCircleFill
       ..style = PaintingStyle.fill;
@@ -135,23 +136,24 @@ class TmtPainter extends CustomPainter {
     final Paint touchAreaPaint = Paint()
       ..color = AppColors.testTMTBoardBackground.withValues(alpha: 0.1);
 
-    if (!connectedPoints.contains(circleOffset) &&
-        !(errorCircle != null && circleOffset == errorCircle)) {
+    if (!connectedCircles.contains(circle) &&
+        !(errorCircle != null && circle == errorCircle)) {
       // draw touch area
       canvas.drawCircle(
-          circleOffset,
+          circle.offset,
           TmtGameVariables.circleRadius + TmtGameVariables.TOUCH_MARGIN,
           touchAreaPaint);
 
-      canvas.drawCircle(circleOffset, TmtGameVariables.circleRadius, fillPaint);
+      canvas.drawCircle(
+          circle.offset, TmtGameVariables.circleRadius, fillPaint);
 
       canvas.drawCircle(
-          circleOffset, TmtGameVariables.circleRadius, strokePaint);
+          circle.offset, TmtGameVariables.circleRadius, strokePaint);
     }
   }
 
-  _drawConnectCircle(Canvas canvas, Offset currentOffset) {
-    if (connectedPoints.contains(currentOffset)) {
+  _drawConnectCircle(Canvas canvas, TmtGameCircle currentCircle) {
+    if (connectedCircles.contains(currentCircle)) {
       final Paint strokePaint = Paint()
         ..style = PaintingStyle.stroke
         ..color = AppColors.testTMTCorrectCircleStroke
@@ -162,21 +164,21 @@ class TmtPainter extends CustomPainter {
         ..style = PaintingStyle.fill;
 
       canvas.drawCircle(
-          currentOffset, TmtGameVariables.circleRadius, fillPaint);
+          currentCircle.offset, TmtGameVariables.circleRadius, fillPaint);
 
       canvas.drawCircle(
-          currentOffset, TmtGameVariables.circleRadius, strokePaint);
+          currentCircle.offset, TmtGameVariables.circleRadius, strokePaint);
     }
   }
 
-  _drawErrorCircle(Canvas canvas, Offset currentOffset) {
-    if (errorCircle != null && currentOffset == errorCircle) {
+  _drawErrorCircle(Canvas canvas, TmtGameCircle currentCircle) {
+    if (errorCircle != null && currentCircle == errorCircle) {
       final Paint fillPaint = Paint()
         ..color = AppColors.testTMTIncorrectCircleStroke.withValues(alpha: 0.3)
         ..style = PaintingStyle.fill;
 
       canvas.drawCircle(
-          currentOffset, TmtGameVariables.circleRadius, fillPaint);
+          currentCircle.offset, TmtGameVariables.circleRadius, fillPaint);
 
       final Paint errorPaint = Paint()
         ..color = AppColors.testTMTIncorrectCircleStroke
@@ -184,7 +186,7 @@ class TmtPainter extends CustomPainter {
         ..style = PaintingStyle.stroke;
 
       canvas.drawCircle(
-          currentOffset, TmtGameVariables.circleRadius, errorPaint);
+          currentCircle.offset, TmtGameVariables.circleRadius, errorPaint);
 
       final Paint xPaint = Paint()
         ..color = AppColors.testTMTIncorrectCircleStroke
@@ -193,7 +195,7 @@ class TmtPainter extends CustomPainter {
         ..style = PaintingStyle.stroke;
 
       double crossSize = TmtGameVariables.circleRadius * 0.7;
-      Offset center = currentOffset;
+      Offset center = currentCircle.offset;
 
       // draw cross
       canvas.drawLine(center - Offset(crossSize, crossSize),
@@ -204,31 +206,31 @@ class TmtPainter extends CustomPainter {
   }
 
   _drawModeCheatModeCircle(
-      Canvas canvas, int currentIndex, Offset currentOffset) {
+      Canvas canvas, int currentIndex, TmtGameCircle currentCircle) {
     if (isCheatModeEnabled &&
         currentIndex == nextCircleIndex &&
-        nextCircleIndex < allPoints.length &&
-        !connectedPoints.contains(currentOffset)) {
+        nextCircleIndex < allCircles.length &&
+        !connectedCircles.contains(currentCircle)) {
       final Paint cheatPaint = Paint()
         ..color = AppColors.primaryBlue
         ..style = PaintingStyle.stroke
         ..strokeWidth = TmtGameVariables.CIRCLE_ERROR_CORRECT_STROKE_WIDTH;
 
       canvas.drawCircle(
-          currentOffset, TmtGameVariables.circleRadius, cheatPaint);
+          currentCircle.offset, TmtGameVariables.circleRadius, cheatPaint);
 
       final Paint fillPaint = Paint()
         ..color = AppColors.primaryBlue.withValues(alpha: 0.2)
         ..style = PaintingStyle.fill;
       canvas.drawCircle(
-          currentOffset, TmtGameVariables.circleRadius, fillPaint);
+          currentCircle.offset, TmtGameVariables.circleRadius, fillPaint);
     }
   }
 
-  _drawCircleText(Canvas canvas, int i) {
+  _drawCircleText(Canvas canvas, TmtGameCircle currentCircle) {
     TextPainter numberPainter = TextPainter(
       text: TextSpan(
-        text: '${i + 1}',
+        text: currentCircle.text,
         style: AppTextStyle.tmtGameCircleText,
       ),
       textDirection: TextDirection.ltr,
@@ -236,17 +238,17 @@ class TmtPainter extends CustomPainter {
     numberPainter.layout();
     numberPainter.paint(
         canvas,
-        allPoints[i] -
+        currentCircle.offset -
             Offset(numberPainter.width / 2, numberPainter.height / 2));
 
     var textLastOrFirst = '';
-    if (i == 0) {
+    if (currentCircle.isFirst()) {
       textLastOrFirst = TMTGame.tmtGameCircleBegin.tr;
-    } else if (i == allPoints.length - 1) {
+    } else if (currentCircle == allCircles.last) {
       textLastOrFirst = TMTGame.tmtGameCircleEnd.tr;
     }
 
-    if (i == 0 || i == allPoints.length - 1) {
+    if (currentCircle.isFirst() || currentCircle == allCircles.last) {
       TextPainter lastOrFirstPainter = TextPainter(
         text: TextSpan(
             text: textLastOrFirst,
@@ -256,24 +258,24 @@ class TmtPainter extends CustomPainter {
       lastOrFirstPainter.layout();
 
       // Check if the circle is too close to the top of the screen
-      bool isNearTopEdge =
-          allPoints[i].dy < TmtGameVariables.circleRadius * 2.5;
+      bool isNearTopEdge = currentCircle.offset.dy <
+          TmtGameVariables.circleRadius * 2.5;
 
       // Position offset - either above or below the circle based on position
       Offset textPosition;
       if (isNearTopEdge) {
         // Place text below the circle if too close to top
-        textPosition = allPoints[i] +
+        textPosition = currentCircle.offset +
             Offset(-lastOrFirstPainter.width / 1.8,
                 TmtGameVariables.circleRadius * 1.2);
       } else {
         // Place text above the circle (original position)
         if (DeviceHelper.isTablet) {
-          textPosition = allPoints[i] -
+          textPosition = currentCircle.offset -
               Offset(lastOrFirstPainter.width / 2.1,
                   TmtGameVariables.circleRadius * 2.1);
-        }else{
-          textPosition = allPoints[i] -
+        } else {
+          textPosition = currentCircle.offset -
               Offset(lastOrFirstPainter.width / 2.2,
                   TmtGameVariables.circleRadius * 2.2);
         }
@@ -285,8 +287,8 @@ class TmtPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant TmtPainter oldDelegate) {
-    return allPoints != oldDelegate.allPoints ||
-        connectedPoints != oldDelegate.connectedPoints ||
+    return allCircles != oldDelegate.allCircles ||
+        connectedCircles != oldDelegate.connectedCircles ||
         currentDragPosition != oldDelegate.currentDragPosition ||
         dragPath != oldDelegate.dragPath ||
         paths != oldDelegate.paths ||
