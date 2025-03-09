@@ -47,12 +47,13 @@ class ReorderCircles {
   });
 
   /// 1: Create an auxiliary list to hold the circles in their final sorted order.
-  /// 2: For each circle, count the number of points it can directly connect to.
-  /// 3: Select the circle with the fewest connectable points, record its original order, and set its order to 1.
-  /// 4: Find the circle in the original list that originally had order 1 and swap its order with the selected circle.
-  /// 5: Add the selected circle to the auxiliary list, remove it from the original list, and remove its offset from the connectable lists of the remaining circles.
-  /// 6: Repeat steps 3–5: starting from the circle just set to order 1, continue assigning orders 2, 3, …, n by selecting the circle with the least connectable points.
-  /// 7: If a circle has an empty connectable list (i.e. no connectable points), attempt to regenerate its position.
+  /// 2: Get first circle randomly, set its order to 1.
+  /// 3: For each circle, count the number of points it can directly connect to.
+  /// 4: Select the circle with the fewest connectable points, record its original order, and set its order to 2.
+  /// 5: Find the circle in the original list that originally had order 2 and swap its order with the selected circle.
+  /// 6: Add the selected circle to the auxiliary list, remove it from the original list, and remove its offset from the connectable lists of the remaining circles.
+  /// 7: Repeat steps 3–5: starting from the circle just set to order 2, continue assigning orders 3, 4, …, n by selecting the circle with the least connectable points.
+  /// 8: If a circle has an empty connectable list (i.e. no connectable points), attempt to regenerate its position.
   void postProcessReorder(List<CircleGenerator> circles) {
     for (int i = 0; i < circles.length; i++) {
       circles[i].order = i + 1;
@@ -63,11 +64,11 @@ class ReorderCircles {
       c.connectableOffsets = _buildConnectableOffsets(c, circles);
     }
 
-    // ============ 3) Sort by connectable points ============
+    _getFirstCircle(circles);
+
+    //============ 3) Sort by connectable points ============
     circles.sort((a, b) =>
         a.connectableOffsets.length.compareTo(b.connectableOffsets.length));
-
-    _getFirstCircle(circles);
 
     // ============ Repeat for remaining circles ============
     _reorderDependNumberOfConnectableOffsets(circles);
@@ -86,25 +87,30 @@ class ReorderCircles {
   void _getFirstCircle(List<CircleGenerator> circles) {
     // Select first circle, set its order to 1
     if (circles.isNotEmpty) {
-      CircleGenerator least = circles.first;
-      int oldOrder = least.order;
-      least.order = 1;
+      CircleGenerator randomCircle = circles[_random.nextInt(circles.length)];
+      int oldOrder = randomCircle.order;
+      randomCircle.order = 1;
 
       // Find order 1 circle in original list, swap with selected circle
       CircleGenerator? circleHad1 = circles.firstWhere(
-        (cc) => cc != least && cc.order == 1,
-        orElse: () => least,
+        (cc) => cc != randomCircle && cc.order == 1,
+        orElse: () => randomCircle,
       );
-      if (circleHad1 != least) {
+      if (circleHad1 != randomCircle) {
         circleHad1.order = oldOrder;
       }
 
-      aux.add(least);
-      circles.remove(least);
+      aux.add(randomCircle);
+      circles.remove(randomCircle);
 
       // Remove offset from connectable lists
       for (CircleGenerator c in circles) {
-        c.connectableOffsets.remove(least.offset);
+        c.connectableOffsets.remove(randomCircle.offset);
+      }
+
+      //recalculate connectableOffsets
+      for (CircleGenerator c in circles) {
+        c.connectableOffsets = _buildConnectableOffsets(c, circles);
       }
     }
   }
@@ -182,6 +188,11 @@ class ReorderCircles {
       circles.remove(nextCircle);
       for (CircleGenerator c in circles) {
         c.connectableOffsets.remove(nextCircle.offset);
+      }
+
+      //recalculate connectableOffsets
+      for (CircleGenerator c in circles) {
+        c.connectableOffsets = _buildConnectableOffsets(c, circles);
       }
     }
   }

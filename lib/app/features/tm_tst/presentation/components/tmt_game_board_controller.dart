@@ -91,7 +91,7 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
     );
 
     _circles = GenerateCircleWithData(
-            tmtGameCircleTextType: TmtGameCircleTextType.NUMBER_WITH_LETTER)
+            tmtGameCircleTextType: TmtGameCircleTextType.NUMBER)
         .generateCircle(listCirclesOffset);
   }
 
