@@ -97,12 +97,12 @@ class TmtPainter extends CustomPainter {
       _drawConnectCircle(canvas, currentCircle);
       _drawModeCheatModeCircle(canvas, i, currentCircle);
       _drawErrorCircle(canvas, currentCircle);
-      _drawWarningLastConnectCircle(canvas, currentCircle.offset);
+      _drawWarningLastConnectCircle(canvas, currentCircle);
       _drawCircleText(canvas, currentCircle);
     }
   }
 
-  _drawWarningLastConnectCircle(Canvas canvas, Offset currentOffset) {
+  _drawWarningLastConnectCircle(Canvas canvas, TmtGameCircle currentOffset) {
     bool isLastConnectedCircle =
         connectedCircles.isNotEmpty && currentOffset == connectedCircles.last;
 
@@ -113,13 +113,13 @@ class TmtPainter extends CustomPainter {
         ..strokeWidth = TmtGameVariables.CIRCLE_ERROR_CORRECT_STROKE_WIDTH;
 
       canvas.drawCircle(
-          currentOffset, TmtGameVariables.circleRadius, lastCirclePaint);
+          currentOffset.offset, TmtGameVariables.circleRadius, lastCirclePaint);
 
       final Paint fillPaint = Paint()
         ..color = AppColors.testTMTCurrentCircleStroke.withValues(alpha: 0.2)
         ..style = PaintingStyle.fill;
       canvas.drawCircle(
-          currentOffset, TmtGameVariables.circleRadius, fillPaint);
+          currentOffset.offset, TmtGameVariables.circleRadius, fillPaint);
     }
   }
 
