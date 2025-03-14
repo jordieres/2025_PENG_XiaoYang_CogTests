@@ -31,19 +31,26 @@ class TmtMetricsController {
   void onTestEnd() {
     testTime.timeEndTest = DateTime.now();
     isFinishTest = true;
+
+    testPauseMetric.onEndPause();
   }
 
   // Finger touch screen
   void onPanStart(DragStartDetails details) {
     testLiftMetric.onEndLift();
+    testPauseMetric.onStartPause(details.localPosition);
   }
 
   // Finger move screen
-  void onPanUpdate(DragUpdateDetails details) {}
+  void onPanUpdate(DragUpdateDetails details) {
+    final currentPosition = details.localPosition;
+    testPauseMetric.checkPauseStatus(currentPosition);
+  }
 
   // Finger lift screen
   void onPanEnd(DragEndDetails details) {
     testLiftMetric.onStartLift();
+    testPauseMetric.onEndPause();
   }
 
   void onConnectNextCircleCorrect() {}

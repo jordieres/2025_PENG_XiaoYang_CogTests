@@ -20,8 +20,5 @@ class TmtTestLiftMetric {
     DateTime now = DateTime.now();
     totalLiftTime += now.difference(_lastPauseTime!).inMilliseconds;
     numberLift++;
-
-    print('Lift time: $totalLiftTime');
-    print('Number of lifts: $numberLift');
   }
 }
