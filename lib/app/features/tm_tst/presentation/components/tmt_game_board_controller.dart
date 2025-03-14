@@ -32,7 +32,6 @@ class TmtGameBoardController extends StatefulWidget {
 }
 
 class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
-
   final TmtMetricsController _metricsController = TmtMetricsController();
 
   late List<TmtGameCircle> _circles = [];
@@ -173,6 +172,7 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
   }
 
   _connectOtherIncorrectCircleConfig(TmtGameCircle currentCircle) {
+    _metricsController.onConnectNextCircleError();
     setState(() {
       _isDragging = false;
       _dragPath.add(currentCircle.offset);
@@ -325,8 +325,8 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
                 onPointerMove: (PointerMoveEvent event) {
                   setState(() {
                     _metricsController.onPointerMove(event);
-                   // print('PointerMoveEvent pressure: ${event.pressure}');
-                   // print('PointerMoveEvent size: ${event.size}');
+                    // print('PointerMoveEvent pressure: ${event.pressure}');
+                    // print('PointerMoveEvent size: ${event.size}');
                   });
                 },
                 behavior: HitTestBehavior.translucent,
