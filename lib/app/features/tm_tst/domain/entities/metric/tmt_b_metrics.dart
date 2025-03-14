@@ -7,20 +7,20 @@ class TmtBMetrics {
   final List<CirclesMetric> _beforeLetterMetricsList = [];
   final List<CirclesMetric> _beforeNumberMetricsList = [];
 
-  DateTime? _connectLetterStartTime;
-  Offset? _lastLetterConnectPoint;
+  DateTime? _connectCircleStartTime;
+  Offset? _lastCircleConnectPoint;
 
   void onConnectLetterCircle(TmtGameCircle circleConnectPoint) {
     if (circleConnectPoint.isFirst()) {
-      _connectLetterStartTime = DateTime.now();
-      _lastLetterConnectPoint = circleConnectPoint.offset;
+      _connectCircleStartTime = DateTime.now();
+      _lastCircleConnectPoint = circleConnectPoint.offset;
     } else {
       final currentTime = DateTime.now();
       CirclesMetric circlesMetric = CirclesMetric();
       circlesMetric.duration =
-          currentTime.difference(_connectLetterStartTime!).inMilliseconds;
+          currentTime.difference(_connectCircleStartTime!).inMilliseconds;
       circlesMetric.distance =
-          (circleConnectPoint.offset - _lastLetterConnectPoint!).distance;
+          (circleConnectPoint.offset - _lastCircleConnectPoint!).distance;
 
       if (circleConnectPoint.isNumber) {
         _beforeLetterMetricsList.add(circlesMetric);
@@ -28,8 +28,8 @@ class TmtBMetrics {
         _beforeNumberMetricsList.add(circlesMetric);
       }
 
-      _connectLetterStartTime = currentTime;
-      _lastLetterConnectPoint = circleConnectPoint.offset;
+      _connectCircleStartTime = currentTime;
+      _lastCircleConnectPoint = circleConnectPoint.offset;
     }
   }
 
