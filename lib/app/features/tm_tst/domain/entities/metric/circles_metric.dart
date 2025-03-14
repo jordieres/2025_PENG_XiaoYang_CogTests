@@ -1,7 +1,5 @@
 
-
-
 class CirclesMetric {
   double distance = 0;
-  double duration = 0;
+  int duration = 0; // In milliseconds
 }
