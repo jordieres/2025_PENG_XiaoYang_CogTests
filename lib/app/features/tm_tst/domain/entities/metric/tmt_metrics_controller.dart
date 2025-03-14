@@ -69,8 +69,9 @@ class TmtMetricsController {
     circleMetrics.dragEndInsideCircle(details.localPosition);
   }
 
-  void onConnectNextCircleCorrect(int circleIndex, Offset circleConnectPoint) {
-    circleMetrics.onConnectNextCircleCorrect(circleIndex, circleConnectPoint);
+  void onConnectNextCircleCorrect(int circleIndex, TmtGameCircle circleConnectPoint) {
+    circleMetrics.onConnectNextCircleCorrect(circleIndex, circleConnectPoint.offset);
+    bMetrics.onConnectLetterCircle(circleConnectPoint);
   }
 
   void onConnectNextCircleError() {

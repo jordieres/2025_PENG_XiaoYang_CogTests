@@ -15,10 +15,23 @@ class GenerateCircleWithData {
       points.add(TmtGameCircle(
         order: i + 1,
         text: _getCircleText(i),
+        isNumber: _isNumber(i),
         offset: circles[i],
       ));
     }
     return points;
+  }
+
+  bool _isNumber(int index) {
+    if (tmtGameCircleTextType == TmtGameCircleTextType.NUMBER) {
+      return true;
+    } else {
+      if (index % 2 == 0) {
+        return true;
+      } else {
+        return false;
+      }
+    }
   }
 
   String _getCircleText(int index) {
