@@ -137,6 +137,7 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
   }
 
   void _onPanUpdate(DragUpdateDetails details) {
+    _metricsController.onPanUpdate(details);
     if (!_isDragging || _hasError) return;
 
     setState(() {
@@ -168,7 +169,6 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
       _connectNextCorrectCircleConfig(details.localPosition);
       return;
     }
-    _metricsController.onPanUpdate(details);
   }
 
   _connectOtherIncorrectCircleConfig(TmtGameCircle currentCircle) {
