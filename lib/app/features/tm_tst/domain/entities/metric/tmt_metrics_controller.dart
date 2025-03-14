@@ -5,9 +5,14 @@ import 'package:msdtmt/app/features/tm_tst/domain/entities/metric/tmt_test_lift_
 import 'package:msdtmt/app/features/tm_tst/domain/entities/metric/tmt_test_pause_metric.dart';
 import 'package:msdtmt/app/features/tm_tst/domain/entities/metric/tmt_test_time_metric.dart';
 
+import '../tmt_game_circle.dart';
+
 enum TmtGameTypeMetrics { typeA, typeB }
 
+/// All calculation here are in milliseconds
 class TmtMetricsController {
+  List<TmtGameCircle> circles = [];
+
   bool isFinishTest = false;
   int numberError = 0;
   List<double> pressureList = [];
@@ -42,19 +47,30 @@ class TmtMetricsController {
   }
 
   // Finger move screen
-  void onPanUpdate(DragUpdateDetails details) {
+  void onPanUpdate(DragUpdateDetails details, List<TmtGameCircle> circles) {
     final currentPosition = details.localPosition;
     testPauseMetric.checkPauseStatus(currentPosition);
+
+    if (circles.isNotEmpty) {
+      TmtGameCircle currentCircle = circles.last;
+      if (currentCircle.isPointInsideCircle(details.localPosition)) {
+        circleMetrics.dragOnInsideCircle(details.localPosition);
+      } else {
+        circleMetrics.dragEndInsideCircle(details.localPosition);
+      }
+    }
   }
+
 
   // Finger lift screen
   void onPanEnd(DragEndDetails details) {
     testLiftMetric.onStartLift();
     testPauseMetric.onEndPause();
+    circleMetrics.dragEndInsideCircle(details.localPosition);
   }
 
   void onConnectNextCircleCorrect(int circleIndex, Offset circleConnectPoint) {
-    circleMetrics.onConnectNextCircleCorrect(circleIndex,circleConnectPoint);
+    circleMetrics.onConnectNextCircleCorrect(circleIndex, circleConnectPoint);
   }
 
   void onConnectNextCircleError() {

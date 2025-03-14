@@ -34,7 +34,7 @@ class TmtGameBoardController extends StatefulWidget {
 class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
   final TmtMetricsController _metricsController = TmtMetricsController();
 
-  late List<TmtGameCircle> _circles = [];
+  List<TmtGameCircle> _circles = [];
   final List<TmtGameCircle> _connectedCircles = [];
   Offset? _currentDragPosition;
   int _nextCircleIndex = 0;
@@ -98,6 +98,8 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
     _circles = GenerateCircleWithData(
             tmtGameCircleTextType: TmtGameCircleTextType.NUMBER)
         .generateCircle(listCirclesOffset);
+
+    _metricsController.circles = _circles;
   }
 
   void _onPanStart(DragStartDetails details) {
@@ -139,7 +141,7 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
   }
 
   void _onPanUpdate(DragUpdateDetails details) {
-    _metricsController.onPanUpdate(details);
+    _metricsController.onPanUpdate(details, _connectedCircles);
     if (!_isDragging || _hasError) return;
 
     setState(() {

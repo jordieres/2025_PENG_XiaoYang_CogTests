@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:msdtmt/app/features/tm_tst/domain/usecases/tmt_game_calculate.dart';
 
 enum TmtGameType {
   TMT_TEST_A(),
@@ -7,7 +8,6 @@ enum TmtGameType {
   TMT_PRACTICE_A(),
   TMT_PRACTICE_B(),
   TMT_BOTH_PRACTICE();
-
 }
 
 enum TmtGameCircleTextType {
@@ -28,5 +28,9 @@ class TmtGameCircle {
 
   bool isFirst() {
     return order == 1;
+  }
+
+  bool isPointInsideCircle(Offset point) {
+    return TmtGameCalculate.isPointInCircle(offset, point);
   }
 }
