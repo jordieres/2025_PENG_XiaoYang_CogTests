@@ -4,6 +4,7 @@ import 'package:msdtmt/app/features/tm_tst/presentation/components/tmt_painter.d
 import '../../../../utils/helpers/app_helpers.dart';
 import '../../data/datasources/generate_circle_with_data.dart';
 import '../../data/datasources/random_grid_sampler.dart';
+import '../../domain/entities/metric/tmt_metrics_controller.dart';
 import '../../domain/entities/tmt_game_circle.dart';
 import '../../domain/usecases/tmt_game_calculate.dart';
 import '../../domain/entities/tmt_game_variable.dart';
@@ -31,6 +32,9 @@ class TmtGameBoardController extends StatefulWidget {
 }
 
 class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
+
+  final TmtMetricsController _metricsController = TmtMetricsController();
+
   late List<TmtGameCircle> _circles = [];
   final List<TmtGameCircle> _connectedCircles = [];
   Offset? _currentDragPosition;
@@ -62,6 +66,8 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
   @override
   void initState() {
     super.initState();
+    //TODO modificar segun tipo de juego
+    _metricsController.onTestStart(TmtGameTypeMetrics.typeA);
   }
 
   @override
@@ -128,6 +134,7 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
         });
       }
     }
+    _metricsController.onPanStart(details);
   }
 
   void _onPanUpdate(DragUpdateDetails details) {
@@ -162,6 +169,7 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
       _connectNextCorrectCircleConfig(details.localPosition);
       return;
     }
+    _metricsController.onPanUpdate(details);
   }
 
   _connectOtherIncorrectCircleConfig(TmtGameCircle currentCircle) {
@@ -232,6 +240,8 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
       _currentDragPosition =
           _connectedCircles.isNotEmpty ? _connectedCircles.last.offset : null;
     });
+
+    _metricsController.onPanEnd(details);
   }
 
   void _showCompletionDialog() {
@@ -281,31 +291,47 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
             });
           });
         }
-        return Column(
+        return Stack(
           children: [
-            Expanded(
-              child: GestureDetector(
-                onPanStart: _onPanStart,
-                onPanUpdate: _onPanUpdate,
-                onPanEnd: _onPanEnd,
-                child: CustomPaint(
-                  size: Size.infinite,
-                  painter: TmtPainter(
-                    allCircles: _circles,
-                    connectedCircles: _connectedCircles,
-                    currentDragPosition: _currentDragPosition,
-                    dragPath: _dragPath,
-                    paths: _paths,
-                    errorCircle: _errorCircle,
-                    nextCircleIndex: _nextCircleIndex,
-                    errorPath: _errorPath,
-                    hasError: _hasError,
-                    lasTimeHasError: _lasTimeHasError,
-                    isCheatModeEnabled: _isCheatModeEnabled,
+            Column(
+              children: [
+                Expanded(
+                  child: GestureDetector(
+                    onPanStart: _onPanStart,
+                    onPanUpdate: _onPanUpdate,
+                    onPanEnd: _onPanEnd,
+                    child: CustomPaint(
+                      size: Size.infinite,
+                      painter: TmtPainter(
+                        allCircles: _circles,
+                        connectedCircles: _connectedCircles,
+                        currentDragPosition: _currentDragPosition,
+                        dragPath: _dragPath,
+                        paths: _paths,
+                        errorCircle: _errorCircle,
+                        nextCircleIndex: _nextCircleIndex,
+                        errorPath: _errorPath,
+                        hasError: _hasError,
+                        lasTimeHasError: _lasTimeHasError,
+                        isCheatModeEnabled: _isCheatModeEnabled,
+                      ),
+                    ),
                   ),
                 ),
+              ],
+            ),
+            Positioned.fill(
+              child: Listener(
+                onPointerMove: (PointerMoveEvent event) {
+                  setState(() {
+                    _metricsController.onPointerMove(event);
+                   // print('PointerMoveEvent pressure: ${event.pressure}');
+                   // print('PointerMoveEvent size: ${event.size}');
+                  });
+                },
+                behavior: HitTestBehavior.translucent,
               ),
-            )
+            ),
           ],
         );
       },
