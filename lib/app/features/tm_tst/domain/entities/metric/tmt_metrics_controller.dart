@@ -31,30 +31,25 @@ class TmtMetricsController {
   void onTestEnd() {
     testTime.timeEndTest = DateTime.now();
     isFinishTest = true;
-    // Additional implementation logic
   }
 
   // Finger touch screen
   void onPanStart(DragStartDetails details) {
-    // Implementation logic for pan start
-    testPauseMetric.onEndPause();
+    testLiftMetric.onEndLift();
   }
 
   // Finger move screen
-  void onPanUpdate(DragUpdateDetails details) {
-    // Implementation logic for pan update
-  }
+  void onPanUpdate(DragUpdateDetails details) {}
 
   // Finger lift screen
   void onPanEnd(DragEndDetails details) {
-    testPauseMetric.onStartPause();
+    testLiftMetric.onStartLift();
   }
 
   void onConnectNextCircleCorrect() {}
 
   void onConnectNextCircleError() {
     numberError++;
-    print('numberError: $numberError');
   }
 
   void onPointerMove(PointerMoveEvent event) {

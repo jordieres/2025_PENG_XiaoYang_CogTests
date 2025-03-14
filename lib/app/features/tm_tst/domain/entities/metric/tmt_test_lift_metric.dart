@@ -1,24 +1,27 @@
-
+import 'metric_static_values.dart';
 
 class TmtTestLiftMetric {
-
-
-
   int numberLift = 0;
   int totalLiftTime = 0;
+  DateTime? _lastPauseTime;
 
   double calculateAverageLift() {
     return numberLift > 0 ? totalLiftTime / numberLift : 0;
   }
 
   void onStartLift() {
-    numberLift++;
-    //TODO
-    // Additional implementation logic here
+    _lastPauseTime = DateTime.now();
   }
 
   void onEndLift() {
-    //TODO
-    // Implementation logic here
+    if (_lastPauseTime == null) {
+      return;
+    }
+    DateTime now = DateTime.now();
+    totalLiftTime += now.difference(_lastPauseTime!).inMilliseconds;
+    numberLift++;
+
+    print('Lift time: $totalLiftTime');
+    print('Number of lifts: $numberLift');
   }
 }
