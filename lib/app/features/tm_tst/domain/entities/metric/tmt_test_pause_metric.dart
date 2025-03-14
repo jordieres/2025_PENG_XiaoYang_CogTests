@@ -14,14 +14,6 @@ class TmtTestPauseMetric {
   }
 
   void onEndPause() {
-    if (_lastPauseTime == null) {
-      return;
-    }
-    DateTime now = DateTime.now();
-    if (now.difference(_lastPauseTime!).inMilliseconds >=
-        MetricStaticValues.DEFAULT_PAUSE_TIME) {
-      totalPauseTime += now.difference(_lastPauseTime!).inMilliseconds;
-      numberPause++;
-    }
+
   }
 }
