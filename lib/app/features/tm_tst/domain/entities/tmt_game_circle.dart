@@ -18,11 +18,13 @@ enum TmtGameCircleTextType {
 class TmtGameCircle {
   final int order; // order since 1 not like index since 0
   final String text;
+  final bool isNumber;
   final Offset offset;
 
   TmtGameCircle({
     required this.order,
     required this.text,
+    required this.isNumber,
     required this.offset,
   });
 

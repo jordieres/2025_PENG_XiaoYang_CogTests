@@ -96,7 +96,7 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
     );
 
     _circles = GenerateCircleWithData(
-            tmtGameCircleTextType: TmtGameCircleTextType.NUMBER)
+            tmtGameCircleTextType: TmtGameCircleTextType.NUMBER_WITH_LETTER)
         .generateCircle(listCirclesOffset);
 
     _metricsController.circles = _circles;
@@ -114,7 +114,7 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
           _isDragging = true;
           _connectedCircles.add(_circles[0]);
           _metricsController.onConnectNextCircleCorrect(
-              _nextCircleIndex, _circles[0].offset);
+              _nextCircleIndex, _circles[0]);
           _nextCircleIndex = 1;
           _currentDragPosition = _circles[0].offset;
           _dragPath.clear();
@@ -221,7 +221,7 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
       _currentDragPosition = currentDragPosition;
 
       _metricsController.onConnectNextCircleCorrect(
-          _nextCircleIndex, nextCircle.offset);
+          _nextCircleIndex, nextCircle);
 
       _dragPath.clear();
       _dragPath.add(currentDragPosition);
