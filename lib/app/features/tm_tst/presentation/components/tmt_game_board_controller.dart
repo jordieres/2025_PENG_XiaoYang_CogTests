@@ -111,6 +111,8 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
         setState(() {
           _isDragging = true;
           _connectedCircles.add(_circles[0]);
+          _metricsController.onConnectNextCircleCorrect(
+              _nextCircleIndex, _circles[0].offset);
           _nextCircleIndex = 1;
           _currentDragPosition = _circles[0].offset;
           _dragPath.clear();
@@ -215,6 +217,9 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
 
       _paths.add(List.from(_dragPath));
       _currentDragPosition = currentDragPosition;
+
+      _metricsController.onConnectNextCircleCorrect(
+          _nextCircleIndex, nextCircle.offset);
 
       _dragPath.clear();
       _dragPath.add(currentDragPosition);

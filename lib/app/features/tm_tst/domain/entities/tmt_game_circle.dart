@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:msdtmt/app/features/tm_tst/domain/entities/tmt_game_variable.dart';
 
 enum TmtGameType {
   TMT_TEST_A(),

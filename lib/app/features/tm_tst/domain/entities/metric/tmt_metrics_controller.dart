@@ -53,7 +53,9 @@ class TmtMetricsController {
     testPauseMetric.onEndPause();
   }
 
-  void onConnectNextCircleCorrect() {}
+  void onConnectNextCircleCorrect(int circleIndex, Offset circleConnectPoint) {
+    circleMetrics.onConnectNextCircleCorrect(circleIndex,circleConnectPoint);
+  }
 
   void onConnectNextCircleError() {
     numberError++;
