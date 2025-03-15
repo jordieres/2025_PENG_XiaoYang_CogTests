@@ -252,6 +252,8 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
   }
 
   void _showCompletionDialog() {
+    _metricsController.onTestEnd(_connectedCircles.last.offset);
+
     showDialog(
       context: context,
       builder: (context) {
@@ -332,8 +334,6 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
                 onPointerMove: (PointerMoveEvent event) {
                   setState(() {
                     _metricsController.onPointerMove(event);
-                    // print('PointerMoveEvent pressure: ${event.pressure}');
-                    // print('PointerMoveEvent size: ${event.size}');
                   });
                 },
                 behavior: HitTestBehavior.translucent,
