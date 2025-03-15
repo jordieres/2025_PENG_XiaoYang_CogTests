@@ -22,11 +22,11 @@ class HomePage extends StatelessWidget {
               onPressed: () => {
                 Get.toNamed(Routes.tmt_test),
               },
-              child: const Text('Go to TMT Test'),
+              child: const Text('Start TMT Test'),
             ),
             ElevatedButton(
               onPressed: () => Get.updateLocale(AppTranslations.SPANISH),
-              child: const Text('Camibar a español'),
+              child: const Text('Cambiar a español'),
             ),
             ElevatedButton(
               onPressed: () => Get.updateLocale(AppTranslations.ENGLISH),

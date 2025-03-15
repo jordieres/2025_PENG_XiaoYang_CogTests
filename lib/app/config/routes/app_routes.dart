@@ -4,6 +4,7 @@ part of 'app_pages.dart';
 class Routes {
   static const home = _Paths.home;
   static const tmt_test = _Paths.tmt_test;
+  static const tmt_results = _Paths.tmt_results;
 }
 
 /// contains a list of route names.
@@ -11,8 +12,5 @@ class Routes {
 class _Paths {
   static const home = '/home';
   static const tmt_test = '/tmt_test';
-  // Example :
-  // static const index = '/';
-  // static const splash = '/splash';
-  // static const product = '/product';
+  static const tmt_results = '/tmt_results';
 }

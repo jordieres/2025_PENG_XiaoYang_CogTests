@@ -19,7 +19,7 @@ class TmtGameVariables {
 
   static const int DEFAULT_CIRCLE_NUMBER = 25;
 
-  static int CIRCLE_NUMBER = 25;
+  static int CIRCLE_NUMBER = 5;
   static double circleRadius = 20;
 
   static double CONNECT_DISTANCE = circleRadius + TOUCH_MARGIN;
