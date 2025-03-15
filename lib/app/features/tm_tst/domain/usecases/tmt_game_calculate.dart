@@ -19,10 +19,11 @@ class TmtGameCalculate {
   ///    - If d < radius, the point is inside the circle.
   ///    - If d == radius, the point lies exactly on the circle.
   ///    - If d > radius, the point lies outside the circle.
-  static bool isPointInCircle(Offset circle, double radius, Offset point) {
+  static bool isPointInCircle(Offset circle, Offset point) {
     double distanceSquared = (point.dx - circle.dx) * (point.dx - circle.dx) +
         (point.dy - circle.dy) * (point.dy - circle.dy);
-    return distanceSquared <= radius * radius;
+    return distanceSquared <=
+        TmtGameVariables.circleRadius * TmtGameVariables.circleRadius;
   }
 
   static bool isConnectWithCircle(
