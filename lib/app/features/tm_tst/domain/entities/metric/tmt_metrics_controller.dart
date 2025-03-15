@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:msdtmt/app/features/tm_tst/domain/entities/metric/tmt_b_metrics.dart';
 import 'package:msdtmt/app/features/tm_tst/domain/entities/metric/tmt_circles_metrics.dart';
+import 'package:msdtmt/app/features/tm_tst/domain/entities/metric/tmt_pressure_size_metric.dart';
 import 'package:msdtmt/app/features/tm_tst/domain/entities/metric/tmt_test_lift_metric.dart';
 import 'package:msdtmt/app/features/tm_tst/domain/entities/metric/tmt_test_pause_metric.dart';
 import 'package:msdtmt/app/features/tm_tst/domain/entities/metric/tmt_test_time_metric.dart';
@@ -23,6 +24,7 @@ class TmtMetricsController {
   TmtTestTimeMetric testTime = TmtTestTimeMetric();
   TmtCircleMetrics circleMetrics = TmtCircleMetrics();
   TmtBMetrics bMetrics = TmtBMetrics();
+  TmtPressureSizeMetric pressureSizeMetric = TmtPressureSizeMetric();
 
   void onTestStart(TmtGameTypeMetrics type) {
     testTime.timeStartTest = DateTime.now();
@@ -33,11 +35,11 @@ class TmtMetricsController {
     }
   }
 
-  void onTestEnd() {
+  void onTestEnd(Offset lastDragOffset) {
     testTime.timeEndTest = DateTime.now();
     isFinishTest = true;
-
     testPauseMetric.onEndPause();
+    circleMetrics.dragEndInsideCircle(lastDragOffset);
   }
 
   // Finger touch screen
@@ -61,7 +63,6 @@ class TmtMetricsController {
     }
   }
 
-
   // Finger lift screen
   void onPanEnd(DragEndDetails details) {
     testLiftMetric.onStartLift();
@@ -69,8 +70,10 @@ class TmtMetricsController {
     circleMetrics.dragEndInsideCircle(details.localPosition);
   }
 
-  void onConnectNextCircleCorrect(int circleIndex, TmtGameCircle circleConnectPoint) {
-    circleMetrics.onConnectNextCircleCorrect(circleIndex, circleConnectPoint.offset);
+  void onConnectNextCircleCorrect(
+      int circleIndex, TmtGameCircle circleConnectPoint) {
+    circleMetrics.onConnectNextCircleCorrect(
+        circleIndex, circleConnectPoint.offset);
     bMetrics.onConnectLetterCircle(circleConnectPoint);
   }
 
@@ -79,6 +82,12 @@ class TmtMetricsController {
   }
 
   void onPointerMove(PointerMoveEvent event) {
-    // Implementation logic for pointer movement
+    if (event.pressure != TmtPressureSizeMetric.noHavePressureCharacteristic) {
+      pressureSizeMetric.addPressureValue(event.pressure);
+    }
+
+    if (event.size != TmtPressureSizeMetric.noHaveSizeCharacteristic) {
+      pressureSizeMetric.addSizeValue(event.size);
+    }
   }
 }
