@@ -1,31 +1,16 @@
 part of 'app_translations.dart';
 
-/// Add `.tr` to get translation value
-///
-/// Example :
-/// ```dart
-/// Keyword.language.tr
-/// ```
-///
-/// Result :
-/// * en : `Language`
-/// * id : `Bahasa`
-class Messages {
-  static String accountType = 'account_type';
-  static String alreadyHaveAccount = 'already_have_account';
+class TMTGame {
+  static String tmtGameCircleBegin = 'tmt_game_circle_begin';
+  static String tmtGameCircleEnd = 'tmt_game_circle_end';
 }
 
-class _MessagesWrapper {
-  final String accountType;
-  final String alreadyHaveAccount;
-
-  _MessagesWrapper({
-    required this.accountType,
-    required this.alreadyHaveAccount,
-  });
+abstract class BaseMessages {
+  String get tmtGameCircleBegin;
+  String get tmtGameCircleEnd;
 
   Map<String, String> get messages => {
-        Messages.accountType: accountType,
-        Messages.alreadyHaveAccount: alreadyHaveAccount,
+        TMTGame.tmtGameCircleBegin: tmtGameCircleBegin,
+        TMTGame.tmtGameCircleEnd: tmtGameCircleEnd,
       };
 }
