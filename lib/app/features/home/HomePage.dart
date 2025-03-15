@@ -17,7 +17,6 @@ class HomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(TMTGame.tmtGameCircleEnd.tr),
             ElevatedButton(
               onPressed: () => {
                 Get.toNamed(Routes.tmt_test),
@@ -31,6 +30,10 @@ class HomePage extends StatelessWidget {
             ElevatedButton(
               onPressed: () => Get.updateLocale(AppTranslations.ENGLISH),
               child: const Text('Switch to English'),
+            ),
+            ElevatedButton(
+              onPressed: () => Get.updateLocale(AppTranslations.CHINIES),
+              child: const Text('切换到中文'),
             ),
           ],
         ),

@@ -18,4 +18,31 @@ class AppTextStyle {
     fontStyle: FontStyle.normal,
   );
 
+  static var customDialogTitle = TextStyle(
+    color: AppColors.customDialogTitleColor,
+    fontSize: 16.0,
+    fontWeight: FontWeight.bold,
+    fontStyle: FontStyle.normal,
+  );
+
+  static var customDialogContent = TextStyle(
+    color: Color(0xFF71727A),
+    fontSize: 12.0,
+    fontWeight: FontWeight.normal,
+  );
+
+  static var customDialogButton = TextStyle(
+    color: Colors.white,
+    fontSize: 14.0,
+    fontWeight: FontWeight.normal,
+    fontStyle: FontStyle.normal,
+  );
+
+  static var customDialogOutlinedButton = TextStyle(
+    color: AppColors.customDialogButtonColor,
+    fontSize: 14.0,
+    fontWeight: FontWeight.normal,
+    fontStyle: FontStyle.normal,
+  );
+
 }

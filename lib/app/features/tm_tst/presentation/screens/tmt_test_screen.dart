@@ -4,6 +4,8 @@ import 'package:msdtmt/app/features/tm_tst/presentation/components/tmt_game_boar
 import 'package:msdtmt/app/features/tm_tst/presentation/controllers/tmt_test_controller.dart';
 import '../../../../config/routes/app_pages.dart';
 import '../../../../config/themes/AppColors.dart';
+import '../../../../config/translation/app_translations.dart';
+import '../../../../shared_components/custom_dialog.dart';
 
 class TmtTestPage extends StatefulWidget {
   const TmtTestPage({super.key});
@@ -63,26 +65,17 @@ class _TmtTestPageState extends State<TmtTestPage> {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Part A Completed'),
-          content: const Text(
-              'You have successfully completed Part A. Ready to start Part B?'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                setState(() {
-                  _boardController = TmtGameBoardController(
-                      key:
-                          ValueKey(_testController.testState.value.toString()));
-                });
-              },
-              child: const Text('Start Part B'),
-            ),
-          ],
-        );
-      },
+      builder: (context) => CustomDialog(
+        mode: DialogMode.singleButton,
+        title: TMTGame.tmtGamePartACompletedBody.tr,
+        primaryButtonText: TMTGame.tmtGamePartBCompletedConfirmationButton.tr,
+        onPrimaryPressed: () {
+          setState(() {
+            _boardController = TmtGameBoardController(
+                key: ValueKey(_testController.testState.value.toString()));
+          });
+        },
+      ),
     );
   }
 
