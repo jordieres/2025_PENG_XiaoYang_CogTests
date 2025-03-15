@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:msdtmt/app/features/tm_tst/presentation/components/tmt_painter.dart';
 
 import '../../../../utils/helpers/app_helpers.dart';
@@ -8,12 +10,14 @@ import '../../domain/entities/metric/tmt_metrics_controller.dart';
 import '../../domain/entities/tmt_game_circle.dart';
 import '../../domain/usecases/tmt_game_calculate.dart';
 import '../../domain/entities/tmt_game_variable.dart';
+import '../controllers/tmt_test_controller.dart';
 
 /// This class manager logic of tmt test
 class TmtGameBoardController extends StatefulWidget {
   TmtGameBoardController({super.key});
 
-  final _TmtGameBoardControllerState _state = _TmtGameBoardControllerState();
+  late final _TmtGameBoardControllerState _state =
+      _TmtGameBoardControllerState();
 
   void regenerateCircles() {
     _state.regenerateCircles();
@@ -32,7 +36,10 @@ class TmtGameBoardController extends StatefulWidget {
 }
 
 class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
-  final TmtMetricsController _metricsController = TmtMetricsController();
+  final TmtTestController _testController = Get.find<TmtTestController>();
+  late TmtMetricsController _metricsController;
+
+  late TmtGameCircleTextType _circleTextType;
 
   List<TmtGameCircle> _circles = [];
   final List<TmtGameCircle> _connectedCircles = [];
@@ -65,8 +72,16 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
   @override
   void initState() {
     super.initState();
-    //TODO modificar segun tipo de juego
-    _metricsController.onTestStart(TmtGameTypeMetrics.TMT_A);
+    _metricsController = _testController.metricsController;
+    // Set the circle text type based on test type
+    if (_testController.testState.value == TmtTestStateFlow.TMT_A_IN_PROGRESS ||
+        _testController.testState.value == TmtTestStateFlow.READY) {
+      _circleTextType = TmtGameCircleTextType.NUMBER;
+    } else {
+      _circleTextType = TmtGameCircleTextType.NUMBER_WITH_LETTER;
+    }
+
+    _testController.startTest();
   }
 
   @override
@@ -95,8 +110,7 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
       TmtGameVariables.CIRCLE_NUMBER,
     );
 
-    _circles = GenerateCircleWithData(
-            tmtGameCircleTextType: TmtGameCircleTextType.NUMBER_WITH_LETTER)
+    _circles = GenerateCircleWithData(tmtGameCircleTextType: _circleTextType)
         .generateCircle(listCirclesOffset);
 
     _metricsController.circles = _circles;
@@ -150,7 +164,7 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
     });
 
     if (_nextCircleIndex >= TmtGameVariables.CIRCLE_NUMBER) {
-      _showCompletionDialog();
+      _onCompleteTest();
       return;
     }
 
@@ -251,29 +265,10 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
     _metricsController.onPanEnd(details);
   }
 
-  void _showCompletionDialog() {
-    //TODO modificar segun tipo de juego
-    _metricsController.onTestEnd(
-        _connectedCircles.last.offset, TmtGameTypeMetrics.TMT_B);
-
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Congratulations!'),
-          content: const Text('You have connected all the dots!'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                regenerateCircles();
-              },
-              child: const Text('Play Again'),
-            ),
-          ],
-        );
-      },
-    );
+  void _onCompleteTest() {
+    if (_connectedCircles.isNotEmpty) {
+      _testController.onTestEnd(_connectedCircles.last.offset);
+    }
   }
 
   void regenerateCircles() {

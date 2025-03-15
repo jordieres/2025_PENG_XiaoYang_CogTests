@@ -6,9 +6,8 @@ import 'package:msdtmt/app/features/tm_tst/domain/entities/metric/tmt_test_lift_
 import 'package:msdtmt/app/features/tm_tst/domain/entities/metric/tmt_test_pause_metric.dart';
 import 'package:msdtmt/app/features/tm_tst/domain/entities/metric/tmt_test_time_metric.dart';
 
+import '../../../presentation/controllers/tmt_test_controller.dart';
 import '../tmt_game_circle.dart';
-
-enum TmtGameTypeMetrics { TMT_A, TMT_B }
 
 /// All calculation here are in milliseconds
 class TmtMetricsController {
@@ -26,22 +25,34 @@ class TmtMetricsController {
   TmtBMetrics bMetrics = TmtBMetrics();
   TmtPressureSizeMetric pressureSizeMetric = TmtPressureSizeMetric();
 
-  void onTestStart(TmtGameTypeMetrics type) {
-    testTimeMetrics.timeStartTest = DateTime.now();
-    if (type == TmtGameTypeMetrics.TMT_A) {
-      testTimeMetrics.timeStartTmtA = DateTime.now();
-    } else {
-      final timeNow = DateTime.now();
-      testTimeMetrics.timeEndTmtA = timeNow;
-      testTimeMetrics.timeStartTmtB = timeNow;
+  void onTestStart(TmtTestStateFlow tmtTestState) {
+    switch (tmtTestState) {
+      case TmtTestStateFlow.READY:
+      case TmtTestStateFlow.TMT_A_IN_PROGRESS:
+        final currentTestTime = DateTime.now();
+        testTimeMetrics.timeStartTest = currentTestTime;
+        testTimeMetrics.timeStartTmtA = currentTestTime;
+        break;
+      case TmtTestStateFlow.TMT_B_IN_PROGRESS:
+        testTimeMetrics.timeStartTmtB = DateTime.now();
+        break;
+      default:
+        break;
     }
   }
 
-  void onTestEnd(Offset lastDragOffset, TmtGameTypeMetrics type) {
-    if (type == TmtGameTypeMetrics.TMT_B) {
-      final timeNow = DateTime.now();
-      testTimeMetrics.timeEndTmtB = timeNow;
-      testTimeMetrics.timeEndTest = timeNow;
+  void onTestEnd(Offset lastDragOffset, TmtTestStateFlow tmtTestState) {
+    switch (tmtTestState) {
+      case TmtTestStateFlow.TMT_A_COMPLETED:
+        testTimeMetrics.timeEndTmtA = DateTime.now();
+        break;
+      case TmtTestStateFlow.TEST_COMPLETED:
+        final currentTestTime = DateTime.now();
+        testTimeMetrics.timeEndTmtB = currentTestTime;
+        testTimeMetrics.timeEndTest = currentTestTime;
+        break;
+      default:
+        break;
     }
     isFinishTest = true;
     testPauseMetric.onEndPause();
