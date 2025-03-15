@@ -8,7 +8,7 @@ import 'package:msdtmt/app/features/tm_tst/domain/entities/metric/tmt_test_time_
 
 import '../tmt_game_circle.dart';
 
-enum TmtGameTypeMetrics { typeA, typeB }
+enum TmtGameTypeMetrics { TMT_A, TMT_B }
 
 /// All calculation here are in milliseconds
 class TmtMetricsController {
@@ -28,7 +28,7 @@ class TmtMetricsController {
 
   void onTestStart(TmtGameTypeMetrics type) {
     testTimeMetrics.timeStartTest = DateTime.now();
-    if (type == TmtGameTypeMetrics.typeA) {
+    if (type == TmtGameTypeMetrics.TMT_A) {
       testTimeMetrics.timeStartTmtA = DateTime.now();
     } else {
       final timeNow = DateTime.now();
@@ -38,7 +38,7 @@ class TmtMetricsController {
   }
 
   void onTestEnd(Offset lastDragOffset, TmtGameTypeMetrics type) {
-    if (type == TmtGameTypeMetrics.typeB) {
+    if (type == TmtGameTypeMetrics.TMT_B) {
       final timeNow = DateTime.now();
       testTimeMetrics.timeEndTmtB = timeNow;
       testTimeMetrics.timeEndTest = timeNow;
