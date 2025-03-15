@@ -252,7 +252,9 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
   }
 
   void _showCompletionDialog() {
-    _metricsController.onTestEnd(_connectedCircles.last.offset);
+    //TODO modificar segun tipo de juego
+    _metricsController.onTestEnd(
+        _connectedCircles.last.offset, TmtGameTypeMetrics.typeB);
 
     showDialog(
       context: context,
