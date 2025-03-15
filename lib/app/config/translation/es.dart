@@ -7,6 +7,15 @@ class SpanishMessages extends BaseMessages {
 
   @override
   String get tmtGameCircleEnd => "Fin";
+
+  @override
+  String get tmtGamePartACompletedTitle => "TMT Parte A Completada";
+
+  @override
+  String get tmtGamePartACompletedBody => "Has completado con éxito la Parte A de TMT. ¿Listo para comenzar la Parte B de TMT?";
+
+  @override
+  String get tmtGamePartBCompletedConfirmationButton => "Sí, Comenzar TMT Parte B";
 }
 
 final es = SpanishMessages();
