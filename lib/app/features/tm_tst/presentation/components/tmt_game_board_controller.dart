@@ -66,7 +66,7 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
   void initState() {
     super.initState();
     //TODO modificar segun tipo de juego
-    _metricsController.onTestStart(TmtGameTypeMetrics.typeA);
+    _metricsController.onTestStart(TmtGameTypeMetrics.TMT_A);
   }
 
   @override
@@ -254,7 +254,7 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
   void _showCompletionDialog() {
     //TODO modificar segun tipo de juego
     _metricsController.onTestEnd(
-        _connectedCircles.last.offset, TmtGameTypeMetrics.typeB);
+        _connectedCircles.last.offset, TmtGameTypeMetrics.TMT_B);
 
     showDialog(
       context: context,
