@@ -17,6 +17,9 @@ class EnglishMessages extends BaseMessages {
 
   @override
   String get tmtGamePartBCompletedConfirmationButton => "Yes, Start TMT Part B";
+
+  @override
+  String get tmtGameTmtScreenAppBarTime => "Time: ";
 }
 
 final en = EnglishMessages();

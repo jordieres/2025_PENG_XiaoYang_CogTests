@@ -15,6 +15,9 @@ class ChineseMessages extends BaseMessages {
 
   @override
   String get tmtGamePartBCompletedConfirmationButton => "是的，开始TMT B部分";
+
+  @override
+  String get tmtGameTmtScreenAppBarTime => "时间: ";
 }
 
 final zh = ChineseMessages();
