@@ -21,22 +21,28 @@ class TmtMetricsController {
 
   TmtTestLiftMetric testLiftMetric = TmtTestLiftMetric();
   TmtTestPauseMetric testPauseMetric = TmtTestPauseMetric();
-  TmtTestTimeMetric testTime = TmtTestTimeMetric();
+  TmtTestTimeMetric testTimeMetrics = TmtTestTimeMetric();
   TmtCircleMetrics circleMetrics = TmtCircleMetrics();
   TmtBMetrics bMetrics = TmtBMetrics();
   TmtPressureSizeMetric pressureSizeMetric = TmtPressureSizeMetric();
 
   void onTestStart(TmtGameTypeMetrics type) {
-    testTime.timeStartTest = DateTime.now();
+    testTimeMetrics.timeStartTest = DateTime.now();
     if (type == TmtGameTypeMetrics.typeA) {
-      testTime.timeStartTmtA = DateTime.now();
+      testTimeMetrics.timeStartTmtA = DateTime.now();
     } else {
-      testTime.timeStartTmtB = DateTime.now();
+      final timeNow = DateTime.now();
+      testTimeMetrics.timeEndTmtA = timeNow;
+      testTimeMetrics.timeStartTmtB = timeNow;
     }
   }
 
-  void onTestEnd(Offset lastDragOffset) {
-    testTime.timeEndTest = DateTime.now();
+  void onTestEnd(Offset lastDragOffset, TmtGameTypeMetrics type) {
+    if (type == TmtGameTypeMetrics.typeB) {
+      final timeNow = DateTime.now();
+      testTimeMetrics.timeEndTmtB = timeNow;
+      testTimeMetrics.timeEndTest = timeNow;
+    }
     isFinishTest = true;
     testPauseMetric.onEndPause();
     circleMetrics.dragEndInsideCircle(lastDragOffset);
