@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:msdtmt/app/utils/helpers/app_helpers.dart';
+
 class TmtGameVariables {
   static const double _REFERENCE_LINE_STROKE_WIDTH_FACTOR =
       0.136; // Use circle radius 22 , line stroke width 3
@@ -9,10 +11,13 @@ class TmtGameVariables {
       0.181; // Use circle radius 22 , circle stroke width 4
 
   // Percentage of all circles in the screen area
-  static const double _CIRCLE_IN_SCREEN_AREA_PERCENTAGE = 0.10;
+  static const double _CIRCLE_IN_SCREEN_AREA_PERCENTAGE_MOBILE = 0.14;
+  static const double _CIRCLE_IN_SCREEN_AREA_PERCENTAGE_TABLET = 0.12;
 
   static const double TOUCH_MARGIN = 5;
   static const int BOARD_MARGIN = 18;
+
+  static const int DEFAULT_CIRCLE_NUMBER = 25;
 
   static int CIRCLE_NUMBER = 25;
   static double circleRadius = 20;
@@ -50,7 +55,14 @@ class TmtGameVariables {
     double availableHeight = maxHeight - (2 * BOARD_MARGIN);
 
     double screenArea = availableWidth * availableHeight;
-    double totalCircleArea = screenArea * _CIRCLE_IN_SCREEN_AREA_PERCENTAGE;
+
+    var areaPercentage = _CIRCLE_IN_SCREEN_AREA_PERCENTAGE_MOBILE;
+    if (DeviceHelper.isTablet) {
+      areaPercentage = _CIRCLE_IN_SCREEN_AREA_PERCENTAGE_TABLET;
+    } else {
+      areaPercentage = _CIRCLE_IN_SCREEN_AREA_PERCENTAGE_MOBILE;
+    }
+    double totalCircleArea = screenArea * areaPercentage;
     double areaPerCircle = totalCircleArea / CIRCLE_NUMBER;
     double calculatedRadius = sqrt(areaPerCircle / pi);
 

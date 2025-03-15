@@ -3,12 +3,24 @@ import 'dart:ui';
 
 import 'package:msdtmt/app/features/tm_tst/data/datasources/random_grid_sampler.dart';
 import 'package:msdtmt/app/features/tm_tst/domain/entities/tmt_game_variable.dart';
+import 'package:msdtmt/app/utils/helpers/app_helpers.dart';
 
 class ReorderCircles {
   static final int _maxRegenerateCircleAttemptsInPostProcessReorder =
       10; // maximum attempts to regenerate a circle
   static final int _maxRegenerateInWholeAreaInPostProcessReorder =
       5; // maximum attempts to regenerate a circle in postProcessReorder
+
+  static const double effectiveRadiusFactor = 0.75;
+
+  // factor to reduce the radius of the circle to avoid overlap
+
+  // factor to adjust the optimal distance between circles
+  static const double optimalDistanceFactorLargeTablet = 3.8;
+  static const double optimalDistanceFactorMediumTablet = 3.5;
+  static const double optimalDistanceFactorSmallTablet = 3.2;
+
+  static const double optimalDistanceFactorPhone = 3;
 
   final double minX; // left boundary
   final double maxX; // right boundary
@@ -35,12 +47,13 @@ class ReorderCircles {
   });
 
   /// 1: Create an auxiliary list to hold the circles in their final sorted order.
-  /// 2: For each circle, count the number of points it can directly connect to.
-  /// 3: Select the circle with the fewest connectable points, record its original order, and set its order to 1.
-  /// 4: Find the circle in the original list that originally had order 1 and swap its order with the selected circle.
-  /// 5: Add the selected circle to the auxiliary list, remove it from the original list, and remove its offset from the connectable lists of the remaining circles.
-  /// 6: Repeat steps 3–5: starting from the circle just set to order 1, continue assigning orders 2, 3, …, n by selecting the circle with the least connectable points.
-  /// 7: If a circle has an empty connectable list (i.e. no connectable points), attempt to regenerate its position.
+  /// 2: Get first circle randomly, set its order to 1.
+  /// 3: For each circle, count the number of points it can directly connect to.
+  /// 4: Select the circle with the fewest connectable points, record its original order, and set its order to 2.
+  /// 5: Find the circle in the original list that originally had order 2 and swap its order with the selected circle.
+  /// 6: Add the selected circle to the auxiliary list, remove it from the original list, and remove its offset from the connectable lists of the remaining circles.
+  /// 7: Repeat steps 3–5: starting from the circle just set to order 2, continue assigning orders 3, 4, …, n by selecting the circle with the least connectable points.
+  /// 8: If a circle has an empty connectable list (i.e. no connectable points), attempt to regenerate its position.
   void postProcessReorder(List<CircleGenerator> circles) {
     for (int i = 0; i < circles.length; i++) {
       circles[i].order = i + 1;
@@ -51,11 +64,11 @@ class ReorderCircles {
       c.connectableOffsets = _buildConnectableOffsets(c, circles);
     }
 
-    // ============ 3) Sort by connectable points ============
+    _getFirstCircle(circles);
+
+    //============ 3) Sort by connectable points ============
     circles.sort((a, b) =>
         a.connectableOffsets.length.compareTo(b.connectableOffsets.length));
-
-    _getFirstCircle(circles);
 
     // ============ Repeat for remaining circles ============
     _reorderDependNumberOfConnectableOffsets(circles);
@@ -74,25 +87,30 @@ class ReorderCircles {
   void _getFirstCircle(List<CircleGenerator> circles) {
     // Select first circle, set its order to 1
     if (circles.isNotEmpty) {
-      CircleGenerator least = circles.first;
-      int oldOrder = least.order;
-      least.order = 1;
+      CircleGenerator randomCircle = circles[_random.nextInt(circles.length)];
+      int oldOrder = randomCircle.order;
+      randomCircle.order = 1;
 
       // Find order 1 circle in original list, swap with selected circle
       CircleGenerator? circleHad1 = circles.firstWhere(
-        (cc) => cc != least && cc.order == 1,
-        orElse: () => least,
+        (cc) => cc != randomCircle && cc.order == 1,
+        orElse: () => randomCircle,
       );
-      if (circleHad1 != least) {
+      if (circleHad1 != randomCircle) {
         circleHad1.order = oldOrder;
       }
 
-      aux.add(least);
-      circles.remove(least);
+      aux.add(randomCircle);
+      circles.remove(randomCircle);
 
       // Remove offset from connectable lists
       for (CircleGenerator c in circles) {
-        c.connectableOffsets.remove(least.offset);
+        c.connectableOffsets.remove(randomCircle.offset);
+      }
+
+      //recalculate connectableOffsets
+      for (CircleGenerator c in circles) {
+        c.connectableOffsets = _buildConnectableOffsets(c, circles);
       }
     }
   }
@@ -117,10 +135,41 @@ class ReorderCircles {
           current, circles, candidates)) {
         break;
       }
+
+      // Sort candidates by number of connectableOffsets
       candidates.sort((a, b) =>
           a.connectableOffsets.length.compareTo(b.connectableOffsets.length));
-      CircleGenerator? nextCircle =
-          candidates.isNotEmpty ? candidates.first : null;
+
+      // find the group of candidates with the fewest connectable points
+      int minConnectable = candidates.isNotEmpty
+          ? candidates.first.connectableOffsets.length
+          : 0;
+      List<CircleGenerator> minConnectableCandidates = candidates
+          .where((c) => c.connectableOffsets.length == minConnectable)
+          .toList();
+
+      // If there are multiple candidates with the same minimum number of connectable points, choose the one that is at a moderate distance
+      CircleGenerator? nextCircle;
+      if (minConnectableCandidates.length > 1) {
+        // calculate the distance between the current circle and each candidate
+        minConnectableCandidates.sort((a, b) {
+          double distanceA = (a.offset - current.offset).distance;
+          double distanceB = (b.offset - current.offset).distance;
+
+          double optimalDistance = minDistance * _getOptimalDistance();
+          double scoreA = (distanceA - optimalDistance).abs();
+          double scoreB = (distanceB - optimalDistance).abs();
+
+          return scoreA.compareTo(scoreB);
+        });
+
+        nextCircle = minConnectableCandidates.first;
+      } else {
+        nextCircle = minConnectableCandidates.isNotEmpty
+            ? minConnectableCandidates.first
+            : null;
+      }
+
       if (nextCircle == null) {
         break;
       }
@@ -129,7 +178,7 @@ class ReorderCircles {
       nextCircle.order = nextOrder;
       CircleGenerator? circleHadNextOrder = circles.firstWhere(
         (cc) => cc != nextCircle && cc.order == nextOrder,
-        orElse: () => nextCircle,
+        orElse: () => nextCircle!,
       );
       if (circleHadNextOrder != nextCircle) {
         circleHadNextOrder.order = oldOrderNext;
@@ -140,6 +189,29 @@ class ReorderCircles {
       for (CircleGenerator c in circles) {
         c.connectableOffsets.remove(nextCircle.offset);
       }
+
+      //recalculate connectableOffsets
+      for (CircleGenerator c in circles) {
+        c.connectableOffsets = _buildConnectableOffsets(c, circles);
+      }
+    }
+  }
+
+  double _getOptimalDistance() {
+    final deviceType = DeviceHelper.deviceType;
+    switch (deviceType) {
+      case DeviceType.largeTablet:
+        return optimalDistanceFactorLargeTablet;
+      case DeviceType.mediumTablet:
+        return optimalDistanceFactorMediumTablet;
+      case DeviceType.smallTablet:
+        return optimalDistanceFactorSmallTablet;
+      case DeviceType.largePhone:
+        return optimalDistanceFactorPhone;
+      case DeviceType.mediumPhone:
+        return optimalDistanceFactorPhone;
+      default:
+        return optimalDistanceFactorPhone;
     }
   }
 
@@ -186,11 +258,8 @@ class ReorderCircles {
     return results;
   }
 
-
-  bool _isLineBlockedByAnyCircle(
-      Offset center1, Offset center2,
+  bool _isLineBlockedByAnyCircle(Offset center1, Offset center2,
       List<CircleGenerator> all, double circleRadius) {
-
     // Calculate the vector from the center of the first circle to the center of the second circle
     final Offset direction = center2 - center1;
     final double distance = direction.distance;
@@ -201,7 +270,8 @@ class ReorderCircles {
     }
 
     // Calculate the normalized direction vector
-    final Offset normalizedDir = Offset(direction.dx / distance, direction.dy / distance);
+    final Offset normalizedDir =
+        Offset(direction.dx / distance, direction.dy / distance);
 
     // Calculate the unit vector perpendicular to the direction
     final Offset perpendicular = Offset(-normalizedDir.dy, normalizedDir.dx);
@@ -221,16 +291,19 @@ class ReorderCircles {
       final Offset toOtherCircle = cg.offset - center1;
 
       // Calculate the projection distance of the other circle in the direction of the line
-      final double projAlongLine = toOtherCircle.dx * normalizedDir.dx + toOtherCircle.dy * normalizedDir.dy;
+      final double projAlongLine = toOtherCircle.dx * normalizedDir.dx +
+          toOtherCircle.dy * normalizedDir.dy;
 
       // if the projection is between the two circles
       if (projAlongLine > 0 && projAlongLine < distance) {
-
         // Calculate the perpendicular distance of the other circle to the line
-        final double projPerpendicular = (toOtherCircle.dx * perpendicular.dx + toOtherCircle.dy * perpendicular.dy).abs();
+        final double projPerpendicular = (toOtherCircle.dx * perpendicular.dx +
+                toOtherCircle.dy * perpendicular.dy)
+            .abs();
 
         // If the perpendicular distance is less than half the corridor width plus the radius of the other circle, it is blocked
-        if (projPerpendicular < (corridorWidth / 2) + circleRadius) {
+        if (projPerpendicular <
+            (corridorWidth / 2) + (circleRadius * effectiveRadiusFactor)) {
           return true;
         }
       }
@@ -238,8 +311,6 @@ class ReorderCircles {
 
     return false;
   }
-
-
 
   bool _reGenerateOneCircleInSameCell(
     CircleGenerator circle,

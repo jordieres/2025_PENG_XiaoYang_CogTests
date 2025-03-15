@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:msdtmt/app/features/tm_tst/presentation/components/tmt_painter.dart';
 
 import '../../../../utils/helpers/app_helpers.dart';
+import '../../data/datasources/generate_circle_with_data.dart';
 import '../../data/datasources/random_grid_sampler.dart';
+import '../../domain/entities/metric/tmt_metrics_controller.dart';
+import '../../domain/entities/tmt_game_circle.dart';
 import '../../domain/usecases/tmt_game_calculate.dart';
 import '../../domain/entities/tmt_game_variable.dart';
 
@@ -29,8 +32,10 @@ class TmtGameBoardController extends StatefulWidget {
 }
 
 class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
-  late List<Offset> _circles = [];
-  final List<Offset> _connectedCircles = [];
+  final TmtMetricsController _metricsController = TmtMetricsController();
+
+  List<TmtGameCircle> _circles = [];
+  final List<TmtGameCircle> _connectedCircles = [];
   Offset? _currentDragPosition;
   int _nextCircleIndex = 0;
   final List<Offset> _dragPath = [];
@@ -44,7 +49,7 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
 
   double _constraintsMaxWidth = 0;
   double _constraintsMaxHeight = 0;
-  Offset? _errorCircle;
+  TmtGameCircle? _errorCircle;
   bool _isDragging = false;
 
   // Getter for cheat mode
@@ -60,6 +65,8 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
   @override
   void initState() {
     super.initState();
+    //TODO modificar segun tipo de juego
+    _metricsController.onTestStart(TmtGameTypeMetrics.TMT_A);
   }
 
   @override
@@ -78,7 +85,7 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
     _isDragging = false;
     _hasError = false; // Reset error state
 
-    _circles = RandomGridSampler(
+    final listCirclesOffset = RandomGridSampler(
             minDistance: TmtGameVariables.safeDistance,
             minX: TmtGameCalculate.getBoardMinX(),
             maxX: TmtGameCalculate.getBoardMaxX(_constraintsMaxWidth),
@@ -87,6 +94,12 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
         .generatePoints(
       TmtGameVariables.CIRCLE_NUMBER,
     );
+
+    _circles = GenerateCircleWithData(
+            tmtGameCircleTextType: TmtGameCircleTextType.NUMBER_WITH_LETTER)
+        .generateCircle(listCirclesOffset);
+
+    _metricsController.circles = _circles;
   }
 
   void _onPanStart(DragStartDetails details) {
@@ -96,14 +109,16 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
     //Set First circle as starting point
     if (_nextCircleIndex == 0) {
       if (TmtGameCalculate.isConnectWithCircle(
-          details.localPosition, _circles[0])) {
+          details.localPosition, _circles[0].offset)) {
         setState(() {
           _isDragging = true;
           _connectedCircles.add(_circles[0]);
+          _metricsController.onConnectNextCircleCorrect(
+              _nextCircleIndex, _circles[0]);
           _nextCircleIndex = 1;
-          _currentDragPosition = _circles[0];
+          _currentDragPosition = _circles[0].offset;
           _dragPath.clear();
-          _dragPath.add(_circles[0]);
+          _dragPath.add(_circles[0].offset);
           _errorCircle = null;
         });
       }
@@ -112,19 +127,21 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
     // It must to be last connected circle
     else if (_nextCircleIndex < TmtGameVariables.CIRCLE_NUMBER) {
       if (TmtGameCalculate.isConnectWithCircle(
-          details.localPosition, _connectedCircles.last)) {
+          details.localPosition, _connectedCircles.last.offset)) {
         setState(() {
           _isDragging = true;
-          _currentDragPosition = _connectedCircles.last;
+          _currentDragPosition = _connectedCircles.last.offset;
           _dragPath.clear();
-          _dragPath.add(_connectedCircles.last);
+          _dragPath.add(_connectedCircles.last.offset);
           _errorCircle = null;
         });
       }
     }
+    _metricsController.onPanStart(details);
   }
 
   void _onPanUpdate(DragUpdateDetails details) {
+    _metricsController.onPanUpdate(details, _connectedCircles);
     if (!_isDragging || _hasError) return;
 
     setState(() {
@@ -138,39 +155,40 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
     }
 
     for (int i = 0; i < _circles.length; i++) {
-      final currentOffset = _circles[i];
+      final currentCircle = _circles[i];
 
-      if (i == _nextCircleIndex || _connectedCircles.contains(currentOffset)) {
+      if (i == _nextCircleIndex || _connectedCircles.contains(currentCircle)) {
         continue;
       }
 
       if (TmtGameCalculate.isConnectWithCircle(
-          details.localPosition, currentOffset)) {
-        _connectOtherIncorrectCircleConfig(currentOffset);
+          details.localPosition, currentCircle.offset)) {
+        _connectOtherIncorrectCircleConfig(currentCircle);
         return;
       }
     }
 
     if (TmtGameCalculate.isConnectWithCircle(
-        details.localPosition, _circles[_nextCircleIndex])) {
+        details.localPosition, _circles[_nextCircleIndex].offset)) {
       _connectNextCorrectCircleConfig(details.localPosition);
       return;
     }
   }
 
-  _connectOtherIncorrectCircleConfig(Offset currentOffset) {
+  _connectOtherIncorrectCircleConfig(TmtGameCircle currentCircle) {
+    _metricsController.onConnectNextCircleError();
     setState(() {
       _isDragging = false;
-      _dragPath.add(currentOffset);
+      _dragPath.add(currentCircle.offset);
       _errorPath = List.from(_dragPath); // Save the current path as error path
       _dragPath.clear();
       _currentDragPosition =
-          _connectedCircles.isNotEmpty ? _connectedCircles.last : null;
+          _connectedCircles.isNotEmpty ? _connectedCircles.last.offset : null;
     });
-    _showErrorStatus(currentOffset);
+    _showErrorStatus(currentCircle);
   }
 
-  void _showErrorStatus(Offset errorOffset) {
+  void _showErrorStatus(TmtGameCircle errorOffset) {
     setState(() {
       _errorCircle = errorOffset;
       _hasError = true;
@@ -197,10 +215,13 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
 
       //Add the TOUCH_MARGIN to the last point of the path
       _dragPath.add(TmtGameCalculate.closestPointOnCircle(
-          nextCircle, TmtGameVariables.circleRadius, _dragPath.last));
+          nextCircle.offset, TmtGameVariables.circleRadius, _dragPath.last));
 
       _paths.add(List.from(_dragPath));
       _currentDragPosition = currentDragPosition;
+
+      _metricsController.onConnectNextCircleCorrect(
+          _nextCircleIndex, nextCircle);
 
       _dragPath.clear();
       _dragPath.add(currentDragPosition);
@@ -224,11 +245,17 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
         _dragPath.clear();
       }
       _currentDragPosition =
-          _connectedCircles.isNotEmpty ? _connectedCircles.last : null;
+          _connectedCircles.isNotEmpty ? _connectedCircles.last.offset : null;
     });
+
+    _metricsController.onPanEnd(details);
   }
 
   void _showCompletionDialog() {
+    //TODO modificar segun tipo de juego
+    _metricsController.onTestEnd(
+        _connectedCircles.last.offset, TmtGameTypeMetrics.TMT_B);
+
     showDialog(
       context: context,
       builder: (context) {
@@ -257,7 +284,7 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
 
   @override
   Widget build(BuildContext context) {
-    DeviceHelper().init(context);
+    DeviceHelper.init(context);
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -275,31 +302,45 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
             });
           });
         }
-        return Column(
+        return Stack(
           children: [
-            Expanded(
-              child: GestureDetector(
-                onPanStart: _onPanStart,
-                onPanUpdate: _onPanUpdate,
-                onPanEnd: _onPanEnd,
-                child: CustomPaint(
-                  size: Size.infinite,
-                  painter: TmtPainter(
-                    allPoints: _circles,
-                    connectedPoints: _connectedCircles,
-                    currentDragPosition: _currentDragPosition,
-                    dragPath: _dragPath,
-                    paths: _paths,
-                    errorCircle: _errorCircle,
-                    nextCircleIndex: _nextCircleIndex,
-                    errorPath: _errorPath,
-                    hasError: _hasError,
-                    lasTimeHasError: _lasTimeHasError,
-                    isCheatModeEnabled: _isCheatModeEnabled,
+            Column(
+              children: [
+                Expanded(
+                  child: GestureDetector(
+                    onPanStart: _onPanStart,
+                    onPanUpdate: _onPanUpdate,
+                    onPanEnd: _onPanEnd,
+                    child: CustomPaint(
+                      size: Size.infinite,
+                      painter: TmtPainter(
+                        allCircles: _circles,
+                        connectedCircles: _connectedCircles,
+                        currentDragPosition: _currentDragPosition,
+                        dragPath: _dragPath,
+                        paths: _paths,
+                        errorCircle: _errorCircle,
+                        nextCircleIndex: _nextCircleIndex,
+                        errorPath: _errorPath,
+                        hasError: _hasError,
+                        lasTimeHasError: _lasTimeHasError,
+                        isCheatModeEnabled: _isCheatModeEnabled,
+                      ),
+                    ),
                   ),
                 ),
+              ],
+            ),
+            Positioned.fill(
+              child: Listener(
+                onPointerMove: (PointerMoveEvent event) {
+                  setState(() {
+                    _metricsController.onPointerMove(event);
+                  });
+                },
+                behavior: HitTestBehavior.translucent,
               ),
-            )
+            ),
           ],
         );
       },
