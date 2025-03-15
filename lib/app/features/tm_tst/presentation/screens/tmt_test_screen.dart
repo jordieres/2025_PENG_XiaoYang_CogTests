@@ -6,6 +6,7 @@ import '../../../../config/routes/app_pages.dart';
 import '../../../../config/themes/AppColors.dart';
 import '../../../../config/translation/app_translations.dart';
 import '../../../../shared_components/custom_dialog.dart';
+import '../components/tmt_test_app_bar.dart';
 
 class TmtTestPage extends StatefulWidget {
   const TmtTestPage({super.key});
@@ -21,6 +22,8 @@ class _TmtTestPageState extends State<TmtTestPage> {
   late TmtTestController _testController;
   Worker? _stateWorker;
 
+  final TmtAppBarController _timerController = TmtAppBarController();
+
   @override
   void initState() {
     super.initState();
@@ -28,10 +31,12 @@ class _TmtTestPageState extends State<TmtTestPage> {
 
     _stateWorker = ever(_testController.testState, (state) {
       if (state == TmtTestStateFlow.TMT_A_COMPLETED) {
+        pauseTimer();
         if (mounted) {
           _showPartACompletedDialog();
         }
       } else if (state == TmtTestStateFlow.TEST_COMPLETED) {
+        pauseTimer();
         Get.offNamed(Routes.tmt_results);
       }
     });
@@ -58,7 +63,20 @@ class _TmtTestPageState extends State<TmtTestPage> {
   }
 
   String _getAppBarTitle() {
-    return _isTestTypeA() ? 'TMT Test - Part A' : 'TMT Test - Part B';
+    return _isTestTypeA() ? 'TMT A' : 'TMT B';
+  }
+
+
+  void pauseTimer() {
+    _timerController.pauseTimer?.call();
+  }
+
+  void resumeTimer() {
+    _timerController.resumeTimer?.call();
+  }
+
+  void resetTimer() {
+    _timerController.resetTimer?.call();
   }
 
   void _showPartACompletedDialog() {
@@ -73,6 +91,7 @@ class _TmtTestPageState extends State<TmtTestPage> {
           setState(() {
             _boardController = TmtGameBoardController(
                 key: ValueKey(_testController.testState.value.toString()));
+            resumeTimer();
           });
         },
       ),
@@ -83,8 +102,10 @@ class _TmtTestPageState extends State<TmtTestPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.testTMTBoardBackground,
-      appBar: AppBar(
-        title: Text(_getAppBarTitle()),
+      appBar: TmtCustomAppBar(
+        title: _getAppBarTitle(),
+        isTestTypeA: _isTestTypeA(),
+        controller: _timerController,
       ),
       body: _boardController ?? Container(),
     );
