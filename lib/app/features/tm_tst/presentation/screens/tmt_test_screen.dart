@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:msdtmt/app/features/tm_tst/presentation/components/tmt_game_board_controller.dart';
-import 'package:msdtmt/app/features/tm_tst/presentation/controllers/tmt_test_controller.dart';
+import 'package:msdtmt/app/features/tm_tst/presentation/controllers/tmt_test_flow_state_controller.dart';
 import '../../../../config/routes/app_pages.dart';
+import '../../../../config/routes/app_route_observer.dart';
 import '../../../../config/themes/AppColors.dart';
 import '../../../../config/translation/app_translations.dart';
 import '../../../../shared_components/custom_dialog.dart';
@@ -19,32 +20,63 @@ class TmtTestPage extends StatefulWidget {
 
 class _TmtTestPageState extends State<TmtTestPage> {
   TmtGameBoardController? _boardController;
-  late TmtTestController _testController;
+  late TmtTestFlowStateController _testTmtFlowStateController;
   Worker? _stateWorker;
+  Worker? _routeObserverWorker;
 
   final TmtAppBarController _timerController = TmtAppBarController();
 
   @override
   void initState() {
     super.initState();
-    _testController = Get.find<TmtTestController>();
+    _testTmtFlowStateController = Get.find<TmtTestFlowStateController>();
+    _tmtTestFlowStateObserver();
+    _tmtTestRouteChangeObserver();
+  }
 
-    _stateWorker = ever(_testController.testState, (state) {
+  void _tmtTestFlowStateObserver() {
+    _stateWorker = ever(_testTmtFlowStateController.testState, (state) {
       if (state == TmtTestStateFlow.TMT_A_COMPLETED) {
-        pauseTimer();
+        _pauseTimer();
         if (mounted) {
           _showPartACompletedDialog();
         }
       } else if (state == TmtTestStateFlow.TEST_COMPLETED) {
-        pauseTimer();
+        _pauseTimer();
         Get.offNamed(Routes.tmt_results);
       }
+    });
+  }
+
+  void _tmtTestRouteChangeObserver() {
+    _routeObserverWorker = ever(appRouteObserver.currentRouteName, (routeName) {
+      if (routeName == Routes.tmt_test) {
+        final currentTestState = _testTmtFlowStateController.testState.value;
+        if (currentTestState == TmtTestStateFlow.TMT_A_IN_PROGRESS ||
+            currentTestState == TmtTestStateFlow.READY) {
+          _resetAllState();
+        } else if (currentTestState == TmtTestStateFlow.TMT_B_IN_PROGRESS) {
+          //TODO implment Memento pattern to restore state
+        }
+      } else {
+        _pauseTimer();
+      }
+    });
+  }
+
+  void _resetAllState() {
+    _testTmtFlowStateController.resetStatusTmtA();
+    setState(() {
+
+      _boardController = TmtGameBoardController(key: UniqueKey());
+      _resetTimer();
     });
   }
 
   @override
   void dispose() {
     _stateWorker?.dispose();
+    _routeObserverWorker?.dispose();
     super.dispose();
   }
 
@@ -52,13 +84,13 @@ class _TmtTestPageState extends State<TmtTestPage> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     _boardController = TmtGameBoardController(
-        key: ValueKey(_testController.testState.value.toString()));
+        key:  UniqueKey());
   }
 
   bool _isTestTypeA() {
-    bool isA =
-        _testController.testState.value == TmtTestStateFlow.TMT_A_IN_PROGRESS ||
-            _testController.testState.value == TmtTestStateFlow.READY;
+    bool isA = _testTmtFlowStateController.testState.value ==
+            TmtTestStateFlow.TMT_A_IN_PROGRESS ||
+        _testTmtFlowStateController.testState.value == TmtTestStateFlow.READY;
     return isA;
   }
 
@@ -66,16 +98,15 @@ class _TmtTestPageState extends State<TmtTestPage> {
     return _isTestTypeA() ? 'TMT A' : 'TMT B';
   }
 
-
-  void pauseTimer() {
+  void _pauseTimer() {
     _timerController.pauseTimer?.call();
   }
 
-  void resumeTimer() {
+  void _resumeTimer() {
     _timerController.resumeTimer?.call();
   }
 
-  void resetTimer() {
+  void _resetTimer() {
     _timerController.resetTimer?.call();
   }
 
@@ -90,8 +121,8 @@ class _TmtTestPageState extends State<TmtTestPage> {
         onPrimaryPressed: () {
           setState(() {
             _boardController = TmtGameBoardController(
-                key: ValueKey(_testController.testState.value.toString()));
-            resumeTimer();
+                key:  UniqueKey());
+            _resumeTimer();
           });
         },
       ),
