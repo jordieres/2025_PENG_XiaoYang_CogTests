@@ -29,6 +29,7 @@ class TmtTestFlowStateController extends GetxController {
         testState.value = TmtTestStateFlow.TMT_A_IN_PROGRESS;
         break;
       case TmtTestStateFlow.TMT_A_COMPLETED:
+      case TmtTestStateFlow.TMT_B_IN_PROGRESS:
         _metricsController.onTestStart(TmtTestStateFlow.TMT_B_IN_PROGRESS);
         testState.value = TmtTestStateFlow.TMT_B_IN_PROGRESS;
         break;
