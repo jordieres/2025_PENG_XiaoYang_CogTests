@@ -39,7 +39,7 @@ class AppTextStyle {
   );
 
   static var customDialogOutlinedButton = TextStyle(
-    color: AppColors.customDialogButtonColor,
+    color: AppColors.customButtonColor,
     fontSize: 14.0,
     fontWeight: FontWeight.normal,
     fontStyle: FontStyle.normal,
