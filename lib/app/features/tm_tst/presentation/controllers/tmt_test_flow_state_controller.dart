@@ -14,6 +14,7 @@ enum TmtTestStateFlow {
 class TmtTestFlowStateController extends GetxController {
   // Shared metrics controller
   TmtMetricsController _metricsController = TmtMetricsController();
+  late TmtMetricsController _metricsControllerTmtA;
 
   // Observable test state
   final Rx<TmtTestStateFlow> testState = TmtTestStateFlow.READY.obs;
@@ -42,6 +43,7 @@ class TmtTestFlowStateController extends GetxController {
         _metricsController.onTestEnd(
             lastDragOffset, TmtTestStateFlow.TMT_A_COMPLETED);
         testState.value = TmtTestStateFlow.TMT_A_COMPLETED;
+        _metricsControllerTmtA = _metricsController.copy();
         break;
       case TmtTestStateFlow.TMT_B_IN_PROGRESS:
         _metricsController.onTestEnd(
@@ -56,5 +58,16 @@ class TmtTestFlowStateController extends GetxController {
   void resetStatusTmtA() {
     _metricsController = TmtMetricsController();
     testState.value = TmtTestStateFlow.TMT_A_IN_PROGRESS;
+  }
+
+  void resetStatusTmtB() {
+    _metricsController = _metricsControllerTmtA.copy();
+    testState.value = TmtTestStateFlow.TMT_B_IN_PROGRESS;
+  }
+
+  int getTmtATimeInSec() {
+    return _metricsControllerTmtA.testTimeMetrics
+        .calculateTimeCompleteTmtA()
+        .inSeconds;
   }
 }

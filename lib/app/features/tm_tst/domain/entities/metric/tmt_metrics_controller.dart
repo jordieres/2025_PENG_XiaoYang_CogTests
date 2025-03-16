@@ -25,6 +25,25 @@ class TmtMetricsController {
   TmtBMetrics bMetrics = TmtBMetrics();
   TmtPressureSizeMetric pressureSizeMetric = TmtPressureSizeMetric();
 
+
+
+  TmtMetricsController copy() {
+    TmtMetricsController controller = TmtMetricsController();
+    controller.isFinishTest = isFinishTest;
+    controller.numberError = numberError;
+    controller.circles = List<TmtGameCircle>.from(circles);
+    controller.pressureList = List<double>.from(pressureList);
+    controller.sizeList = List<double>.from(sizeList);
+    controller.testLiftMetric = testLiftMetric.copy();
+    controller.testPauseMetric = testPauseMetric.copy();
+    controller.testTimeMetrics = testTimeMetrics.copy();
+    controller.circleMetrics = circleMetrics.copy();
+    controller.bMetrics = bMetrics.copy();
+    controller.pressureSizeMetric = pressureSizeMetric.copy();
+    return controller;
+  }
+
+
   void onTestStart(TmtTestStateFlow tmtTestState) {
     switch (tmtTestState) {
       case TmtTestStateFlow.READY:

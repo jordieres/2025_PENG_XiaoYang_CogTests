@@ -12,6 +12,7 @@ class TmtAppBarController {
   void Function()? pauseTimer;
   void Function()? resumeTimer;
   void Function()? stopTimer;
+  void Function(int initialSeconds)? setStartTime;
 }
 
 class TmtCustomAppBar extends StatefulWidget implements PreferredSizeWidget {
@@ -37,6 +38,7 @@ class _TmtCustomAppBarState extends State<TmtCustomAppBar> {
   Timer? _timer;
   int _elapsedSeconds = 0;
   bool _isPaused = false;
+  int _initialSeconds = 0;
 
   @override
   void initState() {
@@ -48,6 +50,7 @@ class _TmtCustomAppBarState extends State<TmtCustomAppBar> {
       widget.controller!.pauseTimer = pauseTimer;
       widget.controller!.resumeTimer = resumeTimer;
       widget.controller!.stopTimer = stopTimer;
+      widget.controller!.setStartTime = setStartTime;
     }
   }
 
@@ -75,7 +78,7 @@ class _TmtCustomAppBarState extends State<TmtCustomAppBar> {
 
   void resetTimer() {
     setState(() {
-      _elapsedSeconds = 0;
+      _elapsedSeconds = _initialSeconds;
       _isPaused = false;
     });
   }
@@ -96,6 +99,14 @@ class _TmtCustomAppBarState extends State<TmtCustomAppBar> {
     _timer?.cancel();
     setState(() {
       _isPaused = true;
+    });
+  }
+
+  void setStartTime(int initialSeconds) {
+    setState(() {
+      _initialSeconds = initialSeconds;
+      _elapsedSeconds = initialSeconds;
+      _isPaused = false;
     });
   }
 
