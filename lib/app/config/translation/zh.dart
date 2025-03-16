@@ -18,6 +18,12 @@ class ChineseMessages extends BaseMessages {
 
   @override
   String get tmtGameTmtScreenAppBarTime => "时间: ";
+
+  @override
+  String get tmtGameTmtHelpTmtATitle => "TMT A 帮助";
+
+  @override
+  String get tmtGameTmtHelpTmtBTitle => "TMT B 帮助";
 }
 
 final zh = ChineseMessages();

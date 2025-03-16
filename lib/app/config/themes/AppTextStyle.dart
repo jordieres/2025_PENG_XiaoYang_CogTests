@@ -4,6 +4,13 @@ import 'AppColors.dart';
 
 class AppTextStyle {
 
+  static var appBarTitle = TextStyle(
+    color: AppColors.mainBlackText,
+    fontSize: DeviceHelper.isTablet ? 16.0 : 14.0,
+    fontWeight: FontWeight.bold,
+    fontStyle: FontStyle.normal,
+  );
+
   static var tmtGameCircleText = TextStyle(
     color: AppColors.mainBlackText,
     fontSize: DeviceHelper.isTablet ? 30 : 22,

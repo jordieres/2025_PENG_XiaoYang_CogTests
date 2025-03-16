@@ -5,7 +5,11 @@ import 'package:get/get.dart';
 import 'package:msdtmt/app/config/translation/app_translations.dart';
 import '../../../../config/routes/app_pages.dart';
 import '../../../../config/themes/AppColors.dart';
+import '../../../../config/themes/AppTextStyle.dart';
 import '../../../../constans/app_constants.dart';
+import '../../../../shared_components/custom_app_bar.dart';
+import '../../../../utils/mixins/app_mixins.dart';
+import '../controllers/tmt_test_flow_state_controller.dart';
 
 class TmtAppBarController {
   void Function()? resetTimer;
@@ -34,11 +38,14 @@ class TmtCustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
-class _TmtCustomAppBarState extends State<TmtCustomAppBar> {
+class _TmtCustomAppBarState extends State<TmtCustomAppBar>
+    with NavigationMixin {
   Timer? _timer;
   int _elapsedSeconds = 0;
   bool _isPaused = false;
   int _initialSeconds = 0;
+
+  late TmtTestFlowStateController _testTmtFlowStateController;
 
   @override
   void initState() {
@@ -52,6 +59,8 @@ class _TmtCustomAppBarState extends State<TmtCustomAppBar> {
       widget.controller!.stopTimer = stopTimer;
       widget.controller!.setStartTime = setStartTime;
     }
+
+    _testTmtFlowStateController = Get.find<TmtTestFlowStateController>();
   }
 
   @override
@@ -112,32 +121,28 @@ class _TmtCustomAppBarState extends State<TmtCustomAppBar> {
 
   @override
   Widget build(BuildContext context) {
+
+    List<Widget> defaultActions = [
+      const SizedBox(width: 80),
+      IconButton(
+        icon: SvgPicture.asset(
+          ImageVectorPath.help,
+          width: 30,
+          height: 30,
+        ),
+        onPressed: () {
+          tmtTestToHelp(_testTmtFlowStateController.testState.value);
+        },
+      ),
+      const SizedBox(width: 8),
+    ];
+
     return Stack(
       children: [
-        AppBar(
+        CustomAppBar(
+          title: widget.title,
           centerTitle: false,
-          leadingWidth: 30,
-          title: Padding(
-            padding: const EdgeInsets.only(left: 0),
-            child: Text(
-              widget.title,
-              style: const TextStyle(fontSize: 18),
-            ),
-          ),
-          actions: [
-            const SizedBox(width: 80),
-            IconButton(
-              icon: SvgPicture.asset(
-                ImageVectorPath.help,
-                width: 30,
-                height: 30,
-              ),
-              onPressed: () {
-                Get.toNamed(Routes.tmt_help);
-              },
-            ),
-            const SizedBox(width: 8),
-          ],
+          actions:  defaultActions,
         ),
         Positioned.fill(
           child: SafeArea(
@@ -147,11 +152,7 @@ class _TmtCustomAppBarState extends State<TmtCustomAppBar> {
                 children: [
                   Text(
                     TMTGame.tmtGameTmtScreenAppBarTime.tr,
-                    style: TextStyle(
-                      color: AppColors.mainBlackText,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
+                    style: AppTextStyle.appBarTitle,
                   ),
                   const SizedBox(width: 8),
                   Container(
@@ -162,11 +163,7 @@ class _TmtCustomAppBarState extends State<TmtCustomAppBar> {
                     ),
                     child: Text(
                       _formatTime(_elapsedSeconds),
-                      style: const TextStyle(
-                        color: AppColors.mainBlackText,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
+                      style: AppTextStyle.appBarTitle
                     ),
                   ),
                 ],
