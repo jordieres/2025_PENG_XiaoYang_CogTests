@@ -24,6 +24,12 @@ class ChineseMessages extends BaseMessages {
 
   @override
   String get tmtGameTmtHelpTmtBTitle => "TMT B 帮助";
+
+  @override
+  String get tmtGameTmtHelpTmtPrimaryButtonText => "我想要练习";
+
+  @override
+  String get tmtGameTmtHelpTmtSecondaryButtonText => "开始正式的测试";
 }
 
 final zh = ChineseMessages();
