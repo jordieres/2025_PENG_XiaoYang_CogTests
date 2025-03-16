@@ -11,7 +11,7 @@ enum TmtTestStateFlow {
   TEST_COMPLETED
 }
 
-class TmtTestController extends GetxController {
+class TmtTestFlowStateController extends GetxController {
   // Shared metrics controller
   TmtMetricsController _metricsController = TmtMetricsController();
 
@@ -23,6 +23,7 @@ class TmtTestController extends GetxController {
   void startTest() {
     switch (testState.value) {
       case TmtTestStateFlow.READY:
+      case TmtTestStateFlow.TMT_A_IN_PROGRESS:
         _metricsController.onTestStart(TmtTestStateFlow.TMT_A_IN_PROGRESS);
         testState.value = TmtTestStateFlow.TMT_A_IN_PROGRESS;
         break;
@@ -52,4 +53,8 @@ class TmtTestController extends GetxController {
     }
   }
 
+  void resetStatusTmtA() {
+    _metricsController = TmtMetricsController();
+    testState.value = TmtTestStateFlow.TMT_A_IN_PROGRESS;
+  }
 }
