@@ -54,9 +54,9 @@ class _TmtTestPageState extends State<TmtTestPage> {
         final currentTestState = _testTmtFlowStateController.testState.value;
         if (currentTestState == TmtTestStateFlow.TMT_A_IN_PROGRESS ||
             currentTestState == TmtTestStateFlow.READY) {
-          _resetAllState();
+          _resetTmtA();
         } else if (currentTestState == TmtTestStateFlow.TMT_B_IN_PROGRESS) {
-          //TODO implment Memento pattern to restore state
+          _resetTmtB();
         }
       } else {
         _pauseTimer();
@@ -64,12 +64,19 @@ class _TmtTestPageState extends State<TmtTestPage> {
     });
   }
 
-  void _resetAllState() {
+  void _resetTmtA() {
     _testTmtFlowStateController.resetStatusTmtA();
     setState(() {
-
       _boardController = TmtGameBoardController(key: UniqueKey());
       _resetTimer();
+    });
+  }
+
+  void _resetTmtB() {
+    _testTmtFlowStateController.resetStatusTmtB();
+    setState(() {
+      _boardController = TmtGameBoardController(key: UniqueKey());
+      _setStartTime(_testTmtFlowStateController.getTmtATimeInSec());
     });
   }
 
@@ -83,8 +90,7 @@ class _TmtTestPageState extends State<TmtTestPage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _boardController = TmtGameBoardController(
-        key:  UniqueKey());
+    _boardController = TmtGameBoardController(key: UniqueKey());
   }
 
   bool _isTestTypeA() {
@@ -110,6 +116,10 @@ class _TmtTestPageState extends State<TmtTestPage> {
     _timerController.resetTimer?.call();
   }
 
+  void _setStartTime(int initialSeconds) {
+    _timerController.setStartTime?.call(initialSeconds);
+  }
+
   void _showPartACompletedDialog() {
     showDialog(
       context: context,
@@ -120,8 +130,7 @@ class _TmtTestPageState extends State<TmtTestPage> {
         primaryButtonText: TMTGame.tmtGamePartBCompletedConfirmationButton.tr,
         onPrimaryPressed: () {
           setState(() {
-            _boardController = TmtGameBoardController(
-                key:  UniqueKey());
+            _boardController = TmtGameBoardController(key: UniqueKey());
             _resumeTimer();
           });
         },
