@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../../config/themes/AppTextStyle.dart';
 import '../../../../config/translation/app_translations.dart';
 import '../../../../shared_components/custom_app_bar.dart';
 import '../../../../shared_components/custom_primary_button.dart';
@@ -47,16 +46,14 @@ class TmtTestHelpPage extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   CustomPrimaryButton(
-                    text: "Quiero practicar",
-                    onPressed: () {
-                      // Handle practice button press
-                    },
+                    text: TMTGame.tmtGameTmtHelpTmtPrimaryButtonText.tr,
+                    onPressed: () {},
                   ),
                   SizedBox(height: DeviceHelper.isTablet ? 28 : 22),
                   CustomSecondaryButton(
-                    text: "Iniciar test formal",
+                    text: TMTGame.tmtGameTmtHelpTmtSecondaryButtonText.tr,
                     onPressed: () {
-                      // Handle start formal test button press
+                      Get.back();
                     },
                   ),
                 ],

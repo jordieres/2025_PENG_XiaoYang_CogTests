@@ -25,7 +25,8 @@ class CustomPrimaryButton extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
-          minimumSize: Size.fromHeight(DeviceHelper.isTablet ? 52 : 42),
+          //minimumSize: Size.fromHeight(DeviceHelper.isTablet ? 52 : 42),
+          padding: const EdgeInsets.symmetric(vertical: 12),
         ),
         child: Text(
           text,

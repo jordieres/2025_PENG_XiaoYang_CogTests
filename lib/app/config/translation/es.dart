@@ -12,10 +12,12 @@ class SpanishMessages extends BaseMessages {
   String get tmtGamePartACompletedTitle => "TMT Parte A Completada";
 
   @override
-  String get tmtGamePartACompletedBody => "Has completado con éxito la Parte A de TMT. ¿Listo para comenzar la Parte B de TMT?";
+  String get tmtGamePartACompletedBody =>
+      "Has completado con éxito la Parte A de TMT. ¿Listo para comenzar la Parte B de TMT?";
 
   @override
-  String get tmtGamePartBCompletedConfirmationButton => "Sí, Comenzar TMT Parte B";
+  String get tmtGamePartBCompletedConfirmationButton =>
+      "Sí, Comenzar TMT Parte B";
 
   @override
   String get tmtGameTmtScreenAppBarTime => "Tiempo: ";
@@ -25,6 +27,12 @@ class SpanishMessages extends BaseMessages {
 
   @override
   String get tmtGameTmtHelpTmtBTitle => "TMT B Ayuda";
+
+  @override
+  String get tmtGameTmtHelpTmtPrimaryButtonText => "Quiero practicar";
+
+  @override
+  String get tmtGameTmtHelpTmtSecondaryButtonText => "Inicar Test Formal";
 }
 
 final es = SpanishMessages();

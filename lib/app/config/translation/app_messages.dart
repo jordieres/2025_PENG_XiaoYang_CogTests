@@ -10,6 +10,8 @@ class TMTGame {
   static String tmtGameTmtScreenAppBarTime = 'tmt_game_tmt_screen_app_bar_time';
   static String tmtGameTmtHelpTmtATitle = 'tmt_game_tmt_help_tmt_a_title';
   static String tmtGameTmtHelpTmtBTitle = 'tmt_game_tmt_help_tmt_b_title';
+  static String tmtGameTmtHelpTmtPrimaryButtonText = 'tmt_game_tmt_help_tmt_primary_button_text';
+  static String tmtGameTmtHelpTmtSecondaryButtonText = 'tmt_game_tmt_help_tmt_secondary_button_text';
 }
 
 abstract class BaseMessages {
@@ -27,6 +29,8 @@ abstract class BaseMessages {
 
   String get tmtGameTmtHelpTmtATitle;
   String get tmtGameTmtHelpTmtBTitle;
+  String get tmtGameTmtHelpTmtPrimaryButtonText;
+  String get tmtGameTmtHelpTmtSecondaryButtonText;
 
 
   Map<String, String> get messages => {
@@ -39,5 +43,7 @@ abstract class BaseMessages {
         TMTGame.tmtGameTmtScreenAppBarTime: tmtGameTmtScreenAppBarTime,
         TMTGame.tmtGameTmtHelpTmtATitle: tmtGameTmtHelpTmtATitle,
         TMTGame.tmtGameTmtHelpTmtBTitle: tmtGameTmtHelpTmtBTitle,
+        TMTGame.tmtGameTmtHelpTmtPrimaryButtonText: tmtGameTmtHelpTmtPrimaryButtonText,
+        TMTGame.tmtGameTmtHelpTmtSecondaryButtonText: tmtGameTmtHelpTmtSecondaryButtonText,
       };
 }

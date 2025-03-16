@@ -27,6 +27,11 @@ class EnglishMessages extends BaseMessages {
   @override
   String get tmtGameTmtHelpTmtBTitle => "TMT B Help";
 
+  @override
+  String get tmtGameTmtHelpTmtPrimaryButtonText => "I want to practice";
+
+  @override
+  String get tmtGameTmtHelpTmtSecondaryButtonText => "Start Formal Test";
 }
 
 final en = EnglishMessages();
