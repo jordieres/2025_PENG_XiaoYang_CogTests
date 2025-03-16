@@ -19,6 +19,12 @@ class SpanishMessages extends BaseMessages {
 
   @override
   String get tmtGameTmtScreenAppBarTime => "Tiempo: ";
+
+  @override
+  String get tmtGameTmtHelpTmtATitle => "TMT A Ayuda";
+
+  @override
+  String get tmtGameTmtHelpTmtBTitle => "TMT B Ayuda";
 }
 
 final es = SpanishMessages();
