@@ -140,7 +140,7 @@ class CustomDialog extends StatelessWidget {
           Navigator.of(context).pop();
         },
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.customDialogButtonColor,
+          backgroundColor: AppColors.customButtonColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.0),
           ),
@@ -172,7 +172,7 @@ class CustomDialog extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8.0),
         ),
-        side: BorderSide(color: AppColors.customDialogButtonColor),
+        side: BorderSide(color: AppColors.customButtonColor),
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 12.0),
