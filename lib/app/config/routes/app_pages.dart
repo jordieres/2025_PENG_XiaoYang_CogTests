@@ -4,6 +4,7 @@ import 'package:msdtmt/app/features/tm_tst/presentation/bindings/tmt_test_bindin
 import 'package:msdtmt/app/features/tm_tst/presentation/screens/tmt_test_screen.dart';
 
 import '../../features/tm_tst/presentation/screens/tmt_test_help.dart';
+import '../../features/tm_tst/presentation/screens/tmt_test_practice.dart';
 import '../../features/tm_tst/presentation/screens/tmt_test_result_screen.dart';
 
 part 'app_routes.dart';
@@ -31,5 +32,6 @@ class AppPages {
       name: _Paths.tmt_help,
       page: () => const TmtTestHelpPage(),
     ),
+    GetPage(name: _Paths.tmt_practice, page: () => const TmtTestPracticePage()),
   ];
 }
