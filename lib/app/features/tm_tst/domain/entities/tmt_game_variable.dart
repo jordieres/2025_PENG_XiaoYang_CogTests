@@ -63,7 +63,7 @@ class TmtGameVariables {
       areaPercentage = _CIRCLE_IN_SCREEN_AREA_PERCENTAGE_MOBILE;
     }
     double totalCircleArea = screenArea * areaPercentage;
-    double areaPerCircle = totalCircleArea / CIRCLE_NUMBER;
+    double areaPerCircle = totalCircleArea / DEFAULT_CIRCLE_NUMBER;
     double calculatedRadius = sqrt(areaPerCircle / pi);
 
     circleRadius = calculatedRadius;
