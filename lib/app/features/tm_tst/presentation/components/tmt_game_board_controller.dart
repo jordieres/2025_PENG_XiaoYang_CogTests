@@ -10,7 +10,7 @@ import '../../domain/entities/metric/tmt_metrics_controller.dart';
 import '../../domain/entities/tmt_game_circle.dart';
 import '../../domain/usecases/tmt_game_calculate.dart';
 import '../../domain/entities/tmt_game_variable.dart';
-import '../controllers/tmt_test_controller.dart';
+import '../controllers/tmt_test_flow_state_controller.dart';
 
 /// This class manager logic of tmt test
 class TmtGameBoardController extends StatefulWidget {
@@ -23,12 +23,10 @@ class TmtGameBoardController extends StatefulWidget {
     _state.regenerateCircles();
   }
 
-  // Add method to toggle cheat mode
   void toggleCheatMode() {
     _state.toggleCheatMode();
   }
 
-  // Add getter to check if cheat mode is enabled
   bool get isCheatModeEnabled => _state.isCheatModeEnabled;
 
   @override
@@ -36,7 +34,7 @@ class TmtGameBoardController extends StatefulWidget {
 }
 
 class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
-  final TmtTestController _testController = Get.find<TmtTestController>();
+  final TmtTestFlowStateController _testController = Get.find<TmtTestFlowStateController>();
   late TmtMetricsController _metricsController;
 
   late TmtGameCircleTextType _circleTextType;

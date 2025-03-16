@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:msdtmt/app/features/tm_tst/presentation/controllers/tmt_test_controller.dart';
+import 'package:msdtmt/app/features/tm_tst/presentation/controllers/tmt_test_flow_state_controller.dart';
 import '../../../../config/routes/app_pages.dart';
 
 class TmtResultsScreen extends StatelessWidget {
@@ -8,7 +8,7 @@ class TmtResultsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TmtTestController testController = Get.find<TmtTestController>();
+    final TmtTestFlowStateController testController = Get.find<TmtTestFlowStateController>();
     final metrics = testController.metricsController;
 
     final partADuration = metrics.testTimeMetrics.calculateTimeCompleteTmtA();

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:msdtmt/app/config/translation/app_translations.dart';
+import '../../../../config/routes/app_pages.dart';
 import '../../../../config/themes/AppColors.dart';
 import '../../../../constans/app_constants.dart';
 
@@ -120,7 +121,9 @@ class _TmtCustomAppBarState extends State<TmtCustomAppBar> {
                 width: 30,
                 height: 30,
               ),
-              onPressed: () {},
+              onPressed: () {
+                Get.toNamed(Routes.tmt_help);
+              },
             ),
             const SizedBox(width: 8),
           ],
