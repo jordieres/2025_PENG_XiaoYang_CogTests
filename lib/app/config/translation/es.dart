@@ -33,6 +33,35 @@ class SpanishMessages extends BaseMessages {
 
   @override
   String get tmtGameTmtHelpTmtSecondaryButtonText => "Inicar Test Formal";
+
+  //--------------------------------------------TMT Practice Text------------------------------------------------------
+  @override
+  String get tmtGamePracticeTmtAThenBDialogTitle =>
+      "¿Repetir esta práctica TMT A o avanzar al siguiente desafío?";
+
+  @override
+  String get tmtGamePracticeTmtAThenBDialogCancelButtonText => "Avanzar";
+
+  @override
+  String get tmtGamePracticeTmtAThenBDialogPrimaryButtonText => "Repetir";
+
+  @override
+  String get tmtGamePracticeOnlyTmtAOrTmtBDialogTitle =>
+      "¿Estás listo para empezar el test TMT?";
+
+  @override
+  String get tmtGamePracticeOnlyTmtAOrTmtBDialogCancelButtonText =>
+      "Sí, empezar";
+
+  @override
+  String get tmtGamePracticeOnlyTmtAOrTmtBDialogPrimaryButtonText =>
+      "No, repetir";
+
+  @override
+  String get tmtGamePracticeTmtAPageTitle => "Práctica TMT A";
+
+  @override
+  String get tmtGamePracticeTmtBPageTitle => "Práctica TMT B";
 }
 
 final es = SpanishMessages();

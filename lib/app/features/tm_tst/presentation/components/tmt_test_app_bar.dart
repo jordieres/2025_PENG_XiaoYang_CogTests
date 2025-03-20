@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:msdtmt/app/config/translation/app_translations.dart';
-import '../../../../config/routes/app_pages.dart';
 import '../../../../config/themes/AppColors.dart';
 import '../../../../config/themes/AppTextStyle.dart';
 import '../../../../constans/app_constants.dart';
 import '../../../../shared_components/custom_app_bar.dart';
 import '../../../../utils/mixins/app_mixins.dart';
-import '../controllers/tmt_test_flow_state_controller.dart';
+import '../screens/tmt_test_help.dart';
 
 class TmtAppBarController {
   void Function()? resetTimer;
@@ -45,8 +44,6 @@ class _TmtCustomAppBarState extends State<TmtCustomAppBar>
   bool _isPaused = false;
   int _initialSeconds = 0;
 
-  late TmtTestFlowStateController _testTmtFlowStateController;
-
   @override
   void initState() {
     super.initState();
@@ -59,8 +56,6 @@ class _TmtCustomAppBarState extends State<TmtCustomAppBar>
       widget.controller!.stopTimer = stopTimer;
       widget.controller!.setStartTime = setStartTime;
     }
-
-    _testTmtFlowStateController = Get.find<TmtTestFlowStateController>();
   }
 
   @override
@@ -121,7 +116,6 @@ class _TmtCustomAppBarState extends State<TmtCustomAppBar>
 
   @override
   Widget build(BuildContext context) {
-
     List<Widget> defaultActions = [
       const SizedBox(width: 80),
       IconButton(
@@ -131,7 +125,7 @@ class _TmtCustomAppBarState extends State<TmtCustomAppBar>
           height: 30,
         ),
         onPressed: () {
-          tmtTestToHelp(_testTmtFlowStateController.testState.value);
+          _navigateToHelpScreen();
         },
       ),
       const SizedBox(width: 8),
@@ -142,7 +136,7 @@ class _TmtCustomAppBarState extends State<TmtCustomAppBar>
         CustomAppBar(
           title: widget.title,
           centerTitle: false,
-          actions:  defaultActions,
+          actions: defaultActions,
         ),
         Positioned.fill(
           child: SafeArea(
@@ -161,10 +155,8 @@ class _TmtCustomAppBarState extends State<TmtCustomAppBar>
                       color: AppColors.secondaryBlue,
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: Text(
-                      _formatTime(_elapsedSeconds),
-                      style: AppTextStyle.appBarTitle
-                    ),
+                    child: Text(_formatTime(_elapsedSeconds),
+                        style: AppTextStyle.appBarTitle),
                   ),
                 ],
               ),
@@ -173,5 +165,10 @@ class _TmtCustomAppBarState extends State<TmtCustomAppBar>
         ),
       ],
     );
+  }
+
+  void _navigateToHelpScreen() {
+    final helpMode = widget.isTestTypeA ? TmtHelpMode.TMT_TEST_A : TmtHelpMode.TMT_TEST_B;
+    tmtTestToHelp(helpMode);
   }
 }

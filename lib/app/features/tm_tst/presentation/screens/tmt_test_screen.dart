@@ -8,6 +8,7 @@ import '../../../../config/themes/AppColors.dart';
 import '../../../../config/translation/app_translations.dart';
 import '../../../../shared_components/custom_dialog.dart';
 import '../components/tmt_test_app_bar.dart';
+import '../controllers/base_tmt_test_flow_contoller.dart';
 
 class TmtTestPage extends StatefulWidget {
   const TmtTestPage({super.key});
@@ -36,6 +37,8 @@ class _TmtTestPageState extends State<TmtTestPage> {
 
   void _tmtTestFlowStateObserver() {
     _stateWorker = ever(_testTmtFlowStateController.testState, (state) {
+      if (!mounted) return;
+
       if (state == TmtTestStateFlow.TMT_A_COMPLETED) {
         _pauseTimer();
         if (mounted) {
@@ -67,7 +70,8 @@ class _TmtTestPageState extends State<TmtTestPage> {
   void _resetTmtA() {
     _testTmtFlowStateController.resetStatusTmtA();
     setState(() {
-      _boardController = TmtGameBoardController(key: UniqueKey());
+      _boardController = TmtGameBoardController(
+          key: UniqueKey(), flowController: _testTmtFlowStateController);
       _resetTimer();
     });
   }
@@ -75,7 +79,8 @@ class _TmtTestPageState extends State<TmtTestPage> {
   void _resetTmtB() {
     _testTmtFlowStateController.resetStatusTmtB();
     setState(() {
-      _boardController = TmtGameBoardController(key: UniqueKey());
+      _boardController = TmtGameBoardController(
+          key: UniqueKey(), flowController: _testTmtFlowStateController);
       _setStartTime(_testTmtFlowStateController.getTmtATimeInSec());
     });
   }
@@ -90,7 +95,8 @@ class _TmtTestPageState extends State<TmtTestPage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _boardController = TmtGameBoardController(key: UniqueKey());
+    _boardController = TmtGameBoardController(
+        key: UniqueKey(), flowController: _testTmtFlowStateController);
   }
 
   bool _isTestTypeA() {
@@ -129,8 +135,10 @@ class _TmtTestPageState extends State<TmtTestPage> {
         title: TMTGame.tmtGamePartACompletedBody.tr,
         primaryButtonText: TMTGame.tmtGamePartBCompletedConfirmationButton.tr,
         onPrimaryPressed: () {
+          Get.back();
           setState(() {
-            _boardController = TmtGameBoardController(key: UniqueKey());
+            _boardController = TmtGameBoardController(
+                key: UniqueKey(), flowController: _testTmtFlowStateController);
             _resumeTimer();
           });
         },

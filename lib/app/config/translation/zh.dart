@@ -30,6 +30,31 @@ class ChineseMessages extends BaseMessages {
 
   @override
   String get tmtGameTmtHelpTmtSecondaryButtonText => "开始正式的测试";
+
+  //--------------------------------------------TMT Practice Text------------------------------------------------------
+  @override
+  String get tmtGamePracticeTmtAThenBDialogTitle => "重复这个TMT A练习还是继续下一个挑战？";
+
+  @override
+  String get tmtGamePracticeTmtAThenBDialogCancelButtonText => "继续";
+
+  @override
+  String get tmtGamePracticeTmtAThenBDialogPrimaryButtonText => "重复";
+
+  @override
+  String get tmtGamePracticeOnlyTmtAOrTmtBDialogTitle => "你准备好开始TMT测试了吗？";
+
+  @override
+  String get tmtGamePracticeOnlyTmtAOrTmtBDialogCancelButtonText => "是的，开始";
+
+  @override
+  String get tmtGamePracticeOnlyTmtAOrTmtBDialogPrimaryButtonText => "不，我需要重复";
+
+  @override
+  String get tmtGamePracticeTmtAPageTitle => "TMT A 练习";
+
+  @override
+  String get tmtGamePracticeTmtBPageTitle => "TMT B 练习";
 }
 
 final zh = ChineseMessages();

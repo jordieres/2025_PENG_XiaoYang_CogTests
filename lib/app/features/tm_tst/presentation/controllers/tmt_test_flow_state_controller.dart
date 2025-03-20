@@ -1,69 +1,40 @@
 import 'dart:ui';
 
-import 'package:get/get.dart';
 import 'package:msdtmt/app/features/tm_tst/domain/entities/metric/tmt_metrics_controller.dart';
 
-enum TmtTestStateFlow {
-  READY,
-  TMT_A_IN_PROGRESS,
-  TMT_A_COMPLETED,
-  TMT_B_IN_PROGRESS,
-  TEST_COMPLETED
-}
+import 'base_tmt_test_flow_contoller.dart';
 
-class TmtTestFlowStateController extends GetxController {
-  // Shared metrics controller
-  TmtMetricsController _metricsController = TmtMetricsController();
+class TmtTestFlowStateController extends BaseTmtTestFlowController {
   late TmtMetricsController _metricsControllerTmtA;
 
-  // Observable test state
-  final Rx<TmtTestStateFlow> testState = TmtTestStateFlow.READY.obs;
+  @override
+  void handleTestStart(TmtTestStateFlow newState) {
+    metricsController.onTestStart(newState);
+  }
 
-  get metricsController => _metricsController;
+  @override
+  void handleTestEnd(Offset lastDragOffset, TmtTestStateFlow newState) {
+    metricsController.onTestEnd(lastDragOffset, newState);
 
-  void startTest() {
-    switch (testState.value) {
-      case TmtTestStateFlow.READY:
-      case TmtTestStateFlow.TMT_A_IN_PROGRESS:
-        _metricsController.onTestStart(TmtTestStateFlow.TMT_A_IN_PROGRESS);
-        testState.value = TmtTestStateFlow.TMT_A_IN_PROGRESS;
-        break;
-      case TmtTestStateFlow.TMT_A_COMPLETED:
-      case TmtTestStateFlow.TMT_B_IN_PROGRESS:
-        _metricsController.onTestStart(TmtTestStateFlow.TMT_B_IN_PROGRESS);
-        testState.value = TmtTestStateFlow.TMT_B_IN_PROGRESS;
-        break;
-      default:
-        break;
+    if (newState == TmtTestStateFlow.TMT_A_COMPLETED) {
+      _metricsControllerTmtA = metricsController.copy();
     }
   }
 
-  void onTestEnd(Offset lastDragOffset) {
-    switch (testState.value) {
-      case TmtTestStateFlow.TMT_A_IN_PROGRESS:
-        _metricsController.onTestEnd(
-            lastDragOffset, TmtTestStateFlow.TMT_A_COMPLETED);
-        testState.value = TmtTestStateFlow.TMT_A_COMPLETED;
-        _metricsControllerTmtA = _metricsController.copy();
-        break;
-      case TmtTestStateFlow.TMT_B_IN_PROGRESS:
-        _metricsController.onTestEnd(
-            lastDragOffset, TmtTestStateFlow.TEST_COMPLETED);
-        testState.value = TmtTestStateFlow.TEST_COMPLETED;
-        break;
-      default:
-        break;
-    }
+  @override
+  void onTmtACompleted() {
+    // This will be called when Part A is completed
+    // The dialog will be shown via the observer in the View
   }
 
-  void resetStatusTmtA() {
-    _metricsController = TmtMetricsController();
-    testState.value = TmtTestStateFlow.TMT_A_IN_PROGRESS;
+  @override
+  void handleResetTmtA() {
+    metricsController = TmtMetricsController();
   }
 
-  void resetStatusTmtB() {
-    _metricsController = _metricsControllerTmtA.copy();
-    testState.value = TmtTestStateFlow.TMT_B_IN_PROGRESS;
+  @override
+  void handleResetTmtB() {
+    metricsController = _metricsControllerTmtA.copy();
   }
 
   int getTmtATimeInSec() {
