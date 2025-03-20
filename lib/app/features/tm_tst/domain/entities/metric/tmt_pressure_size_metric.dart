@@ -1,10 +1,18 @@
 class TmtPressureSizeMetric {
-
-  static const noHavePressureCharacteristic = 1; // if device don't have pressure characteristic
-  static const noHaveSizeCharacteristic = 0; // if device don't have size characteristic
+  static const noHavePressureCharacteristic =
+      1; // if device don't have pressure characteristic
+  static const noHaveSizeCharacteristic =
+      0; // if device don't have size characteristic
 
   final List<double> _pressureList = [];
   final List<double> _sizeList = [];
+
+  TmtPressureSizeMetric copy() {
+    TmtPressureSizeMetric metric = TmtPressureSizeMetric();
+    metric._pressureList.addAll(_pressureList);
+    metric._sizeList.addAll(_sizeList);
+    return metric;
+  }
 
   void addPressureValue(double pressure) {
     if (pressure > 0) {

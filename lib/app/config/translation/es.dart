@@ -7,6 +7,61 @@ class SpanishMessages extends BaseMessages {
 
   @override
   String get tmtGameCircleEnd => "Fin";
+
+  @override
+  String get tmtGamePartACompletedTitle => "TMT Parte A Completada";
+
+  @override
+  String get tmtGamePartACompletedBody =>
+      "Has completado con éxito la Parte A de TMT. ¿Listo para comenzar la Parte B de TMT?";
+
+  @override
+  String get tmtGamePartBCompletedConfirmationButton =>
+      "Sí, Comenzar TMT Parte B";
+
+  @override
+  String get tmtGameTmtScreenAppBarTime => "Tiempo: ";
+
+  @override
+  String get tmtGameTmtHelpTmtATitle => "TMT A Ayuda";
+
+  @override
+  String get tmtGameTmtHelpTmtBTitle => "TMT B Ayuda";
+
+  @override
+  String get tmtGameTmtHelpTmtPrimaryButtonText => "Quiero practicar";
+
+  @override
+  String get tmtGameTmtHelpTmtSecondaryButtonText => "Inicar Test Formal";
+
+  //--------------------------------------------TMT Practice Text------------------------------------------------------
+  @override
+  String get tmtGamePracticeTmtAThenBDialogTitle =>
+      "¿Repetir esta práctica TMT A o avanzar al siguiente desafío?";
+
+  @override
+  String get tmtGamePracticeTmtAThenBDialogCancelButtonText => "Avanzar";
+
+  @override
+  String get tmtGamePracticeTmtAThenBDialogPrimaryButtonText => "Repetir";
+
+  @override
+  String get tmtGamePracticeOnlyTmtAOrTmtBDialogTitle =>
+      "¿Estás listo para empezar el test TMT?";
+
+  @override
+  String get tmtGamePracticeOnlyTmtAOrTmtBDialogCancelButtonText =>
+      "Sí, empezar";
+
+  @override
+  String get tmtGamePracticeOnlyTmtAOrTmtBDialogPrimaryButtonText =>
+      "No, repetir";
+
+  @override
+  String get tmtGamePracticeTmtAPageTitle => "Práctica TMT A";
+
+  @override
+  String get tmtGamePracticeTmtBPageTitle => "Práctica TMT B";
 }
 
 final es = SpanishMessages();

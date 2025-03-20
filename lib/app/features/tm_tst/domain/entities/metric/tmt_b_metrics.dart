@@ -10,6 +10,31 @@ class TmtBMetrics {
   DateTime? _connectCircleStartTime;
   Offset? _lastCircleConnectPoint;
 
+
+  TmtBMetrics copy() {
+    TmtBMetrics metrics = TmtBMetrics();
+
+    for (var metric in _beforeLetterMetricsList) {
+      metrics._beforeLetterMetricsList.add(metric.copy());
+    }
+
+    for (var metric in _beforeNumberMetricsList) {
+      metrics._beforeNumberMetricsList.add(metric.copy());
+    }
+
+    if (_connectCircleStartTime != null) {
+      metrics._connectCircleStartTime =
+          DateTime.fromMillisecondsSinceEpoch(_connectCircleStartTime!.millisecondsSinceEpoch);
+    }
+
+    if (_lastCircleConnectPoint != null) {
+      metrics._lastCircleConnectPoint =
+          Offset(_lastCircleConnectPoint!.dx, _lastCircleConnectPoint!.dy);
+    }
+
+    return metrics;
+  }
+
   void onConnectLetterCircle(TmtGameCircle circleConnectPoint) {
     if (circleConnectPoint.isFirst()) {
       _connectCircleStartTime = DateTime.now();
