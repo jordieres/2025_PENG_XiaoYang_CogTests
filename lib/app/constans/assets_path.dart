@@ -23,7 +23,6 @@ class ImageRasterPath {
 }
 
 class ImageVectorPath {
-  // Example:
-  // static const _folderPath = "assets/images/vector";
-  // static const myVector = "$_folderPath/vector/my_vector.svg";
+  static const _folderPath = "assets/icons";
+  static const help = "$_folderPath/help.svg";
 }
