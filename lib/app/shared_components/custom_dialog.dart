@@ -9,23 +9,23 @@ class CustomDialog extends StatelessWidget {
   final dynamic content;
   final DialogMode mode;
   final String primaryButtonText;
-  final String? secondaryButtonText;
-  final String? rightPrimaryButtonText;
+  final String? cancelButtonText;
+  final String? onLeftPrimaryButtonText;
   final VoidCallback onPrimaryPressed;
-  final VoidCallback? onSecondaryPressed;
-  final VoidCallback? onSecondPrimaryPressed;
+  final VoidCallback? onCancelPressed;
+  final VoidCallback? onLeftPrimaryPressed;
 
   const CustomDialog({
     Key? key,
     required this.title,
-    this.content,
     required this.mode,
     required this.primaryButtonText,
-    this.secondaryButtonText,
-    this.rightPrimaryButtonText,
     required this.onPrimaryPressed,
-    this.onSecondaryPressed,
-    this.onSecondPrimaryPressed,
+    this.content,
+    this.cancelButtonText,
+    this.onCancelPressed,
+    this.onLeftPrimaryButtonText,
+    this.onLeftPrimaryPressed,
   }) : super(key: key);
 
   @override
@@ -73,31 +73,19 @@ class CustomDialog extends StatelessWidget {
   Widget _buildButtons(BuildContext context) {
     switch (mode) {
       case DialogMode.singleButton:
-        return _buildPrimaryButton(
-            context,
-            primaryButtonText,
-            onPrimaryPressed,
-            isFullWidth: true
-        );
+        return _buildPrimaryButton(context, primaryButtonText, onPrimaryPressed,
+            isFullWidth: true);
 
       case DialogMode.twoMainButtons:
         return Row(
           children: [
             Expanded(
-                child: _buildPrimaryButton(
-                    context,
-                    primaryButtonText,
-                    onPrimaryPressed
-                )
-            ),
+                child: _buildPrimaryButton(context,
+                    onLeftPrimaryButtonText ?? "", onLeftPrimaryPressed)),
             const SizedBox(width: 12.0),
             Expanded(
                 child: _buildPrimaryButton(
-                    context,
-                    rightPrimaryButtonText ?? "",
-                    onSecondPrimaryPressed
-                )
-            ),
+                    context, primaryButtonText, onPrimaryPressed)),
           ],
         );
 
@@ -106,30 +94,19 @@ class CustomDialog extends StatelessWidget {
           children: [
             Expanded(
                 child: _buildOutlinedButton(
-                    context,
-                    secondaryButtonText ?? "",
-                    onSecondaryPressed
-                )
-            ),
+                    context, cancelButtonText ?? "", onCancelPressed)),
             const SizedBox(width: 12.0),
             Expanded(
                 child: _buildPrimaryButton(
-                    context,
-                    primaryButtonText,
-                    onPrimaryPressed
-                )
-            ),
+                    context, primaryButtonText, onPrimaryPressed)),
           ],
         );
     }
   }
 
   Widget _buildPrimaryButton(
-      BuildContext context,
-      String text,
-      VoidCallback? onPressed,
-      {bool isFullWidth = false}
-      ) {
+      BuildContext context, String text, VoidCallback? onPressed,
+      {bool isFullWidth = false}) {
     return SizedBox(
       width: isFullWidth ? double.infinity : null,
       child: ElevatedButton(
@@ -137,12 +114,11 @@ class CustomDialog extends StatelessWidget {
           if (onPressed != null) {
             onPressed();
           }
-          Navigator.of(context).pop();
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.customButtonColor,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.0),
+            borderRadius: BorderRadius.circular(12),
           ),
         ),
         child: Padding(
@@ -157,22 +133,21 @@ class CustomDialog extends StatelessWidget {
   }
 
   Widget _buildOutlinedButton(
-      BuildContext context,
-      String text,
-      VoidCallback? onPressed
-      ) {
+      BuildContext context, String text, VoidCallback? onPressed) {
     return OutlinedButton(
       onPressed: () {
         if (onPressed != null) {
           onPressed();
         }
-        Navigator.of(context).pop();
       },
       style: OutlinedButton.styleFrom(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0),
+          borderRadius: BorderRadius.circular(12),
         ),
-        side: BorderSide(color: AppColors.customButtonColor),
+        side: BorderSide(
+          color: AppColors.customButtonColor,
+          width: 1.5,
+        ),
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 12.0),

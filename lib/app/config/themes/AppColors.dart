@@ -21,7 +21,7 @@ class AppColors {
   static const Color testTMTIncorrectCircleStroke = mainRed; // Red incorrect color (TMT)
 
   static const Color customDialogTitleColor = mainBlackText;
-  static const Color customButtonColor = Color(0xFF006FFD);
+  static const Color customButtonColor = primaryBlue;
 
 
 }
