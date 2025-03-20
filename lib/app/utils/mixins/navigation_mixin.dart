@@ -1,11 +1,11 @@
 part of app_mixins;
 
 mixin NavigationMixin {
-  void tmtTestToHelp(TmtTestStateFlow tmtTestStateFlow) {
-    Get.toNamed(Routes.tmt_help, arguments: tmtTestStateFlow);
+  void tmtTestToHelp(TmtHelpMode tmtHelpMode) {
+    Get.toNamed(Routes.tmt_help, arguments: tmtHelpMode);
   }
 
-  void tmmHelpToPractice() {
-    Get.toNamed(Routes.tmt_practice);
+  void navigateToPractice(TMTTestPracticeMode tmtTestPracticeMode) {
+    Get.toNamed(Routes.tmt_practice, arguments: tmtTestPracticeMode);
   }
 }
