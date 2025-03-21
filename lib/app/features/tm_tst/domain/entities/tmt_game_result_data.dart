@@ -1,8 +1,4 @@
-
-
 class TmtGameResultData {
-
-
   final double averageLift;
   final double averagePause;
   final double averageRateBeforeLetters;
@@ -18,11 +14,15 @@ class TmtGameResultData {
   final String codeId;
   final DateTime dateData;
   final int numberErrors;
+  final int numberErrorA;
+  final int numberErrorB;
   final int numberLifts;
   final int numberPauses;
   final int numCirc;
   final String score;
   final double timeComplete;
+  final double timeCompleteA;
+  final double timeCompleteB;
 
   TmtGameResultData({
     required this.averageLift,
@@ -40,13 +40,14 @@ class TmtGameResultData {
     required this.codeId,
     required this.dateData,
     required this.numberErrors,
+    required this.numberErrorA,
+    required this.numberErrorB,
     required this.numberLifts,
     required this.numberPauses,
     required this.numCirc,
     required this.score,
     required this.timeComplete,
+    required this.timeCompleteA,
+    required this.timeCompleteB,
   });
-
-
-
 }

@@ -19,7 +19,7 @@ class TmtGameBoardController extends StatefulWidget {
   TmtGameBoardController({super.key, this.flowController});
 
   late final _TmtGameBoardControllerState _state =
-  _TmtGameBoardControllerState();
+      _TmtGameBoardControllerState();
 
   void regenerateCircles() {
     _state.regenerateCircles();
@@ -36,7 +36,7 @@ class TmtGameBoardController extends StatefulWidget {
 }
 
 class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
-  late BaseTmtTestFlowController _testController;
+  late BaseTmtTestFlowController _testFlowController;
   late TmtMetricsController _metricsController;
 
   late TmtGameCircleTextType _circleTextType;
@@ -73,18 +73,20 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
   void initState() {
     super.initState();
     // Use the provided controller if available, otherwise find one
-    _testController = widget.flowController ?? Get.find<BaseTmtTestFlowController>();
-    _metricsController = _testController.metricsController;
+    _testFlowController =
+        widget.flowController ?? Get.find<BaseTmtTestFlowController>();
+    _metricsController = _testFlowController.metricsController;
 
     // Set the circle text type based on test type
-    if (_testController.testState.value == TmtTestStateFlow.TMT_A_IN_PROGRESS ||
-        _testController.testState.value == TmtTestStateFlow.READY) {
+    if (_testFlowController.testState.value ==
+            TmtTestStateFlow.TMT_A_IN_PROGRESS ||
+        _testFlowController.testState.value == TmtTestStateFlow.READY) {
       _circleTextType = TmtGameCircleTextType.NUMBER;
     } else {
       _circleTextType = TmtGameCircleTextType.NUMBER_WITH_LETTER;
     }
 
-    _testController.startTest();
+    _testFlowController.startTest();
   }
 
   @override
@@ -104,11 +106,11 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
     _hasError = false; // Reset error state
 
     final listCirclesOffset = RandomGridSampler(
-        minDistance: TmtGameVariables.safeDistance,
-        minX: TmtGameCalculate.getBoardMinX(),
-        maxX: TmtGameCalculate.getBoardMaxX(_constraintsMaxWidth),
-        minY: TmtGameCalculate.getBoardMinY(),
-        maxY: TmtGameCalculate.getBoardMaxY(_constraintsMaxHeight))
+            minDistance: TmtGameVariables.safeDistance,
+            minX: TmtGameCalculate.getBoardMinX(),
+            maxX: TmtGameCalculate.getBoardMaxX(_constraintsMaxWidth),
+            minY: TmtGameCalculate.getBoardMinY(),
+            maxY: TmtGameCalculate.getBoardMaxY(_constraintsMaxHeight))
         .generatePoints(
       TmtGameVariables.CIRCLE_NUMBER,
     );
@@ -130,8 +132,8 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
         setState(() {
           _isDragging = true;
           _connectedCircles.add(_circles[0]);
-          _metricsController.onConnectNextCircleCorrect(
-              _nextCircleIndex, _circles[0], _testController.testState.value);
+          _metricsController.onConnectNextCircleCorrect(_nextCircleIndex,
+              _circles[0], _testFlowController.testState.value);
           _nextCircleIndex = 1;
           _currentDragPosition = _circles[0].offset;
           _dragPath.clear();
@@ -193,14 +195,15 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
   }
 
   _connectOtherIncorrectCircleConfig(TmtGameCircle currentCircle) {
-    _metricsController.onConnectNextCircleError();
+    _metricsController
+        .onConnectNextCircleError(_testFlowController.testState.value);
     setState(() {
       _isDragging = false;
       _dragPath.add(currentCircle.offset);
       _errorPath = List.from(_dragPath); // Save the current path as error path
       _dragPath.clear();
       _currentDragPosition =
-      _connectedCircles.isNotEmpty ? _connectedCircles.last.offset : null;
+          _connectedCircles.isNotEmpty ? _connectedCircles.last.offset : null;
     });
     _showErrorStatus(currentCircle);
   }
@@ -214,15 +217,15 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
 
     Future.delayed(
         Duration(milliseconds: TmtGameVariables.ERROR_CIRLCLE_APPEAR_DURATION),
-            () {
-          if (mounted) {
-            setState(() {
-              _errorCircle = null;
-              _errorPath = []; // Clear error path after 1 second
-              _hasError = false;
-            });
-          }
+        () {
+      if (mounted) {
+        setState(() {
+          _errorCircle = null;
+          _errorPath = []; // Clear error path after 1 second
+          _hasError = false;
         });
+      }
+    });
   }
 
   _connectNextCorrectCircleConfig(Offset currentDragPosition) {
@@ -238,7 +241,7 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
       _currentDragPosition = currentDragPosition;
 
       _metricsController.onConnectNextCircleCorrect(
-          _nextCircleIndex, nextCircle, _testController.testState.value);
+          _nextCircleIndex, nextCircle, _testFlowController.testState.value);
 
       _dragPath.clear();
       _dragPath.add(currentDragPosition);
@@ -262,7 +265,7 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
         _dragPath.clear();
       }
       _currentDragPosition =
-      _connectedCircles.isNotEmpty ? _connectedCircles.last.offset : null;
+          _connectedCircles.isNotEmpty ? _connectedCircles.last.offset : null;
     });
 
     _metricsController.onPanEnd(details);
@@ -270,7 +273,7 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
 
   void _onCompleteTest() {
     if (_connectedCircles.isNotEmpty) {
-      _testController.onTestEnd(_connectedCircles.last.offset);
+      _testFlowController.onTestEnd(_connectedCircles.last.offset);
     }
   }
 
