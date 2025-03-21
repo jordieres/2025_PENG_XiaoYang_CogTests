@@ -4,6 +4,9 @@ class TmtPressureSizeMetric {
   static const noHaveSizeCharacteristic =
       0; // if device don't have size characteristic
 
+  static const noHavePressureORSizeCharacteristicValue =
+      -1; // if device don't have pressure and size characteristic will send -1
+
   final List<double> _pressureList = [];
   final List<double> _sizeList = [];
 

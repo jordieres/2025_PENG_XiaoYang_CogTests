@@ -1,4 +1,3 @@
-import 'metric_static_values.dart';
 
 class TmtTestLiftMetric {
   int numberLift = 0;

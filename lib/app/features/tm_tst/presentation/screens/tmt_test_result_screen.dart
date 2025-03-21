@@ -8,7 +8,8 @@ class TmtResultsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TmtTestFlowStateController testController = Get.find<TmtTestFlowStateController>();
+    final TmtTestFlowStateController testController =
+        Get.find<TmtTestFlowStateController>();
     final metrics = testController.metricsController;
 
     final partADuration = metrics.testTimeMetrics.calculateTimeCompleteTmtA();
@@ -37,13 +38,13 @@ class TmtResultsScreen extends StatelessWidget {
               _buildResultCard(
                 'Part A',
                 'Duration: $partADuration seconds',
-                'Errors: ${metrics.numberError}',
+                'Errors: ${metrics.numberErrorA}',
               ),
               const SizedBox(height: 16),
               _buildResultCard(
                 'Part B',
                 'Duration: $partBDuration seconds',
-                'Errors: ${metrics.numberError}',
+                'Errors: ${metrics.numberErrorB}',
               ),
               const SizedBox(height: 32),
               const Text(
