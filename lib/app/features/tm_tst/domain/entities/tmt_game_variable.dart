@@ -18,6 +18,7 @@ class TmtGameVariables {
   static const int BOARD_MARGIN = 18;
 
   static const int DEFAULT_CIRCLE_NUMBER = 25;
+  static const int PRACTICE_CIRCLE_NUMBER = 9;
 
   static int CIRCLE_NUMBER = 5;
   static double circleRadius = 20;
@@ -26,12 +27,22 @@ class TmtGameVariables {
   static double safeDistance =
       circleRadius * 2 + TOUCH_MARGIN + BOARD_MARGIN * 2;
 
+  //----------------- Circle Painter Variables -----------------
   static double LINE_STROKE_WIDTH = 3;
   static double CIRCLE_NORMAL_STROKE_WIDTH = 2;
   static double CIRCLE_ERROR_CORRECT_STROKE_WIDTH = 4;
   static double CIRCLE_ERROR_CORRECT_FILL_ALPHA = 0.2;
 
   static int ERROR_CIRLCLE_APPEAR_DURATION = 500; // ms
+
+  static void setPracticeModeCalculate() {
+    CIRCLE_NUMBER = PRACTICE_CIRCLE_NUMBER;
+  }
+
+  static void setTestModeCalculate() {
+    CIRCLE_NUMBER = DEFAULT_CIRCLE_NUMBER;
+    //TODO getNUmber circle depend on user preference
+  }
 
   static void calculateTMTGameVariables(double maxWidth, double maxHeight) {
     _calculateOptimizedCircleRadius(maxWidth, maxHeight);

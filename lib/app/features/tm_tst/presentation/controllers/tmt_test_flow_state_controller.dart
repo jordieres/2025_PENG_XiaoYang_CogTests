@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:msdtmt/app/features/tm_tst/domain/entities/metric/tmt_metrics_controller.dart';
 
+import '../../domain/entities/tmt_game_variable.dart';
 import 'base_tmt_test_flow_contoller.dart';
 
 class TmtTestFlowStateController extends BaseTmtTestFlowController {
@@ -10,6 +11,7 @@ class TmtTestFlowStateController extends BaseTmtTestFlowController {
   @override
   void handleTestStart(TmtTestStateFlow newState) {
     metricsController.onTestStart(newState);
+    TmtGameVariables.setTestModeCalculate();
   }
 
   @override
