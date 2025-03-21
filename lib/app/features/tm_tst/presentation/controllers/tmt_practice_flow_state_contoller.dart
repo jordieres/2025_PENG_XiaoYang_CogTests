@@ -1,12 +1,13 @@
 import 'dart:ui';
 
 import '../../domain/entities/metric/tmt_metrics_controller.dart';
+import '../../domain/entities/tmt_game_variable.dart';
 import 'base_tmt_test_flow_contoller.dart';
-
 
 class TmtPracticeFlowController extends BaseTmtTestFlowController {
   @override
   void handleTestStart(TmtTestStateFlow newState) {
+    TmtGameVariables.setPracticeModeCalculate();
   }
 
   @override
@@ -15,14 +16,11 @@ class TmtPracticeFlowController extends BaseTmtTestFlowController {
   }
 
   @override
-  void onTmtACompleted() {
-  }
+  void onTmtACompleted() {}
 
   @override
-  void handleResetTmtA() {
-  }
+  void handleResetTmtA() {}
 
   @override
-  void handleResetTmtB() {
-  }
+  void handleResetTmtB() {}
 }
