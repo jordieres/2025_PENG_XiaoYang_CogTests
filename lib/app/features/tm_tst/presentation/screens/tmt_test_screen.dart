@@ -19,7 +19,7 @@ class TmtTestPage extends StatefulWidget {
   }
 }
 
-class _TmtTestPageState extends State<TmtTestPage> {
+class _TmtTestPageState extends State<TmtTestPage> with WidgetsBindingObserver {
   TmtGameBoardController? _boardController;
   late TmtTestFlowStateController _testTmtFlowStateController;
   Worker? _stateWorker;
@@ -33,6 +33,7 @@ class _TmtTestPageState extends State<TmtTestPage> {
     _testTmtFlowStateController = Get.find<TmtTestFlowStateController>();
     _tmtTestFlowStateObserver();
     _tmtTestRouteChangeObserver();
+    WidgetsBinding.instance.addObserver(this);
   }
 
   void _tmtTestFlowStateObserver() {
@@ -67,6 +68,20 @@ class _TmtTestPageState extends State<TmtTestPage> {
     });
   }
 
+  @override
+  void didChangeMetrics() {
+    // When change screen orientation
+    setState(() {
+      final currentStatus= _testTmtFlowStateController.testState.value;
+      if (currentStatus == TmtTestStateFlow.TMT_A_IN_PROGRESS ||
+          currentStatus == TmtTestStateFlow.READY) {
+        _resetTmtA();
+      } else if (currentStatus == TmtTestStateFlow.TMT_B_IN_PROGRESS) {
+        _resetTmtB();
+      }
+    });
+  }
+
   void _resetTmtA() {
     _testTmtFlowStateController.resetStatusTmtA();
     setState(() {
@@ -87,6 +102,7 @@ class _TmtTestPageState extends State<TmtTestPage> {
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _stateWorker?.dispose();
     _routeObserverWorker?.dispose();
     super.dispose();
