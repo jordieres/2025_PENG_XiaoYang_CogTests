@@ -20,7 +20,7 @@ class TmtGameVariables {
   static const int DEFAULT_CIRCLE_NUMBER = 25;
   static const int PRACTICE_CIRCLE_NUMBER = 9;
 
-  static int CIRCLE_NUMBER = 5;
+  static int CIRCLE_NUMBER = 25;
   static double circleRadius = 20;
 
   static double CONNECT_DISTANCE = circleRadius + TOUCH_MARGIN;
@@ -40,7 +40,7 @@ class TmtGameVariables {
   }
 
   static void setTestModeCalculate() {
-    CIRCLE_NUMBER = DEFAULT_CIRCLE_NUMBER;
+    CIRCLE_NUMBER = 5; //TODO put 25
     //TODO getNUmber circle depend on user preference
   }
 
