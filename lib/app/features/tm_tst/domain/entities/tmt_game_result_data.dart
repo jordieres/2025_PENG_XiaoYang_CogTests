@@ -1,3 +1,10 @@
+import 'dart:io';
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter/material.dart';
+
+import 'metric/metric_static_values.dart';
+import 'metric/tmt_metrics_controller.dart';
+
 class TmtGameResultData {
   final double averageLift;
   final double averagePause;
@@ -5,10 +12,10 @@ class TmtGameResultData {
   final double averageRateBeforeNumbers;
   final double averageRateBetweenCircles;
   final double averageRateInsideCircles;
-  final double averageTimeBeforeLetters;
-  final double averageTimeBeforeNumbers;
-  final double averageTimeBetweenCircles;
-  final double averageTimeInsideCircles;
+  final double averageTimeBeforeLetters; // in seconds
+  final double averageTimeBeforeNumbers; // in seconds
+  final double averageTimeBetweenCircles; // in seconds
+  final double averageTimeInsideCircles; // in seconds
   final double averageTotalPressure;
   final double averageTotalSize;
   final String codeId;
@@ -20,9 +27,10 @@ class TmtGameResultData {
   final int numberPauses;
   final int numCirc;
   final String score;
-  final double timeComplete;
-  final double timeCompleteA;
-  final double timeCompleteB;
+  final double timeComplete; // in seconds
+  final double timeCompleteA; // in seconds
+  final double timeCompleteB; // in seconds
+  final String deviceModel;
 
   TmtGameResultData({
     required this.averageLift,
@@ -49,5 +57,83 @@ class TmtGameResultData {
     required this.timeComplete,
     required this.timeCompleteA,
     required this.timeCompleteB,
+    required this.deviceModel,
   });
+
+  static Future<TmtGameResultData> fromMetricsController(
+    TmtMetricsController controller,
+    BuildContext context, {
+    String codeId = "", //TODO parse TMT test code
+    String score = "", // TODO calculate score
+  }) async {
+    // Get device model information
+    String deviceModel = await _getDeviceModel();
+
+    return TmtGameResultData(
+      averageLift: controller.testLiftMetric.calculateAverageLift(),
+      averagePause: controller.testPauseMetric.calculateAveragePause(),
+      averageRateBeforeLetters:
+          controller.bMetrics.calculateAverageRateBeforeLetters(),
+      averageRateBeforeNumbers:
+          controller.bMetrics.calculateAverageRateBeforeNumbers(),
+      averageRateBetweenCircles:
+          controller.circleMetrics.calculateAverageRateBetweenCircles(),
+      averageRateInsideCircles:
+          controller.circleMetrics.calculateAverageRateInsideCircles(),
+      averageTimeBeforeLetters:
+          controller.bMetrics.calculateAverageTimeBeforeLetters() /
+              MetricStaticValues.SEND_METRIC_THRESHOLD_MS,
+      averageTimeBeforeNumbers:
+          controller.bMetrics.calculateAverageTimeBeforeNumbers() /
+              MetricStaticValues.SEND_METRIC_THRESHOLD_MS,
+      averageTimeBetweenCircles:
+          controller.circleMetrics.calculateAverageTimeBetweenCircles() /
+              MetricStaticValues.SEND_METRIC_THRESHOLD_MS,
+      averageTimeInsideCircles:
+          controller.circleMetrics.calculateAverageTimeInsideCircles() /
+              MetricStaticValues.SEND_METRIC_THRESHOLD_MS,
+      averageTotalPressure:
+          controller.pressureSizeMetric.calculateAverageTotalPressure(),
+      averageTotalSize:
+          controller.pressureSizeMetric.calculateAverageTotalSize(),
+      codeId: codeId,
+      dateData: DateTime.now(),
+      numberErrors: controller.numberError,
+      numberErrorA: controller.numberErrorA,
+      numberErrorB: controller.numberErrorB,
+      numberLifts: controller.testLiftMetric.numberLift,
+      numberPauses: controller.testPauseMetric.numberPause,
+      numCirc: controller.circles.length,
+      score: score,
+      timeComplete: controller.testTimeMetrics
+              .calculateTimeCompleteTest()
+              .inMilliseconds /
+          MetricStaticValues.SEND_METRIC_THRESHOLD_MS,
+      timeCompleteA: controller.testTimeMetrics
+              .calculateTimeCompleteTmtA()
+              .inMilliseconds /
+          MetricStaticValues.SEND_METRIC_THRESHOLD_MS,
+      timeCompleteB: controller.testTimeMetrics
+              .calculateTimeCompleteTmtB()
+              .inMilliseconds /
+          MetricStaticValues.SEND_METRIC_THRESHOLD_MS,
+      deviceModel: deviceModel,
+    );
+  }
+
+  static Future<String> _getDeviceModel() async {
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    try {
+      if (Platform.isAndroid) {
+        AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+        return "${androidInfo.brand}_${androidInfo.model}";
+      } else if (Platform.isIOS) {
+        IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+        return "${iosInfo.name}_${iosInfo.model}";
+      }
+    } catch (e) {
+      return "unknown_device";
+    }
+    return "unknown_device";
+  }
 }
