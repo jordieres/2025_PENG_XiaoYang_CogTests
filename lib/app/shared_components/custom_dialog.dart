@@ -32,6 +32,13 @@ class CustomDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget? contentWidget;
 
+    final orientation = MediaQuery.of(context).orientation;
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    final maxWidth = orientation == Orientation.landscape
+        ? screenWidth * 0.5
+        : screenWidth * 0.85;
+
     if (content != null) {
       if (content is String) {
         contentWidget = Text(
@@ -48,7 +55,10 @@ class CustomDialog extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16.0),
       ),
-      child: Padding(
+      child: Container(
+        constraints: BoxConstraints(
+          maxWidth: maxWidth,
+        ),
         padding: const EdgeInsets.all(20.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
