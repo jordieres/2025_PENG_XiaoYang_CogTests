@@ -14,6 +14,7 @@ class CustomDialog extends StatelessWidget {
   final VoidCallback onPrimaryPressed;
   final VoidCallback? onCancelPressed;
   final VoidCallback? onLeftPrimaryPressed;
+  final bool dismissibleByBackButton;
 
   const CustomDialog({
     Key? key,
@@ -26,6 +27,7 @@ class CustomDialog extends StatelessWidget {
     this.onCancelPressed,
     this.onLeftPrimaryButtonText,
     this.onLeftPrimaryPressed,
+    this.dismissibleByBackButton = false
   }) : super(key: key);
 
   @override
@@ -51,31 +53,37 @@ class CustomDialog extends StatelessWidget {
       }
     }
 
-    return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16.0),
+    // 使用 PopScope 替代 WillPopScope
+    final dialogContent = Container(
+      constraints: BoxConstraints(
+        maxWidth: maxWidth,
       ),
-      child: Container(
-        constraints: BoxConstraints(
-          maxWidth: maxWidth,
-        ),
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              title,
-              style: AppTextStyle.customDialogTitle,
-              textAlign: TextAlign.center,
-            ),
-            if (contentWidget != null) ...[
-              const SizedBox(height: 16.0),
-              contentWidget,
-            ],
-            SizedBox(height: contentWidget != null ? 24.0 : 20.0),
-            _buildButtons(context),
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            title,
+            style: AppTextStyle.customDialogTitle,
+            textAlign: TextAlign.center,
+          ),
+          if (contentWidget != null) ...[
+            const SizedBox(height: 16.0),
+            contentWidget,
           ],
+          SizedBox(height: contentWidget != null ? 24.0 : 20.0),
+          _buildButtons(context),
+        ],
+      ),
+    );
+
+    return PopScope(
+      canPop: dismissibleByBackButton,
+      child: Dialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16.0),
         ),
+        child: dialogContent,
       ),
     );
   }
