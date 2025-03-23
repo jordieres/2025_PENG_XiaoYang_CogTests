@@ -162,7 +162,9 @@ class _TmtPracticePageState extends State<TmtTestPracticePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.testTMTBoardBackground,
+      backgroundColor: Get.isDarkMode
+          ? AppColors.testTMTBoardBackgroundDark
+          : AppColors.testTMTBoardBackground,
       appBar: CustomAppBar(
         title: _getHelpTitle(tmtTestPracticeMode),
       ),
