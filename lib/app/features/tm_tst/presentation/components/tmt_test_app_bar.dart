@@ -125,11 +125,20 @@ class _TmtCustomAppBarState extends State<TmtCustomAppBar>
     List<Widget> defaultActions = [
       const SizedBox(width: 80),
       IconButton(
-        icon: SvgPicture.asset(
+        icon: isDarkMode
+            ? SvgPicture.asset(
           ImageVectorPath.help,
           width: 30,
           height: 30,
-          color: isDarkMode ? AppColors.darkText : AppColors.primaryBlue,
+          colorFilter: ColorFilter.mode(
+            AppColors.darkText,
+            BlendMode.srcIn,
+          ),
+        )
+            : SvgPicture.asset(
+          ImageVectorPath.help,
+          width: 30,
+          height: 30,
         ),
         onPressed: () {
           _navigateToHelpScreen();
