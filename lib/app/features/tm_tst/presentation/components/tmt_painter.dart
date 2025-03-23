@@ -35,6 +35,8 @@ class TmtPainter extends CustomPainter {
     this.isCheatModeEnabled = false,
   });
 
+  bool get isDarkMode => Get.isDarkMode;
+
   @override
   void paint(Canvas canvas, Size size) {
     _drawCorrectPathsLines(canvas);
@@ -66,7 +68,7 @@ class TmtPainter extends CustomPainter {
 
   void _drawDragPath(Canvas canvas) {
     final Paint dragLinePaint = Paint()
-      ..color = AppColors.mainBlackText
+      ..color = isDarkMode ? AppColors.darkText : AppColors.mainBlackText
       ..strokeWidth = TmtGameVariables.LINE_STROKE_WIDTH
       ..strokeCap = StrokeCap.round;
 
@@ -116,7 +118,7 @@ class TmtPainter extends CustomPainter {
           currentOffset.offset, TmtGameVariables.circleRadius, lastCirclePaint);
 
       final Paint fillPaint = Paint()
-        ..color = AppColors.testTMTCurrentCircleStroke.withValues(alpha: 0.2)
+        ..color = AppColors.testTMTCurrentCircleStroke.withAlpha(51)
         ..style = PaintingStyle.fill;
       canvas.drawCircle(
           currentOffset.offset, TmtGameVariables.circleRadius, fillPaint);
@@ -125,16 +127,16 @@ class TmtPainter extends CustomPainter {
 
   _drawNormalCircle(Canvas canvas, TmtGameCircle circle) {
     final Paint fillPaint = Paint()
-      ..color = AppColors.testTMTNormalCircleFill
+      ..color = isDarkMode ? AppColors.testTMTNormalCircleFillDark : AppColors.testTMTNormalCircleFill
       ..style = PaintingStyle.fill;
 
     final Paint strokePaint = Paint()
       ..style = PaintingStyle.stroke
-      ..color = AppColors.testTMTNormalLine
+      ..color = isDarkMode ? AppColors.testTMTNormalLineDark : AppColors.testTMTNormalLine
       ..strokeWidth = TmtGameVariables.CIRCLE_NORMAL_STROKE_WIDTH;
 
     final Paint touchAreaPaint = Paint()
-      ..color = AppColors.testTMTBoardBackground.withValues(alpha: 0.1);
+      ..color = (isDarkMode ? AppColors.testTMTBoardBackgroundDark : AppColors.testTMTBoardBackground).withAlpha(26);
 
     if (!connectedCircles.contains(circle) &&
         !(errorCircle != null && circle == errorCircle)) {
@@ -160,7 +162,7 @@ class TmtPainter extends CustomPainter {
         ..strokeWidth = TmtGameVariables.CIRCLE_ERROR_CORRECT_STROKE_WIDTH;
 
       final Paint fillPaint = Paint()
-        ..color = AppColors.testTMTBoardBackground
+        ..color = isDarkMode ? AppColors.testTMTBoardBackgroundDark : AppColors.testTMTBoardBackground
         ..style = PaintingStyle.fill;
 
       canvas.drawCircle(
@@ -174,7 +176,7 @@ class TmtPainter extends CustomPainter {
   _drawErrorCircle(Canvas canvas, TmtGameCircle currentCircle) {
     if (errorCircle != null && currentCircle == errorCircle) {
       final Paint fillPaint = Paint()
-        ..color = AppColors.testTMTIncorrectCircleStroke.withValues(alpha: 0.3)
+        ..color = AppColors.testTMTIncorrectCircleStroke.withAlpha(77)
         ..style = PaintingStyle.fill;
 
       canvas.drawCircle(
@@ -212,7 +214,7 @@ class TmtPainter extends CustomPainter {
         nextCircleIndex < allCircles.length &&
         !connectedCircles.contains(currentCircle)) {
       final Paint cheatPaint = Paint()
-        ..color = AppColors.primaryBlue
+        ..color = isDarkMode ? AppColors.primaryBlueDark : AppColors.primaryBlue
         ..style = PaintingStyle.stroke
         ..strokeWidth = TmtGameVariables.CIRCLE_ERROR_CORRECT_STROKE_WIDTH;
 
@@ -220,7 +222,7 @@ class TmtPainter extends CustomPainter {
           currentCircle.offset, TmtGameVariables.circleRadius, cheatPaint);
 
       final Paint fillPaint = Paint()
-        ..color = AppColors.primaryBlue.withValues(alpha: 0.2)
+        ..color = (isDarkMode ? AppColors.primaryBlueDark : AppColors.primaryBlue).withAlpha(51)
         ..style = PaintingStyle.fill;
       canvas.drawCircle(
           currentCircle.offset, TmtGameVariables.circleRadius, fillPaint);
@@ -228,10 +230,18 @@ class TmtPainter extends CustomPainter {
   }
 
   _drawCircleText(Canvas canvas, TmtGameCircle currentCircle) {
+    final circleTextStyle = AppTextStyle.tmtGameCircleText.copyWith(
+        color: isDarkMode ? AppColors.darkText : AppColors.mainBlackText
+    );
+
+    final circleBeginEndTextStyle = AppTextStyle.tmtGameCircleBeginAndLastText.copyWith(
+        color: isDarkMode ? AppColors.darkText : AppColors.mainBlackText
+    );
+
     TextPainter numberPainter = TextPainter(
       text: TextSpan(
         text: currentCircle.text,
-        style: AppTextStyle.tmtGameCircleText,
+        style: circleTextStyle,
       ),
       textDirection: TextDirection.ltr,
     );
@@ -252,7 +262,7 @@ class TmtPainter extends CustomPainter {
       TextPainter lastOrFirstPainter = TextPainter(
         text: TextSpan(
             text: textLastOrFirst,
-            style: AppTextStyle.tmtGameCircleBeginAndLastText),
+            style: circleBeginEndTextStyle),
         textDirection: TextDirection.ltr,
       );
       lastOrFirstPainter.layout();

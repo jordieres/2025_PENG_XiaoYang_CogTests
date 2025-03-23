@@ -44,6 +44,8 @@ class _TmtCustomAppBarState extends State<TmtCustomAppBar>
   bool _isPaused = false;
   int _initialSeconds = 0;
 
+  bool get isDarkMode => Get.isDarkMode;
+
   @override
   void initState() {
     super.initState();
@@ -116,6 +118,10 @@ class _TmtCustomAppBarState extends State<TmtCustomAppBar>
 
   @override
   Widget build(BuildContext context) {
+    final appBarTitleStyle = AppTextStyle.appBarTitle.copyWith(
+      color: isDarkMode ? AppColors.darkText : AppColors.mainBlackText,
+    );
+
     List<Widget> defaultActions = [
       const SizedBox(width: 80),
       IconButton(
@@ -123,6 +129,7 @@ class _TmtCustomAppBarState extends State<TmtCustomAppBar>
           ImageVectorPath.help,
           width: 30,
           height: 30,
+          color: isDarkMode ? AppColors.darkText : AppColors.primaryBlue,
         ),
         onPressed: () {
           _navigateToHelpScreen();
@@ -146,17 +153,19 @@ class _TmtCustomAppBarState extends State<TmtCustomAppBar>
                 children: [
                   Text(
                     TMTGame.tmtGameTmtScreenAppBarTime.tr,
-                    style: AppTextStyle.appBarTitle,
+                    style: appBarTitleStyle,
                   ),
                   const SizedBox(width: 8),
                   Container(
                     padding: const EdgeInsets.fromLTRB(26, 7, 14, 7),
                     decoration: BoxDecoration(
-                      color: AppColors.secondaryBlue,
+                      color: isDarkMode ? AppColors.secondaryBlueDark : AppColors.secondaryBlue,
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: Text(_formatTime(_elapsedSeconds),
-                        style: AppTextStyle.appBarTitle),
+                    child: Text(
+                      _formatTime(_elapsedSeconds),
+                      style: appBarTitleStyle,
+                    ),
                   ),
                 ],
               ),

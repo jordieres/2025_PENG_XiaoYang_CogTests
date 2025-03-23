@@ -25,7 +25,6 @@ class AppTextStyle {
 
 
   static var appBarTitle = TextStyle(
-    color: AppColors.mainBlackText,
     fontSize: middleTextWhiteSize,
     fontWeight: AppFontWeight.bold,
     fontStyle: FontStyle.normal,
@@ -46,7 +45,6 @@ class AppTextStyle {
   );
 
   static var customDialogTitle = TextStyle(
-    color: AppColors.customDialogTitleColor,
     fontSize: middleTextWhiteSize,
     fontWeight: AppFontWeight.extraBold,
     fontStyle: FontStyle.normal,
