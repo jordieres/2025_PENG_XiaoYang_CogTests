@@ -14,6 +14,49 @@ class TmtCircleMetrics {
 
   bool _isStartDrawInsideCircle = false;
 
+  TmtCircleMetrics copy() {
+    TmtCircleMetrics metrics = TmtCircleMetrics();
+
+    for (var metric in _circleBetweenMetricsList) {
+      metrics._circleBetweenMetricsList.add(metric.copy());
+    }
+
+    for (var metric in _circleInsideMetricsList) {
+      metrics._circleInsideMetricsList.add(metric.copy());
+    }
+
+    if (_connectCircleStartTime != null) {
+      metrics._connectCircleStartTime =
+          DateTime.fromMillisecondsSinceEpoch(_connectCircleStartTime!.millisecondsSinceEpoch);
+    }
+
+    if (lastCircleConnectPoint != null) {
+      metrics.lastCircleConnectPoint =
+          Offset(lastCircleConnectPoint!.dx, lastCircleConnectPoint!.dy);
+    }
+
+    if (_insideCircleStartTime != null) {
+      metrics._insideCircleStartTime =
+          DateTime.fromMillisecondsSinceEpoch(_insideCircleStartTime!.millisecondsSinceEpoch);
+    }
+
+    if (_pointStartInsideCircle != null) {
+      metrics._pointStartInsideCircle =
+          Offset(_pointStartInsideCircle!.dx, _pointStartInsideCircle!.dy);
+    }
+
+    metrics._isStartDrawInsideCircle = _isStartDrawInsideCircle;
+
+    return metrics;
+  }
+
+
+
+
+
+
+
+
   void onConnectNextCircleCorrect(int circleIndex, Offset circleConnectPoint) {
     if (circleIndex == 0) {
       _connectCircleStartTime = DateTime.now();
