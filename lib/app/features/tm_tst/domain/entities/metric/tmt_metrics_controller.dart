@@ -16,6 +16,9 @@ class TmtMetricsController {
 
   bool isFinishTest = false;
   int numberError = 0;
+  int numberErrorA = 0;
+  int numberErrorB = 0;
+
   List<double> pressureList = [];
   List<double> sizeList = [];
 
@@ -25,8 +28,6 @@ class TmtMetricsController {
   TmtCircleMetrics circleMetrics = TmtCircleMetrics();
   TmtBMetrics bMetrics = TmtBMetrics();
   TmtPressureSizeMetric pressureSizeMetric = TmtPressureSizeMetric();
-
-
 
   TmtMetricsController copy() {
     TmtMetricsController controller = TmtMetricsController();
@@ -43,7 +44,6 @@ class TmtMetricsController {
     controller.pressureSizeMetric = pressureSizeMetric.copy();
     return controller;
   }
-
 
   void onTestStart(TmtTestStateFlow tmtTestState) {
     switch (tmtTestState) {
@@ -116,8 +116,13 @@ class TmtMetricsController {
     }
   }
 
-  void onConnectNextCircleError() {
+  void onConnectNextCircleError(TmtTestStateFlow tmtTestState) {
     numberError++;
+    if (tmtTestState == TmtTestStateFlow.TMT_A_IN_PROGRESS) {
+      numberErrorA++;
+    } else if (tmtTestState == TmtTestStateFlow.TMT_B_IN_PROGRESS) {
+      numberErrorB++;
+    }
   }
 
   void onPointerMove(PointerMoveEvent event) {
