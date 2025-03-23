@@ -162,10 +162,12 @@ class _TmtTestPageState extends State<TmtTestPage> with WidgetsBindingObserver {
     );
   }
 
+  bool get isDarkMode => Get.isDarkMode;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.testTMTBoardBackground,
+      backgroundColor: isDarkMode ? AppColors.testTMTBoardBackgroundDark : AppColors.testTMTBoardBackground,
       appBar: TmtCustomAppBar(
         title: _getAppBarTitle(),
         isTestTypeA: _isTestTypeA(),

@@ -1,42 +1,34 @@
-import 'dart:io';
-
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../config/routes/app_pages.dart';
+import '../../config/themes/theme_controller.dart';
 import '../../config/translation/app_translations.dart';
-import '../../shared_components/custom_dialog.dart';
 import '../../utils/mixins/app_mixins.dart';
 import '../tm_tst/presentation/screens/tmt_test_help.dart';
-import '../tm_tst/presentation/screens/tmt_test_practice_screen.dart';
 
 class HomePage extends StatelessWidget with NavigationMixin {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    //getDeviceInfo();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    final ThemeController themeController = Get.find<ThemeController>();
 
     return Scaffold(
       appBar: AppBar(
         title: Text(TMTGame.tmtGameCircleBegin.tr),
+        actions: [
+          Obx(() => IconButton(
+                icon: Icon(
+                  themeController.isDarkMode
+                      ? Icons.light_mode
+                      : Icons.dark_mode,
+                ),
+                onPressed: () {
+                  _showThemeDialog(context, themeController);
+                },
+              )),
+        ],
       ),
       body: Center(
         child: Column(
@@ -48,20 +40,24 @@ class HomePage extends StatelessWidget with NavigationMixin {
               },
               child: const Text('Start TMT Test'),
             ),
+            const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () => {
                 tmtTestToHelp(TmtHelpMode.TMT_PRACTICE_A),
               },
               child: const Text("Start TMT Practice"),
             ),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () => Get.updateLocale(AppTranslations.SPANISH),
               child: const Text('Cambiar a español'),
             ),
+            const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () => Get.updateLocale(AppTranslations.ENGLISH),
               child: const Text('Switch to English'),
             ),
+            const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () => Get.updateLocale(AppTranslations.CHINIES),
               child: const Text('切换到中文'),
@@ -72,18 +68,42 @@ class HomePage extends StatelessWidget with NavigationMixin {
     );
   }
 
-/*
-  Future<void> getDeviceInfo() async {
-    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-
-    if (Platform.isAndroid) {
-      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-      print('品牌: ${androidInfo.brand}');
-      print('设备型号: ${androidInfo.model}');
-    } else if (Platform.isIOS) {
-      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
-      print('设备名称: ${iosInfo.name}');
-      print('型号: ${iosInfo.model}');
-    }
-  }*/
+  // 显示主题选择对话框
+  void _showThemeDialog(BuildContext context, ThemeController controller) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Select Theme'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: const Icon(Icons.light_mode),
+              title: const Text('Light Mode'),
+              onTap: () {
+                controller.setLightMode();
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.dark_mode),
+              title: const Text('Dark Mode'),
+              onTap: () {
+                controller.setDarkMode();
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.brightness_auto),
+              title: const Text('System Theme'),
+              onTap: () {
+                controller.setSystemTheme();
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
