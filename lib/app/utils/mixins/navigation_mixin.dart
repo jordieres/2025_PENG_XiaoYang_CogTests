@@ -1,9 +1,11 @@
 part of app_mixins;
 
-/// Contains all instants routing
 mixin NavigationMixin {
-  /// Example :
-  // void goToDetailProduct(int id) {
-  //   Get.toNamed(Routes.product, parameters: {"id": "$id"});
-  // }
+  void tmtTestToHelp(TmtHelpMode tmtHelpMode) {
+    Get.toNamed(Routes.tmt_help, arguments: tmtHelpMode);
+  }
+
+  void navigateToPractice(TMTTestPracticeMode tmtTestPracticeMode) {
+    Get.toNamed(Routes.tmt_practice, arguments: tmtTestPracticeMode);
+  }
 }

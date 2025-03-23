@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:msdtmt/app/features/tm_tst/presentation/components/tmt_painter.dart';
 
 import '../../../../utils/helpers/app_helpers.dart';
@@ -8,23 +9,26 @@ import '../../domain/entities/metric/tmt_metrics_controller.dart';
 import '../../domain/entities/tmt_game_circle.dart';
 import '../../domain/usecases/tmt_game_calculate.dart';
 import '../../domain/entities/tmt_game_variable.dart';
+import '../controllers/base_tmt_test_flow_contoller.dart';
 
 /// This class manager logic of tmt test
 class TmtGameBoardController extends StatefulWidget {
-  TmtGameBoardController({super.key});
+  // Add a parameter to accept the controller directly
+  final BaseTmtTestFlowController? flowController;
 
-  final _TmtGameBoardControllerState _state = _TmtGameBoardControllerState();
+  TmtGameBoardController({super.key, this.flowController});
+
+  late final _TmtGameBoardControllerState _state =
+      _TmtGameBoardControllerState();
 
   void regenerateCircles() {
     _state.regenerateCircles();
   }
 
-  // Add method to toggle cheat mode
   void toggleCheatMode() {
     _state.toggleCheatMode();
   }
 
-  // Add getter to check if cheat mode is enabled
   bool get isCheatModeEnabled => _state.isCheatModeEnabled;
 
   @override
@@ -32,7 +36,10 @@ class TmtGameBoardController extends StatefulWidget {
 }
 
 class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
-  final TmtMetricsController _metricsController = TmtMetricsController();
+  late BaseTmtTestFlowController _testFlowController;
+  late TmtMetricsController _metricsController;
+
+  late TmtGameCircleTextType _circleTextType;
 
   List<TmtGameCircle> _circles = [];
   final List<TmtGameCircle> _connectedCircles = [];
@@ -45,7 +52,7 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
   bool _lasTimeHasError = false;
 
   // Add cheat mode boolean
-  bool _isCheatModeEnabled = true;
+  bool _isCheatModeEnabled = true; // TODO deactivate cheat mode
 
   double _constraintsMaxWidth = 0;
   double _constraintsMaxHeight = 0;
@@ -65,8 +72,21 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
   @override
   void initState() {
     super.initState();
-    //TODO modificar segun tipo de juego
-    _metricsController.onTestStart(TmtGameTypeMetrics.TMT_A);
+    // Use the provided controller if available, otherwise find one
+    _testFlowController =
+        widget.flowController ?? Get.find<BaseTmtTestFlowController>();
+    _metricsController = _testFlowController.metricsController;
+
+    // Set the circle text type based on test type
+    if (_testFlowController.testState.value ==
+            TmtTestStateFlow.TMT_A_IN_PROGRESS ||
+        _testFlowController.testState.value == TmtTestStateFlow.READY) {
+      _circleTextType = TmtGameCircleTextType.NUMBER;
+    } else {
+      _circleTextType = TmtGameCircleTextType.NUMBER_WITH_LETTER;
+    }
+
+    _testFlowController.startTest();
   }
 
   @override
@@ -95,8 +115,7 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
       TmtGameVariables.CIRCLE_NUMBER,
     );
 
-    _circles = GenerateCircleWithData(
-            tmtGameCircleTextType: TmtGameCircleTextType.NUMBER_WITH_LETTER)
+    _circles = GenerateCircleWithData(tmtGameCircleTextType: _circleTextType)
         .generateCircle(listCirclesOffset);
 
     _metricsController.circles = _circles;
@@ -113,8 +132,8 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
         setState(() {
           _isDragging = true;
           _connectedCircles.add(_circles[0]);
-          _metricsController.onConnectNextCircleCorrect(
-              _nextCircleIndex, _circles[0]);
+          _metricsController.onConnectNextCircleCorrect(_nextCircleIndex,
+              _circles[0], _testFlowController.testState.value);
           _nextCircleIndex = 1;
           _currentDragPosition = _circles[0].offset;
           _dragPath.clear();
@@ -150,7 +169,7 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
     });
 
     if (_nextCircleIndex >= TmtGameVariables.CIRCLE_NUMBER) {
-      _showCompletionDialog();
+      _onCompleteTest();
       return;
     }
 
@@ -176,7 +195,8 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
   }
 
   _connectOtherIncorrectCircleConfig(TmtGameCircle currentCircle) {
-    _metricsController.onConnectNextCircleError();
+    _metricsController
+        .onConnectNextCircleError(_testFlowController.testState.value);
     setState(() {
       _isDragging = false;
       _dragPath.add(currentCircle.offset);
@@ -221,7 +241,7 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
       _currentDragPosition = currentDragPosition;
 
       _metricsController.onConnectNextCircleCorrect(
-          _nextCircleIndex, nextCircle);
+          _nextCircleIndex, nextCircle, _testFlowController.testState.value);
 
       _dragPath.clear();
       _dragPath.add(currentDragPosition);
@@ -251,29 +271,10 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
     _metricsController.onPanEnd(details);
   }
 
-  void _showCompletionDialog() {
-    //TODO modificar segun tipo de juego
-    _metricsController.onTestEnd(
-        _connectedCircles.last.offset, TmtGameTypeMetrics.TMT_B);
-
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Congratulations!'),
-          content: const Text('You have connected all the dots!'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                regenerateCircles();
-              },
-              child: const Text('Play Again'),
-            ),
-          ],
-        );
-      },
-    );
+  void _onCompleteTest() {
+    if (_connectedCircles.isNotEmpty) {
+      _testFlowController.onTestEnd(_connectedCircles.last.offset);
+    }
   }
 
   void regenerateCircles() {
