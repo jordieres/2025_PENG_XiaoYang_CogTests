@@ -33,12 +33,16 @@ class AppTextStyle {
     color: AppColors.darkText,
   );
 
-  static var customDialogOutlinedButton = (TextStyleBase.actionM)
-      .copyWith(color: AppColors.customButtonColor);
+  static var customDialogOutlinedButton =
+      (TextStyleBase.actionM).copyWith(color: AppColors.customButtonColor);
 
-  static var customPrimaryButtonText =  (TextStyleBase.actionM).copyWith(
+  static var customPrimaryButtonText = (TextStyleBase.actionM).copyWith(
     color: AppColors.darkText,
   );
 
-
+  static var tmtResultCardText = TextStyle(
+    fontSize: DeviceHelper.isTablet ? 22 * TextStyleBase.tabletScaleFactor : 22,
+    fontWeight: AppFontWeight.normal,
+    fontStyle: FontStyle.normal,
+  );
 }
