@@ -1,159 +1,266 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:msdtmt/app/features/tm_tst/domain/entities/tmt_game_result_data.dart';
-import 'package:msdtmt/app/features/tm_tst/presentation/controllers/tmt_test_flow_state_controller.dart';
 import '../../../../config/routes/app_pages.dart';
+import '../../../../config/themes/AppColors.dart';
+import '../../../../config/themes/app_text_style_base.dart';
+import '../../../../shared_components/custom_primary_button.dart';
+import '../components/tmt_result_card.dart';
 
-class TmtResultsScreen extends StatelessWidget {
+// Added for testing
+void main() {
+  runApp(
+    MaterialApp(
+      home: TmtResultsScreen(),
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+    ),
+  );
+}
+
+class TmtResultsScreen extends StatefulWidget {
   const TmtResultsScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final TmtTestFlowStateController testController =
-    Get.find<TmtTestFlowStateController>();
+  State<TmtResultsScreen> createState() => _TmtResultsScreenState();
+}
 
-    final Future<TmtGameResultData> resultFuture = TmtGameResultData.fromMetricsController(
-        testController.metricsController, context);
+class _TmtResultsScreenState extends State<TmtResultsScreen> {
+  final ScrollController _scrollController = ScrollController();
+  bool _showScrollIndicator = false;
+  final GlobalKey _contentKey = GlobalKey();
+  DateTime? _lastCalculation;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('TMT Test Results'),
-        automaticallyImplyLeading: false,
-      ),
-      body: FutureBuilder<TmtGameResultData>(
-        future: resultFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(
-              child: Text('Error loading results: ${snapshot.error}'),
-            );
-          } else if (!snapshot.hasData) {
-            return const Center(
-              child: Text('No test data available'),
-            );
-          }
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _calculateContentHeight();
+    });
 
-          final result = snapshot.data!;
-
-          return SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const Text(
-                    'Test Completed',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 32),
-                  _buildResultCard(
-                    'Part A',
-                    'Duration: ${result.timeCompleteA} seconds',
-                    'Errors: ${result.numberErrorA}',
-                  ),
-                  const SizedBox(height: 16),
-                  _buildResultCard(
-                    'Part B',
-                    'Duration: ${result.timeCompleteB} seconds',
-                    'Errors: ${result.numberErrorB}',
-                  ),
-                  const SizedBox(height: 32),
-                  Text(
-                    'Device: ${result.deviceModel}',
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontStyle: FontStyle.italic,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  ExpansionTile(
-                    title: const Text('Detailed Test Metrics',
-                        style: TextStyle(fontWeight: FontWeight.bold)),
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Total Time: ${result.timeComplete.toStringAsFixed(2)} seconds'),
-                            Text('Total Errors: ${result.numberErrors}'),
-                            const Divider(),
-                            Text('Average Lift: ${result.averageLift.toStringAsFixed(2)} ms'),
-                            Text('Average Pause: ${result.averagePause.toStringAsFixed(2)} ms'),
-                            Text('Number of Lifts: ${result.numberLifts}'),
-                            Text('Number of Pauses: ${result.numberPauses}'),
-                            const Divider(),
-                            Text('Average Rate Between Circles: ${result.averageRateBetweenCircles.toStringAsFixed(2)}'),
-                            Text('Average Rate Inside Circles: ${result.averageRateInsideCircles.toStringAsFixed(2)}'),
-                            Text('Average Time Between Circles: ${result.averageTimeBetweenCircles.toStringAsFixed(2)} seconds'),
-                            Text('Average Time Inside Circles: ${result.averageTimeInsideCircles.toStringAsFixed(2)} seconds'),
-                            const Divider(),
-                            Text('Average Rate Before Letters: ${result.averageRateBeforeLetters.toStringAsFixed(2)}'),
-                            Text('Average Rate Before Numbers: ${result.averageRateBeforeNumbers.toStringAsFixed(2)}'),
-                            Text('Average Time Before Letters: ${result.averageTimeBeforeLetters.toStringAsFixed(2)} seconds'),
-                            Text('Average Time Before Numbers: ${result.averageTimeBeforeNumbers.toStringAsFixed(2)} seconds'),
-                            const Divider(),
-                            Text('Average Total Pressure: ${result.averageTotalPressure.toStringAsFixed(2)}'),
-                            Text('Average Total Size: ${result.averageTotalSize.toStringAsFixed(2)}'),
-                            const Divider(),
-                            Text('Number of Circles: ${result.numCirc}'),
-                            Text('Date: ${result.dateData.toString()}'),
-                            if (result.codeId.isNotEmpty) Text('Code ID: ${result.codeId}'),
-                            if (result.score.isNotEmpty) Text('Score: ${result.score}'),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  const Text(
-                    'Thank you for completing the test!',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontStyle: FontStyle.italic,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 32),
-                  ElevatedButton(
-                    onPressed: () {
-                      Get.offAllNamed(Routes.home);
-                    },
-                    child: const Text('Return to Home'),
-                  ),
-                ],
-              ),
-            ),
-          );
-        },
-      ),
-    );
+    _scrollController.addListener(() {
+      _updateScrollIndicator();
+    });
   }
 
-  Widget _buildResultCard(String title, String duration, String errors) {
-    return Card(
-      elevation: 4,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // This will be called when MediaQuery changes, including orientation changes
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _calculateContentHeight();
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _calculateContentHeight() {
+    // Debounce calculations to prevent too frequent recalculations
+    final now = DateTime.now();
+    if (_lastCalculation != null &&
+        now.difference(_lastCalculation!).inMilliseconds < 300) {
+      return;
+    }
+    _lastCalculation = now;
+
+    final RenderBox? contentBox = _contentKey.currentContext?.findRenderObject() as RenderBox?;
+    if (contentBox != null) {
+      final contentHeight = contentBox.size.height;
+      final screenHeight = MediaQuery.of(context).size.height;
+
+      setState(() {
+        _showScrollIndicator = contentHeight > screenHeight;
+      });
+    }
+  }
+
+  void _updateScrollIndicator() {
+    if (_scrollController.hasClients) {
+      if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 20) {
+        if (_showScrollIndicator) {
+          setState(() {
+            _showScrollIndicator = false;
+          });
+        }
+      } else {
+        _calculateContentHeight();
+      }
+    }
+  }
+
+  void _scrollToBottom() {
+    if (_scrollController.hasClients) {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 500),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isLandscape = MediaQuery.of(context).orientation == Orientation.landscape;
+
+    const baseScreenHeight = 812.0;
+    final responsiveRatio = screenHeight / baseScreenHeight;
+
+    final topMargin = (46 * responsiveRatio).clamp(30.0, 60.0).toDouble();
+    final titleToCardMargin = (52 * responsiveRatio).clamp(30.0, 70.0).toDouble();
+    final betweenCardsMargin = (46 * responsiveRatio).clamp(30.0, 60.0).toDouble();
+    final cardsToTextMargin = isLandscape
+        ? (40 * responsiveRatio).clamp(20.0, 60.0).toDouble()
+        : (102 * responsiveRatio).clamp(60.0, 120.0).toDouble();
+
+    final textToButtonMargin = (27 * responsiveRatio).clamp(20.0, 40.0).toDouble();
+    final bottomMargin = (24 * responsiveRatio).clamp(50.0, 100.0).toDouble();
+
+    final horizontalCardSpacing = (16 * (screenWidth / 375)).clamp(12.0, 30.0).toDouble();
+
+    // Mock data for UI testing
+    final int timeCompleteA = 30;
+    final int timeCompleteB = 70;
+    final int errorsA = 1;
+    final int errorsB = 1;
+    final String sessions = '3 Veces';
+
+    return Scaffold(
+      body: SafeArea(
+        child: Stack(
           children: [
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+            SingleChildScrollView(
+              controller: _scrollController,
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: Container(
+                key: _contentKey,
+                padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(height: topMargin),
+                    Center(
+                      child: Text(
+                        'Resultado',
+                        style: TextStyleBase.h2,
+                      ),
+                    ),
+                    SizedBox(height: titleToCardMargin),
+
+                    if (isLandscape)
+                      Row(
+                        children: [
+                          Expanded(
+                            child: TmtResultCard(
+                              title: 'TMT A',
+                              duration: '$timeCompleteA S',
+                              errors: errorsA.toString(),
+                              sessions: sessions,
+                            ),
+                          ),
+                          SizedBox(width: horizontalCardSpacing),
+                          Expanded(
+                            child: TmtResultCard(
+                              title: 'TMT B',
+                              duration: '$timeCompleteB S',
+                              errors: errorsB.toString(),
+                              sessions: sessions,
+                            ),
+                          ),
+                        ],
+                      )
+                    else
+                      Column(
+                        children: [
+                          TmtResultCard(
+                            title: 'TMT A',
+                            duration: '$timeCompleteA S',
+                            errors: errorsA.toString(),
+                            sessions: sessions,
+                          ),
+                          SizedBox(height: betweenCardsMargin),
+                          TmtResultCard(
+                            title: 'TMT B',
+                            duration: '$timeCompleteB S',
+                            errors: errorsB.toString(),
+                            sessions: sessions,
+                          ),
+                        ],
+                      ),
+
+                    SizedBox(height: cardsToTextMargin),
+                    Text(
+                      'Le agradecemos la confianza, el tiempo y el esfuerzo\nen realizar este test dTMT',
+                      style: TextStyleBase.bodyS,
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: textToButtonMargin),
+
+                    CustomPrimaryButton(
+                      text: 'Terminar',
+                      onPressed: () {
+                        Get.offAllNamed(Routes.home);
+                      },
+                    ),
+                    SizedBox(height: bottomMargin),
+                  ],
+                ),
               ),
             ),
-            const Divider(),
-            Text(duration),
-            const SizedBox(height: 8),
-            Text(errors),
+
+            if (_showScrollIndicator)
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: IgnorePointer(
+                  child: Container(
+                    height: 80,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.white.withValues(alpha: 0),
+                          Colors.white.withAlpha(204)
+                        ],
+                        stops: const [0.0, 0.7],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
+            if (_showScrollIndicator)
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 20,
+                child: Center(
+                  child: GestureDetector(
+                    onTap: _scrollToBottom,
+                    child: Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withAlpha(0),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(
+                        Icons.keyboard_arrow_down,
+                        color: Colors.grey.shade600,
+                        size: 32,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
           ],
         ),
       ),
