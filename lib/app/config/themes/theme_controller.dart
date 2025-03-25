@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ThemeController extends GetxController {
+
   static const String _themeKey = 'theme_mode';
   static const String _systemThemeKey = 'system_theme';
 
