@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../../../config/themes/AppColors.dart';
 import '../../../../config/themes/AppFontWeight.dart';
 import '../../../../config/themes/AppTextStyle.dart';
 import '../../../../config/themes/app_text_style_base.dart';
+import '../../../../config/translation/app_translations.dart';
 import '../../domain/usecases/tmt_result_card_responsive_calculate.dart';
 
 class TmtResultCard extends StatelessWidget {
@@ -41,15 +43,18 @@ class TmtResultCard extends StatelessWidget {
             SizedBox(height: metrics.titleSpacing),
             LayoutBuilder(
               builder: (context, constraints) {
+                final durationLabel = TMTResultScreen.durationLabel.tr;
+                final errorsLabel = TMTResultScreen.errorsLabel.tr;
+
                 final durationTextWidth =
-                    TmtResultCardResponsiveCalculator.calculateTextWidth(
-                  'Duración',
+                TmtResultCardResponsiveCalculator.calculateTextWidth(
+                  durationLabel,
                   AppTextStyle.tmtResultCardText,
                 );
 
                 final errorsTextWidth =
-                    TmtResultCardResponsiveCalculator.calculateTextWidth(
-                  'Errores',
+                TmtResultCardResponsiveCalculator.calculateTextWidth(
+                  errorsLabel,
                   AppTextStyle.tmtResultCardText,
                 );
 
@@ -70,9 +75,9 @@ class TmtResultCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       _buildColumn(
-                          'Duración', duration, metrics.labelValueSpacing),
+                          durationLabel, duration, metrics.labelValueSpacing),
                       _buildColumn(
-                          'Errores', errors, metrics.labelValueSpacing),
+                          errorsLabel, errors, metrics.labelValueSpacing),
                     ],
                   ),
                 );

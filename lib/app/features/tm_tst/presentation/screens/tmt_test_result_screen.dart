@@ -1,22 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../../../../config/themes/app_text_style_base.dart';
+import '../../../../config/translation/app_translations.dart';
 import '../../../../shared_components/custom_primary_button.dart';
 import '../../../../utils/helpers/app_helpers.dart';
 import '../../domain/usecases/tmt_result_screen_responsive_calculator.dart';
 import '../components/tmt_result_card.dart';
 
-// Added for testing
-void main() {
-  runApp(
-    MaterialApp(
-      home: TmtResultsScreen(),
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-    ),
-  );
-}
+
 
 class TmtResultsScreen extends StatefulWidget {
   const TmtResultsScreen({super.key});
@@ -168,7 +159,7 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
                       SizedBox(height: metrics.topMargin),
                       Center(
                         child: Text(
-                          'Resultado:',
+                          TMTResultScreen.title.tr,
                           style: TextStyleBase.h1,
                         ),
                       ),
@@ -176,7 +167,7 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
                       // New element: Number of Sessions
                       Center(
                         child: Text(
-                          'Número de Sesiones $numSessions',
+                          '${TMTResultScreen.sessionText.tr} $numSessions',
                           style: TextStyleBase.h2,
                         ),
                       ),
@@ -195,7 +186,7 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
                               ? _cardsToTextMargin
                               : metrics.cardsToThanksTextMargin),
                       Text(
-                        'Le agradecemos la confianza, el tiempo y el esfuerzo\nen realizar este test dTMT',
+                        TMTResultScreen.thanksMessage.tr,
                         style: TextStyleBase.bodyS,
                         textAlign: TextAlign.center,
                       ),
@@ -206,7 +197,7 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
                               ? _textToButtonMargin
                               : metrics.tanksTextToButtonMargin),
                       CustomPrimaryButton(
-                        text: 'Terminar',
+                        text: TMTResultScreen.finishButton.tr,
                         onPressed: () {
                           // Get.offAllNamed(Routes.home);
                         },
@@ -233,7 +224,7 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
         Expanded(
           child: TmtResultCard(
             key: _cardKey,
-            title: 'TMT A',
+            title: TMTResultScreen.tmtATitle.tr,
             duration: '$timeCompleteA S',
             errors: errorsA.toString(),
           ),
@@ -241,7 +232,7 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
         SizedBox(width: metrics.horizontalCardSpacing),
         Expanded(
           child: TmtResultCard(
-            title: 'TMT B',
+            title: TMTResultScreen.tmtBTitle.tr,
             duration: '$timeCompleteB S',
             errors: errorsB.toString(),
           ),
@@ -258,13 +249,13 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
       children: [
         TmtResultCard(
           key: _cardKey,
-          title: 'TMT A',
+          title: TMTResultScreen.tmtATitle.tr,
           duration: '$timeCompleteA S',
           errors: errorsA.toString(),
         ),
         SizedBox(height: metrics.betweenCardsMargin),
         TmtResultCard(
-          title: 'TMT B',
+          title: TMTResultScreen.tmtBTitle.tr,
           duration: '$timeCompleteB S',
           errors: errorsB.toString(),
         ),
