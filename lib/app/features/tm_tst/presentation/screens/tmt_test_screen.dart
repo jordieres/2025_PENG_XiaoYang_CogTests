@@ -148,8 +148,8 @@ class _TmtTestPageState extends State<TmtTestPage> with WidgetsBindingObserver {
       barrierDismissible: false,
       builder: (context) => CustomDialog(
         mode: DialogMode.singleButton,
-        title: TMTGame.tmtGamePartACompletedBody.tr,
-        primaryButtonText: TMTGame.tmtGamePartBCompletedConfirmationButton.tr,
+        title: TMTGameText.tmtGamePartACompletedBody.tr,
+        primaryButtonText: TMTGameText.tmtGamePartBCompletedConfirmationButton.tr,
         onPrimaryPressed: () {
           Get.back();
           setState(() {
