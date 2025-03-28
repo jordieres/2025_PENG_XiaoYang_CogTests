@@ -1,6 +1,6 @@
 part of 'app_translations.dart';
 
-class TMTGame {
+class TMTGameText {
   static String tmtGameCircleBegin = 'tmt_game_circle_begin';
   static String tmtGameCircleEnd = 'tmt_game_circle_end';
   static String tmtGamePartACompletedTitle = 'tmt_game_part_a_completed_title';
@@ -76,18 +76,18 @@ abstract class BaseMessages {
   String get tmtGamePracticeTmtBPageTitle;
 
   Map<String, String> get messages => {
-        TMTGame.tmtGameCircleBegin: tmtGameCircleBegin,
-        TMTGame.tmtGameCircleEnd: tmtGameCircleEnd,
-        TMTGame.tmtGamePartACompletedTitle: tmtGamePartACompletedTitle,
-        TMTGame.tmtGamePartACompletedBody: tmtGamePartACompletedBody,
-        TMTGame.tmtGamePartBCompletedConfirmationButton:
+        TMTGameText.tmtGameCircleBegin: tmtGameCircleBegin,
+        TMTGameText.tmtGameCircleEnd: tmtGameCircleEnd,
+        TMTGameText.tmtGamePartACompletedTitle: tmtGamePartACompletedTitle,
+        TMTGameText.tmtGamePartACompletedBody: tmtGamePartACompletedBody,
+        TMTGameText.tmtGamePartBCompletedConfirmationButton:
             tmtGamePartBCompletedConfirmationButton,
-        TMTGame.tmtGameTmtScreenAppBarTime: tmtGameTmtScreenAppBarTime,
-        TMTGame.tmtGameTmtHelpTmtATitle: tmtGameTmtHelpTmtATitle,
-        TMTGame.tmtGameTmtHelpTmtBTitle: tmtGameTmtHelpTmtBTitle,
-        TMTGame.tmtGameTmtHelpTmtPrimaryButtonText:
+        TMTGameText.tmtGameTmtScreenAppBarTime: tmtGameTmtScreenAppBarTime,
+        TMTGameText.tmtGameTmtHelpTmtATitle: tmtGameTmtHelpTmtATitle,
+        TMTGameText.tmtGameTmtHelpTmtBTitle: tmtGameTmtHelpTmtBTitle,
+        TMTGameText.tmtGameTmtHelpTmtPrimaryButtonText:
             tmtGameTmtHelpTmtPrimaryButtonText,
-        TMTGame.tmtGameTmtHelpTmtSecondaryButtonText:
+        TMTGameText.tmtGameTmtHelpTmtSecondaryButtonText:
             tmtGameTmtHelpTmtSecondaryButtonText,
         //--------------------------------------------TMT Practice Text------------------------------------------------------
         TMTGamePractices.tmtGamePracticeTmtAThenBDialogTitle:

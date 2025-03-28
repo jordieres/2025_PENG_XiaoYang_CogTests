@@ -161,7 +161,7 @@ class _TmtCustomAppBarState extends State<TmtCustomAppBar>
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    TMTGame.tmtGameTmtScreenAppBarTime.tr,
+                    TMTGameText.tmtGameTmtScreenAppBarTime.tr,
                     style: appBarTitleStyle,
                   ),
                   const SizedBox(width: 8),
