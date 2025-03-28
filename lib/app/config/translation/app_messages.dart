@@ -16,7 +16,7 @@ class TMTGameText {
       'tmt_game_tmt_help_tmt_secondary_button_text';
 }
 
-class TMTGamePractices {
+class TMTGamePracticesText {
   static String tmtGamePracticeTmtAThenBDialogTitle =
       'tmt_game_practice_tmt_a_then_b_dialog_title';
   static String tmtGamePracticeTmtAThenBDialogCancelButtonText =
@@ -90,21 +90,21 @@ abstract class BaseMessages {
         TMTGameText.tmtGameTmtHelpTmtSecondaryButtonText:
             tmtGameTmtHelpTmtSecondaryButtonText,
         //--------------------------------------------TMT Practice Text------------------------------------------------------
-        TMTGamePractices.tmtGamePracticeTmtAThenBDialogTitle:
+        TMTGamePracticesText.tmtGamePracticeTmtAThenBDialogTitle:
             tmtGamePracticeTmtAThenBDialogTitle,
-        TMTGamePractices.tmtGamePracticeTmtAThenBDialogCancelButtonText:
+        TMTGamePracticesText.tmtGamePracticeTmtAThenBDialogCancelButtonText:
             tmtGamePracticeTmtAThenBDialogCancelButtonText,
-        TMTGamePractices.tmtGamePracticeTmtAThenBDialogPrimaryButtonText:
+        TMTGamePracticesText.tmtGamePracticeTmtAThenBDialogPrimaryButtonText:
             tmtGamePracticeTmtAThenBDialogPrimaryButtonText,
-        TMTGamePractices.tmtGamePracticeOnlyTmtAOrTmtBDialogTitle:
+        TMTGamePracticesText.tmtGamePracticeOnlyTmtAOrTmtBDialogTitle:
             tmtGamePracticeOnlyTmtAOrTmtBDialogTitle,
-        TMTGamePractices.tmtGamePracticeOnlyTmtAOrTmtBDialogCancelButtonText:
+        TMTGamePracticesText.tmtGamePracticeOnlyTmtAOrTmtBDialogCancelButtonText:
             tmtGamePracticeOnlyTmtAOrTmtBDialogCancelButtonText,
-        TMTGamePractices.tmtGamePracticeOnlyTmtAOrTmtBDialogPrimaryButtonText:
+        TMTGamePracticesText.tmtGamePracticeOnlyTmtAOrTmtBDialogPrimaryButtonText:
             tmtGamePracticeOnlyTmtAOrTmtBDialogPrimaryButtonText,
-        TMTGamePractices.tmtGamePracticeTmtAPageTitle:
+        TMTGamePracticesText.tmtGamePracticeTmtAPageTitle:
             tmtGamePracticeTmtAPageTitle,
-        TMTGamePractices.tmtGamePracticeTmtBPageTitle:
+        TMTGamePracticesText.tmtGamePracticeTmtBPageTitle:
             tmtGamePracticeTmtBPageTitle,
       };
 }
