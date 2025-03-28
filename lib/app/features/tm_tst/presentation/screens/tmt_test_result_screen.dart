@@ -1,10 +1,8 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import '../../../../config/routes/app_pages.dart';
-import '../../../../config/themes/AppColors.dart';
 import '../../../../config/themes/app_text_style_base.dart';
 import '../../../../shared_components/custom_primary_button.dart';
 import '../../../../utils/helpers/app_helpers.dart';
+import '../../domain/usecases/tmt_result_screen_responsive_calculator.dart';
 import '../components/tmt_result_card.dart';
 
 // Added for testing
@@ -33,11 +31,17 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
   final GlobalKey _contentKey = GlobalKey();
   final GlobalKey _cardKey = GlobalKey();
   DateTime? _lastCalculation;
-  double _cardHeight = 0;
 
-  // Valores de margen basados en la altura de la tarjeta
+  // Margin values based on card height
   double _cardsToTextMargin = 0;
   double _textToButtonMargin = 0;
+
+  // Mock data for UI testing
+  final int timeCompleteA = 30;
+  final int timeCompleteB = 30;
+  final int errorsA = 1;
+  final int errorsB = 1;
+  final int numSessions = 3;
 
   @override
   void initState() {
@@ -70,16 +74,17 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
 
   void _calculateCardHeight() {
     final RenderBox? cardBox =
-        _cardKey.currentContext?.findRenderObject() as RenderBox?;
+    _cardKey.currentContext?.findRenderObject() as RenderBox?;
     if (cardBox != null) {
       final height = cardBox.size.height;
 
-      // Calcular los márgenes basados en la altura de la tarjeta
-      final baseSpacing = height * 0.685;
+      // Use the calculator to get proportions based on height
+      final proportions =
+      TmtResultResponsiveCalculator.calculateCardHeightProportions(height);
+
       setState(() {
-        _cardHeight = height;
-        _cardsToTextMargin = baseSpacing * 0.6; // 60% para cardsToTextMargin
-        _textToButtonMargin = baseSpacing * 0.4; // 40% para textToButtonMargin
+        _cardsToTextMargin = proportions.cardsToTextMargin;
+        _textToButtonMargin = proportions.textToButtonMargin;
       });
     }
   }
@@ -94,13 +99,15 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
     _lastCalculation = now;
 
     final RenderBox? contentBox =
-        _contentKey.currentContext?.findRenderObject() as RenderBox?;
+    _contentKey.currentContext?.findRenderObject() as RenderBox?;
     if (contentBox != null) {
-      final contentHeight = contentBox.size.height;
       final screenHeight = MediaQuery.of(context).size.height;
 
       setState(() {
-        _showScrollIndicator = contentHeight > screenHeight;
+        _showScrollIndicator = TmtResultResponsiveCalculator.shouldShowScrollIndicator(
+          contentBox: contentBox,
+          screenHeight: screenHeight,
+        );
       });
     }
   }
@@ -130,80 +137,15 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
     }
   }
 
-  // Función para determinar el factor de escala basado en el tipo de dispositivo
-  double _getScaleFactor() {
-    // Obtener el tipo de dispositivo desde DeviceHelper
-    final deviceType = DeviceHelper.deviceType;
-
-    // Ajustar el factor de escala según el tipo de tablet
-    switch (deviceType) {
-      case DeviceType.largeTablet:
-        return 1.6;
-      case DeviceType.mediumTablet:
-        return 1.4;
-      case DeviceType.smallTablet:
-        return 1.3;
-      case DeviceType.largePhone:
-        return 1.0;
-      case DeviceType.mediumPhone:
-        return 1.0;
-      case DeviceType.smallPhone:
-        return 0.9;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    DeviceHelper.init(context);
-    final screenHeight = MediaQuery.of(context).size.height;
-    final screenWidth = MediaQuery.of(context).size.width;
-    final isLandscape =
-        MediaQuery.of(context).orientation == Orientation.landscape;
+    DeviceHelper.calculateAgain(context);
 
-    // Usar DeviceHelper para detectar si es tablet
-    final bool isTablet = DeviceHelper.isTablet;
+    // Use the calculator to get layout metrics
+    final metrics = TmtResultResponsiveCalculator.calculateLayoutMetrics(context);
 
-    // Factor de escala ajustado según el tipo específico de dispositivo
-    final double baseScaleFactor = _getScaleFactor();
-
-    // Calcular el ratio responsivo sin restringirlo
-    final responsiveRatio = screenHeight / 812.0;
-
-    // Aplicar escalado sin restricciones para permitir crecimiento proporcional en tablets
-    final topMargin = 46 * responsiveRatio * baseScaleFactor;
-
-    // Nuevos márgenes según el diseño
-    final titleToSessionsMargin = isLandscape
-        ? 30 * responsiveRatio * baseScaleFactor
-        : 40 * responsiveRatio * baseScaleFactor;
-    final sessionsToCardMargin = 28 * responsiveRatio * baseScaleFactor;
-    final betweenCardsMargin = 28 * responsiveRatio * baseScaleFactor;
-    final fixedCardsToTextMargin = isLandscape
-        ? 58 * responsiveRatio * baseScaleFactor
-        : 40 * responsiveRatio * baseScaleFactor;
-    final fixedTextToButtonMargin = isLandscape
-        ? 28 * responsiveRatio * baseScaleFactor
-        : 38 * responsiveRatio * baseScaleFactor;
-    final horizontalCardSpacing = 16 * (screenWidth / 375) * baseScaleFactor;
-    final bottomMargin = isLandscape
-        ? 60 * responsiveRatio * baseScaleFactor
-        : 40 * responsiveRatio * baseScaleFactor;
-
-    // Determinar si usar valores fijos o proporcionales
-    final useProportionalMargins = isTablet || !isLandscape;
-
-    // Determinar el ancho del contenido
-    // Para tablets en modo landscape, limitamos el ancho al 70% de la pantalla
-    final contentMaxWidth = (isTablet && isLandscape)
-        ? screenWidth * 0.7 // 70% del ancho para tablets en horizontal
-        : double.infinity; // Sin límite para otros casos
-
-    // Mock data for UI testing
-    final int timeCompleteA = 30;
-    final int timeCompleteB = 30;
-    final int errorsA = 1;
-    final int errorsB = 1;
-    final int numSessions = 3;
+    // Determine whether to use fixed or proportional values based on card height
+    final useProportionalMargins = metrics.isTablet || !metrics.isLandscape;
 
     return Scaffold(
       body: SafeArea(
@@ -213,157 +155,171 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
               controller: _scrollController,
               physics: const AlwaysScrollableScrollPhysics(),
               child: Center(
-                // Centrar todo el contenido
                 child: Container(
                   key: _contentKey,
                   constraints: BoxConstraints(
-                    maxWidth: contentMaxWidth,
+                    maxWidth: metrics.contentMaxWidth,
                   ),
                   padding: EdgeInsets.symmetric(
-                      horizontal: (isTablet && isLandscape)
-                          ? 0 // Sin padding adicional para tablets en horizontal
-                          : screenWidth *
-                              0.04 // Padding normal para otros casos
-                      ),
+                      horizontal: metrics.horizontalPadding),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SizedBox(height: topMargin),
+                      SizedBox(height: metrics.topMargin),
                       Center(
                         child: Text(
                           'Resultado:',
                           style: TextStyleBase.h1,
                         ),
                       ),
-                      SizedBox(height: titleToSessionsMargin),
-                      // Nuevo elemento: Número de Sesiones
+                      SizedBox(height: metrics.titleToSessionsMargin),
+                      // New element: Number of Sessions
                       Center(
                         child: Text(
                           'Número de Sesiones $numSessions',
                           style: TextStyleBase.h2,
                         ),
                       ),
-                      SizedBox(height: sessionsToCardMargin),
-                      // Contenedor para las tarjetas con ancho limitado en tablets
-                      Container(
-                        width: isTablet && !isLandscape
-                            ? screenWidth * 0.8
-                            : double.infinity,
-                        child: isLandscape
-                            ? Row(
-                                children: [
-                                  Expanded(
-                                    child: TmtResultCard(
-                                      key: _cardKey,
-                                      title: 'TMT A',
-                                      duration: '$timeCompleteA S',
-                                      errors: errorsA.toString(),
-                                    ),
-                                  ),
-                                  SizedBox(width: horizontalCardSpacing),
-                                  Expanded(
-                                    child: TmtResultCard(
-                                      title: 'TMT A',
-                                      duration: '$timeCompleteB S',
-                                      errors: errorsB.toString(),
-                                    ),
-                                  ),
-                                ],
-                              )
-                            : Column(
-                                children: [
-                                  TmtResultCard(
-                                    key: _cardKey,
-                                    title: 'TMT A',
-                                    duration: '$timeCompleteA S',
-                                    errors: errorsA.toString(),
-                                  ),
-                                  SizedBox(height: betweenCardsMargin),
-                                  TmtResultCard(
-                                    title: 'TMT A',
-                                    duration: '$timeCompleteB S',
-                                    errors: errorsB.toString(),
-                                  ),
-                                ],
-                              ),
+                      SizedBox(height: metrics.sessionsToCardMargin),
+                      // Container for cards with limited width on tablets
+                      SizedBox(
+                        width: metrics.cardContainerWidth,
+                        child: metrics.isLandscape
+                            ? _buildLandscapeCards()
+                            : _buildPortraitCards(),
                       ),
-                      // Usar el margen calculado si corresponde, o el fijo en caso contrario
+                      // Use the calculated margin if applicable, or the fixed one otherwise
                       SizedBox(
                           height:
-                              useProportionalMargins && _cardsToTextMargin > 0
-                                  ? _cardsToTextMargin
-                                  : fixedCardsToTextMargin),
+                          useProportionalMargins && _cardsToTextMargin > 0
+                              ? _cardsToTextMargin
+                              : metrics.cardsToThanksTextMargin),
                       Text(
                         'Le agradecemos la confianza, el tiempo y el esfuerzo\nen realizar este test dTMT',
                         style: TextStyleBase.bodyS,
                         textAlign: TextAlign.center,
                       ),
-                      // Usar el margen calculado si corresponde, o el fijo en caso contrario
+                      // Use the calculated margin if applicable, or the fixed one otherwise
                       SizedBox(
                           height:
-                              useProportionalMargins && _textToButtonMargin > 0
-                                  ? _textToButtonMargin
-                                  : fixedTextToButtonMargin),
+                          useProportionalMargins && _textToButtonMargin > 0
+                              ? _textToButtonMargin
+                              : metrics.tanksTextToButtonMargin),
                       CustomPrimaryButton(
                         text: 'Terminar',
                         onPressed: () {
                           // Get.offAllNamed(Routes.home);
                         },
                       ),
-                      SizedBox(height: bottomMargin),
+                      SizedBox(height: metrics.bottomMargin),
                     ],
                   ),
                 ),
               ),
             ),
-            if (_showScrollIndicator)
-              Positioned(
-                left: 0,
-                right: 0,
-                bottom: 0,
-                child: IgnorePointer(
-                  child: Container(
-                    height: 80,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Colors.white.withValues(alpha: 0),
-                          Colors.white.withAlpha(204)
-                        ],
-                        stops: const [0.0, 0.7],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            if (_showScrollIndicator)
-              Positioned(
-                left: 0,
-                right: 0,
-                bottom: 20,
-                child: Center(
-                  child: GestureDetector(
-                    onTap: _scrollToBottom,
-                    child: Container(
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withAlpha(0),
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(
-                        Icons.keyboard_arrow_down,
-                        color: Colors.grey.shade600,
-                        size: 32,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+            if (_showScrollIndicator) _buildScrollIndicator(),
           ],
         ),
       ),
+    );
+  }
+
+  /// Builds card layout for horizontal mode
+  Widget _buildLandscapeCards() {
+    final metrics = TmtResultResponsiveCalculator.calculateLayoutMetrics(context);
+
+    return Row(
+      children: [
+        Expanded(
+          child: TmtResultCard(
+            key: _cardKey,
+            title: 'TMT A',
+            duration: '$timeCompleteA S',
+            errors: errorsA.toString(),
+          ),
+        ),
+        SizedBox(width: metrics.horizontalCardSpacing),
+        Expanded(
+          child: TmtResultCard(
+            title: 'TMT B',
+            duration: '$timeCompleteB S',
+            errors: errorsB.toString(),
+          ),
+        ),
+      ],
+    );
+  }
+
+  /// Builds card layout for vertical mode
+  Widget _buildPortraitCards() {
+    final metrics = TmtResultResponsiveCalculator.calculateLayoutMetrics(context);
+
+    return Column(
+      children: [
+        TmtResultCard(
+          key: _cardKey,
+          title: 'TMT A',
+          duration: '$timeCompleteA S',
+          errors: errorsA.toString(),
+        ),
+        SizedBox(height: metrics.betweenCardsMargin),
+        TmtResultCard(
+          title: 'TMT B',
+          duration: '$timeCompleteB S',
+          errors: errorsB.toString(),
+        ),
+      ],
+    );
+  }
+
+  /// Builds the scroll indicator
+  Widget _buildScrollIndicator() {
+    return Stack(
+      children: [
+        Positioned(
+          left: 0,
+          right: 0,
+          bottom: 0,
+          child: IgnorePointer(
+            child: Container(
+              height: 80,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.white.withValues(alpha: 0),
+                    Colors.white.withAlpha(204)
+                  ],
+                  stops: const [0.0, 0.7],
+                ),
+              ),
+            ),
+          ),
+        ),
+        Positioned(
+          left: 0,
+          right: 0,
+          bottom: 20,
+          child: Center(
+            child: GestureDetector(
+              onTap: _scrollToBottom,
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.white.withAlpha(0),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.keyboard_arrow_down,
+                  color: Colors.grey.shade600,
+                  size: 32,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
