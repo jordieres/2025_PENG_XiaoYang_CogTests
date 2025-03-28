@@ -16,6 +16,8 @@ class TMTGameText {
       'tmt_game_tmt_help_tmt_secondary_button_text';
 }
 
+
+
 class TMTGamePracticesText {
   static String tmtGamePracticeTmtAThenBDialogTitle =
       'tmt_game_practice_tmt_a_then_b_dialog_title';
@@ -34,6 +36,18 @@ class TMTGamePracticesText {
       'tmt_game_practice_tmt_a_page_title';
   static String tmtGamePracticeTmtBPageTitle =
       'tmt_game_practice_tmt_b_page_title';
+}
+
+// New class for TMT Result Screen translations
+class TMTResultScreen {
+  static String title = 'tmt_result_screen_title';
+  static String sessionText = 'tmt_result_screen_session_text';
+  static String tmtATitle = 'tmt_result_screen_tmt_a_title';
+  static String tmtBTitle = 'tmt_result_screen_tmt_b_title';
+  static String durationLabel = 'tmt_result_screen_duration_label';
+  static String errorsLabel = 'tmt_result_screen_errors_label';
+  static String thanksMessage = 'tmt_result_screen_thanks_message';
+  static String finishButton = 'tmt_result_screen_finish_button';
 }
 
 abstract class BaseMessages {
@@ -75,36 +89,63 @@ abstract class BaseMessages {
 
   String get tmtGamePracticeTmtBPageTitle;
 
+  //--------------------------------------------TMT Result Screen Text------------------------------------------------------
+
+  String get tmtResultScreenTitle;
+
+  String get tmtResultScreenSessionText;
+
+  String get tmtResultScreenTmtATitle;
+
+  String get tmtResultScreenTmtBTitle;
+
+  String get tmtResultScreenDurationLabel;
+
+  String get tmtResultScreenErrorsLabel;
+
+  String get tmtResultScreenThanksMessage;
+
+  String get tmtResultScreenFinishButton;
+
   Map<String, String> get messages => {
-        TMTGameText.tmtGameCircleBegin: tmtGameCircleBegin,
-        TMTGameText.tmtGameCircleEnd: tmtGameCircleEnd,
-        TMTGameText.tmtGamePartACompletedTitle: tmtGamePartACompletedTitle,
-        TMTGameText.tmtGamePartACompletedBody: tmtGamePartACompletedBody,
-        TMTGameText.tmtGamePartBCompletedConfirmationButton:
-            tmtGamePartBCompletedConfirmationButton,
-        TMTGameText.tmtGameTmtScreenAppBarTime: tmtGameTmtScreenAppBarTime,
-        TMTGameText.tmtGameTmtHelpTmtATitle: tmtGameTmtHelpTmtATitle,
-        TMTGameText.tmtGameTmtHelpTmtBTitle: tmtGameTmtHelpTmtBTitle,
-        TMTGameText.tmtGameTmtHelpTmtPrimaryButtonText:
-            tmtGameTmtHelpTmtPrimaryButtonText,
-        TMTGameText.tmtGameTmtHelpTmtSecondaryButtonText:
-            tmtGameTmtHelpTmtSecondaryButtonText,
-        //--------------------------------------------TMT Practice Text------------------------------------------------------
-        TMTGamePracticesText.tmtGamePracticeTmtAThenBDialogTitle:
-            tmtGamePracticeTmtAThenBDialogTitle,
-        TMTGamePracticesText.tmtGamePracticeTmtAThenBDialogCancelButtonText:
-            tmtGamePracticeTmtAThenBDialogCancelButtonText,
-        TMTGamePracticesText.tmtGamePracticeTmtAThenBDialogPrimaryButtonText:
-            tmtGamePracticeTmtAThenBDialogPrimaryButtonText,
-        TMTGamePracticesText.tmtGamePracticeOnlyTmtAOrTmtBDialogTitle:
-            tmtGamePracticeOnlyTmtAOrTmtBDialogTitle,
-        TMTGamePracticesText.tmtGamePracticeOnlyTmtAOrTmtBDialogCancelButtonText:
-            tmtGamePracticeOnlyTmtAOrTmtBDialogCancelButtonText,
-        TMTGamePracticesText.tmtGamePracticeOnlyTmtAOrTmtBDialogPrimaryButtonText:
-            tmtGamePracticeOnlyTmtAOrTmtBDialogPrimaryButtonText,
-        TMTGamePracticesText.tmtGamePracticeTmtAPageTitle:
-            tmtGamePracticeTmtAPageTitle,
-        TMTGamePracticesText.tmtGamePracticeTmtBPageTitle:
-            tmtGamePracticeTmtBPageTitle,
-      };
+    TMTGameText.tmtGameCircleBegin: tmtGameCircleBegin,
+    TMTGameText.tmtGameCircleEnd: tmtGameCircleEnd,
+    TMTGameText.tmtGamePartACompletedTitle: tmtGamePartACompletedTitle,
+    TMTGameText.tmtGamePartACompletedBody: tmtGamePartACompletedBody,
+    TMTGameText.tmtGamePartBCompletedConfirmationButton:
+    tmtGamePartBCompletedConfirmationButton,
+    TMTGameText.tmtGameTmtScreenAppBarTime: tmtGameTmtScreenAppBarTime,
+    TMTGameText.tmtGameTmtHelpTmtATitle: tmtGameTmtHelpTmtATitle,
+    TMTGameText.tmtGameTmtHelpTmtBTitle: tmtGameTmtHelpTmtBTitle,
+    TMTGameText.tmtGameTmtHelpTmtPrimaryButtonText:
+    tmtGameTmtHelpTmtPrimaryButtonText,
+    TMTGameText.tmtGameTmtHelpTmtSecondaryButtonText:
+    tmtGameTmtHelpTmtSecondaryButtonText,
+    //--------------------------------------------TMT Practice Text------------------------------------------------------
+    TMTGamePracticesText.tmtGamePracticeTmtAThenBDialogTitle:
+    tmtGamePracticeTmtAThenBDialogTitle,
+    TMTGamePracticesText.tmtGamePracticeTmtAThenBDialogCancelButtonText:
+    tmtGamePracticeTmtAThenBDialogCancelButtonText,
+    TMTGamePracticesText.tmtGamePracticeTmtAThenBDialogPrimaryButtonText:
+    tmtGamePracticeTmtAThenBDialogPrimaryButtonText,
+    TMTGamePracticesText.tmtGamePracticeOnlyTmtAOrTmtBDialogTitle:
+    tmtGamePracticeOnlyTmtAOrTmtBDialogTitle,
+    TMTGamePracticesText.tmtGamePracticeOnlyTmtAOrTmtBDialogCancelButtonText:
+    tmtGamePracticeOnlyTmtAOrTmtBDialogCancelButtonText,
+    TMTGamePracticesText.tmtGamePracticeOnlyTmtAOrTmtBDialogPrimaryButtonText:
+    tmtGamePracticeOnlyTmtAOrTmtBDialogPrimaryButtonText,
+    TMTGamePracticesText.tmtGamePracticeTmtAPageTitle:
+    tmtGamePracticeTmtAPageTitle,
+    TMTGamePracticesText.tmtGamePracticeTmtBPageTitle:
+    tmtGamePracticeTmtBPageTitle,
+    //--------------------------------------------TMT Result Screen Text------------------------------------------------------
+    TMTResultScreen.title: tmtResultScreenTitle,
+    TMTResultScreen.sessionText: tmtResultScreenSessionText,
+    TMTResultScreen.tmtATitle: tmtResultScreenTmtATitle,
+    TMTResultScreen.tmtBTitle: tmtResultScreenTmtBTitle,
+    TMTResultScreen.durationLabel: tmtResultScreenDurationLabel,
+    TMTResultScreen.errorsLabel: tmtResultScreenErrorsLabel,
+    TMTResultScreen.thanksMessage: tmtResultScreenThanksMessage,
+    TMTResultScreen.finishButton: tmtResultScreenFinishButton,
+  };
 }

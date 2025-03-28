@@ -55,6 +55,32 @@ class ChineseMessages extends BaseMessages {
 
   @override
   String get tmtGamePracticeTmtBPageTitle => "TMT B 练习";
+
+  //--------------------------------------------TMT Result Screen Text------------------------------------------------------
+  @override
+  String get tmtResultScreenTitle => "结果:";
+
+  @override
+  String get tmtResultScreenSessionText => "会话次数";
+
+  @override
+  String get tmtResultScreenTmtATitle => "TMT A";
+
+  @override
+  String get tmtResultScreenTmtBTitle => "TMT B";
+
+  @override
+  String get tmtResultScreenDurationLabel => "时长";
+
+  @override
+  String get tmtResultScreenErrorsLabel => "错误";
+
+  @override
+  String get tmtResultScreenThanksMessage =>
+      "感谢您的信任、时间和努力完成这个dTMT测试";
+
+  @override
+  String get tmtResultScreenFinishButton => "完成";
 }
 
 final zh = ChineseMessages();
