@@ -1,8 +1,8 @@
 
 import 'package:msdtmt/app/features/tm_tst/domain/entities/tmt_game_result_data.dart';
 import 'package:msdtmt/app/utils/services/net/result_data.dart';
-import '../../data/model/tmt_result_metric_model.dart';
-import '../repository/tmt_result_repository.dart';
+import '../../../data/model/tmt_result_metric_model.dart';
+import '../../repository/tmt_result_repository.dart';
 
 class ReportTmtResultsUseCase {
   final TmtResultRepository repository;
