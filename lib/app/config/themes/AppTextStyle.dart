@@ -45,4 +45,8 @@ class AppTextStyle {
     fontWeight: AppFontWeight.normal,
     fontStyle: FontStyle.normal,
   );
+
+  static var tmtResultThanksText = TextStyleBase.bodyS.copyWith(
+    color: Get.isDarkMode ? AppColors.darkText : AppColors.blueText,
+  );
 }

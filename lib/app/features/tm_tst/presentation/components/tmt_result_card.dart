@@ -21,14 +21,17 @@ class TmtResultCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final metrics = TmtResultCardResponsiveCalculator.calculateCardMetrics(context);
+    final metrics =
+        TmtResultCardResponsiveCalculator.calculateCardMetrics(context);
 
     return Center(
       child: Container(
         width: metrics.maxCardWidth,
         margin: EdgeInsets.symmetric(vertical: metrics.verticalMargin),
         decoration: BoxDecoration(
-          color: AppColors.secondaryBlue,
+          color: Get.isDarkMode
+              ? AppColors.secondaryBlueDark
+              : AppColors.secondaryBlue,
           borderRadius: BorderRadius.circular(metrics.borderRadius),
         ),
         child: Column(
@@ -47,18 +50,19 @@ class TmtResultCard extends StatelessWidget {
                 final errorsLabel = TMTResultScreen.errorsLabel.tr;
 
                 final durationTextWidth =
-                TmtResultCardResponsiveCalculator.calculateTextWidth(
+                    TmtResultCardResponsiveCalculator.calculateTextWidth(
                   durationLabel,
                   AppTextStyle.tmtResultCardText,
                 );
 
                 final errorsTextWidth =
-                TmtResultCardResponsiveCalculator.calculateTextWidth(
+                    TmtResultCardResponsiveCalculator.calculateTextWidth(
                   errorsLabel,
                   AppTextStyle.tmtResultCardText,
                 );
 
-                final spacing = TmtResultCardResponsiveCalculator.calculateLayoutSpacing(
+                final spacing =
+                    TmtResultCardResponsiveCalculator.calculateLayoutSpacing(
                   context,
                   constraints,
                   durationTextWidth,
