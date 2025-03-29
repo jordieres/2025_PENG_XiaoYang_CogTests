@@ -1,13 +1,12 @@
 import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:flutter/material.dart';
 
 import 'metric/metric_static_values.dart';
 import 'metric/tmt_metrics_controller.dart';
 
 class TmtGameResultData {
-  final double averageLift;
-  final double averagePause;
+  final double averageLift; // in seconds
+  final double averagePause; // in seconds
   final double averageRateBeforeLetters;
   final double averageRateBeforeNumbers;
   final double averageRateBetweenCircles;
@@ -21,8 +20,8 @@ class TmtGameResultData {
   final String codeId;
   final DateTime dateData;
   final int numberErrors;
-  final int numberErrorA;
-  final int numberErrorB;
+  final int numberErrorsA;
+  final int numberErrorsB;
   final int numberLifts;
   final int numberPauses;
   final int numCirc;
@@ -48,8 +47,8 @@ class TmtGameResultData {
     required this.codeId,
     required this.dateData,
     required this.numberErrors,
-    required this.numberErrorA,
-    required this.numberErrorB,
+    required this.numberErrorsA,
+    required this.numberErrorsB,
     required this.numberLifts,
     required this.numberPauses,
     required this.numCirc,
@@ -61,10 +60,9 @@ class TmtGameResultData {
   });
 
   static Future<TmtGameResultData> fromMetricsController(
-    TmtMetricsController controller,
-    BuildContext context, {
+    TmtMetricsController controller, {
     String codeId = "", //TODO parse TMT test code
-    String score = "", // TODO calculate score
+    String score = "38", // TODO calculate score
   }) async {
     // Get device model information
     String deviceModel = await _getDeviceModel();
@@ -81,17 +79,13 @@ class TmtGameResultData {
       averageRateInsideCircles:
           controller.circleMetrics.calculateAverageRateInsideCircles(),
       averageTimeBeforeLetters:
-          controller.bMetrics.calculateAverageTimeBeforeLetters() /
-              MetricStaticValues.SEND_METRIC_THRESHOLD_MS,
+          controller.bMetrics.calculateAverageTimeBeforeLetters(),
       averageTimeBeforeNumbers:
-          controller.bMetrics.calculateAverageTimeBeforeNumbers() /
-              MetricStaticValues.SEND_METRIC_THRESHOLD_MS,
+          controller.bMetrics.calculateAverageTimeBeforeNumbers() ,
       averageTimeBetweenCircles:
-          controller.circleMetrics.calculateAverageTimeBetweenCircles() /
-              MetricStaticValues.SEND_METRIC_THRESHOLD_MS,
+          controller.circleMetrics.calculateAverageTimeBetweenCircles(),
       averageTimeInsideCircles:
-          controller.circleMetrics.calculateAverageTimeInsideCircles() /
-              MetricStaticValues.SEND_METRIC_THRESHOLD_MS,
+          controller.circleMetrics.calculateAverageTimeInsideCircles(),
       averageTotalPressure:
           controller.pressureSizeMetric.calculateAverageTotalPressure(),
       averageTotalSize:
@@ -99,8 +93,8 @@ class TmtGameResultData {
       codeId: codeId,
       dateData: DateTime.now(),
       numberErrors: controller.numberError,
-      numberErrorA: controller.numberErrorA,
-      numberErrorB: controller.numberErrorB,
+      numberErrorsA: controller.numberErrorA,
+      numberErrorsB: controller.numberErrorB,
       numberLifts: controller.testLiftMetric.numberLift,
       numberPauses: controller.testPauseMetric.numberPause,
       numCirc: controller.circles.length,
