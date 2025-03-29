@@ -88,6 +88,9 @@ class SpanishMessages extends BaseMessages {
 
   @override
   String get tmtResultScreenFinishButton => "Terminar";
+
+  @override
+  String get tmtResultScreenLoadingResults => "Cargando resultados...";
 }
 
 final es = SpanishMessages();

@@ -76,11 +76,13 @@ class ChineseMessages extends BaseMessages {
   String get tmtResultScreenErrorsLabel => "错误";
 
   @override
-  String get tmtResultScreenThanksMessage =>
-      "感谢您的信任、时间和努力完成这个dTMT测试";
+  String get tmtResultScreenThanksMessage => "感谢您的信任、时间和努力完成这个dTMT测试";
 
   @override
   String get tmtResultScreenFinishButton => "完成";
+
+  @override
+  String get tmtResultScreenLoadingResults => "加载结果...";
 }
 
 final zh = ChineseMessages();
