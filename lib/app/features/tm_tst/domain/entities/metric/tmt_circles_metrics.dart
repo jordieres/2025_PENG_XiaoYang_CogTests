@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'circles_metric.dart';
+import 'metric_static_values.dart';
 
 class TmtCircleMetrics {
   final List<CirclesMetric> _circleBetweenMetricsList = [];
@@ -26,8 +27,8 @@ class TmtCircleMetrics {
     }
 
     if (_connectCircleStartTime != null) {
-      metrics._connectCircleStartTime =
-          DateTime.fromMillisecondsSinceEpoch(_connectCircleStartTime!.millisecondsSinceEpoch);
+      metrics._connectCircleStartTime = DateTime.fromMillisecondsSinceEpoch(
+          _connectCircleStartTime!.millisecondsSinceEpoch);
     }
 
     if (lastCircleConnectPoint != null) {
@@ -36,8 +37,8 @@ class TmtCircleMetrics {
     }
 
     if (_insideCircleStartTime != null) {
-      metrics._insideCircleStartTime =
-          DateTime.fromMillisecondsSinceEpoch(_insideCircleStartTime!.millisecondsSinceEpoch);
+      metrics._insideCircleStartTime = DateTime.fromMillisecondsSinceEpoch(
+          _insideCircleStartTime!.millisecondsSinceEpoch);
     }
 
     if (_pointStartInsideCircle != null) {
@@ -49,13 +50,6 @@ class TmtCircleMetrics {
 
     return metrics;
   }
-
-
-
-
-
-
-
 
   void onConnectNextCircleCorrect(int circleIndex, Offset circleConnectPoint) {
     if (circleIndex == 0) {
@@ -83,7 +77,8 @@ class TmtCircleMetrics {
     int count = 0;
     for (var metric in _circleBetweenMetricsList) {
       if (metric.duration > 0) {
-        totalRate += (metric.distance / metric.duration);
+        totalRate += (metric.distance /
+            (metric.duration / MetricStaticValues.SEND_METRIC_THRESHOLD_MS));
         count++;
       }
     }
@@ -95,7 +90,9 @@ class TmtCircleMetrics {
     final totalTimeBetweenCircles = _circleBetweenMetricsList
         .map((e) => e.duration)
         .reduce((value, element) => value + element);
-    return totalTimeBetweenCircles / _circleBetweenMetricsList.length;
+    return (totalTimeBetweenCircles /
+            MetricStaticValues.SEND_METRIC_THRESHOLD_MS) /
+        _circleBetweenMetricsList.length;
   }
 
   void dragOnInsideCircle(Offset pointStart) {
@@ -127,7 +124,8 @@ class TmtCircleMetrics {
     int count = 0;
     for (var metric in _circleInsideMetricsList) {
       if (metric.duration > 0) {
-        totalRate += (metric.distance / metric.duration);
+        totalRate += (metric.distance /
+            (metric.duration / MetricStaticValues.SEND_METRIC_THRESHOLD_MS));
         count++;
       }
     }
@@ -140,6 +138,8 @@ class TmtCircleMetrics {
     final totalTimeInsideCircles = _circleInsideMetricsList
         .map((e) => e.duration)
         .reduce((value, element) => value + element);
-    return totalTimeInsideCircles / _circleInsideMetricsList.length;
+    return (totalTimeInsideCircles /
+            MetricStaticValues.SEND_METRIC_THRESHOLD_MS) /
+        _circleInsideMetricsList.length;
   }
 }
