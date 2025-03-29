@@ -6,7 +6,9 @@ import 'AppFontWeight.dart';
 import 'app_text_style_base.dart';
 
 class AppTextStyle {
-  static var appBarTitle = (TextStyleBase.h4).copyWith();
+  static var appBarTitle = (TextStyleBase.h4).copyWith(
+    color: Get.isDarkMode ? AppColors.darkText : AppColors.mainBlackText,
+  );
 
   static var tmtGameCircleText = TextStyle(
     color: AppColors.mainBlackText,
@@ -34,7 +36,7 @@ class AppTextStyle {
   );
 
   static var customDialogOutlinedButton =
-      (TextStyleBase.actionM).copyWith(color: AppColors.customButtonColor);
+  (TextStyleBase.actionM).copyWith(color: AppColors.customButtonColor);
 
   static var customPrimaryButtonText = (TextStyleBase.actionM).copyWith(
     color: AppColors.darkText,
