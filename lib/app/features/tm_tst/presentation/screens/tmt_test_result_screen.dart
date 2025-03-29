@@ -201,7 +201,7 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
           CircularProgressIndicator(),
           SizedBox(height: 20),
           Text(
-            "Sending results...",
+            TMTResultScreen.loadingResults.tr,
             style: TextStyleBase.bodyL,
           ),
         ],

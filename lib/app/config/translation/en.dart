@@ -87,6 +87,9 @@ class EnglishMessages extends BaseMessages {
 
   @override
   String get tmtResultScreenFinishButton => "Finish";
+
+  @override
+  String get tmtResultScreenLoadingResults => "Loading Results...";
 }
 
 final en = EnglishMessages();
