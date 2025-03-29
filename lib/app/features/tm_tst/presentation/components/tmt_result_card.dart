@@ -5,7 +5,7 @@ import '../../../../config/themes/AppFontWeight.dart';
 import '../../../../config/themes/AppTextStyle.dart';
 import '../../../../config/themes/app_text_style_base.dart';
 import '../../../../config/translation/app_translations.dart';
-import '../../domain/usecases/tmt_result_card_responsive_calculate.dart';
+import '../../domain/usecases/tmt_result/tmt_result_card_responsive_calculate.dart';
 
 class TmtResultCard extends StatelessWidget {
   final String title;

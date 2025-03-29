@@ -9,7 +9,7 @@ import '../../../../shared_components/custom_primary_button.dart';
 import '../../../../utils/helpers/app_helpers.dart';
 import '../../../../utils/services/app_logger.dart';
 import '../../../../utils/services/request_state.dart';
-import '../../domain/usecases/tmt_result_screen_responsive_calculator.dart';
+import '../../domain/usecases/tmt_result/tmt_result_screen_responsive_calculator.dart';
 import '../components/tmt_result_card.dart';
 import '../controllers/tmt_result_controller.dart';
 import '../controllers/tmt_test_flow_state_controller.dart';
@@ -45,6 +45,7 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
   int _numSessions = 0;
 
   bool _resultsSent = false;
+  bool _hasCalculatedInitialLayout = false;
 
   @override
   void initState() {
@@ -57,13 +58,28 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
     _sendResults();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _calculateContentHeight();
-      _calculateCardHeight();
+      // Add a slight delay for first calculation to ensure rendering is complete
+      Future.delayed(const Duration(milliseconds: 100), () {
+        _calculateContentHeight();
+        _calculateCardHeight();
+        _checkIfScrollNeeded();
+      });
     });
 
     _scrollController.addListener(() {
       _updateScrollIndicator();
     });
+  }
+
+  void _checkIfScrollNeeded() {
+    if (_scrollController.hasClients) {
+      setState(() {
+        _showScrollIndicator = _scrollController.position.maxScrollExtent > 0;
+        _hasCalculatedInitialLayout = true;
+      });
+    } else {
+      Future.delayed(const Duration(milliseconds: 50), _checkIfScrollNeeded);
+    }
   }
 
   void _setupStateObserver() {
@@ -104,6 +120,9 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _calculateContentHeight();
       _calculateCardHeight();
+      if (_hasCalculatedInitialLayout) {
+        _checkIfScrollNeeded();
+      }
     });
   }
 
@@ -116,12 +135,12 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
 
   void _calculateCardHeight() {
     final RenderBox? cardBox =
-        _cardKey.currentContext?.findRenderObject() as RenderBox?;
+    _cardKey.currentContext?.findRenderObject() as RenderBox?;
     if (cardBox != null) {
       final height = cardBox.size.height;
 
       final proportions =
-          TmtResultResponsiveCalculator.calculateCardHeightProportions(height);
+      TmtResultResponsiveCalculator.calculateCardHeightProportions(height);
 
       setState(() {
         _cardsToTextMargin = proportions.cardsToTextMargin;
@@ -139,10 +158,10 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
     _lastCalculation = now;
 
     final RenderBox? contentBox =
-        _contentKey.currentContext?.findRenderObject() as RenderBox?;
+    _contentKey.currentContext?.findRenderObject() as RenderBox?;
+
     if (contentBox != null) {
       final screenHeight = MediaQuery.of(context).size.height;
-
       setState(() {
         _showScrollIndicator =
             TmtResultResponsiveCalculator.shouldShowScrollIndicator(
@@ -213,7 +232,7 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
 
   Widget _buildResultContent(BuildContext context) {
     final metrics =
-        TmtResultResponsiveCalculator.calculateLayoutMetrics(context);
+    TmtResultResponsiveCalculator.calculateLayoutMetrics(context);
     final useProportionalMargins = metrics.isTablet || !metrics.isLandscape;
 
     return Stack(
@@ -228,7 +247,7 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
                 maxWidth: metrics.contentMaxWidth,
               ),
               padding:
-                  EdgeInsets.symmetric(horizontal: metrics.horizontalPadding),
+              EdgeInsets.symmetric(horizontal: metrics.horizontalPadding),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -285,7 +304,7 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
 
   Widget _buildLandscapeCards() {
     final metrics =
-        TmtResultResponsiveCalculator.calculateLayoutMetrics(context);
+    TmtResultResponsiveCalculator.calculateLayoutMetrics(context);
 
     return Row(
       children: [
@@ -311,7 +330,7 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
 
   Widget _buildPortraitCards() {
     final metrics =
-        TmtResultResponsiveCalculator.calculateLayoutMetrics(context);
+    TmtResultResponsiveCalculator.calculateLayoutMetrics(context);
 
     return Column(
       children: [
