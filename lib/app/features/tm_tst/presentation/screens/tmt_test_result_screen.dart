@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:msdtmt/app/config/themes/AppColors.dart';
 import '../../../../config/routes/app_pages.dart';
+import '../../../../config/themes/AppTextStyle.dart';
 import '../../../../config/themes/app_text_style_base.dart';
 import '../../../../config/translation/app_translations.dart';
 import '../../../../shared_components/custom_primary_button.dart';
@@ -257,7 +259,7 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
                           : metrics.cardsToThanksTextMargin),
                   Text(
                     TMTResultScreen.thanksMessage.tr,
-                    style: TextStyleBase.bodyS,
+                    style: AppTextStyle.tmtResultThanksText,
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(
