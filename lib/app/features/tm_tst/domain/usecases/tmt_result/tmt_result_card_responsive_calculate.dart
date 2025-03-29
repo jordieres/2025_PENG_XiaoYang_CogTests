@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../utils/helpers/app_helpers.dart';
+import '../../../../../utils/helpers/app_helpers.dart';
 
 /// Class responsible for performing all responsive calculations for the TmtResultCard component
 class TmtResultCardResponsiveCalculator {

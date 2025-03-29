@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../../constans/app_constants.dart';
-import '../../../../utils/helpers/app_helpers.dart';
+import '../../../../../constans/app_constants.dart';
+import '../../../../../utils/helpers/app_helpers.dart';
 
 class TmtResultResponsiveCalculator {
   static double getScaleFactor() {
@@ -9,9 +9,9 @@ class TmtResultResponsiveCalculator {
       case DeviceType.largeTablet:
         return 1.6;
       case DeviceType.mediumTablet:
-        return 1.4;
-      case DeviceType.smallTablet:
         return 1.3;
+      case DeviceType.smallTablet:
+        return 1.2;
       case DeviceType.largePhone:
         return 1.0;
       case DeviceType.mediumPhone:
@@ -69,9 +69,10 @@ class TmtResultResponsiveCalculator {
 
   static CardHeightProportions calculateCardHeightProportions(
       double cardHeight) {
+
     final baseSpacing = cardHeight * 0.685;
     return CardHeightProportions(
-      cardsToTextMargin: baseSpacing * 0.6, // 60%  cardsToTextMargin
+      cardsToTextMargin:  DeviceHelper.isTablet ? baseSpacing * 0.55 : baseSpacing * 0.6, //
       textToButtonMargin: baseSpacing * 0.4, // 40%  textToButtonMargin
     );
   }
