@@ -32,7 +32,9 @@ class TmtResultResponsiveCalculator {
     final responsiveRatio = screenHeight / AppDesignSize.designHeight;
 
     return ResultLayoutMetrics(
-        topMargin: 46 * responsiveRatio * baseScaleFactor,
+        topMargin: isLandscape
+            ? 30 * responsiveRatio * baseScaleFactor
+            : 40 * responsiveRatio * baseScaleFactor,
         titleToSessionsMargin: isLandscape
             ? 30 * responsiveRatio * baseScaleFactor
             : 40 * responsiveRatio * baseScaleFactor,
@@ -47,7 +49,7 @@ class TmtResultResponsiveCalculator {
         horizontalCardSpacing:
             16 * (screenWidth / AppDesignSize.designWidth) * baseScaleFactor,
         bottomMargin: isLandscape
-            ? 60 * responsiveRatio * baseScaleFactor
+            ? 50 * responsiveRatio * baseScaleFactor
             : 40 * responsiveRatio * baseScaleFactor,
         contentMaxWidth:
             (isTablet && isLandscape) ? screenWidth * 0.7 : double.infinity,
@@ -69,10 +71,10 @@ class TmtResultResponsiveCalculator {
 
   static CardHeightProportions calculateCardHeightProportions(
       double cardHeight) {
-
     final baseSpacing = cardHeight * 0.685;
     return CardHeightProportions(
-      cardsToTextMargin:  DeviceHelper.isTablet ? baseSpacing * 0.55 : baseSpacing * 0.6, //
+      cardsToTextMargin:
+          DeviceHelper.isTablet ? baseSpacing * 0.55 : baseSpacing * 0.6, //
       textToButtonMargin: baseSpacing * 0.4, // 40%  textToButtonMargin
     );
   }
