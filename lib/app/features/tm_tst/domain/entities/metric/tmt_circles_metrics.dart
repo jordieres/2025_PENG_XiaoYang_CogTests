@@ -68,11 +68,13 @@ class TmtCircleMetrics {
       circlesMetric.duration =
           currentTime.difference(_connectCircleStartTime!).inMilliseconds;
 
-      double centerToCenterDistance = (circleConnectPoint - lastCircleConnectPoint!).distance;
+      double centerToCenterDistance =
+          (circleConnectPoint - lastCircleConnectPoint!).distance;
       double radius = TmtGameVariables.circleRadius;
+
       /// Rate is defined as the straight line distance between the exit point of one circle
       /// and the entry point of the next
-      circlesMetric.distance = centerToCenterDistance - 2 * radius;
+      circlesMetric.setRealDistance(centerToCenterDistance - 2 * radius);
       _circleBetweenMetricsList.add(circlesMetric);
       _connectCircleStartTime = currentTime;
       lastCircleConnectPoint = circleConnectPoint;
@@ -119,7 +121,6 @@ class TmtCircleMetrics {
     }
   }
 
-
   void dragEndInsideCircle(Offset pointEnd) {
     if (_insideCircleStartTime == null) return;
     if (_isStartDrawInsideCircle) {
@@ -127,13 +128,15 @@ class TmtCircleMetrics {
       _currentInsideCirclePoints.add(pointEnd);
       double totalPathLength = 0;
       for (int i = 1; i < _currentInsideCirclePoints.length; i++) {
-        totalPathLength += (_currentInsideCirclePoints[i] - _currentInsideCirclePoints[i-1]).distance;
+        totalPathLength +=
+            (_currentInsideCirclePoints[i] - _currentInsideCirclePoints[i - 1])
+                .distance;
       }
 
       CirclesMetric circlesMetric = CirclesMetric();
       circlesMetric.duration =
           currentTime.difference(_insideCircleStartTime!).inMilliseconds;
-      circlesMetric.distance = totalPathLength;
+      circlesMetric.setRealDistance(totalPathLength);
 
       _circleInsideMetricsList.add(circlesMetric);
       _isStartDrawInsideCircle = false;
