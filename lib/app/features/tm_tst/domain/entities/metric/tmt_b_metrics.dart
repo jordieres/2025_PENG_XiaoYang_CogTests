@@ -46,11 +46,13 @@ class TmtBMetrics {
       circlesMetric.duration =
           currentTime.difference(_connectCircleStartTime!).inMilliseconds;
 
-      double currentDistance = (circleConnectPoint.offset - _lastCircleConnectPoint!).distance;
+      double currentDistance =
+          (circleConnectPoint.offset - _lastCircleConnectPoint!).distance;
       double radius = TmtGameVariables.circleRadius;
+
       /// Rate is defined as the straight line distance between the exit point of one circle
       /// and the entry point of the next,
-      circlesMetric.distance = currentDistance - (2 * radius);
+      circlesMetric.setRealDistance(currentDistance - (2 * radius));
 
       if (circleConnectPoint.isNumber) {
         _beforeLetterMetricsList.add(circlesMetric);
