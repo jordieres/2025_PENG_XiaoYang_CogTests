@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import '../tmt_game_circle.dart';
+import '../tmt_game_variable.dart';
 import 'circles_metric.dart';
 import 'metric_static_values.dart';
 
@@ -44,8 +45,12 @@ class TmtBMetrics {
       CirclesMetric circlesMetric = CirclesMetric();
       circlesMetric.duration =
           currentTime.difference(_connectCircleStartTime!).inMilliseconds;
-      circlesMetric.distance =
-          (circleConnectPoint.offset - _lastCircleConnectPoint!).distance;
+
+      double currentDistance = (circleConnectPoint.offset - _lastCircleConnectPoint!).distance;
+      double radius = TmtGameVariables.circleRadius;
+      /// Rate is defined as the straight line distance between the exit point of one circle
+      /// and the entry point of the next,
+      circlesMetric.distance = currentDistance - (2 * radius);
 
       if (circleConnectPoint.isNumber) {
         _beforeLetterMetricsList.add(circlesMetric);
