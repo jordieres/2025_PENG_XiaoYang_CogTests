@@ -91,6 +91,9 @@ class SpanishMessages extends BaseMessages {
 
   @override
   String get tmtResultScreenLoadingResults => "Cargando resultados...";
+
+  @override
+  String get tmtResultScreenSecondsUnit => "s";
 }
 
 final es = SpanishMessages();

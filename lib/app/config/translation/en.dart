@@ -90,6 +90,9 @@ class EnglishMessages extends BaseMessages {
 
   @override
   String get tmtResultScreenLoadingResults => "Loading Results...";
+
+  @override
+  String get tmtResultScreenSecondsUnit => "s";
 }
 
 final en = EnglishMessages();

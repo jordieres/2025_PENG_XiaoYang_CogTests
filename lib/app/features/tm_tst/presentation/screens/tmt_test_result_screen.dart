@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:msdtmt/app/config/themes/AppColors.dart';
 import '../../../../config/routes/app_pages.dart';
 import '../../../../config/themes/AppTextStyle.dart';
 import '../../../../config/themes/app_text_style_base.dart';
@@ -52,7 +51,8 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
     _resultController = Get.find<TmtResultController>();
 
     _lastOrientation = MediaQuery.of(Get.context!).orientation;
-    _metrics = TmtResultResponsiveCalculator.calculateLayoutMetrics(Get.context!);
+    _metrics =
+        TmtResultResponsiveCalculator.calculateLayoutMetrics(Get.context!);
 
     _loadTestResults();
     _setupStateObserver();
@@ -70,17 +70,23 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
       if (state is RequestInitial) {
       } else if (state is RequestLoading) {
       } else if (state is RequestSuccess) {
-      } else if (state is RequestError) {}
+      } else if (state is RequestError) {
+        _showErrorSnackBar(state.message);
+      }
     });
+  }
+
+  void _showErrorSnackBar(String? message) {
+
   }
 
   void _loadTestResults() {
     final metrics = _testController.metricsController;
 
     _timeCompleteA =
-        metrics.testTimeMetrics.calculateTimeCompleteTmtA().inSeconds;
+        metrics.testTimeMetrics.calculateTimeCompleteTmtA().toInt();
     _timeCompleteB =
-        metrics.testTimeMetrics.calculateTimeCompleteTmtB().inSeconds;
+        metrics.testTimeMetrics.calculateTimeCompleteTmtB().toInt();
     _errorsA = metrics.numberErrorA;
     _errorsB = metrics.numberErrorB;
 
@@ -145,7 +151,8 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
       setState(() {
         _showScrollIndicator = false;
       });
-    } else if (!isNearBottom && !_showScrollIndicator &&
+    } else if (!isNearBottom &&
+        !_showScrollIndicator &&
         _scrollController.position.maxScrollExtent > 0) {
       setState(() {
         _showScrollIndicator = true;
@@ -216,7 +223,8 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
               constraints: BoxConstraints(
                 maxWidth: _metrics.contentMaxWidth,
               ),
-              padding: EdgeInsets.symmetric(horizontal: _metrics.horizontalPadding),
+              padding:
+              EdgeInsets.symmetric(horizontal: _metrics.horizontalPadding),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -272,7 +280,7 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
           child: TmtResultCard(
             key: _cardKey,
             title: TMTResultScreen.tmtATitle.tr,
-            duration: '$_timeCompleteA S',
+            duration: '$_timeCompleteA ${TMTResultScreen.secondsUnit.tr}',
             errors: _errorsA.toString(),
           ),
         ),
@@ -280,7 +288,7 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
         Expanded(
           child: TmtResultCard(
             title: TMTResultScreen.tmtBTitle.tr,
-            duration: '$_timeCompleteB S',
+            duration: '$_timeCompleteB ${TMTResultScreen.secondsUnit.tr}',
             errors: _errorsB.toString(),
           ),
         ),
@@ -294,13 +302,13 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
         TmtResultCard(
           key: _cardKey,
           title: TMTResultScreen.tmtATitle.tr,
-          duration: '$_timeCompleteA S',
+          duration: '$_timeCompleteA ${TMTResultScreen.secondsUnit.tr}',
           errors: _errorsA.toString(),
         ),
         SizedBox(height: _metrics.betweenCardsMargin),
         TmtResultCard(
           title: TMTResultScreen.tmtBTitle.tr,
-          duration: '$_timeCompleteB S',
+          duration: '$_timeCompleteB ${TMTResultScreen.secondsUnit.tr}',
           errors: _errorsB.toString(),
         ),
       ],
@@ -322,10 +330,7 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: [
-                    bgColor.withAlpha(0),
-                    bgColor.withAlpha(204)
-                  ],
+                  colors: [bgColor.withAlpha(0), bgColor.withAlpha(204)],
                   stops: const [0.0, 0.7],
                 ),
               ),
