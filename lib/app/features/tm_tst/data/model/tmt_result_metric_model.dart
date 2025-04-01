@@ -1,7 +1,8 @@
-
 import 'package:intl/intl.dart';
 import 'package:msdtmt/app/features/tm_tst/domain/entities/tmt_game_result_data.dart';
 
+import '../../domain/entities/metric/metric_static_values.dart';
+import '../../domain/entities/tmt_game_variable.dart';
 
 class TmtResultModel extends TmtGameResultData {
   TmtResultModel({
@@ -25,38 +26,60 @@ class TmtResultModel extends TmtGameResultData {
     required int numberLifts,
     required int numberPauses,
     required int numCirc,
-    required String score,
     required double timeComplete,
     required double timeCompleteA,
     required double timeCompleteB,
     required String deviceModel,
+    required double scoreA,
+    required double scoreA1,
+    required double scoreA2,
+    required double scoreA3,
+    required double scoreA4,
+    required double scoreA5,
+    required double scoreB,
+    required double scoreB1,
+    required double scoreB2,
+    required double scoreB3,
+    required double scoreB4,
+    required double scoreB5,
   }) : super(
-    averageLift: averageLift,
-    averagePause: averagePause,
-    averageRateBeforeLetters: averageRateBeforeLetters,
-    averageRateBeforeNumbers: averageRateBeforeNumbers,
-    averageRateBetweenCircles: averageRateBetweenCircles,
-    averageRateInsideCircles: averageRateInsideCircles,
-    averageTimeBeforeLetters: averageTimeBeforeLetters,
-    averageTimeBeforeNumbers: averageTimeBeforeNumbers,
-    averageTimeBetweenCircles: averageTimeBetweenCircles,
-    averageTimeInsideCircles: averageTimeInsideCircles,
-    averageTotalPressure: averageTotalPressure,
-    averageTotalSize: averageTotalSize,
-    codeId: codeId,
-    dateData: dateData,
-    numberErrors: numberErrors,
-    numberErrorsA: numberErrorA,
-    numberErrorsB: numberErrorB,
-    numberLifts: numberLifts,
-    numberPauses: numberPauses,
-    numCirc: numCirc,
-    score: score,
-    timeComplete: timeComplete,
-    timeCompleteA: timeCompleteA,
-    timeCompleteB: timeCompleteB,
-    deviceModel: deviceModel,
-  );
+          averageLift: averageLift,
+          averagePause: averagePause,
+          averageRateBeforeLetters: averageRateBeforeLetters,
+          averageRateBeforeNumbers: averageRateBeforeNumbers,
+          averageRateBetweenCircles: averageRateBetweenCircles,
+          averageRateInsideCircles: averageRateInsideCircles,
+          averageTimeBeforeLetters: averageTimeBeforeLetters,
+          averageTimeBeforeNumbers: averageTimeBeforeNumbers,
+          averageTimeBetweenCircles: averageTimeBetweenCircles,
+          averageTimeInsideCircles: averageTimeInsideCircles,
+          averageTotalPressure: averageTotalPressure,
+          averageTotalSize: averageTotalSize,
+          codeId: codeId,
+          dateData: dateData,
+          numberErrors: numberErrors,
+          numberErrorsA: numberErrorA,
+          numberErrorsB: numberErrorB,
+          numberLifts: numberLifts,
+          numberPauses: numberPauses,
+          numCirc: numCirc,
+          timeComplete: timeComplete,
+          timeCompleteA: timeCompleteA,
+          timeCompleteB: timeCompleteB,
+          deviceModel: deviceModel,
+          scoreA: scoreA,
+          scoreA1: scoreA1,
+          scoreA2: scoreA2,
+          scoreA3: scoreA3,
+          scoreA4: scoreA4,
+          scoreA5: scoreA5,
+          scoreB: scoreB,
+          scoreB1: scoreB1,
+          scoreB2: scoreB2,
+          scoreB3: scoreB3,
+          scoreB4: scoreB4,
+          scoreB5: scoreB5,
+        );
 
   factory TmtResultModel.fromEntity(TmtGameResultData entity) {
     return TmtResultModel(
@@ -80,11 +103,22 @@ class TmtResultModel extends TmtGameResultData {
       numberLifts: entity.numberLifts,
       numberPauses: entity.numberPauses,
       numCirc: entity.numCirc,
-      score: entity.score,
       timeComplete: entity.timeComplete,
       timeCompleteA: entity.timeCompleteA,
       timeCompleteB: entity.timeCompleteB,
       deviceModel: entity.deviceModel,
+      scoreA: entity.timeCompleteA,
+      scoreA1: entity.scoreA1,
+      scoreA2: entity.scoreA2,
+      scoreA3: entity.scoreA3,
+      scoreA4: entity.scoreA4,
+      scoreA5: entity.scoreA5,
+      scoreB: entity.timeCompleteB,
+      scoreB1: entity.scoreB1,
+      scoreB2: entity.scoreB2,
+      scoreB3: entity.scoreB3,
+      scoreB4: entity.scoreB4,
+      scoreB5: entity.scoreB5,
     );
   }
 
@@ -93,7 +127,7 @@ class TmtResultModel extends TmtGameResultData {
     final utcDate = dateData.toUtc();
     final formattedDate = '${formatter.format(utcDate)} GMT';
 
-    return {
+    final Map<String, dynamic> result = {
       'NumCirc': numCirc,
       'Time_complete': timeComplete,
       'Number_Errors': numberErrors,
@@ -112,13 +146,36 @@ class TmtResultModel extends TmtGameResultData {
       'Average_Total_Pressure': averageTotalPressure,
       'Average_Total_Size': averageTotalSize,
       'Date_Data': formattedDate,
-      'Score': score,
       'Number_Errors_A': numberErrorsA,
       'Number_Errors_B': numberErrorsB,
       'Time_Complete_A': timeCompleteA,
       'Time_Complete_B': timeCompleteB,
       'Device_Model': deviceModel,
+      // Section scores
+      'ScoreA': scoreA,
+      'ScoreA1': scoreA1,
+      'ScoreA2': scoreA2,
+      'ScoreA3': scoreA3,
+      'ScoreB': scoreB,
+      'ScoreB1': scoreB1,
+      'ScoreB2': scoreB2,
+      'ScoreB3': scoreB3,
     };
+
+    addScoreIfValid('ScoreA4', scoreA4, result);
+    addScoreIfValid('ScoreA5', scoreA5, result);
+    addScoreIfValid('ScoreB4', scoreB4, result);
+    addScoreIfValid('ScoreB5', scoreB5, result);
+
+    return result;
   }
 
+  /// Only have score 4 and 5 if number circles is 25
+  void addScoreIfValid(String key, double value, Map<String, dynamic> result) {
+    if (value != MetricStaticValues.NOT_SECTION_4_AND_5 ||
+        TmtGameVariables.CIRCLE_NUMBER ==
+            TmtGameVariables.DEFAULT_CIRCLE_NUMBER) {
+      result[key] = value;
+    }
+  }
 }

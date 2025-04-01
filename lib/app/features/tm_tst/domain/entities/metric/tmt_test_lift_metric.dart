@@ -34,7 +34,7 @@ class TmtTestLiftMetric {
       return;
     }
     DateTime now = DateTime.now();
-    totalLiftTime += now.difference(_lastPauseTime!).inMilliseconds;
+    totalLiftTime += now.difference(_lastPauseTime!).abs().inMilliseconds;
     numberLift++;
   }
 }

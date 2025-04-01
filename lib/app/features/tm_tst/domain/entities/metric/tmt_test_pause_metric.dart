@@ -66,7 +66,7 @@ class TmtTestPauseMetric {
 
   void onEndPause() {
     if (_pauseStartTime != null) {
-      _totalPauseTime += DateTime.now().difference(_pauseStartTime!);
+      _totalPauseTime += DateTime.now().difference(_pauseStartTime!).abs();
       _pauseStartTime = null;
     }
     _pauseTimerCounter?.cancel();
@@ -85,7 +85,7 @@ class TmtTestPauseMetric {
       if (_isPaused) {
         _isPaused = false;
         if (_pauseStartTime != null) {
-          _totalPauseTime += DateTime.now().difference(_pauseStartTime!);
+          _totalPauseTime += DateTime.now().difference(_pauseStartTime!).abs();
         }
         _pauseStartTime = null;
       }

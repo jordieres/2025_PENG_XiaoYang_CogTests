@@ -44,7 +44,7 @@ class TmtBMetrics {
       final currentTime = DateTime.now();
       CirclesMetric circlesMetric = CirclesMetric();
       circlesMetric.duration =
-          currentTime.difference(_connectCircleStartTime!).inMilliseconds;
+          currentTime.difference(_connectCircleStartTime!).abs().inMilliseconds;
 
       double currentDistance =
           (circleConnectPoint.offset - _lastCircleConnectPoint!).distance;

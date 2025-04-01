@@ -17,7 +17,7 @@ class TmtResultRepositoryImpl implements TmtResultRepository {
   @override
   Future<ResultData> reportTmtResults(TmtResultModel resultModel) async {
     try {
-      String codeId = "73845-26"; //TODO find codeId
+      String codeId = "73912-25"; //TODO find codeId
       TmtUserData userData = TmtUserData(
         mano: "D",
         nivelEduc: "G",

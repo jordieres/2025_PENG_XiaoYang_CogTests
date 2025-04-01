@@ -66,7 +66,7 @@ class TmtCircleMetrics {
       final currentTime = DateTime.now();
       CirclesMetric circlesMetric = CirclesMetric();
       circlesMetric.duration =
-          currentTime.difference(_connectCircleStartTime!).inMilliseconds;
+          currentTime.difference(_connectCircleStartTime!).abs().inMilliseconds;
 
       double centerToCenterDistance =
           (circleConnectPoint - lastCircleConnectPoint!).distance;
@@ -135,7 +135,7 @@ class TmtCircleMetrics {
 
       CirclesMetric circlesMetric = CirclesMetric();
       circlesMetric.duration =
-          currentTime.difference(_insideCircleStartTime!).inMilliseconds;
+          currentTime.difference(_insideCircleStartTime!).abs().inMilliseconds;
       circlesMetric.setRealDistance(totalPathLength);
 
       _circleInsideMetricsList.add(circlesMetric);
