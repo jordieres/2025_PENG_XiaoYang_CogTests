@@ -83,6 +83,9 @@ class ChineseMessages extends BaseMessages {
 
   @override
   String get tmtResultScreenLoadingResults => "加载结果...";
+
+  @override
+  String get tmtResultScreenSecondsUnit => "秒";
 }
 
 final zh = ChineseMessages();
