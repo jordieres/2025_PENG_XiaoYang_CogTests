@@ -1,8 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:msdtmt/app/utils/services/net/rest_api_services.dart';
 
-class ApiInterceptor extends Interceptor {
+import '../../helpers/app_helpers.dart';
 
+class ApiInterceptor extends Interceptor {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
     handler.next(err);
@@ -23,7 +24,8 @@ class ApiInterceptor extends Interceptor {
 
     if (response.data is Map<String, dynamic>) {
       final Map<String, dynamic> responseData = response.data;
-      if (responseData[ApiConstants.statusField] != ApiConstants.statusOk) {
+      if (!StringHelper.equalsIgnoreCase(
+          responseData[ApiConstants.statusField], ApiConstants.statusOk)) {
         String message = 'API returned an error';
         if (responseData[ApiConstants.messageField] != null) {
           message = responseData[ApiConstants.messageField];
