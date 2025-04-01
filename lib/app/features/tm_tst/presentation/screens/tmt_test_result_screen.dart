@@ -8,6 +8,7 @@ import '../../../../shared_components/custom_primary_button.dart';
 import '../../../../utils/helpers/app_helpers.dart';
 import '../../../../utils/services/app_logger.dart';
 import '../../../../utils/services/request_state.dart';
+import '../../../../utils/ui/ui_utils.dart';
 import '../../domain/usecases/tmt_result/tmt_result_screen_responsive_calculator.dart';
 import '../components/tmt_result_card.dart';
 import '../controllers/tmt_result_controller.dart';
@@ -77,7 +78,9 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
   }
 
   void _showErrorSnackBar(String? message) {
-
+    AppSnackbar.showCustomSnackbar(
+      context, "Error", //TODO translate
+    );
   }
 
   void _loadTestResults() {
@@ -224,7 +227,7 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
                 maxWidth: _metrics.contentMaxWidth,
               ),
               padding:
-              EdgeInsets.symmetric(horizontal: _metrics.horizontalPadding),
+                  EdgeInsets.symmetric(horizontal: _metrics.horizontalPadding),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
