@@ -1,4 +1,4 @@
-import 'package:msdtmt/app/features/tm_tst/domain/entities/tmt_game_hand_used.dart';
+import 'package:msdtmt/app/features/tm_tst/domain/entities/result/tmt_game_hand_used.dart';
 
 class TmtGameInitData {
 

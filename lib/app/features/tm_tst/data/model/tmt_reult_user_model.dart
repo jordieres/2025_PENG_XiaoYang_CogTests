@@ -1,5 +1,5 @@
 
-import 'package:msdtmt/app/features/tm_tst/domain/entities/tmt_user_data.dart';
+import 'package:msdtmt/app/features/tm_tst/domain/entities/result/tmt_user_data.dart';
 
 class TmtUserModel extends TmtUserData {
   TmtUserModel({
