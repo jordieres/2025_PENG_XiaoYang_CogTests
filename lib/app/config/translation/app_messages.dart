@@ -36,7 +36,6 @@ class TMTGamePracticesText {
       'tmt_game_practice_tmt_b_page_title';
 }
 
-// New class for TMT Result Screen translations
 class TMTResultScreen {
   static String title = 'tmt_result_screen_title';
   static String sessionText = 'tmt_result_screen_session_text';
@@ -48,6 +47,7 @@ class TMTResultScreen {
   static String finishButton = 'tmt_result_screen_finish_button';
   static String loadingResults = 'tmt_result_screen_loading_results';
   static String secondsUnit = 'tmt_result_screen_seconds_unit';
+  static String errorMessage= 'tmt_result_screen_error_message';
 }
 
 abstract class BaseMessages {
@@ -111,6 +111,8 @@ abstract class BaseMessages {
 
   String get tmtResultScreenSecondsUnit;
 
+  String get tmtResultScreenErrorMessage;
+
   Map<String, String> get messages => {
     TMTGameText.tmtGameCircleBegin: tmtGameCircleBegin,
     TMTGameText.tmtGameCircleEnd: tmtGameCircleEnd,
@@ -155,5 +157,6 @@ abstract class BaseMessages {
     TMTResultScreen.finishButton: tmtResultScreenFinishButton,
     TMTResultScreen.loadingResults: tmtResultScreenLoadingResults,
     TMTResultScreen.secondsUnit: tmtResultScreenSecondsUnit,
+    TMTResultScreen.errorMessage: tmtResultScreenErrorMessage,
   };
 }
