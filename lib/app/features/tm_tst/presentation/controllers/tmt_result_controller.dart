@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
-import 'package:msdtmt/app/features/tm_tst/domain/entities/tmt_game_init_data.dart';
-import 'package:msdtmt/app/features/tm_tst/domain/entities/tmt_game_result_data.dart';
 import 'package:msdtmt/app/utils/services/net/api_error.dart';
 
 import '../../../../utils/services/request_state.dart';
 import '../../domain/entities/metric/tmt_metrics_controller.dart';
+import '../../domain/entities/result/tmt_game_init_data.dart';
+import '../../domain/entities/result/tmt_game_result_data.dart';
 import '../../domain/usecases/tmt_result/report_tmt_result_use_case.dart';
 
 class TmtResultController extends GetxController {

@@ -1,8 +1,9 @@
 import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:msdtmt/app/features/tm_tst/domain/entities/tmt_game_init_data.dart';
+import 'package:msdtmt/app/features/tm_tst/domain/entities/result/tmt_game_init_data.dart';
 
-import 'metric/tmt_metrics_controller.dart';
+import '../metric/tmt_metrics_controller.dart';
+
 
 class TmtGameResultData {
   final TmtGameInitData tmtGameInitData;

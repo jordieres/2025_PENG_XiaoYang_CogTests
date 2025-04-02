@@ -2,7 +2,7 @@ import 'package:msdtmt/app/utils/services/app_logger.dart';
 import 'package:msdtmt/app/utils/services/net/rest_api_services.dart';
 import 'package:msdtmt/app/utils/services/net/result_data.dart';
 
-import '../../domain/entities/tmt_user_data.dart';
+import '../../domain/entities/result/tmt_user_data.dart';
 import '../../domain/repository/tmt_result_repository.dart';
 import '../model/tmt_result_metric_model.dart';
 import '../model/tmt_reult_user_model.dart';
