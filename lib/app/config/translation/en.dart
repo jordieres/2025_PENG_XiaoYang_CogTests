@@ -93,6 +93,9 @@ class EnglishMessages extends BaseMessages {
 
   @override
   String get tmtResultScreenSecondsUnit => "s";
+
+  @override
+  String get tmtResultScreenErrorMessage => "Error Sending Results";
 }
 
 final en = EnglishMessages();

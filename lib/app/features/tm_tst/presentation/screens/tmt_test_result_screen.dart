@@ -79,7 +79,7 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
 
   void _showErrorSnackBar(String? message) {
     AppSnackbar.showCustomSnackbar(
-      context, "Error", //TODO translate
+      context, TMTResultScreen.errorMessage.tr,
     );
   }
 

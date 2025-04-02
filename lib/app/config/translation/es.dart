@@ -94,6 +94,9 @@ class SpanishMessages extends BaseMessages {
 
   @override
   String get tmtResultScreenSecondsUnit => "s";
+
+  @override
+  String get tmtResultScreenErrorMessage => "Error al enviar resultados";
 }
 
 final es = SpanishMessages();

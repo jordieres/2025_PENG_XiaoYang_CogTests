@@ -150,7 +150,7 @@ class TmtResultModel extends TmtGameResultData {
       'Number_Errors_B': numberErrorsB,
       'Time_Complete_A': timeCompleteA,
       'Time_Complete_B': timeCompleteB,
-      'Device_Model': deviceModel,
+      'Device': deviceModel,
       // Section scores
       'ScoreA': scoreA,
       'ScoreA1': scoreA1,
