@@ -1,4 +1,5 @@
 import 'package:intl/intl.dart';
+import 'package:msdtmt/app/features/tm_tst/domain/entities/tmt_game_init_data.dart';
 import 'package:msdtmt/app/features/tm_tst/domain/entities/tmt_game_result_data.dart';
 
 import '../../domain/entities/metric/metric_static_values.dart';
@@ -6,6 +7,7 @@ import '../../domain/entities/tmt_game_variable.dart';
 
 class TmtResultModel extends TmtGameResultData {
   TmtResultModel({
+    required TmtGameInitData tmtGameInitData,
     required double averageLift,
     required double averagePause,
     required double averageRateBeforeLetters,
@@ -18,7 +20,6 @@ class TmtResultModel extends TmtGameResultData {
     required double averageTimeInsideCircles,
     required double averageTotalPressure,
     required double averageTotalSize,
-    required String codeId,
     required DateTime dateData,
     required int numberErrors,
     required int numberErrorA,
@@ -43,6 +44,7 @@ class TmtResultModel extends TmtGameResultData {
     required double scoreB4,
     required double scoreB5,
   }) : super(
+          tmtGameInitData: tmtGameInitData,
           averageLift: averageLift,
           averagePause: averagePause,
           averageRateBeforeLetters: averageRateBeforeLetters,
@@ -55,7 +57,6 @@ class TmtResultModel extends TmtGameResultData {
           averageTimeInsideCircles: averageTimeInsideCircles,
           averageTotalPressure: averageTotalPressure,
           averageTotalSize: averageTotalSize,
-          codeId: codeId,
           dateData: dateData,
           numberErrors: numberErrors,
           numberErrorsA: numberErrorA,
@@ -83,6 +84,7 @@ class TmtResultModel extends TmtGameResultData {
 
   factory TmtResultModel.fromEntity(TmtGameResultData entity) {
     return TmtResultModel(
+      tmtGameInitData: entity.tmtGameInitData,
       averageLift: entity.averageLift,
       averagePause: entity.averagePause,
       averageRateBeforeLetters: entity.averageRateBeforeLetters,
@@ -95,7 +97,6 @@ class TmtResultModel extends TmtGameResultData {
       averageTimeInsideCircles: entity.averageTimeInsideCircles,
       averageTotalPressure: entity.averageTotalPressure,
       averageTotalSize: entity.averageTotalSize,
-      codeId: entity.codeId,
       dateData: entity.dateData,
       numberErrors: entity.numberErrors,
       numberErrorA: entity.numberErrorsA,
@@ -128,6 +129,8 @@ class TmtResultModel extends TmtGameResultData {
     final formattedDate = '${formatter.format(utcDate)} GMT';
 
     final Map<String, dynamic> result = {
+      'codeid': tmtGameInitData.tmtGameCodeId,
+      "Mano": tmtGameInitData.tmtGameHandUsed.value,
       'NumCirc': numCirc,
       'Time_complete': timeComplete,
       'Number_Errors': numberErrors,

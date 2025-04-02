@@ -68,13 +68,12 @@ class RestApiServices {
   }
 
   Future<ResultData> reportTmtResults(
-      String codeId, TmtUserModel userModel, TmtResultModel resultModel) async {
+      TmtUserModel userModel, TmtResultModel resultModel) async {
     try {
       final userJson = userModel.toJson();
       final resultJson = resultModel.toJson();
 
       final data = {
-        ApiConstants.codeIdField: codeId,
         ...userJson,
         ...resultJson,
       };
@@ -138,7 +137,8 @@ class RestApiServices {
     if (e.type == DioExceptionType.connectionTimeout ||
         e.type == DioExceptionType.receiveTimeout ||
         e.type == DioExceptionType.sendTimeout) {
-      return NetworkError('Connection timeout. Please check your network connection.');
+      return NetworkError(
+          'Connection timeout. Please check your network connection.');
     } else if (e.type == DioExceptionType.connectionError) {
       return NetworkError('No internet connection. Please check your network.');
     } else if (e.type == DioExceptionType.badResponse) {

@@ -1,9 +1,12 @@
 import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:msdtmt/app/features/tm_tst/domain/entities/tmt_game_init_data.dart';
 
 import 'metric/tmt_metrics_controller.dart';
 
 class TmtGameResultData {
+  final TmtGameInitData tmtGameInitData;
+
   final double averageLift; // in seconds
   final double averagePause; // in seconds
   final double averageRateBeforeLetters;
@@ -16,7 +19,6 @@ class TmtGameResultData {
   final double averageTimeInsideCircles; // in seconds
   final double averageTotalPressure;
   final double averageTotalSize;
-  final String codeId;
   final DateTime dateData;
   final int numberErrors;
   final int numberErrorsA;
@@ -44,6 +46,7 @@ class TmtGameResultData {
   final double scoreB5; // section5 is optional to 15 circles test
 
   TmtGameResultData({
+    required this.tmtGameInitData,
     required this.averageLift,
     required this.averagePause,
     required this.averageRateBeforeLetters,
@@ -56,7 +59,6 @@ class TmtGameResultData {
     required this.averageTimeInsideCircles,
     required this.averageTotalPressure,
     required this.averageTotalSize,
-    required this.codeId,
     required this.dateData,
     required this.numberErrors,
     required this.numberErrorsA,
@@ -83,9 +85,9 @@ class TmtGameResultData {
   });
 
   static Future<TmtGameResultData> fromMetricsController(
-    TmtMetricsController controller, {
-    String codeId = "", //TODO add
-  }) async {
+    TmtMetricsController controller,
+    TmtGameInitData tmtGameInitData,
+  ) async {
     String deviceModel = await _getDeviceModel();
 
     double scoreA1 = controller.testTimeMetrics.scoreA1;
@@ -101,6 +103,7 @@ class TmtGameResultData {
     double scoreB5 = controller.testTimeMetrics.scoreB5;
 
     return TmtGameResultData(
+      tmtGameInitData: tmtGameInitData,
       averageLift: controller.testLiftMetric.calculateAverageLift(),
       averagePause: controller.testPauseMetric.calculateAveragePause(),
       averageRateBeforeLetters:
@@ -123,7 +126,6 @@ class TmtGameResultData {
           controller.pressureSizeMetric.calculateAverageTotalPressure(),
       averageTotalSize:
           controller.pressureSizeMetric.calculateAverageTotalSize(),
-      codeId: codeId,
       dateData: DateTime.now(),
       numberErrors: controller.numberError,
       numberErrorsA: controller.numberErrorA,

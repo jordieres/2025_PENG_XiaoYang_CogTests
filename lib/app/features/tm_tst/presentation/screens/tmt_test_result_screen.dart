@@ -9,6 +9,8 @@ import '../../../../utils/helpers/app_helpers.dart';
 import '../../../../utils/services/app_logger.dart';
 import '../../../../utils/services/request_state.dart';
 import '../../../../utils/ui/ui_utils.dart';
+import '../../domain/entities/tmt_game_hand_used.dart';
+import '../../domain/entities/tmt_game_init_data.dart';
 import '../../domain/usecases/tmt_result/tmt_result_screen_responsive_calculator.dart';
 import '../components/tmt_result_card.dart';
 import '../controllers/tmt_result_controller.dart';
@@ -79,7 +81,8 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
 
   void _showErrorSnackBar(String? message) {
     AppSnackbar.showCustomSnackbar(
-      context, TMTResultScreen.errorMessage.tr,
+      context,
+      TMTResultScreen.errorMessage.tr,
     );
   }
 
@@ -99,7 +102,13 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
   Future<void> _sendResults() async {
     if (_resultsSent) return;
     try {
-      await _resultController.reportResults(_testController.metricsController);
+      final tmtGameInitData = TmtGameInitData(
+          tmtGameHandUsed: TmtGameHandUsed.RIGHT, //TODO parse from HomeScreen
+          tmtGameCodeId: "74925-26" //TODO parse from HomeScreen
+          );
+
+      await _resultController.reportResults(
+          _testController.metricsController, tmtGameInitData);
       _resultsSent = true;
     } catch (e) {
       AppLogger.severe(_loggerTag, "Error sending results", e);

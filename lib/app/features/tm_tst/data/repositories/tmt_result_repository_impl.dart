@@ -17,20 +17,16 @@ class TmtResultRepositoryImpl implements TmtResultRepository {
   @override
   Future<ResultData> reportTmtResults(TmtResultModel resultModel) async {
     try {
-      String codeId = "652981-38"; //TODO find codeId
       TmtUserData userData = TmtUserData(
-        mano: "D",
         nivelEduc: "G",
         sexo: "M",
-        fNacimiento: DateTime(
-            1980, 1, 1),
+        fNacimiento: DateTime(1980, 1, 1),
       );
-    //TODO get Userdata from local storage
+      //TODO get Userdata from local storage
 
       final userModel = TmtUserModel.fromEntity(userData);
 
       final result = await _apiServices.reportTmtResults(
-        codeId,
         userModel,
         resultModel,
       );
