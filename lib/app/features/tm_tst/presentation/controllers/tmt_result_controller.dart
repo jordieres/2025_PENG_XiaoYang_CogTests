@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:msdtmt/app/features/tm_tst/domain/entities/tmt_game_init_data.dart';
 import 'package:msdtmt/app/features/tm_tst/domain/entities/tmt_game_result_data.dart';
 import 'package:msdtmt/app/utils/services/net/api_error.dart';
 
@@ -22,11 +23,13 @@ class TmtResultController extends GetxController {
 
   TmtResultController(this._reportTmtResultsUseCase);
 
-  Future<void> reportResults(TmtMetricsController controller) async {
+  Future<void> reportResults(
+      TmtMetricsController controller, TmtGameInitData tmtGameInitData) async {
     try {
       state.value = RequestLoading();
       TmtGameResultData resultData =
-          await TmtGameResultData.fromMetricsController(controller);
+          await TmtGameResultData.fromMetricsController(
+              controller, tmtGameInitData);
       final result = await _reportTmtResultsUseCase.execute(resultData);
 
       if (result.result) {
