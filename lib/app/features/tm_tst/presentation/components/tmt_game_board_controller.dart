@@ -6,9 +6,9 @@ import '../../../../utils/helpers/app_helpers.dart';
 import '../../data/datasources/generate_circle_with_data.dart';
 import '../../data/datasources/random_grid_sampler.dart';
 import '../../domain/entities/metric/tmt_metrics_controller.dart';
-import '../../domain/entities/tmt_game_circle.dart';
+import '../../domain/entities/tmt_game/tmt_game_circle.dart';
 import '../../domain/usecases/tmt_game_calculate.dart';
-import '../../domain/entities/tmt_game_variable.dart';
+import '../../domain/entities/tmt_game/tmt_game_variable.dart';
 import '../controllers/base_tmt_test_flow_contoller.dart';
 
 /// This class manager logic of tmt test

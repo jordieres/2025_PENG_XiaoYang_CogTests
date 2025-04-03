@@ -1,7 +1,7 @@
 import 'dart:ui';
 
-import '../tmt_game_circle.dart';
-import '../tmt_game_variable.dart';
+import '../tmt_game/tmt_game_circle.dart';
+import '../tmt_game/tmt_game_variable.dart';
 import 'circles_metric.dart';
 import 'metric_static_values.dart';
 

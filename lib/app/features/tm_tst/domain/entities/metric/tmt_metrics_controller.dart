@@ -9,7 +9,7 @@ import 'package:msdtmt/app/utils/services/app_logger.dart';
 
 import '../../../presentation/controllers/base_tmt_test_flow_contoller.dart';
 import '../../../presentation/controllers/tmt_test_flow_state_controller.dart';
-import '../tmt_game_circle.dart';
+import '../tmt_game/tmt_game_circle.dart';
 
 /// All calculation here are in milliseconds
 class TmtMetricsController {
