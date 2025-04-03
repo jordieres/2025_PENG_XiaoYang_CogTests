@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../config/themes/AppColors.dart';
+import '../config/themes/AppTextStyle.dart';
 import '../utils/helpers/app_helpers.dart';
 
 class CustomPrimaryButton extends StatelessWidget {
@@ -25,16 +26,12 @@ class CustomPrimaryButton extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
-          //minimumSize: Size.fromHeight(DeviceHelper.isTablet ? 52 : 42),
-          padding: const EdgeInsets.symmetric(vertical: 12),
+          minimumSize: Size.fromHeight(DeviceHelper.isTablet ? 60 : 48),
+          padding: const EdgeInsets.symmetric(vertical: 12,horizontal: 16),
         ),
         child: Text(
           text,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: DeviceHelper.isTablet ? 16 : 12,
-            fontWeight: FontWeight.w600, // semibold
-          ),
+          style: AppTextStyle.customPrimaryButtonText,
         ),
       ),
     );

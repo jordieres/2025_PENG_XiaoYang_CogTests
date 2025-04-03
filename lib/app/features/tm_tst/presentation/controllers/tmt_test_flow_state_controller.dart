@@ -41,7 +41,6 @@ class TmtTestFlowStateController extends BaseTmtTestFlowController {
 
   int getTmtATimeInSec() {
     return _metricsControllerTmtA.testTimeMetrics
-        .calculateTimeCompleteTmtA()
-        .inSeconds;
+        .calculateTimeCompleteTmtA().toInt();
   }
 }

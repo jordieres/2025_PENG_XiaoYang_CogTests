@@ -13,7 +13,7 @@ class AppColors {
   static const Color secondaryBlueDark = Color(0xFF1A3A5A); // Darker secondary blue
   static const Color darkBackground = Color(0xFF121212); // Dark background
   static const Color darkSurface = Color(0xFF1E1E1E); // Dark surface color
-  static const Color darkText = Color(0xFFE0E0E0); // Dark mode text color
+  static const Color darkText = Color(0xFFFFFFFF); // Dark mode text color
 
   // Test TMT Colors - Light Mode
   static const Color testTMTBoardBackground = Color(0xFFE7E7E7); // Test TMT Background

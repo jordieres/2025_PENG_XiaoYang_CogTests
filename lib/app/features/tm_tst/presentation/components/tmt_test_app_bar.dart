@@ -118,28 +118,24 @@ class _TmtCustomAppBarState extends State<TmtCustomAppBar>
 
   @override
   Widget build(BuildContext context) {
-    final appBarTitleStyle = AppTextStyle.appBarTitle.copyWith(
-      color: isDarkMode ? AppColors.darkText : AppColors.mainBlackText,
-    );
-
     List<Widget> defaultActions = [
       const SizedBox(width: 80),
       IconButton(
         icon: isDarkMode
             ? SvgPicture.asset(
-          ImageVectorPath.help,
-          width: 30,
-          height: 30,
-          colorFilter: ColorFilter.mode(
-            AppColors.darkText,
-            BlendMode.srcIn,
-          ),
-        )
+                ImageVectorPath.help,
+                width: 30,
+                height: 30,
+                colorFilter: ColorFilter.mode(
+                  AppColors.darkText,
+                  BlendMode.srcIn,
+                ),
+              )
             : SvgPicture.asset(
-          ImageVectorPath.help,
-          width: 30,
-          height: 30,
-        ),
+                ImageVectorPath.help,
+                width: 30,
+                height: 30,
+              ),
         onPressed: () {
           _navigateToHelpScreen();
         },
@@ -160,20 +156,24 @@ class _TmtCustomAppBarState extends State<TmtCustomAppBar>
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
+                  const SizedBox(width: 8),
                   Text(
-                    TMTGame.tmtGameTmtScreenAppBarTime.tr,
-                    style: appBarTitleStyle,
+                    TMTGameText.tmtGameTmtScreenAppBarTime.tr,
+                    style: AppTextStyle.appBarTitle,
                   ),
                   const SizedBox(width: 8),
                   Container(
-                    padding: const EdgeInsets.fromLTRB(26, 7, 14, 7),
+                    padding: const EdgeInsets.fromLTRB(26, 7, 26, 7),
                     decoration: BoxDecoration(
-                      color: isDarkMode ? AppColors.secondaryBlueDark : AppColors.secondaryBlue,
+                      color: isDarkMode
+                          ? AppColors.secondaryBlueDark
+                          : AppColors.secondaryBlue,
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Text(
                       _formatTime(_elapsedSeconds),
-                      style: appBarTitleStyle,
+                      style: AppTextStyle.appBarTitle,
+                      textAlign: TextAlign.center,
                     ),
                   ),
                 ],
@@ -186,7 +186,8 @@ class _TmtCustomAppBarState extends State<TmtCustomAppBar>
   }
 
   void _navigateToHelpScreen() {
-    final helpMode = widget.isTestTypeA ? TmtHelpMode.TMT_TEST_A : TmtHelpMode.TMT_TEST_B;
+    final helpMode =
+        widget.isTestTypeA ? TmtHelpMode.TMT_TEST_A : TmtHelpMode.TMT_TEST_B;
     tmtTestToHelp(helpMode);
   }
 }
