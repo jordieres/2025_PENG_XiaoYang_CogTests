@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import '../../domain/entities/metric/tmt_metrics_controller.dart';
-import '../../domain/entities/tmt_game_variable.dart';
+import '../../domain/entities/tmt_game/tmt_game_variable.dart';
 import 'base_tmt_test_flow_contoller.dart';
 
 class TmtPracticeFlowController extends BaseTmtTestFlowController {
