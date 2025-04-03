@@ -3,17 +3,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:msdtmt/app/utils/services/app_logger.dart';
 import 'package:msdtmt/app/features/tm_tst/data/model/tmt_result_metric_model.dart';
 import 'package:msdtmt/app/features/tm_tst/data/model/tmt_reult_user_model.dart';
+import '../../../../utils/services/local_storage_services.dart';
 import '../../../../utils/services/net/rest_api_services.dart';
 import '../../../../utils/services/net/result_data.dart';
 import '../../domain/repository/pending_result_repository.dart';
 import '../model/pending_result_model.dart';
 
-
-
 class PendingResultRepositoryImpl implements PendingResultRepository {
   final RestApiServices _apiServices;
 
-  static const String _pendingResultsKey = 'pending_tmt_results';
   static const String _loggerTag = 'PendingResultRepositoryImpl';
 
   PendingResultRepositoryImpl(this._apiServices);
@@ -22,8 +20,6 @@ class PendingResultRepositoryImpl implements PendingResultRepository {
   Future<bool> savePendingResult(
       TmtResultModel resultModel, TmtUserModel userModel) async {
     try {
-      final prefs = await SharedPreferences.getInstance();
-
       final pendingResultData = PendingResultData(
         resultModelJson: resultModel.toJson(),
         userModelJson: userModel.toJson(),
@@ -31,11 +27,11 @@ class PendingResultRepositoryImpl implements PendingResultRepository {
       );
 
       List<String> pendingResults =
-          prefs.getStringList(_pendingResultsKey) ?? [];
+          await LocalStorageServices.getPendingResultList();
 
       pendingResults.add(jsonEncode(pendingResultData.toMap()));
 
-      return await prefs.setStringList(_pendingResultsKey, pendingResults);
+      return await LocalStorageServices.savePendingResultList(pendingResults);
     } catch (e) {
       return false;
     }
@@ -46,7 +42,7 @@ class PendingResultRepositoryImpl implements PendingResultRepository {
     try {
       final prefs = await SharedPreferences.getInstance();
       List<String> pendingResultsJson =
-          prefs.getStringList(_pendingResultsKey) ?? [];
+          await LocalStorageServices.getPendingResultList();
       List<PendingResultData> results = [];
 
       for (String jsonString in pendingResultsJson) {
@@ -66,10 +62,8 @@ class PendingResultRepositoryImpl implements PendingResultRepository {
   @override
   Future<bool> deletePendingResult(PendingResultData pendingResultData) async {
     try {
-      final prefs = await SharedPreferences.getInstance();
-
       List<String> pendingResultsJson =
-          prefs.getStringList(_pendingResultsKey) ?? [];
+          await LocalStorageServices.getPendingResultList();
       List<String> remainingResultsJson = [];
 
       for (String jsonString in pendingResultsJson) {
@@ -86,8 +80,8 @@ class PendingResultRepositoryImpl implements PendingResultRepository {
         }
       }
 
-      return await prefs.setStringList(
-          _pendingResultsKey, remainingResultsJson);
+      return await LocalStorageServices.savePendingResultList(
+          remainingResultsJson);
     } catch (e) {
       return false;
     }
@@ -96,8 +90,7 @@ class PendingResultRepositoryImpl implements PendingResultRepository {
   @override
   Future<bool> deleteAllPendingResults() async {
     try {
-      final prefs = await SharedPreferences.getInstance();
-      return await prefs.remove(_pendingResultsKey);
+      return await LocalStorageServices.clearPendingResultList();
     } catch (e) {
       return false;
     }

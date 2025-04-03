@@ -1,3 +1,5 @@
+import 'package:shared_preferences/shared_preferences.dart';
+
 /// contains all service to get data from local
 class LocalStorageServices {
   static final LocalStorageServices _localStorageServices =
@@ -6,19 +8,23 @@ class LocalStorageServices {
   factory LocalStorageServices() {
     return _localStorageServices;
   }
+
+  static const String _pendingResultsKey = 'pending_tmt_results';
+
   LocalStorageServices._internal();
 
-  // to save data in local, you can use SharedPreferences for simple data
-  // or Sqflite for more complex data
+  static Future<bool> savePendingResultList(List<String> pendingResults) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return await prefs.setStringList(_pendingResultsKey, pendingResults);
+  }
 
-  /// example :
-  // Future<void> saveToken(String token) async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   prefs.setString('token', token);
-  // }
+  static Future<List<String>> getPendingResultList() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getStringList(_pendingResultsKey) ?? [];
+  }
 
-  // Future<String?> getToken() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   return prefs.getString('token');
-  // }
+  static Future<bool> clearPendingResultList() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return await prefs.remove(_pendingResultsKey);
+  }
 }
