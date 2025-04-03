@@ -1,7 +1,9 @@
 import 'dart:ui';
 
 import '../tmt_game_circle.dart';
+import '../tmt_game_variable.dart';
 import 'circles_metric.dart';
+import 'metric_static_values.dart';
 
 class TmtBMetrics {
   final List<CirclesMetric> _beforeLetterMetricsList = [];
@@ -9,7 +11,6 @@ class TmtBMetrics {
 
   DateTime? _connectCircleStartTime;
   Offset? _lastCircleConnectPoint;
-
 
   TmtBMetrics copy() {
     TmtBMetrics metrics = TmtBMetrics();
@@ -23,8 +24,8 @@ class TmtBMetrics {
     }
 
     if (_connectCircleStartTime != null) {
-      metrics._connectCircleStartTime =
-          DateTime.fromMillisecondsSinceEpoch(_connectCircleStartTime!.millisecondsSinceEpoch);
+      metrics._connectCircleStartTime = DateTime.fromMillisecondsSinceEpoch(
+          _connectCircleStartTime!.millisecondsSinceEpoch);
     }
 
     if (_lastCircleConnectPoint != null) {
@@ -43,9 +44,15 @@ class TmtBMetrics {
       final currentTime = DateTime.now();
       CirclesMetric circlesMetric = CirclesMetric();
       circlesMetric.duration =
-          currentTime.difference(_connectCircleStartTime!).inMilliseconds;
-      circlesMetric.distance =
+          currentTime.difference(_connectCircleStartTime!).abs().inMilliseconds;
+
+      double currentDistance =
           (circleConnectPoint.offset - _lastCircleConnectPoint!).distance;
+      double radius = TmtGameVariables.circleRadius;
+
+      /// Rate is defined as the straight line distance between the exit point of one circle
+      /// and the entry point of the next,
+      circlesMetric.setRealDistance(currentDistance - (2 * radius));
 
       if (circleConnectPoint.isNumber) {
         _beforeLetterMetricsList.add(circlesMetric);
@@ -67,7 +74,8 @@ class TmtBMetrics {
 
     for (var metric in _beforeLetterMetricsList) {
       if (metric.duration > 0) {
-        totalRate += (metric.distance / metric.duration);
+        totalRate += (metric.distance /
+            (metric.duration / MetricStaticValues.SEND_METRIC_THRESHOLD_MS));
         count++;
       }
     }
@@ -84,7 +92,8 @@ class TmtBMetrics {
 
     for (var metric in _beforeNumberMetricsList) {
       if (metric.duration > 0) {
-        totalRate += (metric.distance / metric.duration);
+        totalRate += (metric.distance /
+            (metric.duration / MetricStaticValues.SEND_METRIC_THRESHOLD_MS));
         count++;
       }
     }
@@ -100,7 +109,9 @@ class TmtBMetrics {
         .map((e) => e.duration)
         .reduce((value, element) => value + element);
 
-    return (totalTimeBeforeLetters / _beforeLetterMetricsList.length);
+    return ((totalTimeBeforeLetters /
+            MetricStaticValues.SEND_METRIC_THRESHOLD_MS) /
+        _beforeLetterMetricsList.length);
   }
 
   /// Average Time Before Numbers: The average drawing time in seconds before circles that contain numbers (Part B only).
@@ -111,6 +122,8 @@ class TmtBMetrics {
         .map((e) => e.duration)
         .reduce((value, element) => value + element);
 
-    return (totalTimeBeforeNumbers / _beforeNumberMetricsList.length);
+    return ((totalTimeBeforeNumbers /
+            MetricStaticValues.SEND_METRIC_THRESHOLD_MS) /
+        _beforeNumberMetricsList.length);
   }
 }

@@ -19,16 +19,16 @@ class TmtTestPauseMetric {
   bool _isPaused = false;
   Duration _totalPauseTime = Duration.zero;
 
-
   TmtTestPauseMetric copy() {
     TmtTestPauseMetric metric = TmtTestPauseMetric();
     metric.numberPause = numberPause;
     metric._isPaused = _isPaused;
-    metric._totalPauseTime = Duration(milliseconds: _totalPauseTime.inMilliseconds);
+    metric._totalPauseTime =
+        Duration(milliseconds: _totalPauseTime.inMilliseconds);
 
     if (_pauseStartTime != null) {
-      metric._pauseStartTime =
-          DateTime.fromMillisecondsSinceEpoch(_pauseStartTime!.millisecondsSinceEpoch);
+      metric._pauseStartTime = DateTime.fromMillisecondsSinceEpoch(
+          _pauseStartTime!.millisecondsSinceEpoch);
     }
 
     if (_lastPosition != null) {
@@ -40,13 +40,12 @@ class TmtTestPauseMetric {
     return metric;
   }
 
-
-
-
-
-
   double calculateAveragePause() {
-    return numberPause > 0 ? _totalPauseTime.inMilliseconds / numberPause : 0;
+    return numberPause > 0
+        ? (_totalPauseTime.inMilliseconds /
+                MetricStaticValues.SEND_METRIC_THRESHOLD_MS) /
+            numberPause
+        : 0;
   }
 
   void onStartPause(Offset startPosition) {
@@ -67,7 +66,7 @@ class TmtTestPauseMetric {
 
   void onEndPause() {
     if (_pauseStartTime != null) {
-      _totalPauseTime += DateTime.now().difference(_pauseStartTime!);
+      _totalPauseTime += DateTime.now().difference(_pauseStartTime!).abs();
       _pauseStartTime = null;
     }
     _pauseTimerCounter?.cancel();
@@ -86,7 +85,7 @@ class TmtTestPauseMetric {
       if (_isPaused) {
         _isPaused = false;
         if (_pauseStartTime != null) {
-          _totalPauseTime += DateTime.now().difference(_pauseStartTime!);
+          _totalPauseTime += DateTime.now().difference(_pauseStartTime!).abs();
         }
         _pauseStartTime = null;
       }

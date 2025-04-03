@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:msdtmt/app/features/home/HomePage.dart';
+import 'package:msdtmt/app/features/tm_tst/presentation/bindings/tmt_result_binding.dart';
 import 'package:msdtmt/app/features/tm_tst/presentation/bindings/tmt_test_binding.dart';
 import 'package:msdtmt/app/features/tm_tst/presentation/screens/tmt_test_screen.dart';
 
@@ -28,6 +29,7 @@ class AppPages {
     GetPage(
       name: _Paths.tmt_results,
       page: () => const TmtResultsScreen(),
+      binding: TmtResultBinding(),
     ),
     GetPage(
       name: _Paths.tmt_help,

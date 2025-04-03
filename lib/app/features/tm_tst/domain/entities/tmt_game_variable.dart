@@ -40,7 +40,7 @@ class TmtGameVariables {
   }
 
   static void setTestModeCalculate() {
-    CIRCLE_NUMBER = 5; //TODO put 25
+    CIRCLE_NUMBER = 3; //TODO put 25
     //TODO getNUmber circle depend on user preference
   }
 
