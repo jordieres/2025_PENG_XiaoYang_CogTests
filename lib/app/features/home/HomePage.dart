@@ -16,7 +16,7 @@ class HomePage extends StatelessWidget with NavigationMixin {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(TMTGame.tmtGameCircleBegin.tr),
+        title: Text(TMTGameText.tmtGameCircleBegin.tr),
         actions: [
           Obx(() => IconButton(
                 icon: Icon(

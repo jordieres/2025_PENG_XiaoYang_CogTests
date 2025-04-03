@@ -112,11 +112,11 @@ class _TmtPracticePageState extends State<TmtTestPracticePage>
       barrierDismissible: false,
       builder: (context) => CustomDialog(
         mode: DialogMode.confirmCancel,
-        title: TMTGamePractices.tmtGamePracticeTmtAThenBDialogTitle.tr,
+        title: TMTGamePracticesText.tmtGamePracticeTmtAThenBDialogTitle.tr,
         cancelButtonText:
-            TMTGamePractices.tmtGamePracticeTmtAThenBDialogCancelButtonText.tr,
+            TMTGamePracticesText.tmtGamePracticeTmtAThenBDialogCancelButtonText.tr,
         primaryButtonText:
-            TMTGamePractices.tmtGamePracticeTmtAThenBDialogPrimaryButtonText.tr,
+            TMTGamePracticesText.tmtGamePracticeTmtAThenBDialogPrimaryButtonText.tr,
         onCancelPressed: () {
           Get.back();
           Get.offNamedUntil(Routes.tmt_help, ModalRoute.withName(Routes.home),
@@ -136,10 +136,10 @@ class _TmtPracticePageState extends State<TmtTestPracticePage>
       barrierDismissible: false,
       builder: (context) => CustomDialog(
         mode: DialogMode.confirmCancel,
-        title: TMTGamePractices.tmtGamePracticeOnlyTmtAOrTmtBDialogTitle.tr,
-        cancelButtonText: TMTGamePractices
+        title: TMTGamePracticesText.tmtGamePracticeOnlyTmtAOrTmtBDialogTitle.tr,
+        cancelButtonText: TMTGamePracticesText
             .tmtGamePracticeOnlyTmtAOrTmtBDialogCancelButtonText.tr,
-        primaryButtonText: TMTGamePractices
+        primaryButtonText: TMTGamePracticesText
             .tmtGamePracticeOnlyTmtAOrTmtBDialogPrimaryButtonText.tr,
         onCancelPressed: () {
           Get.back(); //close dialog
@@ -176,9 +176,9 @@ class _TmtPracticePageState extends State<TmtTestPracticePage>
     switch (practiceMode) {
       case TMTTestPracticeMode.TMT_A_ONLY:
       case TMTTestPracticeMode.TMT_A_THEN_B:
-        return TMTGamePractices.tmtGamePracticeTmtAPageTitle.tr;
+        return TMTGamePracticesText.tmtGamePracticeTmtAPageTitle.tr;
       case TMTTestPracticeMode.TMT_B_ONLY:
-        return TMTGamePractices.tmtGamePracticeTmtBPageTitle.tr;
+        return TMTGamePracticesText.tmtGamePracticeTmtBPageTitle.tr;
     }
   }
 }

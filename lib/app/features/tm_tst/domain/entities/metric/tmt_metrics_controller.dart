@@ -5,6 +5,7 @@ import 'package:msdtmt/app/features/tm_tst/domain/entities/metric/tmt_pressure_s
 import 'package:msdtmt/app/features/tm_tst/domain/entities/metric/tmt_test_lift_metric.dart';
 import 'package:msdtmt/app/features/tm_tst/domain/entities/metric/tmt_test_pause_metric.dart';
 import 'package:msdtmt/app/features/tm_tst/domain/entities/metric/tmt_test_time_metric.dart';
+import 'package:msdtmt/app/utils/services/app_logger.dart';
 
 import '../../../presentation/controllers/base_tmt_test_flow_contoller.dart';
 import '../../../presentation/controllers/tmt_test_flow_state_controller.dart';
@@ -33,6 +34,8 @@ class TmtMetricsController {
     TmtMetricsController controller = TmtMetricsController();
     controller.isFinishTest = isFinishTest;
     controller.numberError = numberError;
+    controller.numberErrorA = numberErrorA;
+    controller.numberErrorB = numberErrorB;
     controller.circles = List<TmtGameCircle>.from(circles);
     controller.pressureList = List<double>.from(pressureList);
     controller.sizeList = List<double>.from(sizeList);
@@ -111,7 +114,13 @@ class TmtMetricsController {
       TmtGameCircle circleConnectPoint, TmtTestStateFlow tmtTestState) {
     circleMetrics.onConnectNextCircleCorrect(
         circleIndex, circleConnectPoint.offset);
-    if (tmtTestState == TmtTestStateFlow.TMT_B_IN_PROGRESS) {
+
+    int circleNumber = circleIndex + 1;
+    if (tmtTestState == TmtTestStateFlow.TMT_A_IN_PROGRESS ||
+        tmtTestState == TmtTestStateFlow.READY) {
+      testTimeMetrics.recordTmtACircleTime(circleNumber);
+    } else if (tmtTestState == TmtTestStateFlow.TMT_B_IN_PROGRESS) {
+      testTimeMetrics.recordTmtBCircleTime(circleNumber);
       bMetrics.onConnectLetterCircle(circleConnectPoint);
     }
   }

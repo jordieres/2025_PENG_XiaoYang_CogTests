@@ -29,12 +29,14 @@ class DeviceHelper {
   };
 
   static bool isTablet = false;
+  static double devicePixelRatio = 1.0;
   static DeviceType deviceType = DeviceType.mediumPhone;
 
   static void init(BuildContext context) {
     var shortestSide = MediaQuery.of(context).size.shortestSide;
     isTablet = _calculateIsTablet(shortestSide);
     deviceType = getDeviceType(shortestSide);
+    devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
   }
 
   static void calculateAgain(BuildContext context) {

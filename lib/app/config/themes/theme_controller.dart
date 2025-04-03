@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import '../../utils/services/local_storage_services.dart';
 
 class ThemeController extends GetxController {
-  static const String _themeKey = 'theme_mode';
-  static const String _systemThemeKey = 'system_theme';
-
   final Rx<ThemeMode> _themeMode = ThemeMode.system.obs;
 
   final RxBool _isFollowSystem = true.obs;
@@ -16,7 +13,7 @@ class ThemeController extends GetxController {
 
   bool get isDarkMode =>
       _themeMode.value == ThemeMode.dark ||
-      (_themeMode.value == ThemeMode.system && Get.isPlatformDarkMode);
+          (_themeMode.value == ThemeMode.system && Get.isPlatformDarkMode);
 
   @override
   void onInit() {
@@ -25,53 +22,29 @@ class ThemeController extends GetxController {
   }
 
   Future<void> _loadThemeSettings() async {
-    final prefs = await SharedPreferences.getInstance();
-    final isSystemTheme = prefs.getBool(_systemThemeKey) ?? true;
-    _isFollowSystem.value = isSystemTheme;
-
-    if (isSystemTheme) {
-      _themeMode.value = ThemeMode.system;
-    } else {
-      final themeValue = prefs.getString(_themeKey);
-      if (themeValue != null) {
-        _themeMode.value = themeValue == ThemeMode.dark.name
-            ? ThemeMode.dark
-            : ThemeMode.light;
-      }
-    }
+    final themeSettings = await LocalStorageServices.loadThemeSettings();
+    _isFollowSystem.value = themeSettings['isFollowSystem'];
+    _themeMode.value = themeSettings['themeMode'];
   }
 
-  Future<void> _saveThemeSettings() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(_systemThemeKey, _isFollowSystem.value);
-
-    if (!_isFollowSystem.value) {
-      await prefs.setString(
-          _themeKey,
-          _themeMode.value == ThemeMode.dark
-              ? ThemeMode.dark.name
-              : ThemeMode.light.name);
-    }
-  }
-
-  void setLightMode() {
+  Future<void> setLightMode() async {
     _isFollowSystem.value = false;
     _themeMode.value = ThemeMode.light;
-    _saveThemeSettings();
+    await LocalStorageServices.saveThemeSettings(_isFollowSystem.value, _themeMode.value);
     Get.changeThemeMode(ThemeMode.light);
   }
 
-  void setDarkMode() {
+  Future<void> setDarkMode() async {
     _isFollowSystem.value = false;
     _themeMode.value = ThemeMode.dark;
-    _saveThemeSettings();
+    await LocalStorageServices.saveThemeSettings(_isFollowSystem.value, _themeMode.value);
     Get.changeThemeMode(ThemeMode.dark);
   }
 
-  void setSystemTheme() {
+  Future<void> setSystemTheme() async {
     _isFollowSystem.value = true;
     _themeMode.value = ThemeMode.system;
-    _saveThemeSettings();
+    await LocalStorageServices.saveThemeSettings(_isFollowSystem.value, _themeMode.value);
     Get.changeThemeMode(ThemeMode.system);
   }
 

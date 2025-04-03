@@ -62,6 +62,41 @@ class SpanishMessages extends BaseMessages {
 
   @override
   String get tmtGamePracticeTmtBPageTitle => "Práctica TMT B";
+
+  //--------------------------------------------TMT Result Screen Text------------------------------------------------------
+  @override
+  String get tmtResultScreenTitle => "Resultado:";
+
+  @override
+  String get tmtResultScreenSessionText => "Número de Sesiones";
+
+  @override
+  String get tmtResultScreenTmtATitle => "TMT A";
+
+  @override
+  String get tmtResultScreenTmtBTitle => "TMT B";
+
+  @override
+  String get tmtResultScreenDurationLabel => "Duración";
+
+  @override
+  String get tmtResultScreenErrorsLabel => "Errores";
+
+  @override
+  String get tmtResultScreenThanksMessage =>
+      "Le agradecemos la confianza, el tiempo y el esfuerzo en realizar este test dTMT";
+
+  @override
+  String get tmtResultScreenFinishButton => "Terminar";
+
+  @override
+  String get tmtResultScreenLoadingResults => "Cargando resultados...";
+
+  @override
+  String get tmtResultScreenSecondsUnit => "s";
+
+  @override
+  String get tmtResultScreenErrorMessage => "Error al enviar resultados";
 }
 
 final es = SpanishMessages();
