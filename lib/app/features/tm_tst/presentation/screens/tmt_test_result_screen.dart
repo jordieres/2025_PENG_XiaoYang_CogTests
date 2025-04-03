@@ -104,7 +104,7 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
     try {
       final tmtGameInitData = TmtGameInitData(
           tmtGameHandUsed: TmtGameHandUsed.RIGHT, //TODO parse from HomeScreen
-          tmtGameCodeId: "74925-26" //TODO parse from HomeScreen
+          tmtGameCodeId: "74829-23" //TODO parse from HomeScreen
           );
 
       await _resultController.reportResults(

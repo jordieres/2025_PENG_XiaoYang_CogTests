@@ -30,7 +30,6 @@ class TmtResultRepositoryImpl implements TmtResultRepository {
         userModel,
         resultModel,
       );
-      //TODO when faliure call to saved in local storage
       return result;
     } catch (e, stackTrace) {
       AppLogger.severe(
@@ -38,4 +37,5 @@ class TmtResultRepositoryImpl implements TmtResultRepository {
       return ResultData(null, false, null);
     }
   }
+
 }
