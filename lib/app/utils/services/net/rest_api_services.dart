@@ -69,10 +69,14 @@ class RestApiServices {
 
   Future<ResultData> reportTmtResults(
       TmtUserModel userModel, TmtResultModel resultModel) async {
-    try {
-      final userJson = userModel.toJson();
-      final resultJson = resultModel.toJson();
+    final userJson = userModel.toJson();
+    final resultJson = resultModel.toJson();
+    return await reportTmtResultsWithJson(userJson, resultJson);
+  }
 
+  Future<ResultData> reportTmtResultsWithJson(
+      Map<String, dynamic> userJson, Map<String, dynamic> resultJson) async {
+    try {
       final data = {
         ...userJson,
         ...resultJson,
