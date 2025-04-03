@@ -253,9 +253,9 @@ class TmtPainter extends CustomPainter {
 
     var textLastOrFirst = '';
     if (currentCircle.isFirst()) {
-      textLastOrFirst = TMTGame.tmtGameCircleBegin.tr;
+      textLastOrFirst = TMTGameText.tmtGameCircleBegin.tr;
     } else if (currentCircle == allCircles.last) {
-      textLastOrFirst = TMTGame.tmtGameCircleEnd.tr;
+      textLastOrFirst = TMTGameText.tmtGameCircleEnd.tr;
     }
 
     if (currentCircle.isFirst() || currentCircle == allCircles.last) {

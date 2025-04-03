@@ -50,7 +50,7 @@ class TmtTestHelpPage extends StatelessWidget with NavigationMixin {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   CustomPrimaryButton(
-                    text: TMTGame.tmtGameTmtHelpTmtPrimaryButtonText.tr,
+                    text: TMTGameText.tmtGameTmtHelpTmtPrimaryButtonText.tr,
                     //TODO change text depending on the mode
                     onPressed: () {
                       _toPracticePage(tmtHelpMode);
@@ -59,7 +59,7 @@ class TmtTestHelpPage extends StatelessWidget with NavigationMixin {
                   SizedBox(height: DeviceHelper.isTablet ? 28 : 22),
                   //TODO visibility depending on the mode
                   CustomSecondaryButton(
-                    text: TMTGame.tmtGameTmtHelpTmtSecondaryButtonText.tr,
+                    text: TMTGameText.tmtGameTmtHelpTmtSecondaryButtonText.tr,
                     onPressed: () {
                       Get.back();
                     },
@@ -77,10 +77,10 @@ class TmtTestHelpPage extends StatelessWidget with NavigationMixin {
     switch (tmtHelpMode) {
       case TmtHelpMode.TMT_TEST_A:
       case TmtHelpMode.TMT_PRACTICE_A:
-        return TMTGame.tmtGameTmtHelpTmtATitle.tr;
+        return TMTGameText.tmtGameTmtHelpTmtATitle.tr;
       case TmtHelpMode.TMT_TEST_B:
       case TmtHelpMode.TMT_PRACTICE_B:
-        return TMTGame.tmtGameTmtHelpTmtBTitle.tr;
+        return TMTGameText.tmtGameTmtHelpTmtBTitle.tr;
     }
   }
 

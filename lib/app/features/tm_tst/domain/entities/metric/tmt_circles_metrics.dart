@@ -1,10 +1,18 @@
 import 'dart:ui';
 
+import 'package:logging/logging.dart';
+import 'package:msdtmt/app/utils/services/app_logger.dart';
+
+import '../tmt_game_circle.dart';
+import '../tmt_game_variable.dart';
 import 'circles_metric.dart';
+import 'metric_static_values.dart';
 
 class TmtCircleMetrics {
   final List<CirclesMetric> _circleBetweenMetricsList = [];
   final List<CirclesMetric> _circleInsideMetricsList = [];
+
+  final List<Offset> _currentInsideCirclePoints = [];
 
   DateTime? _connectCircleStartTime;
   Offset? lastCircleConnectPoint;
@@ -26,8 +34,8 @@ class TmtCircleMetrics {
     }
 
     if (_connectCircleStartTime != null) {
-      metrics._connectCircleStartTime =
-          DateTime.fromMillisecondsSinceEpoch(_connectCircleStartTime!.millisecondsSinceEpoch);
+      metrics._connectCircleStartTime = DateTime.fromMillisecondsSinceEpoch(
+          _connectCircleStartTime!.millisecondsSinceEpoch);
     }
 
     if (lastCircleConnectPoint != null) {
@@ -36,8 +44,8 @@ class TmtCircleMetrics {
     }
 
     if (_insideCircleStartTime != null) {
-      metrics._insideCircleStartTime =
-          DateTime.fromMillisecondsSinceEpoch(_insideCircleStartTime!.millisecondsSinceEpoch);
+      metrics._insideCircleStartTime = DateTime.fromMillisecondsSinceEpoch(
+          _insideCircleStartTime!.millisecondsSinceEpoch);
     }
 
     if (_pointStartInsideCircle != null) {
@@ -50,13 +58,6 @@ class TmtCircleMetrics {
     return metrics;
   }
 
-
-
-
-
-
-
-
   void onConnectNextCircleCorrect(int circleIndex, Offset circleConnectPoint) {
     if (circleIndex == 0) {
       _connectCircleStartTime = DateTime.now();
@@ -65,11 +66,18 @@ class TmtCircleMetrics {
       final currentTime = DateTime.now();
       CirclesMetric circlesMetric = CirclesMetric();
       circlesMetric.duration =
-          currentTime.difference(_connectCircleStartTime!).inMilliseconds;
-      circlesMetric.distance =
+          currentTime.difference(_connectCircleStartTime!).abs().inMilliseconds;
+
+      double centerToCenterDistance =
           (circleConnectPoint - lastCircleConnectPoint!).distance;
-      _connectCircleStartTime = currentTime;
+      double radius = TmtGameVariables.circleRadius;
+
+      /// Rate is defined as the straight line distance between the exit point of one circle
+      /// and the entry point of the next
+      circlesMetric.setRealDistance(centerToCenterDistance - 2 * radius);
       _circleBetweenMetricsList.add(circlesMetric);
+      _connectCircleStartTime = currentTime;
+      lastCircleConnectPoint = circleConnectPoint;
     }
   }
 
@@ -83,7 +91,8 @@ class TmtCircleMetrics {
     int count = 0;
     for (var metric in _circleBetweenMetricsList) {
       if (metric.duration > 0) {
-        totalRate += (metric.distance / metric.duration);
+        totalRate += (metric.distance /
+            (metric.duration / MetricStaticValues.SEND_METRIC_THRESHOLD_MS));
         count++;
       }
     }
@@ -95,7 +104,9 @@ class TmtCircleMetrics {
     final totalTimeBetweenCircles = _circleBetweenMetricsList
         .map((e) => e.duration)
         .reduce((value, element) => value + element);
-    return totalTimeBetweenCircles / _circleBetweenMetricsList.length;
+    return (totalTimeBetweenCircles /
+            MetricStaticValues.SEND_METRIC_THRESHOLD_MS) /
+        _circleBetweenMetricsList.length;
   }
 
   void dragOnInsideCircle(Offset pointStart) {
@@ -103,6 +114,10 @@ class TmtCircleMetrics {
       _insideCircleStartTime = DateTime.now();
       _pointStartInsideCircle = pointStart;
       _isStartDrawInsideCircle = true;
+      _currentInsideCirclePoints.clear();
+      _currentInsideCirclePoints.add(pointStart);
+    } else {
+      _currentInsideCirclePoints.add(pointStart);
     }
   }
 
@@ -110,13 +125,24 @@ class TmtCircleMetrics {
     if (_insideCircleStartTime == null) return;
     if (_isStartDrawInsideCircle) {
       final currentTime = DateTime.now();
+      _currentInsideCirclePoints.add(pointEnd);
+      double totalPathLength = 0;
+      for (int i = 1; i < _currentInsideCirclePoints.length; i++) {
+        totalPathLength +=
+            (_currentInsideCirclePoints[i] - _currentInsideCirclePoints[i - 1])
+                .distance;
+      }
+
       CirclesMetric circlesMetric = CirclesMetric();
       circlesMetric.duration =
-          currentTime.difference(_insideCircleStartTime!).inMilliseconds;
-      circlesMetric.distance = (pointEnd - _pointStartInsideCircle!).distance;
+          currentTime.difference(_insideCircleStartTime!).abs().inMilliseconds;
+      circlesMetric.setRealDistance(totalPathLength);
+
       _circleInsideMetricsList.add(circlesMetric);
       _isStartDrawInsideCircle = false;
       _insideCircleStartTime = null;
+
+      _currentInsideCirclePoints.clear();
     }
   }
 
@@ -127,7 +153,8 @@ class TmtCircleMetrics {
     int count = 0;
     for (var metric in _circleInsideMetricsList) {
       if (metric.duration > 0) {
-        totalRate += (metric.distance / metric.duration);
+        totalRate += (metric.distance /
+            (metric.duration / MetricStaticValues.SEND_METRIC_THRESHOLD_MS));
         count++;
       }
     }
@@ -140,6 +167,8 @@ class TmtCircleMetrics {
     final totalTimeInsideCircles = _circleInsideMetricsList
         .map((e) => e.duration)
         .reduce((value, element) => value + element);
-    return totalTimeInsideCircles / _circleInsideMetricsList.length;
+    return (totalTimeInsideCircles /
+            MetricStaticValues.SEND_METRIC_THRESHOLD_MS) /
+        _circleInsideMetricsList.length;
   }
 }
