@@ -22,42 +22,55 @@ class TmtTestHelpPage extends StatelessWidget with NavigationMixin {
     } catch (e) {
       tmtHelpMode = TmtHelpMode.TMT_TEST_A;
     }
+
     return Scaffold(
       appBar: CustomAppBar(
         title: _getHelpTitle(tmtHelpMode),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
+      body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            // Scrollable content area with vertically centered text
             Expanded(
-              child: Center(
-                child: Text(
-                  _getHelpTitle(tmtHelpMode),
-                  //TODO change text description depending on the mode
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  return SingleChildScrollView(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight: constraints.maxHeight,
+                      ),
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(24),
+                          child: Text(
+                            _getHelpDescription(tmtHelpMode),
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(bottom: DeviceHelper.isTablet ? 46 : 40),
+
+            // Fixed buttons at bottom
+            Container(
+              padding: const EdgeInsets.all(24),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   CustomPrimaryButton(
                     text: TMTGameText.tmtGameTmtHelpTmtPrimaryButtonText.tr,
-                    //TODO change text depending on the mode
                     onPressed: () {
                       _toPracticePage(tmtHelpMode);
                     },
                   ),
                   SizedBox(height: DeviceHelper.isTablet ? 28 : 22),
-                  //TODO visibility depending on the mode
                   CustomSecondaryButton(
                     text: TMTGameText.tmtGameTmtHelpTmtSecondaryButtonText.tr,
                     onPressed: () {
@@ -81,6 +94,17 @@ class TmtTestHelpPage extends StatelessWidget with NavigationMixin {
       case TmtHelpMode.TMT_TEST_B:
       case TmtHelpMode.TMT_PRACTICE_B:
         return TMTGameText.tmtGameTmtHelpTmtBTitle.tr;
+    }
+  }
+
+  String _getHelpDescription(TmtHelpMode tmtHelpMode) {
+    switch (tmtHelpMode) {
+      case TmtHelpMode.TMT_TEST_A:
+      case TmtHelpMode.TMT_PRACTICE_A:
+        return TMTGameText.tmtGameTmtHelpTmtADescription.tr;
+      case TmtHelpMode.TMT_TEST_B:
+      case TmtHelpMode.TMT_PRACTICE_B:
+        return TMTGameText.tmtGameTmtHelpTmtBDescription.tr;
     }
   }
 
