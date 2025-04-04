@@ -25,7 +25,15 @@ class EnglishMessages extends BaseMessages {
   String get tmtGameTmtHelpTmtATitle => "TMT A Help";
 
   @override
+  String get tmtGameTmtHelpTmtADescription =>
+      "Numbers contained in circles will be shown. Please connect with your finger the circles with the numbers in ascending order, starting from the lowest number and continuing with the next in order. Start at 1, then 2, then 3, and so on. Respond accurately as fast as you can.";
+
+  @override
   String get tmtGameTmtHelpTmtBTitle => "TMT B Help";
+
+  @override
+  String get tmtGameTmtHelpTmtBDescription =>
+      "Numbers and letters contained in circles will be shown. Please connect with your finger the circles alternating between numbers and letters in ascending/alphabetical order. Start at number 1, then letter A. Then number 2, then letter B. Respond accurately as fast as you can.";
 
   @override
   String get tmtGameTmtHelpTmtPrimaryButtonText => "I want to practice";
