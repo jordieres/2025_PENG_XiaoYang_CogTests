@@ -53,7 +53,6 @@ class MyApp extends StatelessWidget {
           theme: AppTheme.light,
           darkTheme: AppTheme.dark,
           themeMode: themeController.themeMode,
-          home: const HomePage(),
         ));
   }
 }

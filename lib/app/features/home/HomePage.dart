@@ -51,7 +51,7 @@ class HomePage extends StatelessWidget with NavigationMixin {
               child: const Text("Empezar con TMT test Práctica"),
             ),
             const SizedBox(height: 20),
-            /* ElevatedButton(
+             ElevatedButton(
               onPressed: () => Get.updateLocale(AppTranslations.SPANISH),
               child: const Text('Cambiar a español'),
             ),
@@ -64,14 +64,13 @@ class HomePage extends StatelessWidget with NavigationMixin {
             ElevatedButton(
               onPressed: () => Get.updateLocale(AppTranslations.CHINIES),
               child: const Text('切换到中文'),
-            ),*/
+            ),
           ],
         ),
       ),
     );
   }
 
-  // 显示主题选择对话框
   void _showThemeDialog(BuildContext context, ThemeController controller) {
     showDialog(
       context: context,
