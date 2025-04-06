@@ -6,6 +6,7 @@ import '../../config/themes/theme_controller.dart';
 import '../../config/translation/app_translations.dart';
 import '../../utils/mixins/app_mixins.dart';
 import '../tm_tst/presentation/screens/tmt_test_help.dart';
+import '../user/presentation/contoller/user_profile_controller.dart';
 
 class HomePage extends StatelessWidget with NavigationMixin {
   const HomePage({super.key});
@@ -50,6 +51,15 @@ class HomePage extends StatelessWidget with NavigationMixin {
               },
               child: const Text("Empezar con TMT test Práctica"),
             ),
+            const SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: () =>
+              {
+                toRegisterUser(),
+              },
+              child: const Text("Ir a Alta Usuario"),
+            ),
+
             const SizedBox(height: 20),
              ElevatedButton(
               onPressed: () => Get.updateLocale(AppTranslations.SPANISH),
