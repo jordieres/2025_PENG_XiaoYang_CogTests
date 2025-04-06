@@ -19,7 +19,7 @@ class ReportTmtResultsUseCase {
       final result = await repository.reportTmtResults(resultModel);
       if (!result.result) {
         if(result.error is NetworkError){
-          await pendingResultUseCase.savePendingResult(resultModel);
+          await pendingResultUseCase.savePendingResult(resultData);
         }
       }
       return result;
