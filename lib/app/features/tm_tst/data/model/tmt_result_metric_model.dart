@@ -3,7 +3,7 @@ import 'package:intl/intl.dart';
 import '../../domain/entities/metric/metric_static_values.dart';
 import '../../domain/entities/result/tmt_game_init_data.dart';
 import '../../domain/entities/result/tmt_game_result_data.dart';
-import '../../domain/entities/tmt_game_variable.dart';
+import '../../domain/entities/tmt_game/tmt_game_variable.dart';
 
 class TmtResultModel extends TmtGameResultData {
   TmtResultModel({

@@ -1,6 +1,7 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:msdtmt/app/features/tm_tst/data/model/tmt_result_metric_model.dart';
 import 'package:msdtmt/app/features/tm_tst/data/model/tmt_reult_user_model.dart';
+import 'package:msdtmt/app/utils/services/net/api_error.dart';
 import '../../../../../utils/services/work_manager_handler.dart';
 import '../../../data/model/pending_result_model.dart';
 import '../../entities/result/tmt_game_result_data.dart';
@@ -29,6 +30,7 @@ class PendingResultUseCase {
     return saved;
   }
 
+  ///Only send again if is network error
   Future<bool> sendPendingResults() async {
     try {
       var connectivityResult = await Connectivity().checkConnectivity();
@@ -57,7 +59,11 @@ class PendingResultUseCase {
             allSuccess = false;
           }
         } else {
-          allSuccess = false;
+          if (result.error is NetworkError) {
+            allSuccess = false;
+          } else {
+            await pendingResultRepository.deletePendingResult(pendingResult);
+          }
         }
       }
       final remainingResults =
@@ -77,7 +83,7 @@ class PendingResultUseCase {
     return results.length;
   }
 
-  Future<bool> _hasPendingResults() async {
+  Future<bool> hasPendingResults() async {
     final count = await _getPendingResultCount();
     return count > 0;
   }

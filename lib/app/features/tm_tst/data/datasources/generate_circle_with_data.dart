@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import '../../domain/entities/tmt_game_circle.dart';
+import '../../domain/entities/tmt_game/tmt_game_circle.dart';
 
 class GenerateCircleWithData {
   final TmtGameCircleTextType tmtGameCircleTextType;

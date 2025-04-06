@@ -1,10 +1,6 @@
 import 'dart:ui';
-
-import 'package:logging/logging.dart';
-import 'package:msdtmt/app/utils/services/app_logger.dart';
-
-import '../tmt_game_circle.dart';
-import '../tmt_game_variable.dart';
+import '../tmt_game/tmt_game_circle.dart';
+import '../tmt_game/tmt_game_variable.dart';
 import 'circles_metric.dart';
 import 'metric_static_values.dart';
 

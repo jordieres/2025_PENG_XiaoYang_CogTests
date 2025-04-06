@@ -8,4 +8,8 @@ mixin NavigationMixin {
   void navigateToPractice(TMTTestPracticeMode tmtTestPracticeMode) {
     Get.toNamed(Routes.tmt_practice, arguments: tmtTestPracticeMode);
   }
+
+  void toRegisterUser() {
+    Get.toNamed(Routes.register_user);
+  }
 }

@@ -2,7 +2,7 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:msdtmt/app/features/tm_tst/data/datasources/random_grid_sampler.dart';
-import 'package:msdtmt/app/features/tm_tst/domain/entities/tmt_game_variable.dart';
+import 'package:msdtmt/app/features/tm_tst/domain/entities/tmt_game/tmt_game_variable.dart';
 import 'package:msdtmt/app/utils/helpers/app_helpers.dart';
 
 class ReorderCircles {

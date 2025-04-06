@@ -26,7 +26,15 @@ class SpanishMessages extends BaseMessages {
   String get tmtGameTmtHelpTmtATitle => "TMT A Ayuda";
 
   @override
+  String get tmtGameTmtHelpTmtADescription =>
+      "Se mostrarán números contenidos en círculos. Por favor, conecta con tu dedo los círculos con los números en orden ascendente, empezando desde el número más bajo y continuando con el siguiente en orden. Empieza en 1, luego 2, luego 3, y continúa. Responde con precisión lo más deprisa que puedas.";
+
+  @override
   String get tmtGameTmtHelpTmtBTitle => "TMT B Ayuda";
+
+  @override
+  String get tmtGameTmtHelpTmtBDescription =>
+      "Se mostrarán números y letras contenidos en círculos. Por favor, conecta con tu dedo los círculos alternando entre números y letras en orden ascendente / alfabético. Empieza en el número 1, luego la letra A. Luego el número 2, y luego la letra B. Responde con precisión lo más deprisa que puedas.";
 
   @override
   String get tmtGameTmtHelpTmtPrimaryButtonText => "Quiero practicar";
