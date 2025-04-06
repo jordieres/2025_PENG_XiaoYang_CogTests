@@ -23,7 +23,6 @@ void main() async {
   runApp(const MyApp());
 }
 
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -32,18 +31,28 @@ class MyApp extends StatelessWidget {
     DeviceHelper.init(context);
     final ThemeController themeController = Get.put(ThemeController());
 
-    return Obx(() => GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      navigatorObservers: [appRouteObserver],
-      initialRoute: AppPages.initial,
-      getPages: AppPages.routes,
-      translations: AppTranslations(),
-      locale: AppTranslations.locale,
-      fallbackLocale: AppTranslations.fallbackLocale,
-      theme: AppTheme.light,
-      darkTheme: AppTheme.dark,
-      themeMode: themeController.themeMode,
-      home: const HomePage(),
+    final tmtPendingUseCase = PendingResultUseCase(
+        pendingResultRepository: PendingResultRepositoryImpl(
+      restApiServices,
     ));
+
+    tmtPendingUseCase.hasPendingResults().then((hasPendingResults) {
+      if (hasPendingResults) {
+        tmtPendingUseCase.sendPendingResults();
+      }
+    });
+
+    return Obx(() => GetMaterialApp(
+          debugShowCheckedModeBanner: false,
+          navigatorObservers: [appRouteObserver],
+          initialRoute: AppPages.initial,
+          getPages: AppPages.routes,
+          translations: AppTranslations(),
+          locale: AppTranslations.locale,
+          fallbackLocale: AppTranslations.fallbackLocale,
+          theme: AppTheme.light,
+          darkTheme: AppTheme.dark,
+          themeMode: themeController.themeMode,
+        ));
   }
 }

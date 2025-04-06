@@ -5,8 +5,8 @@ import 'package:msdtmt/app/utils/helpers/app_helpers.dart';
 import '../../../../config/themes/AppColors.dart';
 import '../../../../config/themes/AppTextStyle.dart';
 import '../../../../config/translation/app_translations.dart';
-import '../../domain/entities/tmt_game_circle.dart';
-import '../../domain/entities/tmt_game_variable.dart';
+import '../../domain/entities/tmt_game/tmt_game_circle.dart';
+import '../../domain/entities/tmt_game/tmt_game_variable.dart';
 
 class TmtPainter extends CustomPainter {
   final List<TmtGameCircle> allCircles;

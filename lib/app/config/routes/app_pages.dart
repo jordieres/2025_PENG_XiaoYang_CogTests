@@ -8,6 +8,8 @@ import '../../features/tm_tst/presentation/bindings/tmt_test_practice_binding.da
 import '../../features/tm_tst/presentation/screens/tmt_test_help.dart';
 import '../../features/tm_tst/presentation/screens/tmt_test_practice_screen.dart';
 import '../../features/tm_tst/presentation/screens/tmt_test_result_screen.dart';
+import '../../features/user/presentation/binding/register_user_binding.dart';
+import '../../features/user/presentation/screen/register_user_screen.dart';
 
 part 'app_routes.dart';
 
@@ -39,6 +41,11 @@ class AppPages {
       name: _Paths.tmt_practice,
       page: () => const TmtTestPracticePage(),
       binding: TmtTESTPracticeBinding(),
+    ),
+    GetPage(
+      name: _Paths.register_user,
+      page: () =>  RegisterUserScreen(),
+      binding: RegisterUserBinding(),
     ),
   ];
 }
