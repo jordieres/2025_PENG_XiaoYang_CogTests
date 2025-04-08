@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'app/config/routes/app_pages.dart';
 import 'app/config/routes/app_route_observer.dart';
@@ -19,7 +20,7 @@ import 'app/features/tm_tst/data/repositories/tmt_result_repository_impl.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   AppLogger.init();
-  await WorkManagerHandler.initializeWorkManager();
+  //await WorkManagerHandler.initializeWorkManager(); //TODO remove comment
   runApp(const MyApp());
 }
 
@@ -50,6 +51,16 @@ class MyApp extends StatelessWidget {
           translations: AppTranslations(),
           locale: AppTranslations.locale,
           fallbackLocale: AppTranslations.fallbackLocale,
+          localizationsDelegates: const [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: [
+            AppTranslations.ENGLISH,
+            AppTranslations.SPANISH,
+            AppTranslations.CHINIES
+          ],
           theme: AppTheme.light,
           darkTheme: AppTheme.dark,
           themeMode: themeController.themeMode,
