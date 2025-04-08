@@ -32,9 +32,9 @@ class AppSnackbar {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
-            padding: EdgeInsets.symmetric(
-              horizontal: screenWidth * 0.2, // 20% padding on both sides
-              vertical: 12,
+            margin: EdgeInsets.symmetric(
+              horizontal: screenWidth * 0.1, // 20% padding on both sides
+              vertical: 20,
             ),
             backgroundColor: backgroundColor,
           ),
