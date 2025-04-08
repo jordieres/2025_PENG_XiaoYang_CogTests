@@ -32,6 +32,8 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
   EducationLevel? selectedEducationLevel;
 
   bool isLoading = false;
+  bool isNicknameExists = false;
+  String? nicknameErrorText;
 
   bool _nicknameVisited = false;
   bool _sexVisited = false;
@@ -123,10 +125,13 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
     return nicknameController.text.isNotEmpty &&
         selectedBirthDate != null &&
         selectedSex != null &&
-        selectedEducationLevel != null;
+        selectedEducationLevel != null &&
+        !isNicknameExists;
   }
 
-  void saveUser() {
+  Future<void> saveUser() async {
+    FocusScope.of(context).unfocus();
+
     setState(() {
       _formSubmitted = true;
       _nicknameVisited = true;
@@ -155,6 +160,23 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
       return;
     }
 
+    // Check if nickname exists before saving
+    final nickname = nicknameController.text.trim();
+    final existingProfile = await controller.getProfileByNickname(nickname);
+    if (existingProfile != null) {
+      setState(() {
+        isNicknameExists = true;
+        nicknameErrorText = 'Este apodo ya está en uso';
+      });
+      _formKey.currentState?.validate();
+      AppSnackbar.showCustomSnackbar(
+        context,
+        'Este apodo ya está en uso',
+        backgroundColor: AppColors.mainRed.withAlpha(204),
+      );
+      return;
+    }
+
     if (!mounted) return;
 
     setState(() {
@@ -168,7 +190,9 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
         birthDate: selectedBirthDate!,
         educationLevel: selectedEducationLevel!,
       );
-      controller.saveProfile(newUserProfile);
+
+      await controller.saveProfile(newUserProfile);
+      await controller.loadProfiles();
       Get.back();
       AppSnackbar.showCustomSnackbar(
           context, 'Usuario registrado correctamente');
@@ -176,7 +200,7 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
       if (!mounted) return;
       AppSnackbar.showCustomSnackbar(
         context,
-        'Por favor, rellena todos los campos marcados.',
+        'Error al guardar el usuario. Inténtalo de nuevo.',
         backgroundColor: AppColors.mainRed.withAlpha(204),
       );
     } finally {
@@ -213,7 +237,6 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      key: _formKey,
                       child: _buildFormFields(isLandscape),
                     ),
                     FutureBuilder(
@@ -282,12 +305,19 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
               if (value == null || value.isEmpty) {
                 return 'Por favor introduce un apodo';
               }
+              if (isNicknameExists) {
+                return nicknameErrorText;
+              }
             }
             return null;
           },
           onTap: () => setState(() => _nicknameVisited = true),
           onChanged: (value) {
-            setState(() => _nicknameVisited = true);
+            setState(() {
+              _nicknameVisited = true;
+              isNicknameExists = false;
+              nicknameErrorText = null;
+            });
             _formKey.currentState?.validate();
           },
           style: CustomInputDecoration.textInputStyle,
@@ -410,9 +440,9 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
               ?.copyWith(color: Color(0xFF1A1A1A)),
           items: EducationLevel.values
               .map((level) => DropdownMenuItem(
-                    value: level,
-                    child: Text(getEducationLevelText(level)),
-                  ))
+            value: level,
+            child: Text(getEducationLevelText(level)),
+          ))
               .toList(),
           onChanged: (EducationLevel? value) {
             setState(() {
@@ -459,7 +489,10 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
           Center(
             child: CustomSecondaryButton(
               text: 'Cancelar',
-              onPressed: () => Get.back(),
+              onPressed: () {
+                FocusScope.of(context).unfocus();
+                Get.back();
+              },
             ),
           ),
         ],
