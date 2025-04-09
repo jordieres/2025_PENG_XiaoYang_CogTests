@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 
 import '../../../../config/themes/AppColors.dart';
 import '../../../../config/themes/input_decoration.dart';
+import '../../../../config/translation/app_translations.dart';
 import '../../../../utils/ui/ui_utils.dart';
 import '../../domain/entities/user_profile.dart';
 import '../contoller/user_profile_controller.dart';
@@ -95,9 +96,9 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
       firstDate: DateTime(1900),
       lastDate: DateTime.now(),
       locale: Get.locale,
-      helpText: 'Seleccionar fecha de nacimiento',
-      cancelText: 'Cancelar',
-      confirmText: 'Aceptar',
+      helpText: TMTRegisterUserText.birthDatePickerTitle.tr,
+      cancelText: TMTRegisterUserText.birthDatePickerCancel.tr,
+      confirmText: TMTRegisterUserText.birthDatePickerConfirm.tr,
     );
     if (picked != null && picked != selectedBirthDate) {
       setState(() {
@@ -155,7 +156,7 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
         selectedEducationLevel == null) {
       AppSnackbar.showCustomSnackbar(
         context,
-        'Por favor, rellena todos los campos marcados.',
+        TMTRegisterUserText.formError.tr,
         backgroundColor: AppColors.mainRed.withAlpha(204),
       );
       return;
@@ -167,12 +168,12 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
     if (existingProfile != null) {
       setState(() {
         isNicknameExists = true;
-        nicknameErrorText = 'Este apodo ya está en uso';
+        nicknameErrorText = TMTRegisterUserText.nicknameExistsError.tr;
       });
       _formKey.currentState?.validate();
       AppSnackbar.showCustomSnackbar(
         context,
-        'Este apodo ya está en uso',
+        TMTRegisterUserText.nicknameExistsError.tr,
         backgroundColor: AppColors.mainRed.withAlpha(204),
       );
       return;
@@ -196,12 +197,12 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
       await controller.loadProfiles();
       Get.back();
       AppSnackbar.showCustomSnackbar(
-          context, 'Usuario registrado correctamente');
+          context, TMTRegisterUserText.saveSuccess.tr);
     } catch (e) {
       if (!mounted) return;
       AppSnackbar.showCustomSnackbar(
         context,
-        'Error al guardar el usuario. Inténtalo de nuevo.',
+        TMTRegisterUserText.saveError.tr,
         backgroundColor: AppColors.mainRed.withAlpha(204),
       );
     } finally {
@@ -217,7 +218,7 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     final isLandscape = mediaQuery.orientation == Orientation.landscape;
-    final appBar = CustomAppBar(title: 'Mis Datos');
+    final appBar = CustomAppBar(title: TMTRegisterUserText.title.tr);
     final availableHeight = mediaQuery.size.height -
         appBar.preferredSize.height -
         mediaQuery.padding.top -
@@ -290,13 +291,13 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Apodo', style: _labelStyle),
+        Text(TMTRegisterUserText.nicknameLabel.tr, style: _labelStyle),
         const SizedBox(height: 8),
         TextFormField(
           controller: nicknameController,
           focusNode: nicknameFocusNode,
           decoration: CustomInputDecoration.commonInputDecoration().copyWith(
-            hintText: 'Introduce un apodo',
+            hintText: TMTRegisterUserText.nicknameHint.tr,
           ),
           validator: (value) {
             if ((_nicknameVisited || _formSubmitted)) {
@@ -304,7 +305,7 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
                 return null;
               }
               if (value == null || value.isEmpty) {
-                return 'Por favor introduce un apodo';
+                return TMTRegisterUserText.nicknameError.tr;
               }
               if (isNicknameExists) {
                 return nicknameErrorText;
@@ -331,14 +332,14 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Sexo', style: _labelStyle),
+        Text(TMTRegisterUserText.sexLabel.tr, style: _labelStyle),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(
               width: 150,
               child: RadioListTile<Sex>(
-                title: const Text('Masculino'),
+                title: Text(TMTRegisterUserText.sexMale.tr),
                 value: Sex.male,
                 groupValue: selectedSex,
                 activeColor: CustomInputDecoration.focusColor,
@@ -358,7 +359,7 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
             SizedBox(
               width: 150,
               child: RadioListTile<Sex>(
-                title: const Text('Femenino'),
+                title: Text(TMTRegisterUserText.sexFemale.tr),
                 value: Sex.female,
                 groupValue: selectedSex,
                 activeColor: CustomInputDecoration.focusColor,
@@ -380,7 +381,7 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
           Padding(
             padding: const EdgeInsets.only(top: 0, left: 12.0, bottom: 8.0),
             child: Text(
-              'Por favor selecciona un sexo',
+              TMTRegisterUserText.sexError.tr,
               style: TextStyle(
                   color: Theme.of(context).colorScheme.error, fontSize: 12),
             ),
@@ -393,14 +394,14 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Fecha de nacimiento', style: _labelStyle),
+        Text(TMTRegisterUserText.birthDateLabel.tr, style: _labelStyle),
         const SizedBox(height: 8),
         TextFormField(
           controller: birthDateController,
           focusNode: birthDateFocusNode,
           readOnly: true,
           decoration: CustomInputDecoration.commonInputDecoration().copyWith(
-            hintText: 'Seleccionar fecha',
+            hintText: TMTRegisterUserText.birthDateHint.tr,
             suffixIcon: Icon(Icons.calendar_today, color: Color(0xFF8F9098)),
           ),
           onTap: () => _selectDate(context),
@@ -410,7 +411,7 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
                 return null;
               }
               if (selectedBirthDate == null) {
-                return 'Por favor selecciona una fecha';
+                return TMTRegisterUserText.birthDateError.tr;
               }
             }
             return null;
@@ -425,14 +426,14 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Nivel de estudios', style: _labelStyle),
+        Text(TMTRegisterUserText.educationLabel.tr, style: _labelStyle),
         const SizedBox(height: 8),
         DropdownButtonFormField<EducationLevel>(
           value: selectedEducationLevel,
           focusNode: educationLevelFocusNode,
           decoration: CustomInputDecoration.commonInputDecoration().copyWith(),
           hint: Text(
-            'Seleccionar nivel de estudios',
+            TMTRegisterUserText.educationHint.tr,
             style: CustomInputDecoration.commonInputDecoration().hintStyle,
           ),
           style: Theme.of(context)
@@ -461,7 +462,7 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
                 return null;
               }
               if (value == null) {
-                return 'Por favor selecciona un nivel de estudios';
+                return TMTRegisterUserText.educationError.tr;
               }
             }
             return null;
@@ -481,7 +482,7 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
         else ...[
           Center(
             child: CustomPrimaryButton(
-              text: 'Guardar',
+              text: TMTRegisterUserText.saveButton.tr,
               onPressed: saveUser,
               isEnabled: isFormComplete && !isLoading,
             ),
@@ -489,7 +490,7 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
           const SizedBox(height: 16),
           Center(
             child: CustomSecondaryButton(
-              text: 'Cancelar',
+              text: TMTRegisterUserText.cancelButton.tr,
               onPressed: () {
                 FocusScope.of(context).unfocus();
                 Get.back();
@@ -504,15 +505,15 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
   String getEducationLevelText(EducationLevel level) {
     switch (level) {
       case EducationLevel.primary:
-        return 'Estudios Primarios';
+        return TMTRegisterUserText.educationPrimary.tr;
       case EducationLevel.secondary:
-        return 'Estudios Secundarios';
+        return TMTRegisterUserText.educationSecondary.tr;
       case EducationLevel.graduate:
-        return 'Grado Universitario';
+        return TMTRegisterUserText.educationGraduate.tr;
       case EducationLevel.master:
-        return 'Máster Universitario';
+        return TMTRegisterUserText.educationMaster.tr;
       case EducationLevel.doctorate:
-        return 'Doctorado';
+        return TMTRegisterUserText.educationDoctorate.tr;
       default:
         return '';
     }

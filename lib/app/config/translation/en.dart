@@ -104,6 +104,91 @@ class EnglishMessages extends BaseMessages {
 
   @override
   String get tmtResultScreenErrorMessage => "Error Sending Results";
+
+  //--------------------------------------------Register User Screen Text------------------------------------------------------
+  @override
+  String get registerUserTitle => "My Data";
+
+  @override
+  String get registerUserNicknameLabel => "Nickname";
+
+  @override
+  String get registerUserNicknameHint => "Enter a nickname";
+
+  @override
+  String get registerUserNicknameError => "Please enter a nickname";
+
+  @override
+  String get registerUserNicknameExistsError => "This nickname is already in use";
+
+  @override
+  String get registerUserSexLabel => "Sex";
+
+  @override
+  String get registerUserSexMale => "Male";
+
+  @override
+  String get registerUserSexFemale => "Female";
+
+  @override
+  String get registerUserSexError => "Please select a sex";
+
+  @override
+  String get registerUserBirthDateLabel => "Date of birth";
+
+  @override
+  String get registerUserBirthDateHint => "Select date";
+
+  @override
+  String get registerUserBirthDateError => "Please select a date";
+
+  @override
+  String get registerUserBirthDatePickerTitle => "Select date of birth";
+
+  @override
+  String get registerUserBirthDatePickerCancel => "Cancel";
+
+  @override
+  String get registerUserBirthDatePickerConfirm => "Confirm";
+
+  @override
+  String get registerUserEducationLabel => "Education level";
+
+  @override
+  String get registerUserEducationHint => "Select education level";
+
+  @override
+  String get registerUserEducationError => "Please select an education level";
+
+  @override
+  String get registerUserEducationPrimary => "Primary Education";
+
+  @override
+  String get registerUserEducationSecondary => "Secondary Education";
+
+  @override
+  String get registerUserEducationGraduate => "University Degree";
+
+  @override
+  String get registerUserEducationMaster => "Master's Degree";
+
+  @override
+  String get registerUserEducationDoctorate => "Doctorate";
+
+  @override
+  String get registerUserSaveButton => "Save";
+
+  @override
+  String get registerUserCancelButton => "Cancel";
+
+  @override
+  String get registerUserFormError => "Please fill in all marked fields.";
+
+  @override
+  String get registerUserSaveSuccess => "User successfully registered";
+
+  @override
+  String get registerUserSaveError => "Error saving user. Please try again.";
 }
 
 final en = EnglishMessages();

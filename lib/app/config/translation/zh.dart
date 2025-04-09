@@ -97,6 +97,91 @@ class ChineseMessages extends BaseMessages {
 
   @override
   String get tmtResultScreenErrorMessage => "发送结果时出错";
+
+  //--------------------------------------------Register User Screen Text------------------------------------------------------
+  @override
+  String get registerUserTitle => "我的资料";
+
+  @override
+  String get registerUserNicknameLabel => "昵称";
+
+  @override
+  String get registerUserNicknameHint => "输入昵称";
+
+  @override
+  String get registerUserNicknameError => "请输入昵称";
+
+  @override
+  String get registerUserNicknameExistsError => "该昵称已被使用";
+
+  @override
+  String get registerUserSexLabel => "性别";
+
+  @override
+  String get registerUserSexMale => "男";
+
+  @override
+  String get registerUserSexFemale => "女";
+
+  @override
+  String get registerUserSexError => "请选择性别";
+
+  @override
+  String get registerUserBirthDateLabel => "出生日期";
+
+  @override
+  String get registerUserBirthDateHint => "选择日期";
+
+  @override
+  String get registerUserBirthDateError => "请选择日期";
+
+  @override
+  String get registerUserBirthDatePickerTitle => "选择出生日期";
+
+  @override
+  String get registerUserBirthDatePickerCancel => "取消";
+
+  @override
+  String get registerUserBirthDatePickerConfirm => "确认";
+
+  @override
+  String get registerUserEducationLabel => "教育水平";
+
+  @override
+  String get registerUserEducationHint => "选择教育水平";
+
+  @override
+  String get registerUserEducationError => "请选择教育水平";
+
+  @override
+  String get registerUserEducationPrimary => "小学教育";
+
+  @override
+  String get registerUserEducationSecondary => "中学教育";
+
+  @override
+  String get registerUserEducationGraduate => "大学本科";
+
+  @override
+  String get registerUserEducationMaster => "硕士";
+
+  @override
+  String get registerUserEducationDoctorate => "博士";
+
+  @override
+  String get registerUserSaveButton => "保存";
+
+  @override
+  String get registerUserCancelButton => "取消";
+
+  @override
+  String get registerUserFormError => "请填写所有标记的字段。";
+
+  @override
+  String get registerUserSaveSuccess => "用户注册成功";
+
+  @override
+  String get registerUserSaveError => "保存用户时出错。请重试。";
 }
 
 final zh = ChineseMessages();
