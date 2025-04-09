@@ -32,7 +32,7 @@ class CustomPrimaryButton extends StatelessWidget {
     return SizedBox(
       width: DeviceHelper.isTablet ? 536 : 311,
       child: ElevatedButton(
-        onPressed: isEnabled ? onPressed : null,
+        onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: isEnabled
               ? (backgroundColor ?? AppColors.customButtonColor)
