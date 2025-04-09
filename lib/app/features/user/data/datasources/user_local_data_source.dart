@@ -1,4 +1,5 @@
 import 'package:sqflite/sqflite.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../../../constans/database_constants.dart';
 import '../../../../utils/services/user_data_base_helper.dart';
@@ -7,17 +8,27 @@ import '../model/user_test_result_model.dart';
 
 abstract class UserLocalDataSource {
   Future<List<UserProfileModel>> getAllProfiles();
+
   Future<UserProfileModel?> getProfileByUserId(String userId);
+
   Future<UserProfileModel?> getProfileByNickname(String nickname);
+
   Future<void> saveProfile(UserProfileModel profile);
+
   Future<void> deleteProfile(String userId);
 
   Future<List<UserTestResultModel>> getTestResults();
+
   Future<List<UserTestResultModel>> getTestResultsByUserId(String userId);
+
   Future<List<UserTestResultModel>> getTestResultsByNickname(String nickname);
+
   Future<void> saveTestResult(UserTestResultModel result);
+
   Future<bool> isReferenceCodeUsed(String referenceCode);
+
   Future<List<String>> getAllNicknames();
+
   Future<List<String>> getAllUserId();
 }
 
@@ -31,7 +42,9 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
     final db = await databaseHelper.database;
     final profilesData = await db.query(DatabaseConstants.userProfilesTable);
 
-    return profilesData.map((profileData) => UserProfileModel.fromMap(profileData)).toList();
+    return profilesData
+        .map((profileData) => UserProfileModel.fromMap(profileData))
+        .toList();
   }
 
   @override
@@ -69,7 +82,7 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
   @override
   Future<void> saveProfile(UserProfileModel profile) async {
     final db = await databaseHelper.database;
-
+    profile.userId = const Uuid().v4();
     await db.insert(
       DatabaseConstants.userProfilesTable,
       profile.toMap(),
@@ -96,11 +109,14 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
       orderBy: '${DatabaseConstants.dateColumn} DESC',
     );
 
-    return resultsData.map((resultData) => UserTestResultModel.fromMap(resultData)).toList();
+    return resultsData
+        .map((resultData) => UserTestResultModel.fromMap(resultData))
+        .toList();
   }
 
   @override
-  Future<List<UserTestResultModel>> getTestResultsByUserId(String userId) async {
+  Future<List<UserTestResultModel>> getTestResultsByUserId(
+      String userId) async {
     final db = await databaseHelper.database;
     final resultsData = await db.query(
       DatabaseConstants.userTestResultsTable,
@@ -109,11 +125,14 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
       orderBy: '${DatabaseConstants.dateColumn} DESC',
     );
 
-    return resultsData.map((resultData) => UserTestResultModel.fromMap(resultData)).toList();
+    return resultsData
+        .map((resultData) => UserTestResultModel.fromMap(resultData))
+        .toList();
   }
 
   @override
-  Future<List<UserTestResultModel>> getTestResultsByNickname(String nickname) async {
+  Future<List<UserTestResultModel>> getTestResultsByNickname(
+      String nickname) async {
     final db = await databaseHelper.database;
 
     final profilesData = await db.query(
@@ -161,7 +180,9 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
       columns: [DatabaseConstants.nicknameColumn],
     );
 
-    return results.map((result) => result[DatabaseConstants.nicknameColumn] as String).toList();
+    return results
+        .map((result) => result[DatabaseConstants.nicknameColumn] as String)
+        .toList();
   }
 
   @override
@@ -172,6 +193,8 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
       columns: [DatabaseConstants.userIdColumn],
     );
 
-    return results.map((result) => result[DatabaseConstants.userIdColumn] as String).toList();
+    return results
+        .map((result) => result[DatabaseConstants.userIdColumn] as String)
+        .toList();
   }
 }

@@ -12,11 +12,11 @@ part 'zh.dart';
 class AppTranslations extends Translations {
   static Locale? get locale => Get.deviceLocale;
 
-  static Locale? get fallbackLocale => const Locale('en');
+  static Locale? get fallbackLocale => const Locale('en',"");
 
-  static const Locale ENGLISH = Locale('en');
-  static const Locale SPANISH = Locale('es');
-  static const Locale CHINIES = Locale('zh');
+  static const Locale ENGLISH = Locale('en',"");
+  static const Locale SPANISH = Locale('es',"");
+  static const Locale CHINIES = Locale('zh',"");
 
   @override
   Map<String, Map<String, String>> get keys => {

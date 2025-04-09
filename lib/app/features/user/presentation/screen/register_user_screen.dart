@@ -2,42 +2,89 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../config/themes/AppColors.dart';
+import '../../../../config/themes/input_decoration.dart';
+import '../../../../utils/ui/ui_utils.dart';
 import '../../domain/entities/user_profile.dart';
 import '../contoller/user_profile_controller.dart';
+import '../../../../shared_components/custom_app_bar.dart';
+import '../../../../shared_components/custom_primary_button.dart';
+import '../../../../shared_components/custom_secondary_button.dart';
+import '../../../../utils/helpers/app_helpers.dart';
 
 class RegisterUserScreen extends StatefulWidget {
-  const RegisterUserScreen({Key? key}) : super(key: key);
+  RegisterUserScreen({Key? key}) : super(key: key);
 
   @override
   State<RegisterUserScreen> createState() => _RegisterUserScreenState();
 }
 
 class _RegisterUserScreenState extends State<RegisterUserScreen> {
-  final _formKey = GlobalKey<FormState>(); // Form key for validation
-  final TextEditingController userIdController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController nicknameController = TextEditingController();
-  final TextEditingController searchUserIdController = TextEditingController(); // Separate controller for search
+  final TextEditingController birthDateController = TextEditingController();
+  final FocusNode nicknameFocusNode = FocusNode();
+  final FocusNode birthDateFocusNode = FocusNode();
+  final FocusNode educationLevelFocusNode = FocusNode();
 
   Sex? selectedSex;
   DateTime? selectedBirthDate;
   EducationLevel? selectedEducationLevel;
 
-  String profileInfo = '';
   bool isLoading = false;
+  bool isNicknameExists = false;
+  String? nicknameErrorText;
+
+  bool _nicknameVisited = false;
+  bool _sexVisited = false;
+  bool _birthDateVisited = false;
+  bool _educationLevelVisited = false;
+  bool _formSubmitted = false;
 
   late UserProfileController controller;
+
+  final TextStyle _labelStyle = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w500,
+  );
 
   @override
   void initState() {
     super.initState();
     controller = Get.find<UserProfileController>();
+    nicknameFocusNode.addListener(_onNicknameFocusChange);
+    birthDateFocusNode.addListener(_onBirthDateFocusChange);
+    educationLevelFocusNode.addListener(_onEducationLevelFocusChange);
+  }
+
+  void _onNicknameFocusChange() {
+    if (nicknameFocusNode.hasFocus) {
+      _formKey.currentState?.validate();
+    }
+  }
+
+  void _onBirthDateFocusChange() {
+    if (birthDateFocusNode.hasFocus) {
+      _formKey.currentState?.validate();
+    }
+  }
+
+  void _onEducationLevelFocusChange() {
+    if (educationLevelFocusNode.hasFocus) {
+      _formKey.currentState?.validate();
+    }
   }
 
   @override
   void dispose() {
-    userIdController.dispose();
     nicknameController.dispose();
-    searchUserIdController.dispose();
+    birthDateController.dispose();
+    nicknameFocusNode.removeListener(_onNicknameFocusChange);
+    birthDateFocusNode.removeListener(_onBirthDateFocusChange);
+    educationLevelFocusNode.removeListener(_onEducationLevelFocusChange);
+    nicknameFocusNode.dispose();
+    birthDateFocusNode.dispose();
+    educationLevelFocusNode.dispose();
     super.dispose();
   }
 
@@ -47,21 +94,89 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
       initialDate: selectedBirthDate ?? DateTime.now(),
       firstDate: DateTime(1900),
       lastDate: DateTime.now(),
+      locale: Get.locale,
+      helpText: 'Seleccionar fecha de nacimiento',
+      cancelText: 'Cancelar',
+      confirmText: 'Aceptar',
     );
     if (picked != null && picked != selectedBirthDate) {
       setState(() {
         selectedBirthDate = picked;
+        _birthDateVisited = true;
+        _nicknameVisited = true;
+        _sexVisited = true;
+        final currentLocale = Get.locale?.toString() ?? 'en_US';
+        birthDateFocusNode.removeListener(_onBirthDateFocusChange);
+        birthDateController.text = DateFormat.yMd(currentLocale).format(picked);
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          birthDateController.selection = TextSelection.collapsed(
+            offset: birthDateController.text.length,
+          );
+        });
+
+        birthDateFocusNode.addListener(_onBirthDateFocusChange);
       });
     }
+
+    _formKey.currentState?.validate();
+  }
+
+  bool get isFormComplete {
+    return nicknameController.text.isNotEmpty &&
+        selectedBirthDate != null &&
+        selectedSex != null &&
+        selectedEducationLevel != null &&
+        !isNicknameExists;
   }
 
   Future<void> saveUser() async {
-    if (!_formKey.currentState!.validate()) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please fill all required fields correctly.')),
+    FocusScope.of(context).unfocus();
+
+    setState(() {
+      _formSubmitted = true;
+      _nicknameVisited = true;
+      _sexVisited = true;
+      _birthDateVisited = true;
+      _educationLevelVisited = true;
+    });
+
+    final isValid = _formKey.currentState!.validate();
+
+    if (selectedSex == null ||
+        selectedBirthDate == null ||
+        selectedEducationLevel == null) {
+      setState(() {});
+    }
+
+    if (!isValid ||
+        selectedSex == null ||
+        selectedBirthDate == null ||
+        selectedEducationLevel == null) {
+      AppSnackbar.showCustomSnackbar(
+        context,
+        'Por favor, rellena todos los campos marcados.',
+        backgroundColor: AppColors.mainRed.withAlpha(204),
       );
       return;
     }
+
+    // Check if nickname exists before saving
+    final nickname = nicknameController.text.trim();
+    final existingProfile = await controller.getProfileByNickname(nickname);
+    if (existingProfile != null) {
+      setState(() {
+        isNicknameExists = true;
+        nicknameErrorText = 'Este apodo ya está en uso';
+      });
+      _formKey.currentState?.validate();
+      AppSnackbar.showCustomSnackbar(
+        context,
+        'Este apodo ya está en uso',
+        backgroundColor: AppColors.mainRed.withAlpha(204),
+      );
+      return;
+    }
+
     if (!mounted) return;
 
     setState(() {
@@ -70,96 +185,24 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
 
     try {
       final newUserProfile = UserProfile(
-        userId: userIdController.text,
         nickname: nicknameController.text,
         sex: selectedSex!,
         birthDate: selectedBirthDate!,
         educationLevel: selectedEducationLevel!,
       );
 
-      // Optional: Check if userId already exists before saving
-      // final existingProfile = await controller.getProfileByUserId(newUserProfile.userId);
-      // if (existingProfile != null) {
-      //    if (!mounted) return;
-      //    ScaffoldMessenger.of(context).showSnackBar(
-      //     SnackBar(content: Text('User ID ${newUserProfile.userId} already exists.')),
-      //   );
-      //   setState(() => isLoading = false );
-      //   return;
-      // }
-
-
       await controller.saveProfile(newUserProfile);
-
-      if (!mounted) return;
-
-      userIdController.clear();
-      nicknameController.clear();
-      setState(() {
-        selectedSex = null;
-        selectedBirthDate = null;
-        selectedEducationLevel = null;
-      });
-      _formKey.currentState!.reset(); // Reset form validation state
-
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('User profile saved successfully!')),
-      );
+      await controller.loadProfiles();
+      Get.back();
+      AppSnackbar.showCustomSnackbar(
+          context, 'Usuario registrado correctamente');
     } catch (e) {
       if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to save user profile: $e')),
+      AppSnackbar.showCustomSnackbar(
+        context,
+        'Error al guardar el usuario. Inténtalo de nuevo.',
+        backgroundColor: AppColors.mainRed.withAlpha(204),
       );
-    } finally {
-      if (mounted) {
-        setState(() {
-          isLoading = false;
-        });
-      }
-    }
-  }
-
-  Future<void> getProfile() async {
-    if (searchUserIdController.text.isEmpty){
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please enter a User ID to search.')),
-      );
-      return;
-    }
-    if (!mounted) return;
-
-    setState(() {
-      isLoading = true;
-    });
-
-    try {
-      final UserProfile? profile =
-      await controller.getProfileByUserId(searchUserIdController.text);
-
-      if (!mounted) return;
-
-      setState(() {
-        if (profile != null) {
-          profileInfo = '''
-User ID: ${profile.userId}
-Nickname: ${profile.nickname}
-Sex: ${profile.sex.toString().split('.').last}
-Birth Date: ${DateFormat('yyyy-MM-dd').format(profile.birthDate)}
-Education Level: ${profile.educationLevel.toString().split('.').last}
-''';
-        } else {
-          profileInfo = 'No profile found for this User ID: ${searchUserIdController.text}';
-        }
-      });
-    } catch (e) {
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to get profile: $e')),
-      );
-      setState(() {
-        profileInfo = 'Error fetching profile.';
-      });
     } finally {
       if (mounted) {
         setState(() {
@@ -171,183 +214,306 @@ Education Level: ${profile.educationLevel.toString().split('.').last}
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+    final isLandscape = mediaQuery.orientation == Orientation.landscape;
+    final appBar = CustomAppBar(title: 'Mis Datos');
+    final availableHeight = mediaQuery.size.height -
+        appBar.preferredSize.height -
+        mediaQuery.padding.top -
+        mediaQuery.padding.bottom;
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('User Management'),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Register New User',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                controller: userIdController,
-                decoration: const InputDecoration(
-                  labelText: 'User ID *',
-                  border: OutlineInputBorder(),
-                  hintText: 'Enter a unique user identifier',
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'User ID cannot be empty';
-                  }
-                  // Add more validation if needed (e.g., length, characters)
-                  return null;
-                },
-              ),
-              const SizedBox(height: 12),
-              TextFormField(
-                controller: nicknameController,
-                decoration: const InputDecoration(
-                  labelText: 'Nickname *',
-                  border: OutlineInputBorder(),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Nickname cannot be empty';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 12),
-              DropdownButtonFormField<Sex>(
-                value: selectedSex,
-                decoration: const InputDecoration(
-                  labelText: 'Sex *',
-                  border: OutlineInputBorder(),
-                ),
-                items: Sex.values.map((Sex sex) {
-                  return DropdownMenuItem<Sex>(
-                    value: sex,
-                    child: Text(sex.toString().split('.').last),
-                  );
-                }).toList(),
-                onChanged: (Sex? newValue) {
-                  setState(() {
-                    selectedSex = newValue;
-                  });
-                },
-                validator: (value) => value == null ? 'Please select sex' : null,
-              ),
-              const SizedBox(height: 12),
-              InkWell(
-                onTap: () => _selectDate(context),
-                child: InputDecorator(
-                  decoration: InputDecoration(
-                    labelText: 'Birth Date *',
-                    border: const OutlineInputBorder(),
-                    // Show error style if validation fails
-                    errorText: _formKey.currentState?.validate() == false && selectedBirthDate == null
-                        ? 'Please select birth date'
-                        : null,
-                  ),
-                  child: Text(
-                    selectedBirthDate == null
-                        ? 'Select Date'
-                        : DateFormat('yyyy-MM-dd').format(selectedBirthDate!),
-                  ),
+      appBar: appBar,
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: Center(
+              child: Container(
+                width: isLandscape || DeviceHelper.isTablet
+                    ? mediaQuery.size.width * 0.8
+                    : null,
+                padding: const EdgeInsets.fromLTRB(16.0, 62.0, 16.0, 16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      child: _buildFormFields(isLandscape),
+                    ),
+                    FutureBuilder(
+                      future: Future.delayed(Duration(milliseconds: 50), () {
+                        if (_formKey.currentContext != null) {
+                          final RenderBox box = _formKey.currentContext!
+                              .findRenderObject() as RenderBox;
+                          final formHeight = box.size.height;
+                          final remainingSpace =
+                              availableHeight - formHeight - 62.0 - 16.0;
+                          return remainingSpace > 0 ? remainingSpace / 2 : 32.0;
+                        }
+                        return 32.0;
+                      }),
+                      builder: (context, snapshot) {
+                        final spacing = snapshot.data ?? 32.0;
+                        return SizedBox(height: spacing);
+                      },
+                    ),
+                    _buildActionButtons(context),
+                  ],
                 ),
               ),
-              // Hidden TextFormField for birth date validation within the Form
-              Visibility(
-                visible: false,
-                maintainState: true,
-                child: TextFormField(
-                  initialValue: selectedBirthDate?.toIso8601String(),
-                  validator: (value) => selectedBirthDate == null ? '' : null, // Trigger validation
-                ),
-              ),
-              const SizedBox(height: 12),
-              DropdownButtonFormField<EducationLevel>(
-                value: selectedEducationLevel,
-                decoration: const InputDecoration(
-                  labelText: 'Education Level *',
-                  border: OutlineInputBorder(),
-                ),
-                items: EducationLevel.values.map((EducationLevel level) {
-                  return DropdownMenuItem<EducationLevel>(
-                    value: level,
-                    child: Text(level.toString().split('.').last),
-                  );
-                }).toList(),
-                onChanged: (EducationLevel? newValue) {
-                  setState(() {
-                    selectedEducationLevel = newValue;
-                  });
-                },
-                validator: (value) => value == null ? 'Please select education level' : null,
-              ),
-              const SizedBox(height: 20),
-              Align(
-                alignment: Alignment.centerRight,
-                child: ElevatedButton(
-                  onPressed: isLoading ? null : saveUser,
-                  child: isLoading
-                      ? const SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
-                      : const Text('Save User'),
-                ),
-              ),
-
-              const SizedBox(height: 32),
-              const Divider(),
-              const SizedBox(height: 24),
-
-              Text(
-                'Get User Profile',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
-              const SizedBox(height: 16),
-              TextField(
-                controller: searchUserIdController, // Use separate controller here
-                decoration: const InputDecoration(
-                  labelText: 'User ID to Search',
-                  border: OutlineInputBorder(),
-                  hintText: 'Enter User ID to fetch profile',
-                ),
-              ),
-              const SizedBox(height: 12),
-              Align(
-                alignment: Alignment.centerRight,
-                child: ElevatedButton(
-                  onPressed: isLoading ? null : getProfile,
-                  child: isLoading
-                      ? const SizedBox(
-                      width: 20,
-                      height: 20,
-                      child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
-                      : const Text('Get Profile'),
-                ),
-              ),
-              const SizedBox(height: 24),
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.surfaceVariant,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: profileInfo.isEmpty
-                    ? Text(
-                  'Enter a User ID and click "Get Profile" to view information.',
-                  style: TextStyle(color: Theme.of(context).hintColor),
-                )
-                    : Text(profileInfo),
-              ),
-              const SizedBox(height: 20),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
+  }
+
+  Widget _buildFormFields(bool isLandscape) {
+    return Form(
+      key: _formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildNicknameField(),
+          const SizedBox(height: 24),
+          _buildSexField(),
+          const SizedBox(height: 16),
+          _buildBirthDateField(),
+          const SizedBox(height: 24),
+          _buildEducationLevelField(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildNicknameField() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Apodo', style: _labelStyle),
+        const SizedBox(height: 8),
+        TextFormField(
+          controller: nicknameController,
+          focusNode: nicknameFocusNode,
+          decoration: CustomInputDecoration.commonInputDecoration().copyWith(
+            hintText: 'Introduce un apodo',
+          ),
+          validator: (value) {
+            if ((_nicknameVisited || _formSubmitted)) {
+              if (nicknameFocusNode.hasFocus) {
+                return null;
+              }
+              if (value == null || value.isEmpty) {
+                return 'Por favor introduce un apodo';
+              }
+              if (isNicknameExists) {
+                return nicknameErrorText;
+              }
+            }
+            return null;
+          },
+          onTap: () => setState(() => _nicknameVisited = true),
+          onChanged: (value) {
+            setState(() {
+              _nicknameVisited = true;
+              isNicknameExists = false;
+              nicknameErrorText = null;
+            });
+            _formKey.currentState?.validate();
+          },
+          style: CustomInputDecoration.textInputStyle,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSexField() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Sexo', style: _labelStyle),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: 150,
+              child: RadioListTile<Sex>(
+                title: const Text('Masculino'),
+                value: Sex.male,
+                groupValue: selectedSex,
+                activeColor: CustomInputDecoration.focusColor,
+                onChanged: (Sex? value) {
+                  setState(() {
+                    selectedSex = value;
+                    _sexVisited = true;
+                    _nicknameVisited = true;
+                  });
+                  _formKey.currentState?.validate();
+                },
+                contentPadding: EdgeInsets.zero,
+                visualDensity: VisualDensity.compact,
+              ),
+            ),
+            SizedBox(width: 20),
+            SizedBox(
+              width: 150,
+              child: RadioListTile<Sex>(
+                title: const Text('Femenino'),
+                value: Sex.female,
+                groupValue: selectedSex,
+                activeColor: CustomInputDecoration.focusColor,
+                onChanged: (Sex? value) {
+                  setState(() {
+                    selectedSex = value;
+                    _sexVisited = true;
+                    _nicknameVisited = true;
+                  });
+                  _formKey.currentState?.validate();
+                },
+                contentPadding: EdgeInsets.zero,
+                visualDensity: VisualDensity.compact,
+              ),
+            ),
+          ],
+        ),
+        if ((_sexVisited || _formSubmitted) && selectedSex == null)
+          Padding(
+            padding: const EdgeInsets.only(top: 0, left: 12.0, bottom: 8.0),
+            child: Text(
+              'Por favor selecciona un sexo',
+              style: TextStyle(
+                  color: Theme.of(context).colorScheme.error, fontSize: 12),
+            ),
+          ),
+      ],
+    );
+  }
+
+  Widget _buildBirthDateField() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Fecha de nacimiento', style: _labelStyle),
+        const SizedBox(height: 8),
+        TextFormField(
+          controller: birthDateController,
+          focusNode: birthDateFocusNode,
+          readOnly: true,
+          decoration: CustomInputDecoration.commonInputDecoration().copyWith(
+            hintText: 'Seleccionar fecha',
+            suffixIcon: Icon(Icons.calendar_today, color: Color(0xFF8F9098)),
+          ),
+          onTap: () => _selectDate(context),
+          validator: (value) {
+            if ((_birthDateVisited || _formSubmitted)) {
+              if (birthDateFocusNode.hasFocus) {
+                return null;
+              }
+              if (selectedBirthDate == null) {
+                return 'Por favor selecciona una fecha';
+              }
+            }
+            return null;
+          },
+          style: CustomInputDecoration.textInputStyle,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildEducationLevelField() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Nivel de estudios', style: _labelStyle),
+        const SizedBox(height: 8),
+        DropdownButtonFormField<EducationLevel>(
+          value: selectedEducationLevel,
+          focusNode: educationLevelFocusNode,
+          decoration: CustomInputDecoration.commonInputDecoration().copyWith(),
+          hint: Text(
+            'Seleccionar nivel de estudios',
+            style: CustomInputDecoration.commonInputDecoration().hintStyle,
+          ),
+          style: Theme.of(context)
+              .textTheme
+              .titleMedium
+              ?.copyWith(color: Color(0xFF1A1A1A)),
+          items: EducationLevel.values
+              .map((level) => DropdownMenuItem(
+            value: level,
+            child: Text(getEducationLevelText(level)),
+          ))
+              .toList(),
+          onChanged: (EducationLevel? value) {
+            setState(() {
+              selectedEducationLevel = value;
+              _educationLevelVisited = true;
+              _nicknameVisited = true;
+              _sexVisited = true;
+              _birthDateVisited = true;
+            });
+            _formKey.currentState?.validate();
+          },
+          validator: (value) {
+            if ((_educationLevelVisited || _formSubmitted)) {
+              if (educationLevelFocusNode.hasFocus) {
+                return null;
+              }
+              if (value == null) {
+                return 'Por favor selecciona un nivel de estudios';
+              }
+            }
+            return null;
+          },
+          isExpanded: true,
+        ),
+      ],
+    );
+  }
+
+  Widget _buildActionButtons(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (isLoading)
+          Center(child: CircularProgressIndicator())
+        else ...[
+          Center(
+            child: CustomPrimaryButton(
+              text: 'Guardar',
+              onPressed: saveUser,
+              isEnabled: isFormComplete && !isLoading,
+            ),
+          ),
+          const SizedBox(height: 16),
+          Center(
+            child: CustomSecondaryButton(
+              text: 'Cancelar',
+              onPressed: () {
+                FocusScope.of(context).unfocus();
+                Get.back();
+              },
+            ),
+          ),
+        ],
+      ],
+    );
+  }
+
+  String getEducationLevelText(EducationLevel level) {
+    switch (level) {
+      case EducationLevel.primary:
+        return 'Estudios Primarios';
+      case EducationLevel.secondary:
+        return 'Estudios Secundarios';
+      case EducationLevel.graduate:
+        return 'Grado Universitario';
+      case EducationLevel.master:
+        return 'Máster Universitario';
+      case EducationLevel.doctorate:
+        return 'Doctorado';
+      default:
+        return '';
+    }
   }
 }
