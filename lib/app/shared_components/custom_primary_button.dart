@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import '../config/themes/AppColors.dart';
 import '../config/themes/AppTextStyle.dart';
 import '../utils/helpers/app_helpers.dart';
@@ -19,16 +21,22 @@ class CustomPrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // 注意: onPressed 始终传递 onPressed 回调，而不考虑 isEnabled 状态
-    // 这样按钮即使在视觉上显示为"禁用"状态，依然可以点击
+    final bool isDarkMode = Get.isDarkMode;
+    final Color disabledBgColor = isDarkMode
+        ? AppColors.customPrimaryButtonDisabledBackgroundColorDark
+        : AppColors.customPrimaryButtonDisabledBackgroundColor;
+    final Color disabledTextColor = isDarkMode
+        ? AppColors.customPrimaryButtonDisabledTextColorDark
+        : AppColors.customPrimaryButtonDisabledTextColor;
+
     return SizedBox(
       width: DeviceHelper.isTablet ? 536 : 311,
       child: ElevatedButton(
-        onPressed: onPressed, // 始终可点击，无论 isEnabled 是什么值
+        onPressed: isEnabled ? onPressed : null,
         style: ElevatedButton.styleFrom(
           backgroundColor: isEnabled
               ? (backgroundColor ?? AppColors.customButtonColor)
-              : Colors.grey.shade300, // 根据 isEnabled 改变颜色
+              : disabledBgColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
@@ -38,7 +46,7 @@ class CustomPrimaryButton extends StatelessWidget {
         child: Text(
           text,
           style: AppTextStyle.customPrimaryButtonText.copyWith(
-            color: isEnabled ? Colors.white : Colors.grey.shade700, // 根据 isEnabled 改变文字颜色
+            color: isEnabled ? Colors.white : disabledTextColor,
           ),
         ),
       ),
