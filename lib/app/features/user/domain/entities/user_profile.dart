@@ -1,11 +1,17 @@
 class UserProfile {
-  final String userId;
+  String userId = "";
   final String nickname;
   final Sex sex;
   final DateTime birthDate;
   final EducationLevel educationLevel;
 
-  UserProfile({
+  UserProfile(
+      {required this.nickname,
+      required this.sex,
+      required this.birthDate,
+      required this.educationLevel});
+
+  UserProfile.withUserId({
     required this.userId,
     required this.nickname,
     required this.sex,

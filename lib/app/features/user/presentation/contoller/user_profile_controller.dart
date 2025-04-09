@@ -26,9 +26,6 @@ class UserProfileController extends GetxController {
     try {
       final allProfiles = await repository.getAllProfiles();
       profiles.value = allProfiles;
-      if (allProfiles.isNotEmpty && selectedUserId.isEmpty) {
-        setSelectedUserId(allProfiles.first.userId);
-      }
     } finally {
       isLoading.value = false;
     }
@@ -54,7 +51,6 @@ class UserProfileController extends GetxController {
     isLoading.value = true;
     try {
       await repository.saveProfile(profile);
-      await loadProfiles();
     } finally {
       isLoading.value = false;
     }
