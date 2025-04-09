@@ -2,7 +2,9 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:msdtmt/app/features/tm_tst/data/model/tmt_result_metric_model.dart';
 import 'package:msdtmt/app/features/tm_tst/data/model/tmt_reult_user_model.dart';
 import 'package:msdtmt/app/utils/services/net/api_error.dart';
+import '../../../../../utils/services/user_data_base_helper.dart';
 import '../../../../../utils/services/work_manager_handler.dart';
+import '../../../../user/data/datasources/user_local_data_source.dart';
 import '../../../data/model/pending_result_model.dart';
 import '../../entities/result/tmt_game_result_data.dart';
 import '../../repository/pending_result_repository.dart';
@@ -15,12 +17,15 @@ class PendingResultUseCase {
   });
 
   Future<bool> savePendingResult(TmtGameResultData tmtGameResultData) async {
-    final userModel = TmtUserModel(
-      nivelEduc: "G",
-      fNacimiento: DateTime(1980, 1, 1),
-      sexo: "M",
-    );
-    //TODO get from local storage
+    final userLocalDataSource =
+        UserLocalDataSourceImpl(databaseHelper: UserDatabaseHelper());
+
+    final currentProfile = await userLocalDataSource.getCurrentProfile();
+
+    if (currentProfile == null) {
+      return false;
+    }
+    final userModel = TmtUserModel.fromUserProfile(currentProfile);
 
     bool saved = await pendingResultRepository.savePendingResult(
         TmtResultModel.fromEntity(tmtGameResultData), userModel);

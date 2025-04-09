@@ -1,6 +1,6 @@
 import 'package:intl/intl.dart';
 
-import '../../../../constans/date_formatte.dart';
+import '../../../../constans/send_tmt_result_date_formatter.dart';
 import '../../domain/entities/metric/metric_static_values.dart';
 import '../../domain/entities/result/tmt_game_init_data.dart';
 import '../../domain/entities/result/tmt_game_result_data.dart';
@@ -85,8 +85,8 @@ class TmtResultModel {
 
   factory TmtResultModel.fromEntity(TmtGameResultData entity) {
     final formatter = DateFormat(
-        DateFormatter.TMT_TEST_RESULT_SEND_DATA_FORMATTER,
-        DateFormatter.DATE_LOCALE);
+        SendTMTResultDateFormatter.TMT_TEST_RESULT_SEND_DATA_FORMATTER,
+        SendTMTResultDateFormatter.DATE_LOCALE);
     final utcDate = entity.dateData.toUtc();
     final formattedDate = formatter.format(utcDate);
 

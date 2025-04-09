@@ -1,5 +1,6 @@
 import 'package:uuid/uuid.dart';
 
+import '../../../tm_tst/data/model/tmt_reult_user_model.dart';
 import '../../domain/entities/user_profile.dart';
 
 class UserProfileModel extends UserProfile {
@@ -38,6 +39,9 @@ class UserProfileModel extends UserProfile {
         educationLevel:
             EducationLevel.fromValue(map['educationLevel'] as String));
   }
+
+
+
 
   Map<String, dynamic> toMap() {
     return {

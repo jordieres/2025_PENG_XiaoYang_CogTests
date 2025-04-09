@@ -2,6 +2,9 @@ import 'package:msdtmt/app/utils/services/app_logger.dart';
 import 'package:msdtmt/app/utils/services/net/rest_api_services.dart';
 import 'package:msdtmt/app/utils/services/net/result_data.dart';
 
+import '../../../../utils/services/net/api_error.dart';
+import '../../../../utils/services/user_data_base_helper.dart';
+import '../../../user/data/datasources/user_local_data_source.dart';
 import '../../domain/entities/result/tmt_user_data.dart';
 import '../../domain/repository/tmt_result_repository.dart';
 import '../model/tmt_result_metric_model.dart';
@@ -17,14 +20,15 @@ class TmtResultRepositoryImpl implements TmtResultRepository {
   @override
   Future<ResultData> reportTmtResults(TmtResultModel resultModel) async {
     try {
-      TmtUserData userData = TmtUserData(
-        nivelEduc: "G",
-        sexo: "M",
-        fNacimiento: DateTime(1980, 1, 1),
-      );
-      //TODO get Userdata from local storage
+      final userLocalDataSource =
+          UserLocalDataSourceImpl(databaseHelper: UserDatabaseHelper());
 
-      final userModel = TmtUserModel.fromEntity(userData);
+      final currentProfile = await userLocalDataSource.getCurrentProfile();
+
+      if (currentProfile == null) {
+        return ResultData.failure(UnknownApiError('No current profile found'));
+      }
+      final userModel = TmtUserModel.fromUserProfile(currentProfile);
 
       final result = await _apiServices.reportTmtResults(
         userModel,
@@ -37,5 +41,4 @@ class TmtResultRepositoryImpl implements TmtResultRepository {
       return ResultData(null, false, null);
     }
   }
-
 }
