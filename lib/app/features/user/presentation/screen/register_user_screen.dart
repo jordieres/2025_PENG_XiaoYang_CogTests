@@ -4,10 +4,12 @@ import 'package:intl/intl.dart';
 
 import '../../../../config/themes/AppColors.dart';
 import '../../../../config/themes/AppTextStyle.dart';
+import '../../../../config/themes/app_text_style_base.dart';
 import '../../../../config/themes/input_decoration.dart';
 import '../../../../config/translation/app_translations.dart';
 import '../../../../utils/ui/ui_utils.dart';
 import '../../domain/entities/user_profile.dart';
+import '../../domain/usecase/register_user_screen_responsive_calculator.dart';
 import '../contoller/user_profile_controller.dart';
 import '../../../../shared_components/custom_app_bar.dart';
 import '../../../../shared_components/custom_primary_button.dart';
@@ -22,11 +24,6 @@ class RegisterUserScreen extends StatefulWidget {
 }
 
 class _RegisterUserScreenState extends State<RegisterUserScreen> {
-
-  static const double kContentTopPadding = 62.0;
-  static const double kContentHorizontalPadding = 16.0;
-  static const double kContentBottomPadding = 16.0;
-  static const double kDefaultSpacing = 32.0;
   static const double kFieldVerticalSpacing = 24.0;
   static const double kSexFieldVerticalSpacing = 16.0;
   static const double kLabelFieldSpacing = 8.0;
@@ -74,7 +71,8 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
 
   void _updateFormHeight() {
     if (_formBoxKey.currentContext != null && mounted) {
-      final RenderBox box = _formBoxKey.currentContext!.findRenderObject() as RenderBox;
+      final RenderBox box =
+      _formBoxKey.currentContext!.findRenderObject() as RenderBox;
       if (box.hasSize) {
         setState(() {
           _formHeight = box.size.height;
@@ -91,11 +89,15 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
   double _calculateSpacing(double availableHeight) {
     if (!_isFormMeasured) {
       _updateFormHeight();
-      return kDefaultSpacing;
+      return RegisterUserScreenResponsiveCalculator.kDefaultSpacing;
     }
 
-    final remainingSpace = availableHeight - _formHeight - kContentTopPadding - kContentBottomPadding;
-    return remainingSpace > 0 ? remainingSpace / 2 : kDefaultSpacing;
+    return RegisterUserScreenResponsiveCalculator
+        .calculateSpacingBetweenFormAndButtons(
+      context,
+      availableHeight,
+      _formHeight,
+    );
   }
 
   void _onNicknameFocusChange() {
@@ -280,15 +282,18 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
           return SingleChildScrollView(
             child: Center(
               child: Container(
-                width: isLandscape || DeviceHelper.isTablet
-                    ? mediaQuery.size.width * 0.8
-                    : null,
-                padding: const EdgeInsets.fromLTRB(
-                    kContentHorizontalPadding,
-                    kContentTopPadding,
-                    kContentHorizontalPadding,
-                    kContentBottomPadding
+                width: RegisterUserScreenResponsiveCalculator
+                    .calculateContainerWidth(
+                  context,
                 ),
+                padding: const EdgeInsets.fromLTRB(
+                    RegisterUserScreenResponsiveCalculator
+                        .kContentHorizontalPadding,
+                    RegisterUserScreenResponsiveCalculator.kContentTopPadding,
+                    RegisterUserScreenResponsiveCalculator
+                        .kContentHorizontalPadding,
+                    RegisterUserScreenResponsiveCalculator
+                        .kContentBottomPadding),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -375,57 +380,45 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
         Text(TMTRegisterUserText.sexLabel.tr,
             style: AppTextStyle.registerUserLabelText),
         Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            SizedBox(
-              width: 150,
-              child: RadioListTile<Sex>(
-                title: Text(TMTRegisterUserText.sexMale.tr,
-                    style: CustomInputDecoration.textInputStyle),
-                value: Sex.male,
-                groupValue: selectedSex,
-                activeColor: CustomInputDecoration.focusColor,
-                onChanged: (Sex? value) {
-                  setState(() {
-                    selectedSex = value;
-                    _sexVisited = true;
-                    _nicknameVisited = true;
-                  });
-                  _formKey.currentState?.validate();
-                  WidgetsBinding.instance.addPostFrameCallback((_) {
-                    _updateFormHeight();
-                  });
-                },
-                contentPadding: EdgeInsets.zero,
-                visualDensity: VisualDensity.compact,
-              ),
+            Radio<Sex>(
+              value: Sex.male,
+              groupValue: selectedSex,
+              activeColor: CustomInputDecoration.focusColor,
+              onChanged: (Sex? value) {
+                setState(() {
+                  selectedSex = value;
+                  _sexVisited = true;
+                  _nicknameVisited = true;
+                });
+                _formKey.currentState?.validate();
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  _updateFormHeight();
+                });
+              },
             ),
+            Text(TMTRegisterUserText.sexMale.tr,
+                style: CustomInputDecoration.textInputStyle),
             SizedBox(width: 20),
-            SizedBox(
-              width: 150,
-              child: RadioListTile<Sex>(
-                title: Text(
-                  TMTRegisterUserText.sexFemale.tr,
-                  style: CustomInputDecoration.textInputStyle,
-                ),
-                value: Sex.female,
-                groupValue: selectedSex,
-                activeColor: CustomInputDecoration.focusColor,
-                onChanged: (Sex? value) {
-                  setState(() {
-                    selectedSex = value;
-                    _sexVisited = true;
-                    _nicknameVisited = true;
-                  });
-                  _formKey.currentState?.validate();
-                  WidgetsBinding.instance.addPostFrameCallback((_) {
-                    _updateFormHeight();
-                  });
-                },
-                contentPadding: EdgeInsets.zero,
-                visualDensity: VisualDensity.compact,
-              ),
+            Radio<Sex>(
+              value: Sex.female,
+              groupValue: selectedSex,
+              activeColor: CustomInputDecoration.focusColor,
+              onChanged: (Sex? value) {
+                setState(() {
+                  selectedSex = value;
+                  _sexVisited = true;
+                  _nicknameVisited = true;
+                });
+                _formKey.currentState?.validate();
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  _updateFormHeight();
+                });
+              },
             ),
+            Text(TMTRegisterUserText.sexFemale.tr,
+                style: CustomInputDecoration.textInputStyle),
           ],
         ),
         if ((_sexVisited || _formSubmitted) && selectedSex == null)
@@ -433,8 +426,9 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
             padding: const EdgeInsets.only(top: 0, left: 12.0, bottom: 8.0),
             child: Text(
               TMTRegisterUserText.sexError.tr,
-              style: TextStyle(
-                  color: Theme.of(context).colorScheme.error, fontSize: 12),
+              style: TextStyleBase.bodyS.copyWith(
+                color: Theme.of(context).colorScheme.error,
+              ),
             ),
           ),
       ],
