@@ -108,6 +108,7 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
         final currentLocale = Get.locale?.toString() ?? 'en_US';
         birthDateFocusNode.removeListener(_onBirthDateFocusChange);
         birthDateController.text = DateFormat.yMd(currentLocale).format(picked);
+
         WidgetsBinding.instance.addPostFrameCallback((_) {
           birthDateController.selection = TextSelection.collapsed(
             offset: birthDateController.text.length,

@@ -12,6 +12,7 @@ class LocalStorageServices {
   static const String _pendingResultsKey = 'pending_tmt_results';
   static const String _themeKey = 'theme_mode';
   static const String _systemThemeKey = 'system_theme';
+  static const String _currentProfileKey = 'current_profile_id';
 
   LocalStorageServices._internal();
 
@@ -61,5 +62,15 @@ class LocalStorageServices {
       'isFollowSystem': isSystemTheme,
       'themeMode': themeMode
     };
+  }
+
+  static Future<bool> setCurrentProfileId(String userId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return await prefs.setString(_currentProfileKey, userId);
+  }
+
+  static Future<String?> getCurrentProfileId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString(_currentProfileKey);
   }
 }
