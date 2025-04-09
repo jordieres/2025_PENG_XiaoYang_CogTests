@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../config/themes/AppColors.dart';
+import '../../../../config/themes/AppTextStyle.dart';
 import '../../../../config/themes/input_decoration.dart';
 import '../../../../config/translation/app_translations.dart';
 import '../../../../utils/ui/ui_utils.dart';
@@ -14,7 +15,7 @@ import '../../../../shared_components/custom_secondary_button.dart';
 import '../../../../utils/helpers/app_helpers.dart';
 
 class RegisterUserScreen extends StatefulWidget {
-  RegisterUserScreen({Key? key}) : super(key: key);
+  const RegisterUserScreen({super.key});
 
   @override
   State<RegisterUserScreen> createState() => _RegisterUserScreenState();
@@ -43,11 +44,6 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
   bool _formSubmitted = false;
 
   late UserProfileController controller;
-
-  final TextStyle _labelStyle = TextStyle(
-    fontSize: 16,
-    fontWeight: FontWeight.w500,
-  );
 
   @override
   void initState() {
@@ -171,11 +167,13 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
         nicknameErrorText = TMTRegisterUserText.nicknameExistsError.tr;
       });
       _formKey.currentState?.validate();
-      AppSnackbar.showCustomSnackbar(
-        context,
-        TMTRegisterUserText.nicknameExistsError.tr,
-        backgroundColor: AppColors.mainRed.withAlpha(204),
-      );
+      if (mounted) {
+        AppSnackbar.showCustomSnackbar(
+          context,
+          TMTRegisterUserText.nicknameExistsError.tr,
+          backgroundColor: AppColors.mainRed.withAlpha(204),
+        );
+      }
       return;
     }
 
@@ -196,8 +194,12 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
       await controller.saveProfile(newUserProfile);
       await controller.loadProfiles();
       Get.back();
-      AppSnackbar.showCustomSnackbar(
-          context, TMTRegisterUserText.saveSuccess.tr);
+      if (mounted) {
+        AppSnackbar.showCustomSnackbar(
+          context,
+          TMTRegisterUserText.saveSuccess.tr,
+        );
+      }
     } catch (e) {
       if (!mounted) return;
       AppSnackbar.showCustomSnackbar(
@@ -291,7 +293,8 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(TMTRegisterUserText.nicknameLabel.tr, style: _labelStyle),
+        Text(TMTRegisterUserText.nicknameLabel.tr,
+            style: AppTextStyle.registerUserLabelText),
         const SizedBox(height: 8),
         TextFormField(
           controller: nicknameController,
@@ -332,14 +335,16 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(TMTRegisterUserText.sexLabel.tr, style: _labelStyle),
+        Text(TMTRegisterUserText.sexLabel.tr,
+            style: AppTextStyle.registerUserLabelText),
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SizedBox(
               width: 150,
               child: RadioListTile<Sex>(
-                title: Text(TMTRegisterUserText.sexMale.tr),
+                title: Text(TMTRegisterUserText.sexMale.tr,
+                    style: CustomInputDecoration.textInputStyle),
                 value: Sex.male,
                 groupValue: selectedSex,
                 activeColor: CustomInputDecoration.focusColor,
@@ -359,7 +364,10 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
             SizedBox(
               width: 150,
               child: RadioListTile<Sex>(
-                title: Text(TMTRegisterUserText.sexFemale.tr),
+                title: Text(
+                  TMTRegisterUserText.sexFemale.tr,
+                  style: CustomInputDecoration.textInputStyle,
+                ),
                 value: Sex.female,
                 groupValue: selectedSex,
                 activeColor: CustomInputDecoration.focusColor,
@@ -394,7 +402,8 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(TMTRegisterUserText.birthDateLabel.tr, style: _labelStyle),
+        Text(TMTRegisterUserText.birthDateLabel.tr,
+            style: AppTextStyle.registerUserLabelText),
         const SizedBox(height: 8),
         TextFormField(
           controller: birthDateController,
@@ -426,7 +435,8 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(TMTRegisterUserText.educationLabel.tr, style: _labelStyle),
+        Text(TMTRegisterUserText.educationLabel.tr,
+            style: AppTextStyle.registerUserLabelText),
         const SizedBox(height: 8),
         DropdownButtonFormField<EducationLevel>(
           value: selectedEducationLevel,
@@ -436,15 +446,14 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
             TMTRegisterUserText.educationHint.tr,
             style: CustomInputDecoration.commonInputDecoration().hintStyle,
           ),
-          style: Theme.of(context)
-              .textTheme
-              .titleMedium
-              ?.copyWith(color: Color(0xFF1A1A1A)),
           items: EducationLevel.values
               .map((level) => DropdownMenuItem(
-            value: level,
-            child: Text(getEducationLevelText(level)),
-          ))
+                    value: level,
+                    child: Text(
+                      getEducationLevelText(level),
+                      style: CustomInputDecoration.textInputStyle,
+                    ),
+                  ))
               .toList(),
           onChanged: (EducationLevel? value) {
             setState(() {
@@ -514,8 +523,6 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
         return TMTRegisterUserText.educationMaster.tr;
       case EducationLevel.doctorate:
         return TMTRegisterUserText.educationDoctorate.tr;
-      default:
-        return '';
     }
   }
 }
