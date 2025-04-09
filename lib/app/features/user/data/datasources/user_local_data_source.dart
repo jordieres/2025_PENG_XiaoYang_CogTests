@@ -3,6 +3,7 @@ import 'package:uuid/uuid.dart';
 
 import '../../../../constans/database_constants.dart';
 import '../../../../utils/services/user_data_base_helper.dart';
+import '../../../../utils/services/local_storage_services.dart';
 import '../model/user_profile_model.dart';
 import '../model/user_test_result_model.dart';
 
@@ -30,6 +31,10 @@ abstract class UserLocalDataSource {
   Future<List<String>> getAllNicknames();
 
   Future<List<String>> getAllUserId();
+
+  Future<void> setCurrentProfile(String userId);
+
+  Future<UserProfileModel?> getCurrentProfile();
 }
 
 class UserLocalDataSourceImpl implements UserLocalDataSource {
@@ -88,6 +93,10 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
       profile.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
+    final currentProfileId = await LocalStorageServices.getCurrentProfileId();
+    if (currentProfileId == null || currentProfileId.isEmpty) {
+      await setCurrentProfile(profile.userId);
+    }
   }
 
   @override
@@ -164,6 +173,7 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
   @override
   Future<bool> isReferenceCodeUsed(String referenceCode) async {
     final db = await databaseHelper.database;
+    //TODO join with user profile
     final count = Sqflite.firstIntValue(await db.rawQuery(
       'SELECT COUNT(*) FROM ${DatabaseConstants.userTestResultsTable} WHERE ${DatabaseConstants.referenceCodeColumn} = ?',
       [referenceCode],
@@ -196,5 +206,16 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
     return results
         .map((result) => result[DatabaseConstants.userIdColumn] as String)
         .toList();
+  }
+
+  @override
+  Future<void> setCurrentProfile(String userId) async {
+    await LocalStorageServices.setCurrentProfileId(userId);
+  }
+
+  @override
+  Future<UserProfileModel?> getCurrentProfile() async {
+    final currentProfileId = await LocalStorageServices.getCurrentProfileId();
+    return await getProfileByUserId(currentProfileId ?? '');
   }
 }
