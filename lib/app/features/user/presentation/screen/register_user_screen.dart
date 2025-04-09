@@ -22,7 +22,18 @@ class RegisterUserScreen extends StatefulWidget {
 }
 
 class _RegisterUserScreenState extends State<RegisterUserScreen> {
+
+  static const double kContentTopPadding = 62.0;
+  static const double kContentHorizontalPadding = 16.0;
+  static const double kContentBottomPadding = 16.0;
+  static const double kDefaultSpacing = 32.0;
+  static const double kFieldVerticalSpacing = 24.0;
+  static const double kSexFieldVerticalSpacing = 16.0;
+  static const double kLabelFieldSpacing = 8.0;
+  static const double kButtonSpacing = 16.0;
+
   final _formKey = GlobalKey<FormState>();
+  final _formBoxKey = GlobalKey();
   final TextEditingController nicknameController = TextEditingController();
   final TextEditingController birthDateController = TextEditingController();
   final FocusNode nicknameFocusNode = FocusNode();
@@ -43,6 +54,9 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
   bool _educationLevelVisited = false;
   bool _formSubmitted = false;
 
+  double _formHeight = 0;
+  bool _isFormMeasured = false;
+
   late UserProfileController controller;
 
   @override
@@ -52,6 +66,36 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
     nicknameFocusNode.addListener(_onNicknameFocusChange);
     birthDateFocusNode.addListener(_onBirthDateFocusChange);
     educationLevelFocusNode.addListener(_onEducationLevelFocusChange);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _updateFormHeight();
+    });
+  }
+
+  void _updateFormHeight() {
+    if (_formBoxKey.currentContext != null && mounted) {
+      final RenderBox box = _formBoxKey.currentContext!.findRenderObject() as RenderBox;
+      if (box.hasSize) {
+        setState(() {
+          _formHeight = box.size.height;
+          _isFormMeasured = true;
+        });
+      } else {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _updateFormHeight();
+        });
+      }
+    }
+  }
+
+  double _calculateSpacing(double availableHeight) {
+    if (!_isFormMeasured) {
+      _updateFormHeight();
+      return kDefaultSpacing;
+    }
+
+    final remainingSpace = availableHeight - _formHeight - kContentTopPadding - kContentBottomPadding;
+    return remainingSpace > 0 ? remainingSpace / 2 : kDefaultSpacing;
   }
 
   void _onNicknameFocusChange() {
@@ -114,6 +158,10 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
 
         birthDateFocusNode.addListener(_onBirthDateFocusChange);
       });
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _updateFormHeight();
+      });
     }
 
     _formKey.currentState?.validate();
@@ -158,7 +206,6 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
       return;
     }
 
-    // Check if nickname exists before saving
     final nickname = nicknameController.text.trim();
     final existingProfile = await controller.getProfileByNickname(nickname);
     if (existingProfile != null) {
@@ -236,30 +283,20 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
                 width: isLandscape || DeviceHelper.isTablet
                     ? mediaQuery.size.width * 0.8
                     : null,
-                padding: const EdgeInsets.fromLTRB(16.0, 62.0, 16.0, 16.0),
+                padding: const EdgeInsets.fromLTRB(
+                    kContentHorizontalPadding,
+                    kContentTopPadding,
+                    kContentHorizontalPadding,
+                    kContentBottomPadding
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
+                      key: _formBoxKey,
                       child: _buildFormFields(isLandscape),
                     ),
-                    FutureBuilder(
-                      future: Future.delayed(Duration(milliseconds: 50), () {
-                        if (_formKey.currentContext != null) {
-                          final RenderBox box = _formKey.currentContext!
-                              .findRenderObject() as RenderBox;
-                          final formHeight = box.size.height;
-                          final remainingSpace =
-                              availableHeight - formHeight - 62.0 - 16.0;
-                          return remainingSpace > 0 ? remainingSpace / 2 : 32.0;
-                        }
-                        return 32.0;
-                      }),
-                      builder: (context, snapshot) {
-                        final spacing = snapshot.data ?? 32.0;
-                        return SizedBox(height: spacing);
-                      },
-                    ),
+                    SizedBox(height: _calculateSpacing(availableHeight)),
                     _buildActionButtons(context),
                   ],
                 ),
@@ -278,11 +315,11 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildNicknameField(),
-          const SizedBox(height: 24),
+          const SizedBox(height: kFieldVerticalSpacing),
           _buildSexField(),
-          const SizedBox(height: 16),
+          const SizedBox(height: kSexFieldVerticalSpacing),
           _buildBirthDateField(),
-          const SizedBox(height: 24),
+          const SizedBox(height: kFieldVerticalSpacing),
           _buildEducationLevelField(),
         ],
       ),
@@ -295,7 +332,7 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
       children: [
         Text(TMTRegisterUserText.nicknameLabel.tr,
             style: AppTextStyle.registerUserLabelText),
-        const SizedBox(height: 8),
+        const SizedBox(height: kLabelFieldSpacing),
         TextFormField(
           controller: nicknameController,
           focusNode: nicknameFocusNode,
@@ -355,6 +392,9 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
                     _nicknameVisited = true;
                   });
                   _formKey.currentState?.validate();
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    _updateFormHeight();
+                  });
                 },
                 contentPadding: EdgeInsets.zero,
                 visualDensity: VisualDensity.compact,
@@ -378,6 +418,9 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
                     _nicknameVisited = true;
                   });
                   _formKey.currentState?.validate();
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    _updateFormHeight();
+                  });
                 },
                 contentPadding: EdgeInsets.zero,
                 visualDensity: VisualDensity.compact,
@@ -404,7 +447,7 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
       children: [
         Text(TMTRegisterUserText.birthDateLabel.tr,
             style: AppTextStyle.registerUserLabelText),
-        const SizedBox(height: 8),
+        const SizedBox(height: kLabelFieldSpacing),
         TextFormField(
           controller: birthDateController,
           focusNode: birthDateFocusNode,
@@ -437,7 +480,7 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
       children: [
         Text(TMTRegisterUserText.educationLabel.tr,
             style: AppTextStyle.registerUserLabelText),
-        const SizedBox(height: 8),
+        const SizedBox(height: kLabelFieldSpacing),
         DropdownButtonFormField<EducationLevel>(
           value: selectedEducationLevel,
           focusNode: educationLevelFocusNode,
@@ -448,12 +491,12 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
           ),
           items: EducationLevel.values
               .map((level) => DropdownMenuItem(
-                    value: level,
-                    child: Text(
-                      getEducationLevelText(level),
-                      style: CustomInputDecoration.textInputStyle,
-                    ),
-                  ))
+            value: level,
+            child: Text(
+              getEducationLevelText(level),
+              style: CustomInputDecoration.textInputStyle,
+            ),
+          ))
               .toList(),
           onChanged: (EducationLevel? value) {
             setState(() {
@@ -464,6 +507,9 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
               _birthDateVisited = true;
             });
             _formKey.currentState?.validate();
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              _updateFormHeight();
+            });
           },
           validator: (value) {
             if ((_educationLevelVisited || _formSubmitted)) {
@@ -496,7 +542,7 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
               isEnabled: isFormComplete && !isLoading,
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: kButtonSpacing),
           Center(
             child: CustomSecondaryButton(
               text: TMTRegisterUserText.cancelButton.tr,
