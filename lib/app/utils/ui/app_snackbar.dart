@@ -8,11 +8,13 @@ class AppSnackbar {
     BuildContext context,
     String message, {
     int durationInSeconds = 2,
-    Color backgroundColor = Colors.black87,
+    Color? backgroundColor,
   }) {
     if (_isSnackbarVisible) {
       return;
     }
+
+    backgroundColor ??= Theme.of(context).colorScheme.inverseSurface;
 
     _isSnackbarVisible = true;
     final screenWidth = MediaQuery.of(context).size.width;
@@ -24,7 +26,7 @@ class AppSnackbar {
               child: Text(
                 message,
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Theme.of(context).colorScheme.onInverseSurface),
               ),
             ),
             duration: Duration(seconds: durationInSeconds),
