@@ -40,6 +40,15 @@ class TMTGamePracticesText {
       'tmt_game_practice_tmt_b_page_title';
 }
 
+class TmtSelectHandDialogText {
+  static String title = 'tmt_select_hand_dialog_title';
+  static String content = 'tmt_select_hand_dialog_content';
+  static String rightHandButtonText =
+      'tmt_select_hand_dialog_right_hand_button_text';
+  static String leftHandButtonText =
+      'tmt_select_hand_dialog_left_hand_button_text';
+}
+
 class SelectModePracticeOrTestText {
   static String title = 'select_mode_practice_or_test_title';
   static String questionText = 'select_mode_practice_or_test_question_text';
@@ -147,6 +156,15 @@ abstract class BaseMessages {
   String get tmtGamePracticeTmtAPageTitle;
 
   String get tmtGamePracticeTmtBPageTitle;
+
+  //--------------------------------------------TMT Select Hand Dialog Text------------------------------------------------------
+  String get tmtSelectHandDialogTitle;
+
+  String get tmtSelectHandDialogContent;
+
+  String get tmtSelectHandDialogRightHandButtonText;
+
+  String get tmtSelectHandDialogLeftHandButtonText;
 
   //--------------------------------------------Select Mode Practice Or Test Screen Text------------------------------------------------------
 
@@ -287,7 +305,13 @@ abstract class BaseMessages {
             tmtGamePracticeTmtAPageTitle,
         TMTGamePracticesText.tmtGamePracticeTmtBPageTitle:
             tmtGamePracticeTmtBPageTitle,
-
+        //--------------------------------------------TMT Select Hand Dialog Text------------------------------------------------------
+        TmtSelectHandDialogText.title: tmtSelectHandDialogTitle,
+        TmtSelectHandDialogText.content: tmtSelectHandDialogContent,
+        TmtSelectHandDialogText.rightHandButtonText:
+            tmtSelectHandDialogRightHandButtonText,
+        TmtSelectHandDialogText.leftHandButtonText:
+            tmtSelectHandDialogLeftHandButtonText,
         //--------------------------------------------Select Mode Practice Or Test Screen Text------------------------------------------------------
         SelectModePracticeOrTestText.title: selectModePracticeOrTestTitle,
         SelectModePracticeOrTestText.questionText:
