@@ -69,12 +69,28 @@ class EnglishMessages extends BaseMessages {
 
   @override
   String get tmtGamePracticeTmtBPageTitle => "TMT B Practice";
+
+  //--------------------------------------------TMT Select Hand Dialog Text------------------------------------------------------
+  @override
+  String get tmtSelectHandDialogTitle => "Select your dominant hand";
+
+  @override
+  String get tmtSelectHandDialogContent =>
+      "Use the hand you feel most comfortable with to take the test. This optimizes your TMT Test experience.";
+
+  @override
+  String get tmtSelectHandDialogRightHandButtonText => "Right hand";
+
+  @override
+  String get tmtSelectHandDialogLeftHandButtonText => "Left hand";
+
   //--------------------------------------------Select Mode Practice Or Test Screen Text------------------------------------------------------
   @override
   String get selectModePracticeOrTestTitle => "Select Mode";
 
   @override
-  String get selectModePracticeOrTestQuestionText => "Which mode do you prefer?";
+  String get selectModePracticeOrTestQuestionText =>
+      "Which mode do you prefer?";
 
   @override
   String get selectModePracticeOrTestPracticeButtonText => "Practice";
@@ -148,7 +164,8 @@ class EnglishMessages extends BaseMessages {
   String get registerUserNicknameError => "Please enter a nickname";
 
   @override
-  String get registerUserNicknameExistsError => "This nickname is already in use";
+  String get registerUserNicknameExistsError =>
+      "This nickname is already in use";
 
   @override
   String get registerUserSexLabel => "Sex";

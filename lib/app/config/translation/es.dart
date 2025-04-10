@@ -71,6 +71,20 @@ class SpanishMessages extends BaseMessages {
   @override
   String get tmtGamePracticeTmtBPageTitle => "Práctica TMT B";
 
+  //--------------------------------------------TMT Select Hand Dialog Text------------------------------------------------------
+  @override
+  String get tmtSelectHandDialogTitle => "Selecciona tu mano dominante";
+
+  @override
+  String get tmtSelectHandDialogContent => "Usa la mano con la que te sientas más cómodo para realizar la prueba. Esto optimiza tu experiencia TMT test.";
+
+  @override
+  String get tmtSelectHandDialogRightHandButtonText => "Mano derecha";
+
+  @override
+  String get tmtSelectHandDialogLeftHandButtonText => "Mano izquierda";
+
+
   //--------------------------------------------Select Mode Practice Or Test Screen Text------------------------------------------------------
   @override
   String get selectModePracticeOrTestTitle => "Seleccionar Modo";

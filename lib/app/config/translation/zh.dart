@@ -64,6 +64,19 @@ class ChineseMessages extends BaseMessages {
   @override
   String get tmtGamePracticeTmtBPageTitle => "TMT B 练习";
 
+  //--------------------------------------------TMT Select Hand Dialog Text------------------------------------------------------
+  @override
+  String get tmtSelectHandDialogTitle => "选择您要使用的手";
+
+  @override
+  String get tmtSelectHandDialogContent => "使用您感觉最舒适的手进行测试。这将优化您的TMT测试体验。";
+
+  @override
+  String get tmtSelectHandDialogRightHandButtonText => "右手";
+
+  @override
+  String get tmtSelectHandDialogLeftHandButtonText => "左手";
+
   //--------------------------------------------Select Mode Practice Or Test Screen Text------------------------------------------------------
   @override
   String get selectModePracticeOrTestTitle => "选择模式";

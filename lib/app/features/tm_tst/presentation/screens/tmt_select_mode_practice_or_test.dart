@@ -14,15 +14,13 @@ import '../../../../utils/helpers/app_helpers.dart';
 import '../../domain/entities/result/tmt_game_hand_used.dart';
 import '../../domain/entities/result/tmt_game_init_data.dart';
 import '../../domain/usecases/select_mode_practice_or_test_responsive_calculate.dart';
+import '../components/tmt_select_hand_dialog.dart';
 import '../screens/tmt_test_help.dart';
 
 class SelectModePracticeOrTest extends StatelessWidget with NavigationMixin {
-   SelectModePracticeOrTest({super.key});
+  SelectModePracticeOrTest({super.key});
 
-  final tmtGameInitData = TmtGameInitData(
-      tmtGameHandUsed: TmtGameHandUsed.RIGHT, //TODO parse from HomeScreen
-      tmtGameCodeId: "74829-23" //TODO parse from HomeScreen
-  );
+  final String tmtGameCodeId = "74829-23"; //TODO parse from HomeScreen
 
   bool get isDarkMode => Get.isDarkMode;
 
@@ -32,7 +30,7 @@ class SelectModePracticeOrTest extends StatelessWidget with NavigationMixin {
     final isLandscape = orientation == Orientation.landscape;
     final isTablet = DeviceHelper.isTablet;
     final cardWidth =
-    SelectModePracticeOrTestCalculate.calculateCardWidth(context);
+        SelectModePracticeOrTestCalculate.calculateCardWidth(context);
 
     return Scaffold(
       appBar: CustomAppBar(title: SelectModePracticeOrTestText.title.tr),
@@ -83,8 +81,13 @@ class SelectModePracticeOrTest extends StatelessWidget with NavigationMixin {
             child: _buildOptionCard(
               context: context,
               title: SelectModePracticeOrTestText.testButtonText.tr,
-              onTap: () {
-                toTmtTest(tmtGameInitData);
+              onTap: () async {
+                TmtGameHandUsed selectedHand =
+                    await showTmtSelectHandDialogGetX();
+                toTmtTest(TmtGameInitData(
+                  tmtGameHandUsed: selectedHand,
+                  tmtGameCodeId: tmtGameCodeId,
+                ));
               },
               isPractice: false,
             ),
@@ -96,7 +99,7 @@ class SelectModePracticeOrTest extends StatelessWidget with NavigationMixin {
 
   Widget _buildLandscapeLayout(BuildContext context) {
     final cardWidth =
-    SelectModePracticeOrTestCalculate.calculateCardWidth(context);
+        SelectModePracticeOrTestCalculate.calculateCardWidth(context);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 38.0),
@@ -120,8 +123,13 @@ class SelectModePracticeOrTest extends StatelessWidget with NavigationMixin {
             child: _buildOptionCard(
               context: context,
               title: SelectModePracticeOrTestText.testButtonText.tr,
-              onTap: () {
-                toTmtTest(tmtGameInitData);
+              onTap: () async {
+                TmtGameHandUsed selectedHand =
+                    await showTmtSelectHandDialogGetX();
+                toTmtTest(TmtGameInitData(
+                  tmtGameHandUsed: selectedHand,
+                  tmtGameCodeId: tmtGameCodeId,
+                ));
               },
               isPractice: false,
             ),
@@ -142,10 +150,10 @@ class SelectModePracticeOrTest extends StatelessWidget with NavigationMixin {
         : AppColors.secondaryBlueClear;
 
     final Color innerCardColor =
-    isDarkMode ? AppColors.secondaryBlueDark : AppColors.secondaryBlue;
+        isDarkMode ? AppColors.secondaryBlueDark : AppColors.secondaryBlue;
 
     final double cardHeight =
-    SelectModePracticeOrTestCalculate.calculateCardHeight(context);
+        SelectModePracticeOrTestCalculate.calculateCardHeight(context);
 
     return Container(
       height: cardHeight,
@@ -172,7 +180,9 @@ class SelectModePracticeOrTest extends StatelessWidget with NavigationMixin {
                     child: Text(
                       title,
                       style: TextStyleBase.h2.copyWith(
-                        color: isDarkMode ? AppColors.darkText : AppColors.blueText,
+                        color: isDarkMode
+                            ? AppColors.darkText
+                            : AppColors.blueText,
                       ),
                     ),
                   ),
@@ -195,19 +205,19 @@ class SelectModePracticeOrTest extends StatelessWidget with NavigationMixin {
                   padding: const EdgeInsets.all(8.0),
                   child: isDarkMode
                       ? SvgPicture.asset(
-                    ImageVectorPath.help,
-                    width: 30,
-                    height: 30,
-                    colorFilter: const ColorFilter.mode(
-                      AppColors.darkText,
-                      BlendMode.srcIn,
-                    ),
-                  )
+                          ImageVectorPath.help,
+                          width: 30,
+                          height: 30,
+                          colorFilter: const ColorFilter.mode(
+                            AppColors.darkText,
+                            BlendMode.srcIn,
+                          ),
+                        )
                       : SvgPicture.asset(
-                    ImageVectorPath.help,
-                    width: 30,
-                    height: 30,
-                  ),
+                          ImageVectorPath.help,
+                          width: 30,
+                          height: 30,
+                        ),
                 ),
               ),
             ),
