@@ -15,7 +15,7 @@ import '../../domain/usecases/select_mode_practice_or_test_responsive_calculate.
 import '../screens/tmt_test_help.dart';
 
 class SelectModePracticeOrTest extends StatelessWidget with NavigationMixin {
-  const SelectModePracticeOrTest({Key? key}) : super(key: key);
+  const SelectModePracticeOrTest({super.key});
 
   bool get isDarkMode => Get.isDarkMode;
 
@@ -149,19 +149,24 @@ class SelectModePracticeOrTest extends StatelessWidget with NavigationMixin {
       child: Row(
         children: [
           Expanded(
-            child: GestureDetector(
-              onTap: onTap,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: innerCardColor,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Center(
-                  child: Text(
-                    title,
-                    style: TextStyleBase.h2.copyWith(
-                      color:
-                      isDarkMode ? AppColors.darkText : AppColors.blueText,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(15),
+              child: Material(
+                color: innerCardColor,
+                child: InkWell(
+                  splashColor: isDarkMode
+                      ? Colors.white.withAlpha(51)
+                      : AppColors.primaryBlue.withAlpha(51),
+                  highlightColor: isDarkMode
+                      ? Colors.white.withAlpha(25)
+                      : AppColors.primaryBlue.withAlpha(25),
+                  onTap: onTap,
+                  child: Center(
+                    child: Text(
+                      title,
+                      style: TextStyleBase.h2.copyWith(
+                        color: isDarkMode ? AppColors.darkText : AppColors.blueText,
+                      ),
                     ),
                   ),
                 ),
@@ -169,25 +174,36 @@ class SelectModePracticeOrTest extends StatelessWidget with NavigationMixin {
             ),
           ),
           const SizedBox(width: 36),
-          IconButton(
-            icon: isDarkMode
-                ? SvgPicture.asset(
-              ImageVectorPath.help,
-              width: 30,
-              height: 30,
-              colorFilter: const ColorFilter.mode(
-                AppColors.darkText,
-                BlendMode.srcIn,
+          ClipOval(
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                splashColor: isDarkMode
+                    ? Colors.white.withAlpha(51)
+                    : AppColors.primaryBlue.withAlpha(51),
+                onTap: () {
+                  _showHelpDialog(context, isPractice);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: isDarkMode
+                      ? SvgPicture.asset(
+                    ImageVectorPath.help,
+                    width: 30,
+                    height: 30,
+                    colorFilter: const ColorFilter.mode(
+                      AppColors.darkText,
+                      BlendMode.srcIn,
+                    ),
+                  )
+                      : SvgPicture.asset(
+                    ImageVectorPath.help,
+                    width: 30,
+                    height: 30,
+                  ),
+                ),
               ),
-            )
-                : SvgPicture.asset(
-              ImageVectorPath.help,
-              width: 30,
-              height: 30,
             ),
-            onPressed: () {
-              _showHelpDialog(context, isPractice);
-            },
           ),
           const SizedBox(width: 16),
         ],
