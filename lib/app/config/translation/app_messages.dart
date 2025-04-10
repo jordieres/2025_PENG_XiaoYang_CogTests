@@ -40,6 +40,24 @@ class TMTGamePracticesText {
       'tmt_game_practice_tmt_b_page_title';
 }
 
+class SelectModePracticeOrTestText {
+  static String title = 'select_mode_practice_or_test_title';
+  static String questionText = 'select_mode_practice_or_test_question_text';
+  static String practiceButtonText =
+      'select_mode_practice_or_test_practice_button_text';
+  static String testButtonText =
+      'select_mode_practice_or_test_test_button_text';
+  static String practiceModeTitle =
+      'select_mode_practice_or_test_practice_mode_title';
+  static String practiceModeContent =
+      'select_mode_practice_or_test_practice_mode_content';
+  static String testModeTitle = 'select_mode_practice_or_test_test_mode_title';
+  static String testModeContent =
+      'select_mode_practice_or_test_test_mode_content';
+  static String buttonUnderstood =
+      'select_mode_practice_or_test_button_understood';
+}
+
 class TMTResultScreen {
   static String title = 'tmt_result_screen_title';
   static String sessionText = 'tmt_result_screen_session_text';
@@ -68,8 +86,10 @@ class TMTRegisterUserText {
   static String birthDateHint = 'register_user_birth_date_hint';
   static String birthDateError = 'register_user_birth_date_error';
   static String birthDatePickerTitle = 'register_user_birth_date_picker_title';
-  static String birthDatePickerCancel = 'register_user_birth_date_picker_cancel';
-  static String birthDatePickerConfirm = 'register_user_birth_date_picker_confirm';
+  static String birthDatePickerCancel =
+      'register_user_birth_date_picker_cancel';
+  static String birthDatePickerConfirm =
+      'register_user_birth_date_picker_confirm';
   static String educationLabel = 'register_user_education_label';
   static String educationHint = 'register_user_education_hint';
   static String educationError = 'register_user_education_error';
@@ -127,6 +147,26 @@ abstract class BaseMessages {
   String get tmtGamePracticeTmtAPageTitle;
 
   String get tmtGamePracticeTmtBPageTitle;
+
+  //--------------------------------------------Select Mode Practice Or Test Screen Text------------------------------------------------------
+
+  String get selectModePracticeOrTestTitle;
+
+  String get selectModePracticeOrTestQuestionText;
+
+  String get selectModePracticeOrTestPracticeButtonText;
+
+  String get selectModePracticeOrTestTestButtonText;
+
+  String get selectModePracticeOrTestPracticeModeTitle;
+
+  String get selectModePracticeOrTestPracticeModeContent;
+
+  String get selectModePracticeOrTestTestModeTitle;
+
+  String get selectModePracticeOrTestTestModeContent;
+
+  String get selectModePracticeOrTestButtonUnderstood;
 
   //--------------------------------------------TMT Result Screen Text------------------------------------------------------
 
@@ -211,82 +251,106 @@ abstract class BaseMessages {
   String get registerUserSaveError;
 
   Map<String, String> get messages => {
-    TMTGameText.tmtGameCircleBegin: tmtGameCircleBegin,
-    TMTGameText.tmtGameCircleEnd: tmtGameCircleEnd,
-    TMTGameText.tmtGamePartACompletedTitle: tmtGamePartACompletedTitle,
-    TMTGameText.tmtGamePartACompletedBody: tmtGamePartACompletedBody,
-    TMTGameText.tmtGamePartBCompletedConfirmationButton:
-    tmtGamePartBCompletedConfirmationButton,
-    TMTGameText.tmtGameTmtScreenAppBarTime: tmtGameTmtScreenAppBarTime,
-    TMTGameText.tmtGameTmtHelpTmtATitle: tmtGameTmtHelpTmtATitle,
-    TMTGameText.tmtGameTmtHelpTmtADescription:
-    tmtGameTmtHelpTmtADescription,
-    TMTGameText.tmtGameTmtHelpTmtBTitle: tmtGameTmtHelpTmtBTitle,
-    TMTGameText.tmtGameTmtHelpTmtBDescription:
-    tmtGameTmtHelpTmtBDescription,
-    TMTGameText.tmtGameTmtHelpTmtPrimaryButtonText:
-    tmtGameTmtHelpTmtPrimaryButtonText,
-    TMTGameText.tmtGameTmtHelpTmtSecondaryButtonText:
-    tmtGameTmtHelpTmtSecondaryButtonText,
-    //--------------------------------------------TMT Practice Text------------------------------------------------------
-    TMTGamePracticesText.tmtGamePracticeTmtAThenBDialogTitle:
-    tmtGamePracticeTmtAThenBDialogTitle,
-    TMTGamePracticesText.tmtGamePracticeTmtAThenBDialogCancelButtonText:
-    tmtGamePracticeTmtAThenBDialogCancelButtonText,
-    TMTGamePracticesText.tmtGamePracticeTmtAThenBDialogPrimaryButtonText:
-    tmtGamePracticeTmtAThenBDialogPrimaryButtonText,
-    TMTGamePracticesText.tmtGamePracticeOnlyTmtAOrTmtBDialogTitle:
-    tmtGamePracticeOnlyTmtAOrTmtBDialogTitle,
-    TMTGamePracticesText
-        .tmtGamePracticeOnlyTmtAOrTmtBDialogCancelButtonText:
-    tmtGamePracticeOnlyTmtAOrTmtBDialogCancelButtonText,
-    TMTGamePracticesText
-        .tmtGamePracticeOnlyTmtAOrTmtBDialogPrimaryButtonText:
-    tmtGamePracticeOnlyTmtAOrTmtBDialogPrimaryButtonText,
-    TMTGamePracticesText.tmtGamePracticeTmtAPageTitle:
-    tmtGamePracticeTmtAPageTitle,
-    TMTGamePracticesText.tmtGamePracticeTmtBPageTitle:
-    tmtGamePracticeTmtBPageTitle,
-    //--------------------------------------------TMT Result Screen Text------------------------------------------------------
-    TMTResultScreen.title: tmtResultScreenTitle,
-    TMTResultScreen.sessionText: tmtResultScreenSessionText,
-    TMTResultScreen.tmtATitle: tmtResultScreenTmtATitle,
-    TMTResultScreen.tmtBTitle: tmtResultScreenTmtBTitle,
-    TMTResultScreen.durationLabel: tmtResultScreenDurationLabel,
-    TMTResultScreen.errorsLabel: tmtResultScreenErrorsLabel,
-    TMTResultScreen.thanksMessage: tmtResultScreenThanksMessage,
-    TMTResultScreen.finishButton: tmtResultScreenFinishButton,
-    TMTResultScreen.loadingResults: tmtResultScreenLoadingResults,
-    TMTResultScreen.secondsUnit: tmtResultScreenSecondsUnit,
-    TMTResultScreen.errorMessage: tmtResultScreenErrorMessage,
-    //--------------------------------------------Register User Screen Text------------------------------------------------------
-    TMTRegisterUserText.title: registerUserTitle,
-    TMTRegisterUserText.nicknameLabel: registerUserNicknameLabel,
-    TMTRegisterUserText.nicknameHint: registerUserNicknameHint,
-    TMTRegisterUserText.nicknameError: registerUserNicknameError,
-    TMTRegisterUserText.nicknameExistsError: registerUserNicknameExistsError,
-    TMTRegisterUserText.sexLabel: registerUserSexLabel,
-    TMTRegisterUserText.sexMale: registerUserSexMale,
-    TMTRegisterUserText.sexFemale: registerUserSexFemale,
-    TMTRegisterUserText.sexError: registerUserSexError,
-    TMTRegisterUserText.birthDateLabel: registerUserBirthDateLabel,
-    TMTRegisterUserText.birthDateHint: registerUserBirthDateHint,
-    TMTRegisterUserText.birthDateError: registerUserBirthDateError,
-    TMTRegisterUserText.birthDatePickerTitle: registerUserBirthDatePickerTitle,
-    TMTRegisterUserText.birthDatePickerCancel: registerUserBirthDatePickerCancel,
-    TMTRegisterUserText.birthDatePickerConfirm: registerUserBirthDatePickerConfirm,
-    TMTRegisterUserText.educationLabel: registerUserEducationLabel,
-    TMTRegisterUserText.educationHint: registerUserEducationHint,
-    TMTRegisterUserText.educationError: registerUserEducationError,
-    TMTRegisterUserText.educationPrimary: registerUserEducationPrimary,
-    TMTRegisterUserText.educationSecondary: registerUserEducationSecondary,
-    TMTRegisterUserText.educationGraduate: registerUserEducationGraduate,
-    TMTRegisterUserText.educationMaster: registerUserEducationMaster,
-    TMTRegisterUserText.educationDoctorate: registerUserEducationDoctorate,
-    TMTRegisterUserText.saveButton: registerUserSaveButton,
-    TMTRegisterUserText.cancelButton: registerUserCancelButton,
-    TMTRegisterUserText.formError: registerUserFormError,
-    TMTRegisterUserText.saveSuccess: registerUserSaveSuccess,
-    TMTRegisterUserText.saveError: registerUserSaveError,
-  };
+        TMTGameText.tmtGameCircleBegin: tmtGameCircleBegin,
+        TMTGameText.tmtGameCircleEnd: tmtGameCircleEnd,
+        TMTGameText.tmtGamePartACompletedTitle: tmtGamePartACompletedTitle,
+        TMTGameText.tmtGamePartACompletedBody: tmtGamePartACompletedBody,
+        TMTGameText.tmtGamePartBCompletedConfirmationButton:
+            tmtGamePartBCompletedConfirmationButton,
+        TMTGameText.tmtGameTmtScreenAppBarTime: tmtGameTmtScreenAppBarTime,
+        TMTGameText.tmtGameTmtHelpTmtATitle: tmtGameTmtHelpTmtATitle,
+        TMTGameText.tmtGameTmtHelpTmtADescription:
+            tmtGameTmtHelpTmtADescription,
+        TMTGameText.tmtGameTmtHelpTmtBTitle: tmtGameTmtHelpTmtBTitle,
+        TMTGameText.tmtGameTmtHelpTmtBDescription:
+            tmtGameTmtHelpTmtBDescription,
+        TMTGameText.tmtGameTmtHelpTmtPrimaryButtonText:
+            tmtGameTmtHelpTmtPrimaryButtonText,
+        TMTGameText.tmtGameTmtHelpTmtSecondaryButtonText:
+            tmtGameTmtHelpTmtSecondaryButtonText,
+        //--------------------------------------------TMT Practice Text------------------------------------------------------
+        TMTGamePracticesText.tmtGamePracticeTmtAThenBDialogTitle:
+            tmtGamePracticeTmtAThenBDialogTitle,
+        TMTGamePracticesText.tmtGamePracticeTmtAThenBDialogCancelButtonText:
+            tmtGamePracticeTmtAThenBDialogCancelButtonText,
+        TMTGamePracticesText.tmtGamePracticeTmtAThenBDialogPrimaryButtonText:
+            tmtGamePracticeTmtAThenBDialogPrimaryButtonText,
+        TMTGamePracticesText.tmtGamePracticeOnlyTmtAOrTmtBDialogTitle:
+            tmtGamePracticeOnlyTmtAOrTmtBDialogTitle,
+        TMTGamePracticesText
+                .tmtGamePracticeOnlyTmtAOrTmtBDialogCancelButtonText:
+            tmtGamePracticeOnlyTmtAOrTmtBDialogCancelButtonText,
+        TMTGamePracticesText
+                .tmtGamePracticeOnlyTmtAOrTmtBDialogPrimaryButtonText:
+            tmtGamePracticeOnlyTmtAOrTmtBDialogPrimaryButtonText,
+        TMTGamePracticesText.tmtGamePracticeTmtAPageTitle:
+            tmtGamePracticeTmtAPageTitle,
+        TMTGamePracticesText.tmtGamePracticeTmtBPageTitle:
+            tmtGamePracticeTmtBPageTitle,
+
+        //--------------------------------------------Select Mode Practice Or Test Screen Text------------------------------------------------------
+        SelectModePracticeOrTestText.title: selectModePracticeOrTestTitle,
+        SelectModePracticeOrTestText.questionText:
+            selectModePracticeOrTestQuestionText,
+        SelectModePracticeOrTestText.practiceButtonText:
+            selectModePracticeOrTestPracticeButtonText,
+        SelectModePracticeOrTestText.testButtonText:
+            selectModePracticeOrTestTestButtonText,
+        SelectModePracticeOrTestText.practiceModeTitle:
+            selectModePracticeOrTestPracticeModeTitle,
+        SelectModePracticeOrTestText.practiceModeContent:
+            selectModePracticeOrTestPracticeModeContent,
+        SelectModePracticeOrTestText.testModeTitle:
+            selectModePracticeOrTestTestModeTitle,
+        SelectModePracticeOrTestText.testModeContent:
+            selectModePracticeOrTestTestModeContent,
+        SelectModePracticeOrTestText.buttonUnderstood:
+            selectModePracticeOrTestButtonUnderstood,
+
+        //--------------------------------------------TMT Result Screen Text------------------------------------------------------
+        TMTResultScreen.title: tmtResultScreenTitle,
+        TMTResultScreen.sessionText: tmtResultScreenSessionText,
+        TMTResultScreen.tmtATitle: tmtResultScreenTmtATitle,
+        TMTResultScreen.tmtBTitle: tmtResultScreenTmtBTitle,
+        TMTResultScreen.durationLabel: tmtResultScreenDurationLabel,
+        TMTResultScreen.errorsLabel: tmtResultScreenErrorsLabel,
+        TMTResultScreen.thanksMessage: tmtResultScreenThanksMessage,
+        TMTResultScreen.finishButton: tmtResultScreenFinishButton,
+        TMTResultScreen.loadingResults: tmtResultScreenLoadingResults,
+        TMTResultScreen.secondsUnit: tmtResultScreenSecondsUnit,
+        TMTResultScreen.errorMessage: tmtResultScreenErrorMessage,
+        //--------------------------------------------Register User Screen Text------------------------------------------------------
+        TMTRegisterUserText.title: registerUserTitle,
+        TMTRegisterUserText.nicknameLabel: registerUserNicknameLabel,
+        TMTRegisterUserText.nicknameHint: registerUserNicknameHint,
+        TMTRegisterUserText.nicknameError: registerUserNicknameError,
+        TMTRegisterUserText.nicknameExistsError:
+            registerUserNicknameExistsError,
+        TMTRegisterUserText.sexLabel: registerUserSexLabel,
+        TMTRegisterUserText.sexMale: registerUserSexMale,
+        TMTRegisterUserText.sexFemale: registerUserSexFemale,
+        TMTRegisterUserText.sexError: registerUserSexError,
+        TMTRegisterUserText.birthDateLabel: registerUserBirthDateLabel,
+        TMTRegisterUserText.birthDateHint: registerUserBirthDateHint,
+        TMTRegisterUserText.birthDateError: registerUserBirthDateError,
+        TMTRegisterUserText.birthDatePickerTitle:
+            registerUserBirthDatePickerTitle,
+        TMTRegisterUserText.birthDatePickerCancel:
+            registerUserBirthDatePickerCancel,
+        TMTRegisterUserText.birthDatePickerConfirm:
+            registerUserBirthDatePickerConfirm,
+        TMTRegisterUserText.educationLabel: registerUserEducationLabel,
+        TMTRegisterUserText.educationHint: registerUserEducationHint,
+        TMTRegisterUserText.educationError: registerUserEducationError,
+        TMTRegisterUserText.educationPrimary: registerUserEducationPrimary,
+        TMTRegisterUserText.educationSecondary: registerUserEducationSecondary,
+        TMTRegisterUserText.educationGraduate: registerUserEducationGraduate,
+        TMTRegisterUserText.educationMaster: registerUserEducationMaster,
+        TMTRegisterUserText.educationDoctorate: registerUserEducationDoctorate,
+        TMTRegisterUserText.saveButton: registerUserSaveButton,
+        TMTRegisterUserText.cancelButton: registerUserCancelButton,
+        TMTRegisterUserText.formError: registerUserFormError,
+        TMTRegisterUserText.saveSuccess: registerUserSaveSuccess,
+        TMTRegisterUserText.saveError: registerUserSaveError,
+      };
 }

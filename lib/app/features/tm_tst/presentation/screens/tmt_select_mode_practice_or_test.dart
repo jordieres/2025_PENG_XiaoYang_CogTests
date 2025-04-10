@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import '../../../../config/themes/AppColors.dart';
 import '../../../../config/themes/AppTextStyle.dart';
 import '../../../../config/themes/app_text_style_base.dart';
+import '../../../../config/translation/app_translations.dart';
 import '../../../../constans/app_constants.dart';
 import '../../../../shared_components/custom_app_bar.dart';
 import '../../../../shared_components/custom_dialog.dart';
@@ -24,10 +25,10 @@ class SelectModePracticeOrTest extends StatelessWidget with NavigationMixin {
     final isLandscape = orientation == Orientation.landscape;
     final isTablet = DeviceHelper.isTablet;
     final cardWidth =
-        SelectModePracticeOrTestCalculate.calculateCardWidth(context);
+    SelectModePracticeOrTestCalculate.calculateCardWidth(context);
 
     return Scaffold(
-      appBar: CustomAppBar(title: 'Seleccionar Modo'),
+      appBar: CustomAppBar(title: SelectModePracticeOrTestText.title.tr),
       body: SafeArea(
         child: Center(
           child: Column(
@@ -35,7 +36,7 @@ class SelectModePracticeOrTest extends StatelessWidget with NavigationMixin {
             children: [
               const SizedBox(height: 26),
               Text(
-                '¿Qué modalidad prefieres?',
+                SelectModePracticeOrTestText.questionText.tr,
                 style: AppTextStyle.selectModeTitle,
                 textAlign: TextAlign.center,
               ),
@@ -59,7 +60,7 @@ class SelectModePracticeOrTest extends StatelessWidget with NavigationMixin {
             padding: const EdgeInsets.symmetric(horizontal: 38.0),
             child: _buildOptionCard(
               context: context,
-              title: 'Práctica',
+              title: SelectModePracticeOrTestText.practiceButtonText.tr,
               onTap: () {
                 tmtTestToHelp(TmtHelpMode.TMT_PRACTICE_A);
               },
@@ -74,7 +75,7 @@ class SelectModePracticeOrTest extends StatelessWidget with NavigationMixin {
             padding: const EdgeInsets.symmetric(horizontal: 38.0),
             child: _buildOptionCard(
               context: context,
-              title: 'Test Formal',
+              title: SelectModePracticeOrTestText.testButtonText.tr,
               onTap: () {
                 toTmtTest();
               },
@@ -88,7 +89,7 @@ class SelectModePracticeOrTest extends StatelessWidget with NavigationMixin {
 
   Widget _buildLandscapeLayout(BuildContext context) {
     final cardWidth =
-        SelectModePracticeOrTestCalculate.calculateCardWidth(context);
+    SelectModePracticeOrTestCalculate.calculateCardWidth(context);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 38.0),
@@ -99,7 +100,7 @@ class SelectModePracticeOrTest extends StatelessWidget with NavigationMixin {
             width: cardWidth,
             child: _buildOptionCard(
               context: context,
-              title: 'Práctica',
+              title: SelectModePracticeOrTestText.practiceButtonText.tr,
               onTap: () {
                 tmtTestToHelp(TmtHelpMode.TMT_PRACTICE_A);
               },
@@ -111,7 +112,7 @@ class SelectModePracticeOrTest extends StatelessWidget with NavigationMixin {
             width: cardWidth,
             child: _buildOptionCard(
               context: context,
-              title: 'Test Formal',
+              title: SelectModePracticeOrTestText.testButtonText.tr,
               onTap: () {
                 toTmtTest();
               },
@@ -134,10 +135,10 @@ class SelectModePracticeOrTest extends StatelessWidget with NavigationMixin {
         : AppColors.secondaryBlueClear;
 
     final Color innerCardColor =
-        isDarkMode ? AppColors.secondaryBlueDark : AppColors.secondaryBlue;
+    isDarkMode ? AppColors.secondaryBlueDark : AppColors.secondaryBlue;
 
     final double cardHeight =
-        SelectModePracticeOrTestCalculate.calculateCardHeight(context);
+    SelectModePracticeOrTestCalculate.calculateCardHeight(context);
 
     return Container(
       height: cardHeight,
@@ -160,7 +161,7 @@ class SelectModePracticeOrTest extends StatelessWidget with NavigationMixin {
                     title,
                     style: TextStyleBase.h2.copyWith(
                       color:
-                          isDarkMode ? AppColors.darkText : AppColors.blueText,
+                      isDarkMode ? AppColors.darkText : AppColors.blueText,
                     ),
                   ),
                 ),
@@ -171,19 +172,19 @@ class SelectModePracticeOrTest extends StatelessWidget with NavigationMixin {
           IconButton(
             icon: isDarkMode
                 ? SvgPicture.asset(
-                    ImageVectorPath.help,
-                    width: 30,
-                    height: 30,
-                    colorFilter: const ColorFilter.mode(
-                      AppColors.darkText,
-                      BlendMode.srcIn,
-                    ),
-                  )
+              ImageVectorPath.help,
+              width: 30,
+              height: 30,
+              colorFilter: const ColorFilter.mode(
+                AppColors.darkText,
+                BlendMode.srcIn,
+              ),
+            )
                 : SvgPicture.asset(
-                    ImageVectorPath.help,
-                    width: 30,
-                    height: 30,
-                  ),
+              ImageVectorPath.help,
+              width: 30,
+              height: 30,
+            ),
             onPressed: () {
               _showHelpDialog(context, isPractice);
             },
@@ -199,11 +200,10 @@ class SelectModePracticeOrTest extends StatelessWidget with NavigationMixin {
       showDialog(
         context: context,
         builder: (context) => CustomDialog(
-          title: 'Modo Práctica',
-          content:
-              'En este modo, podrás practicar el test sin que se registren tus resultados oficiales. Es ideal para que te familiarices con el procedimiento y puedas corregir errores sin presión.',
+          title: SelectModePracticeOrTestText.practiceModeTitle.tr,
+          content: SelectModePracticeOrTestText.practiceModeContent.tr,
           mode: DialogMode.singleButton,
-          primaryButtonText: 'Entendido',
+          primaryButtonText: SelectModePracticeOrTestText.buttonUnderstood.tr,
           onPrimaryPressed: () {
             Navigator.of(context).pop();
           },
@@ -213,11 +213,10 @@ class SelectModePracticeOrTest extends StatelessWidget with NavigationMixin {
       showDialog(
         context: context,
         builder: (context) => CustomDialog(
-          title: 'Test Formal',
-          content:
-              'Selecciona este modo para iniciar el test evaluativo. Aquí se registrarán tus tiempos y errores para calcular tu score. Asegúrate de estar listo, ya que este test se considera definitivo.',
+          title: SelectModePracticeOrTestText.testModeTitle.tr,
+          content: SelectModePracticeOrTestText.testModeContent.tr,
           mode: DialogMode.singleButton,
-          primaryButtonText: 'Entendido',
+          primaryButtonText: SelectModePracticeOrTestText.buttonUnderstood.tr,
           onPrimaryPressed: () {
             Navigator.of(context).pop();
           },
