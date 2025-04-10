@@ -14,11 +14,13 @@ Future<TmtGameHandUsed> showTmtSelectHandDialogGetX() async {
         textAlign: TextAlign.center,
       ),
       mode: DialogMode.twoMainButtons,
-      primaryButtonText: TmtSelectHandDialogText.rightHandButtonText.tr,
+      primaryButtonText:
+          "${TmtSelectHandDialogText.rightHandButtonText.tr} \u{1F449}",
       onPrimaryPressed: () {
         Get.back(result: TmtGameHandUsed.RIGHT);
       },
-      onLeftPrimaryButtonText: TmtSelectHandDialogText.leftHandButtonText.tr,
+      onLeftPrimaryButtonText:
+          "\u{1F448} ${TmtSelectHandDialogText.leftHandButtonText.tr}",
       onLeftPrimaryPressed: () {
         Get.back(result: TmtGameHandUsed.LEFT);
       },
