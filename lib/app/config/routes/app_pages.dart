@@ -45,11 +45,11 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.tmt_select_practice_or_test,
-      page: () => const SelectModePracticeOrTest(),
+      page: () => SelectModePracticeOrTest(),
     ),
     GetPage(
       name: _Paths.register_user,
-      page: () =>  RegisterUserScreen(),
+      page: () => RegisterUserScreen(),
       binding: RegisterUserBinding(),
     ),
   ];
