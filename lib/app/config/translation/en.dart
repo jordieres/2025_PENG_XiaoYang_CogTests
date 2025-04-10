@@ -69,6 +69,35 @@ class EnglishMessages extends BaseMessages {
 
   @override
   String get tmtGamePracticeTmtBPageTitle => "TMT B Practice";
+  //--------------------------------------------Select Mode Practice Or Test Screen Text------------------------------------------------------
+  @override
+  String get selectModePracticeOrTestTitle => "Select Mode";
+
+  @override
+  String get selectModePracticeOrTestQuestionText => "Which mode do you prefer?";
+
+  @override
+  String get selectModePracticeOrTestPracticeButtonText => "Practice";
+
+  @override
+  String get selectModePracticeOrTestTestButtonText => "Formal Test";
+
+  @override
+  String get selectModePracticeOrTestPracticeModeTitle => "Practice Mode";
+
+  @override
+  String get selectModePracticeOrTestPracticeModeContent =>
+      "In this mode, you can practice the test without registering your official results. It's ideal for familiarizing yourself with the procedure and correcting errors without pressure.";
+
+  @override
+  String get selectModePracticeOrTestTestModeTitle => "Formal Test";
+
+  @override
+  String get selectModePracticeOrTestTestModeContent =>
+      "Select this mode to start the evaluation test. Your times and errors will be recorded to calculate your score. Make sure you are ready, as this test is considered definitive.";
+
+  @override
+  String get selectModePracticeOrTestButtonUnderstood => "Understood";
 
   //--------------------------------------------TMT Result Screen Text------------------------------------------------------
   @override

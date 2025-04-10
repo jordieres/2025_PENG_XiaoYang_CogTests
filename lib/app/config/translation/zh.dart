@@ -64,6 +64,36 @@ class ChineseMessages extends BaseMessages {
   @override
   String get tmtGamePracticeTmtBPageTitle => "TMT B 练习";
 
+  //--------------------------------------------Select Mode Practice Or Test Screen Text------------------------------------------------------
+  @override
+  String get selectModePracticeOrTestTitle => "选择模式";
+
+  @override
+  String get selectModePracticeOrTestQuestionText => "您喜欢哪种模式？";
+
+  @override
+  String get selectModePracticeOrTestPracticeButtonText => "练习";
+
+  @override
+  String get selectModePracticeOrTestTestButtonText => "正式测试";
+
+  @override
+  String get selectModePracticeOrTestPracticeModeTitle => "练习模式";
+
+  @override
+  String get selectModePracticeOrTestPracticeModeContent =>
+      "在此模式下，您可以练习测试而不会记录正式结果。这是您熟悉流程并在无压力的情况下纠正错误的理想方式。";
+
+  @override
+  String get selectModePracticeOrTestTestModeTitle => "正式测试";
+
+  @override
+  String get selectModePracticeOrTestTestModeContent =>
+      "选择此模式开始评估测试。系统将记录您的时间和错误以计算分数。请确保您已准备就绪，因为此测试被视为最终测试。";
+
+  @override
+  String get selectModePracticeOrTestButtonUnderstood => "明白了";
+
   //--------------------------------------------TMT Result Screen Text------------------------------------------------------
   @override
   String get tmtResultScreenTitle => "结果:";

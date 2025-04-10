@@ -71,6 +71,37 @@ class SpanishMessages extends BaseMessages {
   @override
   String get tmtGamePracticeTmtBPageTitle => "Práctica TMT B";
 
+  //--------------------------------------------Select Mode Practice Or Test Screen Text------------------------------------------------------
+  @override
+  String get selectModePracticeOrTestTitle => "Seleccionar Modo";
+
+  @override
+  String get selectModePracticeOrTestQuestionText =>
+      "¿Qué modalidad prefieres?";
+
+  @override
+  String get selectModePracticeOrTestPracticeButtonText => "Práctica";
+
+  @override
+  String get selectModePracticeOrTestTestButtonText => "Test Formal";
+
+  @override
+  String get selectModePracticeOrTestPracticeModeTitle => "Modo Práctica";
+
+  @override
+  String get selectModePracticeOrTestPracticeModeContent =>
+      "En este modo, podrás practicar el test sin que se registren tus resultados oficiales. Es ideal para que te familiarices con el procedimiento y puedas corregir errores sin presión.";
+
+  @override
+  String get selectModePracticeOrTestTestModeTitle => "Test Formal";
+
+  @override
+  String get selectModePracticeOrTestTestModeContent =>
+      "Selecciona este modo para iniciar el test evaluativo. Aquí se registrarán tus tiempos y errores para calcular tu score. Asegúrate de estar listo, ya que este test se considera definitivo.";
+
+  @override
+  String get selectModePracticeOrTestButtonUnderstood => "Entendido";
+
   //--------------------------------------------TMT Result Screen Text------------------------------------------------------
   @override
   String get tmtResultScreenTitle => "Resultado:";
@@ -144,7 +175,8 @@ class SpanishMessages extends BaseMessages {
   String get registerUserBirthDateError => "Por favor selecciona una fecha";
 
   @override
-  String get registerUserBirthDatePickerTitle => "Seleccionar fecha de nacimiento";
+  String get registerUserBirthDatePickerTitle =>
+      "Seleccionar fecha de nacimiento";
 
   @override
   String get registerUserBirthDatePickerCancel => "Cancelar";
@@ -159,7 +191,8 @@ class SpanishMessages extends BaseMessages {
   String get registerUserEducationHint => "Seleccionar nivel de estudios";
 
   @override
-  String get registerUserEducationError => "Por favor selecciona un nivel de estudios";
+  String get registerUserEducationError =>
+      "Por favor selecciona un nivel de estudios";
 
   @override
   String get registerUserEducationPrimary => "Estudios Primarios";
@@ -183,13 +216,15 @@ class SpanishMessages extends BaseMessages {
   String get registerUserCancelButton => "Cancelar";
 
   @override
-  String get registerUserFormError => "Por favor, rellena todos los campos marcados.";
+  String get registerUserFormError =>
+      "Por favor, rellena todos los campos marcados.";
 
   @override
   String get registerUserSaveSuccess => "Usuario registrado correctamente";
 
   @override
-  String get registerUserSaveError => "Error al guardar el usuario. Inténtalo de nuevo.";
+  String get registerUserSaveError =>
+      "Error al guardar el usuario. Inténtalo de nuevo.";
 }
 
 final es = SpanishMessages();
