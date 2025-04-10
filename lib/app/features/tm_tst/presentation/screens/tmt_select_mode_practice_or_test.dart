@@ -11,11 +11,18 @@ import '../../../../shared_components/custom_app_bar.dart';
 import '../../../../shared_components/custom_dialog.dart';
 import '../../../../utils/mixins/app_mixins.dart';
 import '../../../../utils/helpers/app_helpers.dart';
+import '../../domain/entities/result/tmt_game_hand_used.dart';
+import '../../domain/entities/result/tmt_game_init_data.dart';
 import '../../domain/usecases/select_mode_practice_or_test_responsive_calculate.dart';
 import '../screens/tmt_test_help.dart';
 
 class SelectModePracticeOrTest extends StatelessWidget with NavigationMixin {
-  const SelectModePracticeOrTest({super.key});
+   SelectModePracticeOrTest({super.key});
+
+  final tmtGameInitData = TmtGameInitData(
+      tmtGameHandUsed: TmtGameHandUsed.RIGHT, //TODO parse from HomeScreen
+      tmtGameCodeId: "74829-23" //TODO parse from HomeScreen
+  );
 
   bool get isDarkMode => Get.isDarkMode;
 
@@ -77,7 +84,7 @@ class SelectModePracticeOrTest extends StatelessWidget with NavigationMixin {
               context: context,
               title: SelectModePracticeOrTestText.testButtonText.tr,
               onTap: () {
-                toTmtTest();
+                toTmtTest(tmtGameInitData);
               },
               isPractice: false,
             ),
@@ -114,7 +121,7 @@ class SelectModePracticeOrTest extends StatelessWidget with NavigationMixin {
               context: context,
               title: SelectModePracticeOrTestText.testButtonText.tr,
               onTap: () {
-                toTmtTest();
+                toTmtTest(tmtGameInitData);
               },
               isPractice: false,
             ),

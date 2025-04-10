@@ -9,7 +9,6 @@ import '../../../../utils/helpers/app_helpers.dart';
 import '../../../../utils/services/app_logger.dart';
 import '../../../../utils/services/request_state.dart';
 import '../../../../utils/ui/ui_utils.dart';
-import '../../domain/entities/result/tmt_game_hand_used.dart';
 import '../../domain/entities/result/tmt_game_init_data.dart';
 import '../../domain/usecases/tmt_result/tmt_result_screen_responsive_calculator.dart';
 import '../components/tmt_result_card.dart';
@@ -102,11 +101,7 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
   Future<void> _sendResults() async {
     if (_resultsSent) return;
     try {
-      final tmtGameInitData = TmtGameInitData(
-          tmtGameHandUsed: TmtGameHandUsed.RIGHT, //TODO parse from HomeScreen
-          tmtGameCodeId: "74829-23" //TODO parse from HomeScreen
-          );
-
+      final tmtGameInitData = Get.arguments as TmtGameInitData;
       await _resultController.reportResults(
           _testController.metricsController, tmtGameInitData);
       _resultsSent = true;
