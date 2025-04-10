@@ -46,16 +46,9 @@ class HomePage extends StatelessWidget with NavigationMixin {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () => {
-                Get.toNamed(Routes.tmt_test),
+                Get.toNamed(Routes.tmt_select_practice_or_test),
               },
               child: const Text('Emepzar TMT Test'),
-            ),
-            const SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: () => {
-                tmtTestToHelp(TmtHelpMode.TMT_PRACTICE_A),
-              },
-              child: const Text("Empezar con TMT test Práctica"),
             ),
             const SizedBox(height: 10),
             ElevatedButton(

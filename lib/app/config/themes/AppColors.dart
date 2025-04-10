@@ -6,6 +6,7 @@ class AppColors {
   // Light mode colors
   static const Color primaryBlue = Color(0xFF3086CF); // Main blue color
   static const Color secondaryBlue = Color(0xFFE8F1FA); // Secondary blue color
+  static const Color secondaryBlueClear = Color(0xFFF8F9FE); // Clear secondary blue
   static const Color mainBlackText = Color(0xFF222222); // Main black text color
   static const Color blueText = Color(0xFF0E47A1); // Blue text color
   static const Color mainRed = Color(0xFFD74343); // Red color

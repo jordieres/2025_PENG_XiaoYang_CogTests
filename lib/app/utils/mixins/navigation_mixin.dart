@@ -12,4 +12,8 @@ mixin NavigationMixin {
   void toRegisterUser() {
     Get.toNamed(Routes.register_user);
   }
+
+  void toTmtTest() {
+    Get.toNamed(Routes.tmt_test);
+  }
 }

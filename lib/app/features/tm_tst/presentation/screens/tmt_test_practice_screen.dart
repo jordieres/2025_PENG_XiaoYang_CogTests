@@ -113,13 +113,14 @@ class _TmtPracticePageState extends State<TmtTestPracticePage>
       builder: (context) => CustomDialog(
         mode: DialogMode.confirmCancel,
         title: TMTGamePracticesText.tmtGamePracticeTmtAThenBDialogTitle.tr,
-        cancelButtonText:
-            TMTGamePracticesText.tmtGamePracticeTmtAThenBDialogCancelButtonText.tr,
-        primaryButtonText:
-            TMTGamePracticesText.tmtGamePracticeTmtAThenBDialogPrimaryButtonText.tr,
+        cancelButtonText: TMTGamePracticesText
+            .tmtGamePracticeTmtAThenBDialogCancelButtonText.tr,
+        primaryButtonText: TMTGamePracticesText
+            .tmtGamePracticeTmtAThenBDialogPrimaryButtonText.tr,
         onCancelPressed: () {
           Get.back();
-          Get.offNamedUntil(Routes.tmt_help, ModalRoute.withName(Routes.home),
+          Get.offNamedUntil(Routes.tmt_help,
+              ModalRoute.withName(Routes.tmt_select_practice_or_test),
               arguments: TmtHelpMode.TMT_TEST_B);
         },
         onPrimaryPressed: () {
