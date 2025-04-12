@@ -235,6 +235,41 @@ class EnglishMessages extends BaseMessages {
 
   @override
   String get registerUserSaveError => "Error saving user. Please try again.";
+
+  //--------------------------------------------Current User Data Screen Text------------------------------------------------------
+  @override
+  String get currentUserDataScreenTitle => "User Profile";
+
+  @override
+  String get currentUserDataScreenNoUserFound => "No user profile found";
+
+  @override
+  String get currentUserDataScreenCreateProfile => "Create Profile";
+
+  @override
+  String get currentUserDataScreenDeleteProfile => "Delete Profile";
+
+  @override
+  String get currentUserDataScreenBackButton => "Back";
+
+  @override
+  String get currentUserDataScreenConfirmDeleteTitle => "Confirm Delete";
+
+  @override
+  String get currentUserDataScreenConfirmDeleteContent =>
+      "Are you sure you want to delete this user profile? This action cannot be undone.";
+
+  @override
+  String get currentUserDataScreenConfirmDeleteButton => "Delete";
+
+  @override
+  String get currentUserDataScreenCancelButton => "Cancel";
+
+  @override
+  String get currentUserDataScreenDeleteSuccess => "User profile deleted successfully";
+
+  @override
+  String get currentUserDataScreenDeleteError => "Error deleting user profile";
 }
 
 final en = EnglishMessages();

@@ -225,6 +225,41 @@ class ChineseMessages extends BaseMessages {
 
   @override
   String get registerUserSaveError => "保存用户时出错。请重试。";
+
+  //--------------------------------------------Current User Data Screen Text------------------------------------------------------
+  @override
+  String get currentUserDataScreenTitle => "用户资料";
+
+  @override
+  String get currentUserDataScreenNoUserFound => "未找到用户资料";
+
+  @override
+  String get currentUserDataScreenCreateProfile => "创建资料";
+
+  @override
+  String get currentUserDataScreenDeleteProfile => "删除资料";
+
+  @override
+  String get currentUserDataScreenBackButton => "返回";
+
+  @override
+  String get currentUserDataScreenConfirmDeleteTitle => "确认删除";
+
+  @override
+  String get currentUserDataScreenConfirmDeleteContent =>
+      "您确定要删除此用户资料吗？此操作无法撤消。";
+
+  @override
+  String get currentUserDataScreenConfirmDeleteButton => "删除";
+
+  @override
+  String get currentUserDataScreenCancelButton => "取消";
+
+  @override
+  String get currentUserDataScreenDeleteSuccess => "用户资料已成功删除";
+
+  @override
+  String get currentUserDataScreenDeleteError => "删除用户资料时出错";
 }
 
 final zh = ChineseMessages();
