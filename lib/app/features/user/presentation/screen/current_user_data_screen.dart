@@ -39,7 +39,7 @@ class _CurrentUserDataScreenState
   void updateFormHeight() {
     if (formBoxKey.currentContext != null && mounted) {
       final RenderBox box =
-          formBoxKey.currentContext!.findRenderObject() as RenderBox;
+      formBoxKey.currentContext!.findRenderObject() as RenderBox;
       if (box.hasSize) {
         setState(() {
           formHeight = box.size.height;
@@ -91,7 +91,7 @@ class _CurrentUserDataScreenState
 
   @override
   String getScreenTitle() {
-    return 'User Profile';
+    return CurrentUserDataScreenText.title.tr;
   }
 
   void _confirmDeleteUser() {
@@ -101,16 +101,15 @@ class _CurrentUserDataScreenState
       context: context,
       builder: (BuildContext context) {
         return CustomDialog(
-            title: 'Confirm Delete',
+            title: CurrentUserDataScreenText.confirmDeleteTitle.tr,
             mode: DialogMode.confirmCancel,
-            primaryButtonText: 'Delete',
+            primaryButtonText: CurrentUserDataScreenText.confirmDeleteButton.tr,
             onPrimaryPressed: () {
               Get.back();
               _deleteUser();
             },
-            content:
-                'Are you sure you want to delete this user profile? This action cannot be undone.',
-            cancelButtonText: 'Cancel',
+            content: CurrentUserDataScreenText.confirmDeleteContent.tr,
+            cancelButtonText: CurrentUserDataScreenText.cancelButton.tr,
             onCancelPressed: () {
               Get.back();
             });
@@ -131,14 +130,14 @@ class _CurrentUserDataScreenState
       if (mounted) {
         AppSnackbar.showCustomSnackbar(
           context,
-          'User profile deleted successfully',
+          CurrentUserDataScreenText.deleteSuccess.tr,
         );
       }
     } catch (e) {
       if (!mounted) return;
       AppSnackbar.showCustomSnackbar(
         context,
-        'Error deleting user profile',
+        CurrentUserDataScreenText.deleteError.tr,
         backgroundColor: AppColors.mainRed.withAlpha(204),
       );
     } finally {
@@ -167,7 +166,7 @@ class _CurrentUserDataScreenState
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'No user profile found',
+                CurrentUserDataScreenText.noUserFound.tr,
                 style: TextStyleBase.bodyM,
               ),
               SizedBox(height: 16),
@@ -206,7 +205,7 @@ class _CurrentUserDataScreenState
         else ...[
           Center(
             child: CustomPrimaryButton(
-              text: 'Delete Profile',
+              text: CurrentUserDataScreenText.deleteProfile.tr,
               onPressed: _confirmDeleteUser,
               backgroundColor: AppColors.mainRed,
             ),
@@ -214,7 +213,7 @@ class _CurrentUserDataScreenState
           const SizedBox(height: 16),
           Center(
             child: CustomSecondaryButton(
-              text: 'Back',
+              text: CurrentUserDataScreenText.backButton.tr,
               onPressed: () {
                 Get.back();
               },

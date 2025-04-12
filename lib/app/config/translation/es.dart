@@ -239,6 +239,41 @@ class SpanishMessages extends BaseMessages {
   @override
   String get registerUserSaveError =>
       "Error al guardar el usuario. Inténtalo de nuevo.";
+
+  //--------------------------------------------Current User Data Screen Text------------------------------------------------------
+  @override
+  String get currentUserDataScreenTitle => "Perfil de Usuario";
+
+  @override
+  String get currentUserDataScreenNoUserFound => "No se encontró perfil de usuario";
+
+  @override
+  String get currentUserDataScreenCreateProfile => "Crear Perfil";
+
+  @override
+  String get currentUserDataScreenDeleteProfile => "Eliminar Perfil";
+
+  @override
+  String get currentUserDataScreenBackButton => "Volver";
+
+  @override
+  String get currentUserDataScreenConfirmDeleteTitle => "Confirmar Eliminación";
+
+  @override
+  String get currentUserDataScreenConfirmDeleteContent =>
+      "¿Estás seguro de que quieres eliminar este perfil de usuario? Esta acción no se puede deshacer.";
+
+  @override
+  String get currentUserDataScreenConfirmDeleteButton => "Eliminar";
+
+  @override
+  String get currentUserDataScreenCancelButton => "Cancelar";
+
+  @override
+  String get currentUserDataScreenDeleteSuccess => "Perfil de usuario eliminado correctamente";
+
+  @override
+  String get currentUserDataScreenDeleteError => "Error al eliminar el perfil de usuario";
 }
 
 final es = SpanishMessages();
