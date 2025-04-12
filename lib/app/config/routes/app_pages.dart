@@ -10,6 +10,7 @@ import '../../features/tm_tst/presentation/screens/tmt_test_help.dart';
 import '../../features/tm_tst/presentation/screens/tmt_test_practice_screen.dart';
 import '../../features/tm_tst/presentation/screens/tmt_test_result_screen.dart';
 import '../../features/user/presentation/binding/register_user_binding.dart';
+import '../../features/user/presentation/screen/current_user_data_screen.dart';
 import '../../features/user/presentation/screen/register_user_screen.dart';
 
 part 'app_routes.dart';
@@ -50,6 +51,11 @@ class AppPages {
     GetPage(
       name: _Paths.register_user,
       page: () => RegisterUserScreen(),
+      binding: RegisterUserBinding(),
+    ),
+    GetPage(
+      name: _Paths.current_user_data,
+      page: () => CurrentUserDataScreen(),
       binding: RegisterUserBinding(),
     ),
   ];

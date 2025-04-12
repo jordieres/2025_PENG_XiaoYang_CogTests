@@ -6,11 +6,9 @@ class CustomSecondaryButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
 
-  const CustomSecondaryButton({
-    Key? key,
-    required this.text,
-    required this.onPressed,
-  }) : super(key: key);
+  const CustomSecondaryButton(
+      {Key? key, required this.text, required this.onPressed})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

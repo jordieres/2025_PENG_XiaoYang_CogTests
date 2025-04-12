@@ -152,7 +152,7 @@ class EnglishMessages extends BaseMessages {
 
   //--------------------------------------------Register User Screen Text------------------------------------------------------
   @override
-  String get registerUserTitle => "My Data";
+  String get registerUserTitle => "Create new profile";
 
   @override
   String get registerUserNicknameLabel => "Nickname";

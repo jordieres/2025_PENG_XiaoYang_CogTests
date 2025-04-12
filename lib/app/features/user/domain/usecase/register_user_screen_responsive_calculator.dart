@@ -4,6 +4,7 @@ import 'package:msdtmt/app/utils/services/app_logger.dart';
 import '../../../../utils/helpers/app_helpers.dart';
 
 class RegisterUserScreenResponsiveCalculator {
+
   static const double kContentTopPadding = 62.0;
   static const double kContentHorizontalPadding = 16.0;
   static const double kContentBottomPadding = 16.0;
@@ -53,8 +54,6 @@ class RegisterUserScreenResponsiveCalculator {
     if (result < RegisterUserScreenResponsiveCalculator.kDefaultSpacing) {
       return RegisterUserScreenResponsiveCalculator.kDefaultSpacing;
     }
-
-    AppLogger.debug("fffffff,", "result: $result");
     return result;
   }
 

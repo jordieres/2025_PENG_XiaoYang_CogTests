@@ -12,12 +12,6 @@ import '../user/presentation/contoller/user_profile_controller.dart';
 class HomePage extends StatelessWidget with NavigationMixin {
   const HomePage({super.key});
 
-
-
-
-
-
-
   @override
   Widget build(BuildContext context) {
     final ThemeController themeController = Get.find<ThemeController>();
@@ -56,6 +50,13 @@ class HomePage extends StatelessWidget with NavigationMixin {
                 toRegisterUser(),
               },
               child: const Text("Ir a Alta Usuario"),
+            ),
+            const SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: () => {
+                Get.toNamed(Routes.current_user_data),
+              },
+              child: const Text("Ir a Current User"),
             ),
             const SizedBox(height: 20),
             ElevatedButton(

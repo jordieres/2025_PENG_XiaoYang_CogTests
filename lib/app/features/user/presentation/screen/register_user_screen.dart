@@ -1,194 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
+import 'package:msdtmt/app/features/user/presentation/screen/user_screen_base.dart';
 
 import '../../../../config/themes/AppColors.dart';
-import '../../../../config/themes/AppTextStyle.dart';
-import '../../../../config/themes/app_text_style_base.dart';
-import '../../../../config/themes/input_decoration.dart';
 import '../../../../config/translation/app_translations.dart';
-import '../../../../utils/ui/ui_utils.dart';
-import '../../domain/entities/user_profile.dart';
-import '../../domain/usecase/register_user_screen_responsive_calculator.dart';
-import '../contoller/user_profile_controller.dart';
-import '../../../../shared_components/custom_app_bar.dart';
 import '../../../../shared_components/custom_primary_button.dart';
 import '../../../../shared_components/custom_secondary_button.dart';
-import '../../../../utils/helpers/app_helpers.dart';
+import '../../../../utils/ui/ui_utils.dart';
+import '../../domain/entities/user_profile.dart';
 
-class RegisterUserScreen extends StatefulWidget {
+class RegisterUserScreen extends RegisterUserScreenBase {
   const RegisterUserScreen({super.key});
 
   @override
   State<RegisterUserScreen> createState() => _RegisterUserScreenState();
 }
 
-class _RegisterUserScreenState extends State<RegisterUserScreen> {
-  static const double kFieldVerticalSpacing = 24.0;
-  static const double kSexFieldVerticalSpacing = 16.0;
-  static const double kLabelFieldSpacing = 8.0;
-  static const double kButtonSpacing = 16.0;
-
-  final _formKey = GlobalKey<FormState>();
-  final _formBoxKey = GlobalKey();
-  final TextEditingController nicknameController = TextEditingController();
-  final TextEditingController birthDateController = TextEditingController();
-  final FocusNode nicknameFocusNode = FocusNode();
-  final FocusNode birthDateFocusNode = FocusNode();
-  final FocusNode educationLevelFocusNode = FocusNode();
-
-  Sex? selectedSex;
-  DateTime? selectedBirthDate;
-  EducationLevel? selectedEducationLevel;
-
-  bool isLoading = false;
-  bool isNicknameExists = false;
-  String? nicknameErrorText;
-
-  bool _nicknameVisited = false;
-  bool _sexVisited = false;
-  bool _birthDateVisited = false;
-  bool _educationLevelVisited = false;
-  bool _formSubmitted = false;
-
-  double _formHeight = 0;
-  bool _isFormMeasured = false;
-
-  late UserProfileController controller;
-
+class _RegisterUserScreenState extends RegisterUserScreenBaseState<RegisterUserScreen> {
   @override
-  void initState() {
-    super.initState();
-    controller = Get.find<UserProfileController>();
-    nicknameFocusNode.addListener(_onNicknameFocusChange);
-    birthDateFocusNode.addListener(_onBirthDateFocusChange);
-    educationLevelFocusNode.addListener(_onEducationLevelFocusChange);
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _updateFormHeight();
-    });
+  String getScreenTitle() {
+    return TMTRegisterUserText.title.tr;
   }
 
-  void _updateFormHeight() {
-    if (_formBoxKey.currentContext != null && mounted) {
-      final RenderBox box =
-      _formBoxKey.currentContext!.findRenderObject() as RenderBox;
-      if (box.hasSize) {
-        setState(() {
-          _formHeight = box.size.height;
-          _isFormMeasured = true;
-        });
-      } else {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          _updateFormHeight();
-        });
-      }
-    }
-  }
-
-  double _calculateSpacing(double availableHeight) {
-    if (!_isFormMeasured) {
-      _updateFormHeight();
-      return RegisterUserScreenResponsiveCalculator.kDefaultSpacing;
-    }
-
-    return RegisterUserScreenResponsiveCalculator
-        .calculateSpacingBetweenFormAndButtons(
-      context,
-      availableHeight,
-      _formHeight,
-    );
-  }
-
-  void _onNicknameFocusChange() {
-    if (nicknameFocusNode.hasFocus) {
-      _formKey.currentState?.validate();
-    }
-  }
-
-  void _onBirthDateFocusChange() {
-    if (birthDateFocusNode.hasFocus) {
-      _formKey.currentState?.validate();
-    }
-  }
-
-  void _onEducationLevelFocusChange() {
-    if (educationLevelFocusNode.hasFocus) {
-      _formKey.currentState?.validate();
-    }
-  }
-
-  @override
-  void dispose() {
-    nicknameController.dispose();
-    birthDateController.dispose();
-    nicknameFocusNode.removeListener(_onNicknameFocusChange);
-    birthDateFocusNode.removeListener(_onBirthDateFocusChange);
-    educationLevelFocusNode.removeListener(_onEducationLevelFocusChange);
-    nicknameFocusNode.dispose();
-    birthDateFocusNode.dispose();
-    educationLevelFocusNode.dispose();
-    super.dispose();
-  }
-
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: selectedBirthDate ?? DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
-      locale: Get.locale,
-      helpText: TMTRegisterUserText.birthDatePickerTitle.tr,
-      cancelText: TMTRegisterUserText.birthDatePickerCancel.tr,
-      confirmText: TMTRegisterUserText.birthDatePickerConfirm.tr,
-    );
-    if (picked != null && picked != selectedBirthDate) {
-      setState(() {
-        selectedBirthDate = picked;
-        _birthDateVisited = true;
-        _nicknameVisited = true;
-        _sexVisited = true;
-        final currentLocale = Get.locale?.toString() ?? 'en_US';
-        birthDateFocusNode.removeListener(_onBirthDateFocusChange);
-        birthDateController.text = DateFormat.yMd(currentLocale).format(picked);
-
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          birthDateController.selection = TextSelection.collapsed(
-            offset: birthDateController.text.length,
-          );
-        });
-
-        birthDateFocusNode.addListener(_onBirthDateFocusChange);
-      });
-
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        _updateFormHeight();
-      });
-    }
-
-    _formKey.currentState?.validate();
-  }
-
-  bool get isFormComplete {
-    return nicknameController.text.isNotEmpty &&
-        selectedBirthDate != null &&
-        selectedSex != null &&
-        selectedEducationLevel != null &&
-        !isNicknameExists;
-  }
-
-  Future<void> saveUser() async {
+  Future<void> handleSave() async {
     FocusScope.of(context).unfocus();
 
     setState(() {
-      _formSubmitted = true;
-      _nicknameVisited = true;
-      _sexVisited = true;
-      _birthDateVisited = true;
-      _educationLevelVisited = true;
+      formSubmitted = true;
+      nicknameVisited = true;
+      sexVisited = true;
+      birthDateVisited = true;
+      educationLevelVisited = true;
     });
 
-    final isValid = _formKey.currentState!.validate();
+    final isValid = formKey.currentState!.validate();
 
     if (selectedSex == null ||
         selectedBirthDate == null ||
@@ -215,7 +60,7 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
         isNicknameExists = true;
         nicknameErrorText = TMTRegisterUserText.nicknameExistsError.tr;
       });
-      _formKey.currentState?.validate();
+      formKey.currentState?.validate();
       if (mounted) {
         AppSnackbar.showCustomSnackbar(
           context,
@@ -266,263 +111,7 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
-    final isLandscape = mediaQuery.orientation == Orientation.landscape;
-    final appBar = CustomAppBar(title: TMTRegisterUserText.title.tr);
-    final availableHeight = mediaQuery.size.height -
-        appBar.preferredSize.height -
-        mediaQuery.padding.top -
-        mediaQuery.padding.bottom;
-
-    return Scaffold(
-      appBar: appBar,
-      body: LayoutBuilder(
-        builder: (context, constraints) {
-          return SingleChildScrollView(
-            child: Center(
-              child: Container(
-                width: RegisterUserScreenResponsiveCalculator
-                    .calculateContainerWidth(
-                  context,
-                ),
-                padding: const EdgeInsets.fromLTRB(
-                    RegisterUserScreenResponsiveCalculator
-                        .kContentHorizontalPadding,
-                    RegisterUserScreenResponsiveCalculator.kContentTopPadding,
-                    RegisterUserScreenResponsiveCalculator
-                        .kContentHorizontalPadding,
-                    RegisterUserScreenResponsiveCalculator
-                        .kContentBottomPadding),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      key: _formBoxKey,
-                      child: _buildFormFields(isLandscape),
-                    ),
-                    SizedBox(height: _calculateSpacing(availableHeight)),
-                    _buildActionButtons(context),
-                  ],
-                ),
-              ),
-            ),
-          );
-        },
-      ),
-    );
-  }
-
-  Widget _buildFormFields(bool isLandscape) {
-    return Form(
-      key: _formKey,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildNicknameField(),
-          const SizedBox(height: kFieldVerticalSpacing),
-          _buildSexField(),
-          const SizedBox(height: kSexFieldVerticalSpacing),
-          _buildBirthDateField(),
-          const SizedBox(height: kFieldVerticalSpacing),
-          _buildEducationLevelField(),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildNicknameField() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(TMTRegisterUserText.nicknameLabel.tr,
-            style: AppTextStyle.registerUserLabelText),
-        const SizedBox(height: kLabelFieldSpacing),
-        TextFormField(
-          controller: nicknameController,
-          focusNode: nicknameFocusNode,
-          decoration: CustomInputDecoration.commonInputDecoration().copyWith(
-            hintText: TMTRegisterUserText.nicknameHint.tr,
-          ),
-          validator: (value) {
-            if ((_nicknameVisited || _formSubmitted)) {
-              if (nicknameFocusNode.hasFocus) {
-                return null;
-              }
-              if (value == null || value.isEmpty) {
-                return TMTRegisterUserText.nicknameError.tr;
-              }
-              if (isNicknameExists) {
-                return nicknameErrorText;
-              }
-            }
-            return null;
-          },
-          onTap: () => setState(() => _nicknameVisited = true),
-          onChanged: (value) {
-            setState(() {
-              _nicknameVisited = true;
-              isNicknameExists = false;
-              nicknameErrorText = null;
-            });
-            _formKey.currentState?.validate();
-          },
-          style: CustomInputDecoration.textInputStyle,
-        ),
-      ],
-    );
-  }
-
-  Widget _buildSexField() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(TMTRegisterUserText.sexLabel.tr,
-            style: AppTextStyle.registerUserLabelText),
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Radio<Sex>(
-              value: Sex.male,
-              groupValue: selectedSex,
-              activeColor: CustomInputDecoration.focusColor,
-              onChanged: (Sex? value) {
-                setState(() {
-                  selectedSex = value;
-                  _sexVisited = true;
-                  _nicknameVisited = true;
-                });
-                _formKey.currentState?.validate();
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  _updateFormHeight();
-                });
-              },
-            ),
-            Text(TMTRegisterUserText.sexMale.tr,
-                style: CustomInputDecoration.textInputStyle),
-            SizedBox(width: 20),
-            Radio<Sex>(
-              value: Sex.female,
-              groupValue: selectedSex,
-              activeColor: CustomInputDecoration.focusColor,
-              onChanged: (Sex? value) {
-                setState(() {
-                  selectedSex = value;
-                  _sexVisited = true;
-                  _nicknameVisited = true;
-                });
-                _formKey.currentState?.validate();
-                WidgetsBinding.instance.addPostFrameCallback((_) {
-                  _updateFormHeight();
-                });
-              },
-            ),
-            Text(TMTRegisterUserText.sexFemale.tr,
-                style: CustomInputDecoration.textInputStyle),
-          ],
-        ),
-        if ((_sexVisited || _formSubmitted) && selectedSex == null)
-          Padding(
-            padding: const EdgeInsets.only(top: 0, left: 12.0, bottom: 8.0),
-            child: Text(
-              TMTRegisterUserText.sexError.tr,
-              style: TextStyleBase.bodyS.copyWith(
-                color: Theme.of(context).colorScheme.error,
-              ),
-            ),
-          ),
-      ],
-    );
-  }
-
-  Widget _buildBirthDateField() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(TMTRegisterUserText.birthDateLabel.tr,
-            style: AppTextStyle.registerUserLabelText),
-        const SizedBox(height: kLabelFieldSpacing),
-        TextFormField(
-          controller: birthDateController,
-          focusNode: birthDateFocusNode,
-          readOnly: true,
-          decoration: CustomInputDecoration.commonInputDecoration().copyWith(
-            hintText: TMTRegisterUserText.birthDateHint.tr,
-            suffixIcon: Icon(Icons.calendar_today, color: Color(0xFF8F9098)),
-          ),
-          onTap: () => _selectDate(context),
-          validator: (value) {
-            if ((_birthDateVisited || _formSubmitted)) {
-              if (birthDateFocusNode.hasFocus) {
-                return null;
-              }
-              if (selectedBirthDate == null) {
-                return TMTRegisterUserText.birthDateError.tr;
-              }
-            }
-            return null;
-          },
-          style: CustomInputDecoration.textInputStyle,
-        ),
-      ],
-    );
-  }
-
-  Widget _buildEducationLevelField() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(TMTRegisterUserText.educationLabel.tr,
-            style: AppTextStyle.registerUserLabelText),
-        const SizedBox(height: kLabelFieldSpacing),
-        DropdownButtonFormField<EducationLevel>(
-          value: selectedEducationLevel,
-          focusNode: educationLevelFocusNode,
-          decoration: CustomInputDecoration.commonInputDecoration().copyWith(),
-          hint: Text(
-            TMTRegisterUserText.educationHint.tr,
-            style: CustomInputDecoration.commonInputDecoration().hintStyle,
-          ),
-          items: EducationLevel.values
-              .map((level) => DropdownMenuItem(
-            value: level,
-            child: Text(
-              getEducationLevelText(level),
-              style: CustomInputDecoration.textInputStyle,
-            ),
-          ))
-              .toList(),
-          onChanged: (EducationLevel? value) {
-            setState(() {
-              selectedEducationLevel = value;
-              _educationLevelVisited = true;
-              _nicknameVisited = true;
-              _sexVisited = true;
-              _birthDateVisited = true;
-            });
-            _formKey.currentState?.validate();
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              _updateFormHeight();
-            });
-          },
-          validator: (value) {
-            if ((_educationLevelVisited || _formSubmitted)) {
-              if (educationLevelFocusNode.hasFocus) {
-                return null;
-              }
-              if (value == null) {
-                return TMTRegisterUserText.educationError.tr;
-              }
-            }
-            return null;
-          },
-          isExpanded: true,
-        ),
-      ],
-    );
-  }
-
-  Widget _buildActionButtons(BuildContext context) {
+  Widget buildActionButtons(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -532,11 +121,11 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
           Center(
             child: CustomPrimaryButton(
               text: TMTRegisterUserText.saveButton.tr,
-              onPressed: saveUser,
+              onPressed: handleSave,
               isEnabled: isFormComplete && !isLoading,
             ),
           ),
-          const SizedBox(height: kButtonSpacing),
+          const SizedBox(height: 16),
           Center(
             child: CustomSecondaryButton(
               text: TMTRegisterUserText.cancelButton.tr,
@@ -549,20 +138,5 @@ class _RegisterUserScreenState extends State<RegisterUserScreen> {
         ],
       ],
     );
-  }
-
-  String getEducationLevelText(EducationLevel level) {
-    switch (level) {
-      case EducationLevel.primary:
-        return TMTRegisterUserText.educationPrimary.tr;
-      case EducationLevel.secondary:
-        return TMTRegisterUserText.educationSecondary.tr;
-      case EducationLevel.graduate:
-        return TMTRegisterUserText.educationGraduate.tr;
-      case EducationLevel.master:
-        return TMTRegisterUserText.educationMaster.tr;
-      case EducationLevel.doctorate:
-        return TMTRegisterUserText.educationDoctorate.tr;
-    }
   }
 }

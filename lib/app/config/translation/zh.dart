@@ -143,7 +143,7 @@ class ChineseMessages extends BaseMessages {
 
   //--------------------------------------------Register User Screen Text------------------------------------------------------
   @override
-  String get registerUserTitle => "我的资料";
+  String get registerUserTitle => "创建新账户";
 
   @override
   String get registerUserNicknameLabel => "昵称";
