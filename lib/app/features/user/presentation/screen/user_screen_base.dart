@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import '../../../../config/themes/AppTextStyle.dart';
-import '../../../../config/themes/app_text_style_base.dart';
 import '../../../../config/themes/input_decoration.dart';
 import '../../../../config/translation/app_translations.dart';
 import '../../domain/entities/user_profile.dart';
@@ -34,15 +33,6 @@ abstract class RegisterUserScreenBaseState<T extends RegisterUserScreenBase>
   EducationLevel? selectedEducationLevel;
 
   bool isLoading = false;
-  bool isNicknameExists = false;
-  String? nicknameErrorText;
-
-  bool nicknameVisited = false;
-  bool sexVisited = false;
-  bool birthDateVisited = false;
-  bool educationLevelVisited = false;
-  bool formSubmitted = false;
-
   double formHeight = 0;
   bool isFormMeasured = false;
 
@@ -50,18 +40,10 @@ abstract class RegisterUserScreenBaseState<T extends RegisterUserScreenBase>
 
   bool get isReadOnly => false;
 
-  bool get showValidationErrors => !isReadOnly;
-
   @override
   void initState() {
     super.initState();
     controller = Get.find<UserProfileController>();
-
-    if (!isReadOnly) {
-      nicknameFocusNode.addListener(_onNicknameFocusChange);
-      birthDateFocusNode.addListener(_onBirthDateFocusChange);
-      educationLevelFocusNode.addListener(_onEducationLevelFocusChange);
-    }
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       updateFormHeight();
@@ -98,81 +80,21 @@ abstract class RegisterUserScreenBaseState<T extends RegisterUserScreenBase>
     );
   }
 
-  void _onNicknameFocusChange() {
-    if (nicknameFocusNode.hasFocus) {
-      formKey.currentState?.validate();
-    }
-  }
-
-  void _onBirthDateFocusChange() {
-    if (birthDateFocusNode.hasFocus) {
-      formKey.currentState?.validate();
-    }
-  }
-
-  void _onEducationLevelFocusChange() {
-    if (educationLevelFocusNode.hasFocus) {
-      formKey.currentState?.validate();
-    }
-  }
-
   @override
   void dispose() {
     nicknameController.dispose();
     birthDateController.dispose();
-    if (!isReadOnly) {
-      nicknameFocusNode.removeListener(_onNicknameFocusChange);
-      birthDateFocusNode.removeListener(_onBirthDateFocusChange);
-      educationLevelFocusNode.removeListener(_onEducationLevelFocusChange);
-    }
     nicknameFocusNode.dispose();
     birthDateFocusNode.dispose();
     educationLevelFocusNode.dispose();
     super.dispose();
   }
 
-  Future<void> _selectDate(BuildContext context) async {
-    if (isReadOnly) return;
-
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: selectedBirthDate ?? DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
-      locale: Get.locale,
-      helpText: TMTRegisterUserText.birthDatePickerTitle.tr,
-      cancelText: TMTRegisterUserText.birthDatePickerCancel.tr,
-      confirmText: TMTRegisterUserText.birthDatePickerConfirm.tr,
-    );
-    if (picked != null && picked != selectedBirthDate) {
-      setState(() {
-        selectedBirthDate = picked;
-        birthDateVisited = true;
-        nicknameVisited = true;
-        sexVisited = true;
-        final currentLocale = Get.locale?.toString() ?? 'en_US';
-        birthDateFocusNode.removeListener(_onBirthDateFocusChange);
-        birthDateController.text = DateFormat.yMd(currentLocale).format(picked);
-
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          birthDateController.selection = TextSelection.collapsed(
-            offset: birthDateController.text.length,
-          );
-        });
-
-        birthDateFocusNode.addListener(_onBirthDateFocusChange);
-      });
-    }
-
-    formKey.currentState?.validate();
-  }
-
   bool get isFormComplete {
     return nicknameController.text.isNotEmpty &&
         selectedBirthDate != null &&
         selectedSex != null &&
-        selectedEducationLevel != null &&
-        !isNicknameExists;
+        selectedEducationLevel != null;
   }
 
   String getScreenTitle();
@@ -261,41 +183,25 @@ abstract class RegisterUserScreenBaseState<T extends RegisterUserScreenBase>
             hintText: isReadOnly ? null : TMTRegisterUserText.nicknameHint.tr,
             filled: isReadOnly,
           ),
-          validator: (value) {
-            if (!showValidationErrors) return null;
-
-            if ((nicknameVisited || formSubmitted)) {
-              if (nicknameFocusNode.hasFocus) {
-                return null;
-              }
-              if (value == null || value.isEmpty) {
-                return TMTRegisterUserText.nicknameError.tr;
-              }
-              if (isNicknameExists) {
-                return nicknameErrorText;
-              }
-            }
-            return null;
-          },
-          onTap: () {
-            if (!isReadOnly) {
-              setState(() => nicknameVisited = true);
-            }
-          },
-          onChanged: (value) {
-            if (isReadOnly) return;
-
-            setState(() {
-              nicknameVisited = true;
-              isNicknameExists = false;
-              nicknameErrorText = null;
-            });
-            formKey.currentState?.validate();
-          },
+          validator: validateNicknameField,
+          onTap: onNicknameFieldTap,
+          onChanged: onNicknameFieldChanged,
           style: CustomInputDecoration.textInputStyle,
         ),
       ],
     );
+  }
+
+  String? validateNicknameField(String? value) {
+    return null;
+  }
+
+  void onNicknameFieldTap() {
+    // To be overridden by subclasses if needed
+  }
+
+  void onNicknameFieldChanged(String value) {
+    // To be overridden by subclasses if needed
   }
 
   Widget _buildSexField() {
@@ -311,19 +217,7 @@ abstract class RegisterUserScreenBaseState<T extends RegisterUserScreenBase>
               value: Sex.male,
               groupValue: selectedSex,
               activeColor: CustomInputDecoration.focusColor,
-              onChanged: isReadOnly
-                  ? null
-                  : (Sex? value) {
-                      setState(() {
-                        selectedSex = value;
-                        sexVisited = true;
-                        nicknameVisited = true;
-                      });
-                      formKey.currentState?.validate();
-                      WidgetsBinding.instance.addPostFrameCallback((_) {
-                        updateFormHeight();
-                      });
-                    },
+              onChanged: isReadOnly ? null : onSexChanged,
             ),
             Text(TMTRegisterUserText.sexMale.tr,
                 style: CustomInputDecoration.textInputStyle),
@@ -332,38 +226,27 @@ abstract class RegisterUserScreenBaseState<T extends RegisterUserScreenBase>
               value: Sex.female,
               groupValue: selectedSex,
               activeColor: CustomInputDecoration.focusColor,
-              onChanged: isReadOnly
-                  ? null
-                  : (Sex? value) {
-                      setState(() {
-                        selectedSex = value;
-                        sexVisited = true;
-                        nicknameVisited = true;
-                      });
-                      formKey.currentState?.validate();
-                      WidgetsBinding.instance.addPostFrameCallback((_) {
-                        updateFormHeight();
-                      });
-                    },
+              onChanged: isReadOnly ? null : onSexChanged,
             ),
             Text(TMTRegisterUserText.sexFemale.tr,
                 style: CustomInputDecoration.textInputStyle),
           ],
         ),
-        if (showValidationErrors &&
-            (sexVisited || formSubmitted) &&
-            selectedSex == null)
-          Padding(
-            padding: const EdgeInsets.only(top: 0, left: 12.0, bottom: 8.0),
-            child: Text(
-              TMTRegisterUserText.sexError.tr,
-              style: TextStyleBase.bodyS.copyWith(
-                color: Theme.of(context).colorScheme.error,
-              ),
-            ),
-          ),
+        buildSexValidationError(),
       ],
     );
+  }
+
+  Widget buildSexValidationError() {
+    return SizedBox.shrink();
+  }
+
+  void onSexChanged(Sex? value) {
+    if (!isReadOnly) {
+      setState(() {
+        selectedSex = value;
+      });
+    }
   }
 
   Widget _buildBirthDateField() {
@@ -385,24 +268,45 @@ abstract class RegisterUserScreenBaseState<T extends RegisterUserScreenBase>
             filled: isReadOnly,
             enabled: !isReadOnly,
           ),
-          onTap: () => isReadOnly ? null : _selectDate(context),
-          validator: (value) {
-            if (!showValidationErrors) return null;
-
-            if ((birthDateVisited || formSubmitted)) {
-              if (birthDateFocusNode.hasFocus) {
-                return null;
-              }
-              if (selectedBirthDate == null) {
-                return TMTRegisterUserText.birthDateError.tr;
-              }
-            }
-            return null;
-          },
+          onTap: isReadOnly ? null : () => selectDate(context),
+          validator: validateBirthDateField,
           style: CustomInputDecoration.textInputStyle,
         ),
       ],
     );
+  }
+
+  String? validateBirthDateField(String? value) {
+    return null;
+  }
+
+  Future<void> selectDate(BuildContext context) async {
+    if (isReadOnly) return;
+
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedBirthDate ?? DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+      locale: Get.locale,
+      helpText: TMTRegisterUserText.birthDatePickerTitle.tr,
+      cancelText: TMTRegisterUserText.birthDatePickerCancel.tr,
+      confirmText: TMTRegisterUserText.birthDatePickerConfirm.tr,
+    );
+
+    if (picked != null && picked != selectedBirthDate) {
+      setState(() {
+        selectedBirthDate = picked;
+        final currentLocale = Get.locale?.toString() ?? 'en_US';
+        birthDateController.text = DateFormat.yMd(currentLocale).format(picked);
+      });
+
+      onDateSelected(picked);
+    }
+  }
+
+  void onDateSelected(DateTime date) {
+    // To be overridden by subclasses if needed
   }
 
   Widget _buildEducationLevelField() {
@@ -450,34 +354,20 @@ abstract class RegisterUserScreenBaseState<T extends RegisterUserScreenBase>
                 ),
               ))
           .toList(),
-      onChanged: (EducationLevel? value) {
-        setState(() {
-          selectedEducationLevel = value;
-          educationLevelVisited = true;
-          nicknameVisited = true;
-          sexVisited = true;
-          birthDateVisited = true;
-        });
-        formKey.currentState?.validate();
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          updateFormHeight();
-        });
-      },
-      validator: (value) {
-        if (!showValidationErrors) return null;
-
-        if ((educationLevelVisited || formSubmitted)) {
-          if (educationLevelFocusNode.hasFocus) {
-            return null;
-          }
-          if (value == null) {
-            return TMTRegisterUserText.educationError.tr;
-          }
-        }
-        return null;
-      },
+      onChanged: onEducationLevelChanged,
+      validator: validateEducationLevelField,
       isExpanded: true,
     );
+  }
+
+  void onEducationLevelChanged(EducationLevel? value) {
+    setState(() {
+      selectedEducationLevel = value;
+    });
+  }
+
+  String? validateEducationLevelField(EducationLevel? value) {
+    return null;
   }
 
   String getEducationLevelText(EducationLevel level) {

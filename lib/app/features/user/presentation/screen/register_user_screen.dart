@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:msdtmt/app/features/user/presentation/screen/user_screen_base.dart';
 
 import '../../../../config/themes/AppColors.dart';
+import '../../../../config/themes/app_text_style_base.dart';
 import '../../../../config/translation/app_translations.dart';
 import '../../../../shared_components/custom_primary_button.dart';
 import '../../../../shared_components/custom_secondary_button.dart';
@@ -16,30 +17,32 @@ class RegisterUserScreen extends RegisterUserScreenBase {
   State<RegisterUserScreen> createState() => _RegisterUserScreenState();
 }
 
-class _RegisterUserScreenState extends RegisterUserScreenBaseState<RegisterUserScreen> {
-  @override
-  String getScreenTitle() {
-    return TMTRegisterUserText.title.tr;
-  }
+class _RegisterUserScreenState
+    extends RegisterUserScreenBaseState<RegisterUserScreen> {
+  bool isNicknameExists = false;
+  String? nicknameErrorText;
 
-  @override
-  bool get isFormComplete {
-    return nicknameController.text.trim().isNotEmpty &&
-        selectedBirthDate != null &&
-        selectedSex != null &&
-        selectedEducationLevel != null &&
-        !isNicknameExists;
-  }
+  bool nicknameVisited = false;
+  bool sexVisited = false;
+  bool birthDateVisited = false;
+  bool educationLevelVisited = false;
+  bool formSubmitted = false;
 
   @override
   void initState() {
     super.initState();
     nicknameController.addListener(_onNicknameChanged);
+    nicknameFocusNode.addListener(_onNicknameFocusChange);
+    birthDateFocusNode.addListener(_onBirthDateFocusChange);
+    educationLevelFocusNode.addListener(_onEducationLevelFocusChange);
   }
 
   @override
   void dispose() {
     nicknameController.removeListener(_onNicknameChanged);
+    nicknameFocusNode.removeListener(_onNicknameFocusChange);
+    birthDateFocusNode.removeListener(_onBirthDateFocusChange);
+    educationLevelFocusNode.removeListener(_onEducationLevelFocusChange);
     super.dispose();
   }
 
@@ -57,6 +60,149 @@ class _RegisterUserScreenState extends RegisterUserScreenBaseState<RegisterUserS
         });
       }
     }
+  }
+
+  void _onNicknameFocusChange() {
+    if (nicknameFocusNode.hasFocus) {
+      formKey.currentState?.validate();
+    }
+  }
+
+  void _onBirthDateFocusChange() {
+    if (birthDateFocusNode.hasFocus) {
+      formKey.currentState?.validate();
+    }
+  }
+
+  void _onEducationLevelFocusChange() {
+    if (educationLevelFocusNode.hasFocus) {
+      formKey.currentState?.validate();
+    }
+  }
+
+  @override
+  bool get isFormComplete {
+    return nicknameController.text.trim().isNotEmpty &&
+        selectedBirthDate != null &&
+        selectedSex != null &&
+        selectedEducationLevel != null &&
+        !isNicknameExists;
+  }
+
+  @override
+  String getScreenTitle() {
+    return TMTRegisterUserText.title.tr;
+  }
+
+  @override
+  String? validateNicknameField(String? value) {
+    if ((nicknameVisited || formSubmitted)) {
+      if (nicknameFocusNode.hasFocus) {
+        return null;
+      }
+      if (value == null || value.isEmpty) {
+        return TMTRegisterUserText.nicknameError.tr;
+      }
+      if (isNicknameExists) {
+        return nicknameErrorText;
+      }
+    }
+    return null;
+  }
+
+  @override
+  void onNicknameFieldTap() {
+    setState(() => nicknameVisited = true);
+  }
+
+  @override
+  void onNicknameFieldChanged(String value) {
+    setState(() {
+      nicknameVisited = true;
+      isNicknameExists = false;
+      nicknameErrorText = null;
+    });
+    formKey.currentState?.validate();
+  }
+
+  @override
+  Widget buildSexValidationError() {
+    if ((sexVisited || formSubmitted) && selectedSex == null) {
+      return Padding(
+        padding: const EdgeInsets.only(top: 0, left: 12.0, bottom: 8.0),
+        child: Text(
+          TMTRegisterUserText.sexError.tr,
+          style: TextStyleBase.bodyS.copyWith(
+            color: Theme.of(context).colorScheme.error,
+          ),
+        ),
+      );
+    }
+    return SizedBox.shrink();
+  }
+
+  @override
+  void onSexChanged(Sex? value) {
+    setState(() {
+      selectedSex = value;
+      sexVisited = true;
+      nicknameVisited = true;
+    });
+    formKey.currentState?.validate();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      updateFormHeight();
+    });
+  }
+
+  @override
+  String? validateBirthDateField(String? value) {
+    if ((birthDateVisited || formSubmitted)) {
+      if (birthDateFocusNode.hasFocus) {
+        return null;
+      }
+      if (selectedBirthDate == null) {
+        return TMTRegisterUserText.birthDateError.tr;
+      }
+    }
+    return null;
+  }
+
+  @override
+  void onDateSelected(DateTime date) {
+    setState(() {
+      birthDateVisited = true;
+      nicknameVisited = true;
+      sexVisited = true;
+    });
+    formKey.currentState?.validate();
+  }
+
+  @override
+  void onEducationLevelChanged(EducationLevel? value) {
+    setState(() {
+      selectedEducationLevel = value;
+      educationLevelVisited = true;
+      nicknameVisited = true;
+      sexVisited = true;
+      birthDateVisited = true;
+    });
+    formKey.currentState?.validate();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      updateFormHeight();
+    });
+  }
+
+  @override
+  String? validateEducationLevelField(EducationLevel? value) {
+    if ((educationLevelVisited || formSubmitted)) {
+      if (educationLevelFocusNode.hasFocus) {
+        return null;
+      }
+      if (value == null) {
+        return TMTRegisterUserText.educationError.tr;
+      }
+    }
+    return null;
   }
 
   Future<void> handleSave() async {
