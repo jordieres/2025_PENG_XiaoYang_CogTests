@@ -153,7 +153,7 @@ class SpanishMessages extends BaseMessages {
 
   //--------------------------------------------Register User Screen Text------------------------------------------------------
   @override
-  String get registerUserTitle => "Mis Datos";
+  String get registerUserTitle => "Crear nuevo perfil";
 
   @override
   String get registerUserNicknameLabel => "Apodo";

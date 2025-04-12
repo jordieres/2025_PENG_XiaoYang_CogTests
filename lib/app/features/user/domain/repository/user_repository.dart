@@ -28,6 +28,8 @@ abstract class UserRepository {
   Future<List<String>> getAllNicknames();
 
   Future<List<String>> getAllUserId();
+
+  Future<UserProfile?> getCurrentProfile();
 }
 
 class UserRepositoryImpl implements UserRepository {
@@ -98,5 +100,10 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future<List<String>> getAllUserId() async {
     return await localDataSource.getAllUserId();
+  }
+
+  @override
+  Future<UserProfile?> getCurrentProfile() async {
+    return await localDataSource.getCurrentProfile();
   }
 }

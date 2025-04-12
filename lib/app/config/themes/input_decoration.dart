@@ -6,6 +6,7 @@ import 'AppColors.dart';
 import 'app_text_style_base.dart';
 
 class CustomInputDecoration {
+
   static final BorderRadius _defaultBorderRadius = BorderRadius.circular(12);
 
   static final _BORDER_WIDTH = 2.0;
@@ -42,4 +43,10 @@ class CustomInputDecoration {
   }
 
   static var textInputStyle = TextStyleBase.bodyM.copyWith();
+
+  static var textReadOnlyStyle = TextStyleBase.bodyM.copyWith(
+    color: AppColors.mainBlackText.withOpacity(0.5),
+  );
 }
+
+

@@ -91,4 +91,8 @@ class UserProfileController extends GetxController {
   Future<UserProfile?> getProfileByNickname(String nickname) async {
     return await repository.getProfileByNickname(nickname);
   }
+
+  Future<UserProfile?> getCurrentProfile() async {
+    return await repository.getCurrentProfile();
+  }
 }
