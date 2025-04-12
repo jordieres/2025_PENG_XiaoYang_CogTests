@@ -26,7 +26,6 @@ class _CurrentUserDataScreenState
 
   UserProfile? currentProfile;
   bool isLoadingProfile = true;
-
   bool isFormReady = false;
 
   @override
@@ -39,7 +38,7 @@ class _CurrentUserDataScreenState
   void updateFormHeight() {
     if (formBoxKey.currentContext != null && mounted) {
       final RenderBox box =
-      formBoxKey.currentContext!.findRenderObject() as RenderBox;
+          formBoxKey.currentContext!.findRenderObject() as RenderBox;
       if (box.hasSize) {
         setState(() {
           formHeight = box.size.height;
