@@ -22,6 +22,43 @@ class _RegisterUserScreenState extends RegisterUserScreenBaseState<RegisterUserS
     return TMTRegisterUserText.title.tr;
   }
 
+  @override
+  bool get isFormComplete {
+    return nicknameController.text.trim().isNotEmpty &&
+        selectedBirthDate != null &&
+        selectedSex != null &&
+        selectedEducationLevel != null &&
+        !isNicknameExists;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    nicknameController.addListener(_onNicknameChanged);
+  }
+
+  @override
+  void dispose() {
+    nicknameController.removeListener(_onNicknameChanged);
+    super.dispose();
+  }
+
+  void _onNicknameChanged() {
+    if (nicknameController.text.isEmpty) {
+      if (isNicknameExists) {
+        setState(() {
+          isNicknameExists = false;
+          nicknameErrorText = null;
+        });
+      }
+      if (!nicknameVisited) {
+        setState(() {
+          nicknameVisited = true;
+        });
+      }
+    }
+  }
+
   Future<void> handleSave() async {
     FocusScope.of(context).unfocus();
 
@@ -34,6 +71,18 @@ class _RegisterUserScreenState extends RegisterUserScreenBaseState<RegisterUserS
     });
 
     final isValid = formKey.currentState!.validate();
+    final nickname = nicknameController.text.trim();
+
+    if (nickname.isEmpty) {
+      if (mounted) {
+        AppSnackbar.showCustomSnackbar(
+          context,
+          TMTRegisterUserText.nicknameError.tr,
+          backgroundColor: AppColors.mainRed.withAlpha(204),
+        );
+      }
+      return;
+    }
 
     if (selectedSex == null ||
         selectedBirthDate == null ||
@@ -53,7 +102,6 @@ class _RegisterUserScreenState extends RegisterUserScreenBaseState<RegisterUserS
       return;
     }
 
-    final nickname = nicknameController.text.trim();
     final existingProfile = await controller.getProfileByNickname(nickname);
     if (existingProfile != null) {
       setState(() {
@@ -79,7 +127,7 @@ class _RegisterUserScreenState extends RegisterUserScreenBaseState<RegisterUserS
 
     try {
       final newUserProfile = UserProfile(
-        nickname: nicknameController.text,
+        nickname: nicknameController.text.trim(),
         sex: selectedSex!,
         birthDate: selectedBirthDate!,
         educationLevel: selectedEducationLevel!,
