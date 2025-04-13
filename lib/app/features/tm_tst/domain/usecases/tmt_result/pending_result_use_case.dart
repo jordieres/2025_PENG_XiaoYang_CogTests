@@ -4,13 +4,22 @@ import 'package:msdtmt/app/features/tm_tst/data/model/tmt_reult_user_model.dart'
 import 'package:msdtmt/app/utils/services/net/api_error.dart';
 import '../../../../../utils/services/user_data_base_helper.dart';
 import '../../../../../utils/services/work_manager_handler.dart';
+import '../../../../user/data/datasources/test_result_data_soruce.dart';
 import '../../../../user/data/datasources/user_profle_data_soruce.dart';
+import '../../../../user/domain/entities/user_test_local_data_result.dart';
+import '../../../../user/domain/repository/test_result_local_data_repository.dart';
 import '../../../data/model/pending_result_model.dart';
 import '../../entities/result/tmt_game_result_data.dart';
 import '../../repository/pending_result_repository.dart';
 
 class PendingResultUseCase {
   final PendingResultRepository pendingResultRepository;
+  final TestResultLocalDataRepository testResultLocalDataRepositoryImpl =
+      TestResultLocalDataRepositoryImpl(
+    testResultDataSource: TestResultDataSourceImpl(
+      databaseHelper: UserDatabaseHelper(),
+    ),
+  );
 
   PendingResultUseCase({
     required this.pendingResultRepository,
@@ -62,6 +71,14 @@ class PendingResultUseCase {
               await pendingResultRepository.deletePendingResult(pendingResult);
           if (!deleted) {
             allSuccess = false;
+          } else {
+            testResultLocalDataRepositoryImpl
+                .saveTestResult(UserTestLocalDataResult(
+              referenceCode: pendingResult.codeId,
+              date: pendingResult.date,
+              tmtATime: pendingResult.tmtATime,
+              tmtBTime: pendingResult.tmtBTime,
+            ));
           }
         } else {
           if (result.error is NetworkError) {

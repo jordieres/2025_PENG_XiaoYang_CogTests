@@ -1,38 +1,34 @@
-
+import '../../../../constans/database_constants.dart';
 import '../../domain/entities/user_test_local_data_result.dart';
 
 class UserTestResultLocalDataModel extends UserTestLocalDataResult {
   UserTestResultLocalDataModel({
-    required String referenceCode,
-    required DateTime date,
-    required double tmtATime,
-    required double tmtBTime,
-  }) : super(
-    referenceCode: referenceCode,
-    date: date,
-    tmtATime: tmtATime,
-    tmtBTime: tmtBTime,
-  );
+    required super.referenceCode,
+    required super.date,
+    required super.tmtATime,
+    required super.tmtBTime,
+  });
 
   factory UserTestResultLocalDataModel.fromMap(Map<String, dynamic> map) {
     return UserTestResultLocalDataModel(
-      referenceCode: map['referenceCode'] as String,
-      date: DateTime.parse(map['date'] as String),
-      tmtATime: map['tmtATime'] as double,
-      tmtBTime: map['tmtBTime'] as double,
+      referenceCode: map[DatabaseConstants.referenceCodeColumn] as String,
+      date: DateTime.parse(map[DatabaseConstants.dateColumn] as String),
+      tmtATime: map[DatabaseConstants.tmtATimeColumn] as double,
+      tmtBTime: map[DatabaseConstants.tmtBTimeColumn] as double,
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'referenceCode': referenceCode,
-      'date': date.toIso8601String(),
-      'tmtATime': tmtATime,
-      'tmtBTime': tmtBTime,
+      DatabaseConstants.referenceCodeColumn: referenceCode,
+      DatabaseConstants.dateColumn: date.toIso8601String(),
+      DatabaseConstants.tmtATimeColumn: tmtATime,
+      DatabaseConstants.tmtBTimeColumn: tmtBTime,
     };
   }
 
-  factory UserTestResultLocalDataModel.fromEntity(UserTestLocalDataResult entity) {
+  factory UserTestResultLocalDataModel.fromEntity(
+      UserTestLocalDataResult entity) {
     return UserTestResultLocalDataModel(
       referenceCode: entity.referenceCode,
       date: entity.date,

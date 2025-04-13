@@ -1,6 +1,7 @@
 import 'package:intl/intl.dart';
 
 import '../../../../constans/send_tmt_result_date_formatter.dart';
+import '../../../../constans/tmt_result_model_constant.dart';
 import '../../domain/entities/metric/metric_static_values.dart';
 import '../../domain/entities/result/tmt_game_init_data.dart';
 import '../../domain/entities/result/tmt_game_result_data.dart';
@@ -132,39 +133,47 @@ class TmtResultModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> result = {
-      'codeid': tmtGameInitData.tmtGameCodeId,
-      "Mano": tmtGameInitData.tmtGameHandUsed.value,
-      'NumCirc': numCirc,
-      'Time_complete': timeComplete,
-      'Number_Errors': numberErrors,
-      'Average_Pause': averagePause,
-      'Average_Lift': averageLift,
-      'Average_Rate_Between_Circles': averageRateBetweenCircles,
-      'Average_Rate_Inside_Circles': averageRateInsideCircles,
-      'Average_Time_Between_Circles': averageTimeBetweenCircles,
-      'Average_Time_Inside_Circles': averageTimeInsideCircles,
-      'Average_Rate_Before_Letters': averageRateBeforeLetters,
-      'Average_Rate_Before_Numbers': averageRateBeforeNumbers,
-      'Average_Time_Before_Letters': averageTimeBeforeLetters,
-      'Average_Time_Before_Numbers': averageTimeBeforeNumbers,
-      'Number_Pauses': numberPauses,
-      'Number_Lifts': numberLifts,
-      'Average_Total_Pressure': averageTotalPressure,
-      'Average_Total_Size': averageTotalSize,
-      'Date_Data': dateData,
-      'Number_Errors_A': numberErrorsA,
-      'Number_Errors_B': numberErrorsB,
-      'Time_Complete_A': timeCompleteA,
-      'Time_Complete_B': timeCompleteB,
-      'Device': deviceModel,
-      'ScoreA': scoreA,
-      'ScoreA1': scoreA1,
-      'ScoreA2': scoreA2,
-      'ScoreA3': scoreA3,
-      'ScoreB': scoreB,
-      'ScoreB1': scoreB1,
-      'ScoreB2': scoreB2,
-      'ScoreB3': scoreB3,
+      TmtResultModelConstant.CODE_ID: tmtGameInitData.tmtGameCodeId,
+      TmtResultModelConstant.HAND_USED: tmtGameInitData.tmtGameHandUsed.value,
+      TmtResultModelConstant.NUM_CIRC: numCirc,
+      TmtResultModelConstant.TIME_COMPLETE: timeComplete,
+      TmtResultModelConstant.NUMBER_ERRORS: numberErrors,
+      TmtResultModelConstant.AVERAGE_PAUSE: averagePause,
+      TmtResultModelConstant.AVERAGE_LIFT: averageLift,
+      TmtResultModelConstant.AVERAGE_RATE_BETWEEN_CIRCLES:
+          averageRateBetweenCircles,
+      TmtResultModelConstant.AVERAGE_RATE_INSIDE_CIRCLES:
+          averageRateInsideCircles,
+      TmtResultModelConstant.AVERAGE_TIME_BETWEEN_CIRCLES:
+          averageTimeBetweenCircles,
+      TmtResultModelConstant.AVERAGE_TIME_INSIDE_CIRCLES:
+          averageTimeInsideCircles,
+      TmtResultModelConstant.AVERAGE_RATE_BEFORE_LETTERS:
+          averageRateBeforeLetters,
+      TmtResultModelConstant.AVERAGE_RATE_BEFORE_NUMBERS:
+          averageRateBeforeNumbers,
+      TmtResultModelConstant.AVERAGE_TIME_BEFORE_LETTERS:
+          averageTimeBeforeLetters,
+      TmtResultModelConstant.AVERAGE_TIME_BEFORE_NUMBERS:
+          averageTimeBeforeNumbers,
+      TmtResultModelConstant.NUMBER_PAUSES: numberPauses,
+      TmtResultModelConstant.NUMBER_LIFTS: numberLifts,
+      TmtResultModelConstant.AVERAGE_TOTAL_PRESSURE: averageTotalPressure,
+      TmtResultModelConstant.AVERAGE_TOTAL_SIZE: averageTotalSize,
+      TmtResultModelConstant.DATE_DATA: dateData,
+      TmtResultModelConstant.NUMBER_ERRORS_A: numberErrorsA,
+      TmtResultModelConstant.NUMBER_ERRORS_B: numberErrorsB,
+      TmtResultModelConstant.TIME_COMPLETE_A: timeCompleteA,
+      TmtResultModelConstant.TIME_COMPLETE_B: timeCompleteB,
+      TmtResultModelConstant.DEVICE: deviceModel,
+      TmtResultModelConstant.SCORE_A: scoreA,
+      TmtResultModelConstant.SCORE_A1: scoreA1,
+      TmtResultModelConstant.SCORE_A2: scoreA2,
+      TmtResultModelConstant.SCORE_A3: scoreA3,
+      TmtResultModelConstant.SCORE_B: scoreB,
+      TmtResultModelConstant.SCORE_B1: scoreB1,
+      TmtResultModelConstant.SCORE_B2: scoreB2,
+      TmtResultModelConstant.SCORE_B3: scoreB3,
     };
 
     /// Only have score 4 and 5 if number circles is 25
@@ -176,10 +185,10 @@ class TmtResultModel {
       }
     }
 
-    addScoreIfValid('ScoreA4', scoreA4, result);
-    addScoreIfValid('ScoreA5', scoreA5, result);
-    addScoreIfValid('ScoreB4', scoreB4, result);
-    addScoreIfValid('ScoreB5', scoreB5, result);
+    addScoreIfValid(TmtResultModelConstant.SCORE_A4, scoreA4, result);
+    addScoreIfValid(TmtResultModelConstant.SCORE_A5, scoreA5, result);
+    addScoreIfValid(TmtResultModelConstant.SCORE_B4, scoreB4, result);
+    addScoreIfValid(TmtResultModelConstant.SCORE_B5, scoreB5, result);
 
     return result;
   }
