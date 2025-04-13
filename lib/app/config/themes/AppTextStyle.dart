@@ -53,4 +53,8 @@ class AppTextStyle {
   static var selectModeTitle = TextStyleBase.h2.copyWith();
 
   static var registerUserLabelText = TextStyleBase.h5.copyWith();
+
+  static var tmtResultHistoryTabletHeaderText = TextStyleBase.h4;
+
+  static var tmtResultHistoryTabletContentText = TextStyleBase.bodyM;
 }

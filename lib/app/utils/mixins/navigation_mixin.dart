@@ -21,7 +21,12 @@ mixin NavigationMixin {
     Get.toNamed(Routes.register_user);
   }
 
+  //TODO removed SelectedScreen
   void toTmtTest(TmtGameInitData tmtGameInitData) {
     Get.toNamed(Routes.tmt_test, arguments: tmtGameInitData);
+  }
+
+  void toTmtHistory() {
+    Get.toNamed(Routes.tmt_user_history);
   }
 }
