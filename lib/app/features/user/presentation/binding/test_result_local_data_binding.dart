@@ -2,10 +2,10 @@ import 'package:get/get.dart';
 
 import '../../../../utils/services/user_data_base_helper.dart';
 import '../../data/datasources/test_result_data_soruce.dart';
-import '../../domain/repository/test_result_repository.dart';
+import '../../domain/repository/test_result_local_data_repository.dart';
 import '../contoller/test_result_controller.dart';
 
-class TestResultBinding extends Bindings {
+class TestResultLocalDataBinding extends Bindings {
   @override
   void dependencies() {
     // Database helper
@@ -13,20 +13,20 @@ class TestResultBinding extends Bindings {
       () => UserDatabaseHelper(),
     );
 
-    Get.lazyPut<TestResultDataSource>(
+    Get.lazyPut<TestResultLocalDataSource>(
       () => TestResultDataSourceImpl(
         databaseHelper: Get.find<UserDatabaseHelper>(),
       ),
     );
 
-    Get.lazyPut<TestResultRepository>(
-      () => TestResultRepositoryImpl(
-        testResultDataSource: Get.find<TestResultDataSource>(),
+    Get.lazyPut<TestResultLocalDataRepository>(
+      () => TestResultLocalDataRepositoryImpl(
+        testResultDataSource: Get.find<TestResultLocalDataSource>(),
       ),
     );
 
-    Get.put(TestResultController(
-      repository: Get.find<TestResultRepository>(),
+    Get.put(TestResultLocalDataController(
+      repository: Get.find<TestResultLocalDataRepository>(),
     ));
   }
 }

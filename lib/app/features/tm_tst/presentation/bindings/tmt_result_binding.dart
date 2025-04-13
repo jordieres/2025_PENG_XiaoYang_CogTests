@@ -5,7 +5,7 @@ import 'package:msdtmt/app/utils/services/net/rest_api_services.dart';
 import '../../domain/repository/tmt_result_repository.dart';
 import '../../domain/usecases/tmt_result/pending_result_use_case.dart';
 import '../../domain/usecases/tmt_result/report_tmt_result_use_case.dart';
-import '../controllers/tmt_result_controller.dart';
+import '../controllers/tmt_result_report_controller.dart';
 
 class TmtResultBinding extends Bindings {
 
@@ -29,7 +29,7 @@ class TmtResultBinding extends Bindings {
         ));
 
     // Controller
-    Get.put(TmtResultController(
+    Get.put(TmtResultReportController(
       Get.find<ReportTmtResultsUseCase>(),
     ));
   }

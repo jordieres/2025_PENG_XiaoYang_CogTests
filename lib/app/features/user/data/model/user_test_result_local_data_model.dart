@@ -1,8 +1,8 @@
 
-import '../../domain/entities/user_test_result.dart';
+import '../../domain/entities/user_test_local_data_result.dart';
 
-class UserTestResultModel extends UserTestResult {
-  UserTestResultModel({
+class UserTestResultLocalDataModel extends UserTestLocalDataResult {
+  UserTestResultLocalDataModel({
     required String referenceCode,
     required DateTime date,
     required double tmtATime,
@@ -14,8 +14,8 @@ class UserTestResultModel extends UserTestResult {
     tmtBTime: tmtBTime,
   );
 
-  factory UserTestResultModel.fromMap(Map<String, dynamic> map) {
-    return UserTestResultModel(
+  factory UserTestResultLocalDataModel.fromMap(Map<String, dynamic> map) {
+    return UserTestResultLocalDataModel(
       referenceCode: map['referenceCode'] as String,
       date: DateTime.parse(map['date'] as String),
       tmtATime: map['tmtATime'] as double,
@@ -32,8 +32,8 @@ class UserTestResultModel extends UserTestResult {
     };
   }
 
-  factory UserTestResultModel.fromEntity(UserTestResult entity) {
-    return UserTestResultModel(
+  factory UserTestResultLocalDataModel.fromEntity(UserTestLocalDataResult entity) {
+    return UserTestResultLocalDataModel(
       referenceCode: entity.referenceCode,
       date: entity.date,
       tmtATime: entity.tmtATime,

@@ -12,7 +12,7 @@ import '../../../../utils/ui/ui_utils.dart';
 import '../../domain/entities/result/tmt_game_init_data.dart';
 import '../../domain/usecases/tmt_result/tmt_result_screen_responsive_calculator.dart';
 import '../components/tmt_result_card.dart';
-import '../controllers/tmt_result_controller.dart';
+import '../controllers/tmt_result_report_controller.dart';
 import '../controllers/tmt_test_flow_state_controller.dart';
 
 class TmtResultsScreen extends StatefulWidget {
@@ -35,7 +35,7 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
   late ResultLayoutMetrics _metrics;
 
   late TmtTestFlowStateController _testController;
-  late TmtResultController _resultController;
+  late TmtResultReportController _resultController;
 
   int _timeCompleteA = 0;
   int _timeCompleteB = 0;
@@ -50,7 +50,7 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
   void initState() {
     super.initState();
     _testController = Get.find<TmtTestFlowStateController>();
-    _resultController = Get.find<TmtResultController>();
+    _resultController = Get.find<TmtResultReportController>();
 
     _lastOrientation = MediaQuery.of(Get.context!).orientation;
     _metrics =
