@@ -4,7 +4,7 @@ import 'package:msdtmt/app/features/tm_tst/data/model/tmt_reult_user_model.dart'
 import 'package:msdtmt/app/utils/services/net/api_error.dart';
 import '../../../../../utils/services/user_data_base_helper.dart';
 import '../../../../../utils/services/work_manager_handler.dart';
-import '../../../../user/data/datasources/user_local_data_source.dart';
+import '../../../../user/data/datasources/user_profle_data_soruce.dart';
 import '../../../data/model/pending_result_model.dart';
 import '../../entities/result/tmt_game_result_data.dart';
 import '../../repository/pending_result_repository.dart';
@@ -18,7 +18,7 @@ class PendingResultUseCase {
 
   Future<bool> savePendingResult(TmtGameResultData tmtGameResultData) async {
     final userLocalDataSource =
-        UserLocalDataSourceImpl(databaseHelper: UserDatabaseHelper());
+        UserProfileDataSourceImpl(databaseHelper: UserDatabaseHelper());
 
     final currentProfile = await userLocalDataSource.getCurrentProfile();
 
