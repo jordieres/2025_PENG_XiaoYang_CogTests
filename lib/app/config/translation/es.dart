@@ -274,6 +274,28 @@ class SpanishMessages extends BaseMessages {
 
   @override
   String get currentUserDataScreenDeleteError => "Error al eliminar el perfil de usuario";
+
+  //--------------------------------------------User Result History Screen Text------------------------------------------------------
+  @override
+  String get userResultHistoryScreenTitle => "Historia";
+
+  @override
+  String get userResultHistoryScreenNoData => "No hay resultados disponibles";
+
+  @override
+  String get userResultHistoryScreenDateHeader => "Fecha";
+
+  @override
+  String get userResultHistoryScreenReferenceHeader => "Referencia";
+
+  @override
+  String get userResultHistoryScreenTmtAHeader => "TMT-A";
+
+  @override
+  String get userResultHistoryScreenTmtBHeader => "TMT-B";
+
+  @override
+  String get userResultHistoryScreenSecondsUnit => "s";
 }
 
 final es = SpanishMessages();

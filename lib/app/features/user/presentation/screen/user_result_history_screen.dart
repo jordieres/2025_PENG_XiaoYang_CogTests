@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:msdtmt/app/features/user/domain/entities/user_test_local_data_result.dart';
 import '../../../../config/themes/AppTextStyle.dart';
 import '../../../../config/themes/app_text_style_base.dart';
+import '../../../../config/translation/app_translations.dart';
 import '../../../../shared_components/custom_app_bar.dart';
 import '../../../../utils/helpers/app_helpers.dart';
 import '../contoller/test_result_controller.dart';
@@ -58,7 +59,7 @@ class _UserResultHistoryScreenState extends State<UserResultHistoryScreen> {
     }
 
     return Scaffold(
-      appBar: CustomAppBar(title: 'Historia'),
+      appBar: CustomAppBar(title: UserResultHistoryScreenText.title.tr),
       body: Obx(() {
         if (_controller.isLoading.value) {
           return const Center(child: CircularProgressIndicator());
@@ -67,7 +68,7 @@ class _UserResultHistoryScreenState extends State<UserResultHistoryScreen> {
         if (_controller.testResults.isEmpty) {
           return Center(
             child: Text(
-              'No hay resultados disponibles',
+              UserResultHistoryScreenText.noData.tr,
               style: TextStyleBase.h2,
             ),
           );
@@ -146,21 +147,21 @@ class _UserResultHistoryScreenState extends State<UserResultHistoryScreen> {
           Expanded(
             flex: 3,
             child: Text(
-              'Fecha',
+              UserResultHistoryScreenText.dateHeader.tr,
               style: AppTextStyle.tmtResultHistoryTabletHeaderText,
             ),
           ),
           Expanded(
             flex: 3,
             child: Text(
-              'Referencia',
+              UserResultHistoryScreenText.referenceHeader.tr,
               style: AppTextStyle.tmtResultHistoryTabletHeaderText,
             ),
           ),
           Expanded(
             flex: 2,
             child: Text(
-              'TMT-A',
+              UserResultHistoryScreenText.tmtAHeader.tr,
               style: AppTextStyle.tmtResultHistoryTabletHeaderText,
               textAlign: TextAlign.center,
             ),
@@ -168,7 +169,7 @@ class _UserResultHistoryScreenState extends State<UserResultHistoryScreen> {
           Expanded(
             flex: 2,
             child: Text(
-              'TMT-B',
+              UserResultHistoryScreenText.tmtBHeader.tr,
               style: AppTextStyle.tmtResultHistoryTabletHeaderText,
               textAlign: TextAlign.center,
             ),
@@ -197,6 +198,8 @@ class _UserResultHistoryScreenState extends State<UserResultHistoryScreen> {
 
   Widget _buildResultRow(
       UserTestLocalDataResult result, DateFormat dateFormat) {
+    final secondsUnit = UserResultHistoryScreenText.secondsUnit.tr;
+
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       child: Row(
@@ -218,7 +221,7 @@ class _UserResultHistoryScreenState extends State<UserResultHistoryScreen> {
           Expanded(
             flex: 2,
             child: Text(
-              '${result.tmtATime.toStringAsFixed(0)}s',
+              '${result.tmtATime.toStringAsFixed(0)}$secondsUnit',
               style: AppTextStyle.tmtResultHistoryTabletContentText,
               textAlign: TextAlign.center,
             ),
@@ -226,7 +229,7 @@ class _UserResultHistoryScreenState extends State<UserResultHistoryScreen> {
           Expanded(
             flex: 2,
             child: Text(
-              '${result.tmtBTime.toStringAsFixed(0)}s',
+              '${result.tmtBTime.toStringAsFixed(0)}$secondsUnit',
               style: AppTextStyle.tmtResultHistoryTabletContentText,
               textAlign: TextAlign.center,
             ),
