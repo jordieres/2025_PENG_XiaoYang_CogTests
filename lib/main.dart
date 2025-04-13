@@ -20,7 +20,7 @@ import 'app/features/tm_tst/data/repositories/tmt_result_repository_impl.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   AppLogger.init();
-  //await WorkManagerHandler.initializeWorkManager(); //TODO remove comment
+  await WorkManagerHandler.initializeWorkManager(); //TODO remove comment
   runApp(const MyApp());
 }
 

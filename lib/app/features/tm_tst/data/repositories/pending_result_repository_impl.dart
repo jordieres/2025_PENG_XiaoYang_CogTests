@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:msdtmt/app/utils/services/app_logger.dart';
 import 'package:msdtmt/app/features/tm_tst/data/model/tmt_result_metric_model.dart';
 import 'package:msdtmt/app/features/tm_tst/data/model/tmt_reult_user_model.dart';
@@ -40,7 +39,6 @@ class PendingResultRepositoryImpl implements PendingResultRepository {
   @override
   Future<List<PendingResultData>> getPendingResults() async {
     try {
-      final prefs = await SharedPreferences.getInstance();
       List<String> pendingResultsJson =
           await LocalStorageServices.getPendingResultList();
       List<PendingResultData> results = [];

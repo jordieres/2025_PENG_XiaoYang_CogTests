@@ -31,9 +31,9 @@ class PendingResultData {
       resultModelJson[TmtResultModelConstant.CODE_ID] as String? ?? '';
 
   DateTime get date {
-    final date =
-        resultModelJson[TmtResultModelConstant.DATE_DATA] as String? ?? '';
     try {
+      final date =
+          resultModelJson[TmtResultModelConstant.DATE_DATA] as String? ?? '';
       return DateTime.parse(date);
     } catch (e) {
       return DateTime.now();
@@ -41,22 +41,20 @@ class PendingResultData {
   }
 
   double get tmtATime {
-    final tmtATime =
-        resultModelJson[TmtResultModelConstant.TIME_COMPLETE_A] as String? ??
-            '';
     try {
-      return double.parse(tmtATime);
+      return resultModelJson[TmtResultModelConstant.TIME_COMPLETE_A]
+              as double? ??
+          0;
     } catch (e) {
       return 0.0;
     }
   }
 
   double get tmtBTime {
-    final tmtBTime =
-        resultModelJson[TmtResultModelConstant.TIME_COMPLETE_B] as String? ??
-            '';
     try {
-      return double.parse(tmtBTime);
+      return resultModelJson[TmtResultModelConstant.TIME_COMPLETE_B]
+              as double? ??
+          0;
     } catch (e) {
       return 0.0;
     }
