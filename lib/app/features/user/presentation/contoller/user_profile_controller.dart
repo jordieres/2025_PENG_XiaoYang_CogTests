@@ -1,10 +1,9 @@
 import 'package:get/get.dart';
 import '../../domain/entities/user_profile.dart';
-import '../../domain/entities/user_test_result.dart';
-import '../../domain/repository/user_repository.dart';
+import '../../domain/repository/user_profile_repository.dart';
 
 class UserProfileController extends GetxController {
-  final UserRepository repository;
+  final UserProfileRepository repository;
 
   UserProfileController({required this.repository});
 
@@ -12,13 +11,12 @@ class UserProfileController extends GetxController {
   final Rx<UserProfile?> selectedProfile = Rx<UserProfile?>(null);
   final RxString selectedUserId = ''.obs;
   final RxBool isLoading = false.obs;
-  final RxList<UserTestResult> testResults = <UserTestResult>[].obs;
 
   @override
   void onInit() {
     super.onInit();
     loadProfiles();
-    loadAllTestResults();
+    loadCurrentProfile();
   }
 
   Future<void> loadProfiles() async {
@@ -31,26 +29,39 @@ class UserProfileController extends GetxController {
     }
   }
 
+  Future<void> loadCurrentProfile() async {
+    isLoading.value = true;
+    try {
+      final profile = await repository.getCurrentProfile();
+      if (profile != null) {
+        selectedProfile.value = profile;
+        selectedUserId.value = profile.userId;
+      } else if (profiles.isNotEmpty) {
+        selectedProfile.value = profiles.first;
+        selectedUserId.value = profiles.first.userId;
+        await repository.setCurrentProfile(selectedUserId.value);
+      }
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
   Future<void> setSelectedUserId(String userId) async {
     selectedUserId.value = userId;
     final profile = await repository.getProfileByUserId(userId);
     selectedProfile.value = profile;
-  }
-
-  Future<void> loadAllTestResults() async {
-    isLoading.value = true;
-    try {
-      final results = await repository.getTestResults();
-      testResults.value = results;
-    } finally {
-      isLoading.value = false;
-    }
+    await repository.setCurrentProfile(userId);
   }
 
   Future<void> saveProfile(UserProfile profile) async {
     isLoading.value = true;
     try {
       await repository.saveProfile(profile);
+      await loadProfiles();
+      // If this is the first profile, select it
+      if (selectedProfile.value == null && profiles.isNotEmpty) {
+        await loadCurrentProfile();
+      }
     } finally {
       isLoading.value = false;
     }
@@ -62,23 +73,15 @@ class UserProfileController extends GetxController {
       await repository.deleteProfile(userId);
       await loadProfiles();
       if (selectedUserId.value == userId) {
-        selectedUserId.value = profiles.isNotEmpty ? profiles.first.userId : '';
-        selectedProfile.value = profiles.isNotEmpty ? profiles.first : null;
+        if (profiles.isNotEmpty) {
+          selectedUserId.value = profiles.first.userId;
+          selectedProfile.value = profiles.first;
+          await repository.setCurrentProfile(selectedUserId.value);
+        } else {
+          selectedUserId.value = '';
+          selectedProfile.value = null;
+        }
       }
-    } finally {
-      isLoading.value = false;
-    }
-  }
-
-  Future<bool> isReferenceCodeUsed(String referenceCode) async {
-    return await repository.isReferenceCodeUsed(referenceCode);
-  }
-
-  Future<void> saveTestResult(UserTestResult result) async {
-    isLoading.value = true;
-    try {
-      await repository.saveTestResult(result);
-      await loadAllTestResults();
     } finally {
       isLoading.value = false;
     }
