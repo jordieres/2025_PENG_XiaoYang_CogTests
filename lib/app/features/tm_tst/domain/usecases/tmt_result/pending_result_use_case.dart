@@ -72,7 +72,7 @@ class PendingResultUseCase {
           if (!deleted) {
             allSuccess = false;
           } else {
-            testResultLocalDataRepositoryImpl
+            await testResultLocalDataRepositoryImpl
                 .saveTestResult(UserTestLocalDataResult(
               referenceCode: pendingResult.codeId,
               date: pendingResult.date,
