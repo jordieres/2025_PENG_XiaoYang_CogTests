@@ -79,10 +79,10 @@ class EnglishMessages extends BaseMessages {
       "Use the hand you feel most comfortable with to take the test. This optimizes your TMT Test experience.";
 
   @override
-  String get tmtSelectHandDialogRightHandButtonText => "Right hand";
+  String get tmtSelectHandDialogRightHandButtonText => "Right\nhand";
 
   @override
-  String get tmtSelectHandDialogLeftHandButtonText => "Left hand";
+  String get tmtSelectHandDialogLeftHandButtonText => "Left\nhand";
 
   //--------------------------------------------Select Mode Practice Or Test Screen Text------------------------------------------------------
   @override
