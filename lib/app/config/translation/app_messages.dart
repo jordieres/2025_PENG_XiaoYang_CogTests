@@ -114,6 +114,17 @@ class TMTRegisterUserText {
   static String saveError = 'register_user_save_error';
 }
 
+// New class for UserResultHistoryScreen translations
+class UserResultHistoryScreenText {
+  static String title = 'user_result_history_screen_title';
+  static String noData = 'user_result_history_screen_no_data';
+  static String dateHeader = 'user_result_history_screen_date_header';
+  static String referenceHeader = 'user_result_history_screen_reference_header';
+  static String tmtAHeader = 'user_result_history_screen_tmt_a_header';
+  static String tmtBHeader = 'user_result_history_screen_tmt_b_header';
+  static String secondsUnit = 'user_result_history_screen_seconds_unit';
+}
+
 // New class for CurrentUserDataScreen translations
 class CurrentUserDataScreenText {
   static String title = 'current_user_data_screen_title';
@@ -307,6 +318,22 @@ abstract class BaseMessages {
 
   String get currentUserDataScreenDeleteError;
 
+  //--------------------------------------------User Result History Screen Text------------------------------------------------------
+
+  String get userResultHistoryScreenTitle;
+
+  String get userResultHistoryScreenNoData;
+
+  String get userResultHistoryScreenDateHeader;
+
+  String get userResultHistoryScreenReferenceHeader;
+
+  String get userResultHistoryScreenTmtAHeader;
+
+  String get userResultHistoryScreenTmtBHeader;
+
+  String get userResultHistoryScreenSecondsUnit;
+
   Map<String, String> get messages => {
     TMTGameText.tmtGameCircleBegin: tmtGameCircleBegin,
     TMTGameText.tmtGameCircleEnd: tmtGameCircleEnd,
@@ -428,5 +455,14 @@ abstract class BaseMessages {
     CurrentUserDataScreenText.cancelButton: currentUserDataScreenCancelButton,
     CurrentUserDataScreenText.deleteSuccess: currentUserDataScreenDeleteSuccess,
     CurrentUserDataScreenText.deleteError: currentUserDataScreenDeleteError,
+
+    //--------------------------------------------User Result History Screen Text------------------------------------------------------
+    UserResultHistoryScreenText.title: userResultHistoryScreenTitle,
+    UserResultHistoryScreenText.noData: userResultHistoryScreenNoData,
+    UserResultHistoryScreenText.dateHeader: userResultHistoryScreenDateHeader,
+    UserResultHistoryScreenText.referenceHeader: userResultHistoryScreenReferenceHeader,
+    UserResultHistoryScreenText.tmtAHeader: userResultHistoryScreenTmtAHeader,
+    UserResultHistoryScreenText.tmtBHeader: userResultHistoryScreenTmtBHeader,
+    UserResultHistoryScreenText.secondsUnit: userResultHistoryScreenSecondsUnit,
   };
 }

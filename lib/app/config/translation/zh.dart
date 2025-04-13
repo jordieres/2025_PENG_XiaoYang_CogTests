@@ -260,6 +260,28 @@ class ChineseMessages extends BaseMessages {
 
   @override
   String get currentUserDataScreenDeleteError => "删除用户资料时出错";
+
+  //--------------------------------------------User Result History Screen Text------------------------------------------------------
+  @override
+  String get userResultHistoryScreenTitle => "历史记录";
+
+  @override
+  String get userResultHistoryScreenNoData => "没有可用结果";
+
+  @override
+  String get userResultHistoryScreenDateHeader => "日期";
+
+  @override
+  String get userResultHistoryScreenReferenceHeader => "编号";
+
+  @override
+  String get userResultHistoryScreenTmtAHeader => "TMT-A";
+
+  @override
+  String get userResultHistoryScreenTmtBHeader => "TMT-B";
+
+  @override
+  String get userResultHistoryScreenSecondsUnit => "秒";
 }
 
 final zh = ChineseMessages();
