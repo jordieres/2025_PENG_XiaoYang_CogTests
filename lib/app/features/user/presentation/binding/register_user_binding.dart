@@ -5,7 +5,7 @@ import '../../data/datasources/user_local_data_source.dart';
 import '../../domain/repository/user_repository.dart';
 import '../contoller/user_profile_controller.dart';
 
-class RegisterUserBinding extends Bindings {
+class UserProfileBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut(
@@ -24,7 +24,6 @@ class RegisterUserBinding extends Bindings {
         localDataSource: Get.find<UserLocalDataSource>(),
       ),
     );
-
     // Controller
     Get.put(UserProfileController(
       repository: Get.find<UserRepository>(),

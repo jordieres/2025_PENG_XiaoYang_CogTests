@@ -163,9 +163,17 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
   @override
   Future<void> saveTestResult(UserTestResultModel result) async {
     final db = await databaseHelper.database;
+
+    final currentProfileId = await LocalStorageServices.getCurrentProfileId();
+    if (currentProfileId == null || currentProfileId.isEmpty) {
+      throw Exception('No user profile selected');
+    }
+
+    final resultMap = result.toMap();
+    resultMap[DatabaseConstants.userIdColumn] = currentProfileId;
     await db.insert(
       DatabaseConstants.userTestResultsTable,
-      result.toMap(),
+      resultMap,
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
@@ -173,10 +181,13 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
   @override
   Future<bool> isReferenceCodeUsed(String referenceCode) async {
     final db = await databaseHelper.database;
-    //TODO join with user profile
+    final currentProfileId = await LocalStorageServices.getCurrentProfileId();
+    if (currentProfileId == null || currentProfileId.isEmpty) {
+      return false;
+    }
     final count = Sqflite.firstIntValue(await db.rawQuery(
-      'SELECT COUNT(*) FROM ${DatabaseConstants.userTestResultsTable} WHERE ${DatabaseConstants.referenceCodeColumn} = ?',
-      [referenceCode],
+      'SELECT COUNT(*) FROM ${DatabaseConstants.userTestResultsTable} WHERE ${DatabaseConstants.referenceCodeColumn} = ? AND ${DatabaseConstants.userIdColumn} = ?',
+      [referenceCode, currentProfileId],
     ));
 
     return count != null && count > 0;

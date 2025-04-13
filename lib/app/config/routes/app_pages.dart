@@ -33,7 +33,10 @@ class AppPages {
     GetPage(
       name: _Paths.tmt_results,
       page: () => const TmtResultsScreen(),
-      binding: TmtResultBinding(),
+      bindings: [
+        TmtResultBinding(),
+        UserProfileBinding(),
+      ],
     ),
     GetPage(
       name: _Paths.tmt_help,
@@ -51,12 +54,12 @@ class AppPages {
     GetPage(
       name: _Paths.register_user,
       page: () => RegisterUserScreen(),
-      binding: RegisterUserBinding(),
+      binding: UserProfileBinding(),
     ),
     GetPage(
       name: _Paths.current_user_data,
       page: () => CurrentUserDataScreen(),
-      binding: RegisterUserBinding(),
+      binding: UserProfileBinding(),
     ),
   ];
 }
