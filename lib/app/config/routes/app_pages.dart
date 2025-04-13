@@ -9,6 +9,7 @@ import '../../features/tm_tst/presentation/screens/tmt_select_mode_practice_or_t
 import '../../features/tm_tst/presentation/screens/tmt_test_help.dart';
 import '../../features/tm_tst/presentation/screens/tmt_test_practice_screen.dart';
 import '../../features/tm_tst/presentation/screens/tmt_test_result_screen.dart';
+import '../../features/user/presentation/binding/test_result_local_data_binding.dart';
 import '../../features/user/presentation/binding/user_profile_binding.dart';
 import '../../features/user/presentation/screen/current_user_data_screen.dart';
 import '../../features/user/presentation/screen/register_user_screen.dart';
@@ -35,7 +36,7 @@ class AppPages {
       page: () => const TmtResultsScreen(),
       bindings: [
         TmtResultBinding(),
-        UserProfileBinding(),
+        TestResultLocalDataBinding(),
       ],
     ),
     GetPage(

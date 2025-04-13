@@ -20,7 +20,7 @@ import '../screens/tmt_test_help.dart';
 class SelectModePracticeOrTest extends StatelessWidget with NavigationMixin {
   SelectModePracticeOrTest({super.key});
 
-  final String tmtGameCodeId = "74829-23"; //TODO parse from HomeScreen
+  final String tmtGameCodeId = "28476-24"; //TODO parse from HomeScreen
 
   bool get isDarkMode => Get.isDarkMode;
 
