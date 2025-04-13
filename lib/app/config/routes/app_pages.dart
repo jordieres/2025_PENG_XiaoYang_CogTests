@@ -10,9 +10,11 @@ import '../../features/tm_tst/presentation/screens/tmt_test_help.dart';
 import '../../features/tm_tst/presentation/screens/tmt_test_practice_screen.dart';
 import '../../features/tm_tst/presentation/screens/tmt_test_result_screen.dart';
 import '../../features/user/presentation/binding/test_result_local_data_binding.dart';
+import '../../features/user/presentation/binding/user_history_binding.dart';
 import '../../features/user/presentation/binding/user_profile_binding.dart';
 import '../../features/user/presentation/screen/current_user_data_screen.dart';
 import '../../features/user/presentation/screen/register_user_screen.dart';
+import '../../features/user/presentation/screen/user_result_history_screen.dart';
 
 part 'app_routes.dart';
 
@@ -61,6 +63,11 @@ class AppPages {
       name: _Paths.current_user_data,
       page: () => CurrentUserDataScreen(),
       binding: UserProfileBinding(),
+    ),
+    GetPage(
+      name: _Paths.user_history,
+      page: () => const UserResultHistoryScreen(),
+      binding: UserHistoryBinding(),
     ),
   ];
 }

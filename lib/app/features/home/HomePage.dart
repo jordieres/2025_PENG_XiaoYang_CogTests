@@ -52,6 +52,13 @@ class HomePage extends StatelessWidget with NavigationMixin {
               child: const Text("Ir a Alta Usuario"),
             ),
             const SizedBox(height: 10),
+
+            ElevatedButton(
+              onPressed: () => {
+                Get.toNamed(Routes.tmt_user_history),
+              },
+              child: const Text("Historial TMT"),
+            ),
             ElevatedButton(
               onPressed: () => {
                 Get.toNamed(Routes.current_user_data),

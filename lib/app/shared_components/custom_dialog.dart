@@ -39,7 +39,7 @@ class CustomDialog extends StatelessWidget {
 
     final maxWidth = orientation == Orientation.landscape
         ? screenWidth * 0.5
-        : screenWidth * 0.85;
+        : screenWidth * 0.8;
 
     if (content != null) {
       if (content is String) {
