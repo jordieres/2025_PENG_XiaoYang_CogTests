@@ -1,10 +1,10 @@
-class UserTestResult {
+class UserTestLocalDataResult {
   final String referenceCode;
   final DateTime date;
   final double tmtATime;
   final double tmtBTime;
 
-  UserTestResult({
+  UserTestLocalDataResult({
     required this.referenceCode,
     required this.date,
     required this.tmtATime,

@@ -3,23 +3,23 @@ import 'package:sqflite/sqflite.dart';
 import '../../../../constans/database_constants.dart';
 import '../../../../utils/services/user_data_base_helper.dart';
 import '../../../../utils/services/local_storage_services.dart';
-import '../model/user_test_result_model.dart';
+import '../model/user_test_result_local_data_model.dart';
 
-abstract class TestResultDataSource {
-  Future<List<UserTestResultModel>> getTestResultsByUserId(String userId);
-  Future<List<UserTestResultModel>> getTestResultsByNickname(String nickname);
-  Future<void> saveTestResult(UserTestResultModel result);
+abstract class TestResultLocalDataSource {
+  Future<List<UserTestResultLocalDataModel>> getTestResultsByUserId(String userId);
+  Future<List<UserTestResultLocalDataModel>> getTestResultsByNickname(String nickname);
+  Future<void> saveTestResult(UserTestResultLocalDataModel result);
   Future<bool> isReferenceCodeUsed(String referenceCode);
 }
 
-class TestResultDataSourceImpl implements TestResultDataSource {
+class TestResultDataSourceImpl implements TestResultLocalDataSource {
   final UserDatabaseHelper databaseHelper;
 
   TestResultDataSourceImpl({required this.databaseHelper});
 
 
   @override
-  Future<List<UserTestResultModel>> getTestResultsByUserId(String userId) async {
+  Future<List<UserTestResultLocalDataModel>> getTestResultsByUserId(String userId) async {
     final db = await databaseHelper.database;
     final resultsData = await db.query(
       DatabaseConstants.userTestResultsTable,
@@ -29,12 +29,12 @@ class TestResultDataSourceImpl implements TestResultDataSource {
     );
 
     return resultsData
-        .map((resultData) => UserTestResultModel.fromMap(resultData))
+        .map((resultData) => UserTestResultLocalDataModel.fromMap(resultData))
         .toList();
   }
 
   @override
-  Future<List<UserTestResultModel>> getTestResultsByNickname(String nickname) async {
+  Future<List<UserTestResultLocalDataModel>> getTestResultsByNickname(String nickname) async {
     final db = await databaseHelper.database;
 
     final profilesData = await db.query(
@@ -53,7 +53,7 @@ class TestResultDataSourceImpl implements TestResultDataSource {
   }
 
   @override
-  Future<void> saveTestResult(UserTestResultModel result) async {
+  Future<void> saveTestResult(UserTestResultLocalDataModel result) async {
     final db = await databaseHelper.database;
 
     final currentProfileId = await LocalStorageServices.getCurrentProfileId();

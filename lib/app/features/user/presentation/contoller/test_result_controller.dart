@@ -1,20 +1,27 @@
 import 'package:get/get.dart';
-import '../../domain/entities/user_test_result.dart';
-import '../../domain/repository/test_result_repository.dart';
+import '../../../../utils/services/local_storage_services.dart';
+import '../../domain/entities/user_test_local_data_result.dart';
+import '../../domain/repository/test_result_local_data_repository.dart';
 
-class TestResultController extends GetxController {
-  final TestResultRepository repository;
+class TestResultLocalDataController extends GetxController {
+  final TestResultLocalDataRepository repository;
 
-  TestResultController({required this.repository});
+  TestResultLocalDataController({required this.repository});
 
-  final RxList<UserTestResult> testResults = <UserTestResult>[].obs;
+  final RxList<UserTestLocalDataResult> testResults =
+      <UserTestLocalDataResult>[].obs;
   final RxBool isLoading = false.obs;
 
-  Future<void> loadTestResultsByUserId(String userId) async {
+  Future<void> loadCurrentUserTestResults() async {
     isLoading.value = true;
     try {
-      final results = await repository.getTestResultsByUserId(userId);
-      testResults.value = results;
+      final currentUserId = await LocalStorageServices.getCurrentProfileId();
+      if (currentUserId != null && currentUserId.isNotEmpty) {
+        final results = await repository.getTestResultsByUserId(currentUserId);
+        testResults.value = results;
+      } else {
+        testResults.value = [];
+      }
     } finally {
       isLoading.value = false;
     }
@@ -34,7 +41,7 @@ class TestResultController extends GetxController {
     return await repository.isReferenceCodeUsed(referenceCode);
   }
 
-  Future<void> saveTestResult(UserTestResult result) async {
+  Future<void> saveTestResult(UserTestLocalDataResult result) async {
     isLoading.value = true;
     try {
       await repository.saveTestResult(result);

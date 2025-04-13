@@ -7,7 +7,7 @@ import '../../domain/entities/result/tmt_game_init_data.dart';
 import '../../domain/entities/result/tmt_game_result_data.dart';
 import '../../domain/usecases/tmt_result/report_tmt_result_use_case.dart';
 
-class TmtResultController extends GetxController {
+class TmtResultReportController extends GetxController {
   final ReportTmtResultsUseCase _reportTmtResultsUseCase;
 
   final Rx<RequestState> state = Rx<RequestState>(RequestInitial());
@@ -21,7 +21,7 @@ class TmtResultController extends GetxController {
   String? get errorMessage =>
       state.value is RequestError ? (state.value as RequestError).message : '';
 
-  TmtResultController(this._reportTmtResultsUseCase);
+  TmtResultReportController(this._reportTmtResultsUseCase);
 
   Future<void> reportResults(
       TmtMetricsController controller, TmtGameInitData tmtGameInitData) async {
