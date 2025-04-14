@@ -34,7 +34,7 @@ class AppTextStyle {
   );
 
   static var customDialogOutlinedButton =
-      (TextStyleBase.actionM).copyWith(color: AppColors.customButtonColor);
+  (TextStyleBase.actionM).copyWith(color: AppColors.customButtonColor);
 
   static var customPrimaryButtonText = (TextStyleBase.actionM).copyWith(
     color: AppColors.darkText,
@@ -57,4 +57,18 @@ class AppTextStyle {
   static var tmtResultHistoryTabletHeaderText = TextStyleBase.h4;
 
   static var tmtResultHistoryTabletContentText = TextStyleBase.bodyM;
+
+
+  //-------------------------reference code Input-------------------------
+  static var referenceCodeInputTextStyle = TextStyleBase.bodyL.copyWith(
+    color: Colors.white,
+  );
+
+  static var referenceCodeHintTextStyle = TextStyleBase.bodyL.copyWith(
+    color: Colors.white,
+  );
+
+  static var referenceCodeInputErrorTextStyle = TextStyleBase.bodyS.copyWith(
+    color: AppColors.mainRed,
+  );
 }
