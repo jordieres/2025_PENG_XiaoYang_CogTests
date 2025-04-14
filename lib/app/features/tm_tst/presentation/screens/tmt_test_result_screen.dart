@@ -7,6 +7,7 @@ import '../../../../config/themes/app_text_style_base.dart';
 import '../../../../config/translation/app_translations.dart';
 import '../../../../shared_components/custom_primary_button.dart';
 import '../../../../utils/helpers/app_helpers.dart';
+import '../../../../utils/mixins/app_mixins.dart';
 import '../../../../utils/services/app_logger.dart';
 import '../../../../utils/services/request_state.dart';
 import '../../../../utils/ui/ui_utils.dart';
@@ -24,7 +25,8 @@ class TmtResultsScreen extends StatefulWidget {
   State<TmtResultsScreen> createState() => _TmtResultsScreenState();
 }
 
-class _TmtResultsScreenState extends State<TmtResultsScreen> {
+class _TmtResultsScreenState extends State<TmtResultsScreen>
+    with NavigationMixin {
   final ScrollController _scrollController = ScrollController();
   bool _showScrollIndicator = false;
   final GlobalKey _contentKey = GlobalKey();
@@ -220,15 +222,23 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
     DeviceHelper.calculateAgain(context);
     _metrics = TmtResultResponsiveCalculator.calculateLayoutMetrics(context);
 
-    return Scaffold(
-      body: SafeArea(
-        child: Obx(() {
-          if (_resultController.isLoading || _isLoadingTestResults) {
-            return _buildLoadingScreen();
-          } else {
-            return _buildResultContent();
-          }
-        }),
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop) {
+          navigateAllToHome();
+        }
+      },
+      child: Scaffold(
+        body: SafeArea(
+          child: Obx(() {
+            if (_resultController.isLoading || _isLoadingTestResults) {
+              return _buildLoadingScreen();
+            } else {
+              return _buildResultContent();
+            }
+          }),
+        ),
       ),
     );
   }
@@ -262,7 +272,7 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
                 maxWidth: _metrics.contentMaxWidth,
               ),
               padding:
-              EdgeInsets.symmetric(horizontal: _metrics.horizontalPadding),
+                  EdgeInsets.symmetric(horizontal: _metrics.horizontalPadding),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -297,7 +307,7 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
                   CustomPrimaryButton(
                     text: TMTResultScreen.finishButton.tr,
                     onPressed: () {
-                      Get.offAllNamed(Routes.home);
+                      navigateAllToHome();
                     },
                   ),
                   SizedBox(height: _metrics.bottomMargin),
