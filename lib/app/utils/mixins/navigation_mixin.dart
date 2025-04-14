@@ -1,6 +1,10 @@
 part of app_mixins;
 
 mixin NavigationMixin {
+  void navigateAllToHome() {
+    Get.offAllNamed(Routes.home);
+  }
+
   void navigateToHome() {
     Get.offNamed(Routes.home);
   }
@@ -21,7 +25,11 @@ mixin NavigationMixin {
     Get.toNamed(Routes.register_user);
   }
 
-  //TODO removed SelectedScreen
+  void toSelectedPracticeOrTest(String tmtReferenceCode) {
+    Get.toNamed(Routes.tmt_select_practice_or_test,
+        arguments: tmtReferenceCode);
+  }
+
   void toTmtTest(TmtGameInitData tmtGameInitData) {
     Get.toNamed(Routes.tmt_test, arguments: tmtGameInitData);
   }

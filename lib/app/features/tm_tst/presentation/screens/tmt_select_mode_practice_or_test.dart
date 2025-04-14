@@ -17,12 +17,29 @@ import '../../domain/usecases/select_mode_practice_or_test_responsive_calculate.
 import '../components/tmt_select_hand_dialog.dart';
 import '../screens/tmt_test_help.dart';
 
-class SelectModePracticeOrTest extends StatelessWidget with NavigationMixin {
-  SelectModePracticeOrTest({super.key});
+class SelectModePracticeOrTest extends StatefulWidget {
+  const SelectModePracticeOrTest({super.key});
 
-  final String tmtGameCodeId = "28476-24"; //TODO parse from HomeScreen
+  @override
+  State<SelectModePracticeOrTest> createState() =>
+      _SelectModePracticeOrTestState();
+}
 
+class _SelectModePracticeOrTestState extends State<SelectModePracticeOrTest>
+    with NavigationMixin {
+
+  String tmtGameCodeId = "";
   bool get isDarkMode => Get.isDarkMode;
+
+  @override
+  void initState() {
+    super.initState();
+    try {
+      tmtGameCodeId = Get.arguments as String;
+    } catch (e) {
+      tmtGameCodeId = "";
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
