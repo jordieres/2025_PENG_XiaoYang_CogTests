@@ -266,7 +266,8 @@ class EnglishMessages extends BaseMessages {
   String get currentUserDataScreenCancelButton => "Cancel";
 
   @override
-  String get currentUserDataScreenDeleteSuccess => "User profile deleted successfully";
+  String get currentUserDataScreenDeleteSuccess =>
+      "User profile deleted successfully";
 
   @override
   String get currentUserDataScreenDeleteError => "Error deleting user profile";
@@ -292,6 +293,33 @@ class EnglishMessages extends BaseMessages {
 
   @override
   String get userResultHistoryScreenSecondsUnit => "s";
+
+  //--------------------------------------------Reference Code Input Text------------------------------------------------------
+
+  @override
+  String get referenceCodeInputLabel => "Reference";
+
+  @override
+  String get referenceCodeInputBothFieldsRequired =>
+      "Please complete both fields";
+
+  @override
+  String get referenceCodeInputEnterReferenceCode =>
+      "Please enter a reference code";
+
+  @override
+  String get referenceCodeInputCodeAlreadyUsed =>
+      "The reference code has already been used";
+
+  @override
+  String get referenceCodeInputValidReferenceCode => "Valid reference code";
+
+  @override
+  String get referenceCodeInputIncorrectReference =>
+      "The reference is not correct. Please verify it or contact your neurologist";
+
+  @override
+  String get referenceCodeInputValidationError => "Error validating the code: ";
 }
 
 final en = EnglishMessages();

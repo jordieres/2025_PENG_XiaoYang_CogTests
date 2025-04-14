@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:msdtmt/app/config/themes/AppColors.dart';
+import '../../../../config/translation/app_translations.dart';
 import '../../../../utils/ui/ui_utils.dart';
 import '../../domain/usecases/validate_reference_code_use_case.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class ReferenceCodeController extends GetxController {
 
   Future<void> validateReferenceCode(String code) async {
     if (code.isEmpty) {
-      errorMessage.value = 'Por favor, introduce un código de referencia';
+      errorMessage.value = ReferenceCodeInputText.enterReferenceCode.tr;
       showErrorMessage(errorMessage.value);
       return;
     }
@@ -29,7 +30,7 @@ class ReferenceCodeController extends GetxController {
       final result = await validateReferenceCodeUseCase.execute(code);
 
       if (result.isUsedLocally) {
-        errorMessage.value = 'El código de referencia ya ha sido utilizado.';
+        errorMessage.value = ReferenceCodeInputText.codeAlreadyUsed.tr;
         showErrorMessage(errorMessage.value);
         isValidated.value = false;
         return;
@@ -38,15 +39,16 @@ class ReferenceCodeController extends GetxController {
       if (result.isValid) {
         fullReferenceCode.value = code;
         isValidated.value = true;
-        showSuccessMessage('Código de referencia válido');
+        showSuccessMessage(ReferenceCodeInputText.validReferenceCode.tr);
       } else {
-        errorMessage.value = result.errorMessage ??
-            'La referencia no es correcta. Por favor verifíquela o contacte al neurólogo.';
+        errorMessage.value =
+            result.errorMessage ?? ReferenceCodeInputText.incorrectReference.tr;
         showErrorMessage(errorMessage.value);
         isValidated.value = false;
       }
     } catch (e) {
-      errorMessage.value = 'Error al validar el código: ${e.toString()}';
+      errorMessage.value =
+          '${ReferenceCodeInputText.validationError.tr}${e.toString()}';
       showErrorMessage(errorMessage.value);
       isValidated.value = false;
     } finally {

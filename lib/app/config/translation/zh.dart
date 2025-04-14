@@ -56,7 +56,7 @@ class ChineseMessages extends BaseMessages {
   String get tmtGamePracticeOnlyTmtAOrTmtBDialogCancelButtonText => "是的，开始";
 
   @override
-  String get tmtGamePracticeOnlyTmtAOrTmtBDialogPrimaryButtonText => "不，我需要重复";
+  String get tmtGamePracticeOnlyTmtAOrTmtBDialogPrimaryButtonText => "不，我要重复";
 
   @override
   String get tmtGamePracticeTmtAPageTitle => "TMT A 练习";
@@ -282,6 +282,28 @@ class ChineseMessages extends BaseMessages {
 
   @override
   String get userResultHistoryScreenSecondsUnit => "秒";
+
+//--------------------------------------------Reference Code Input Text------------------------------------------------------
+  @override
+  String get referenceCodeInputLabel => "参考编号";
+
+  @override
+  String get referenceCodeInputBothFieldsRequired => "请填写两个字段";
+
+  @override
+  String get referenceCodeInputEnterReferenceCode => "请输入参考编号";
+
+  @override
+  String get referenceCodeInputCodeAlreadyUsed => "该参考编号已被使用";
+
+  @override
+  String get referenceCodeInputValidReferenceCode => "有效的参考编号";
+
+  @override
+  String get referenceCodeInputIncorrectReference => "参考编号不正确，请核实或联系您的神经科医生";
+
+  @override
+  String get referenceCodeInputValidationError => "验证编号时出错: ";
 }
 
 final zh = ChineseMessages();
