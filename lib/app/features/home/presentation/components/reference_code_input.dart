@@ -5,6 +5,7 @@ import 'package:msdtmt/app/config/themes/AppColors.dart';
 import 'package:msdtmt/app/config/themes/AppTextStyle.dart';
 import 'package:msdtmt/app/utils/helpers/app_helpers.dart';
 import '../../../../config/themes/app_text_style_base.dart';
+import '../../../../config/translation/app_translations.dart';
 import '../controllers/reference_code_controller.dart';
 
 class UpperCaseTextFormatter extends TextInputFormatter {
@@ -78,11 +79,11 @@ class _ReferenceCodeInputState extends State<ReferenceCodeInput> {
       case DeviceType.smallTablet:
         return screenWidth * 0.5;
       case DeviceType.largePhone:
-        return screenWidth * 0.8;
+        return screenWidth * 0.5;
       case DeviceType.mediumPhone:
-        return screenWidth * 0.8;
+        return screenWidth * 0.6;
       case DeviceType.smallPhone:
-        return screenWidth * 0.8;
+        return screenWidth * 0.9;
     }
   }
 
@@ -213,33 +214,34 @@ class _ReferenceCodeInputState extends State<ReferenceCodeInput> {
             height: 60,
             decoration:
                 getReferenceCodeInputDecoration(isReadOnly, errorMessage),
-            child: Theme(
-              data: getReferenceCodeTextSelectionTheme(context),
-              child: TextField(
-                controller: mainCodeController,
-                focusNode: mainFocusNode,
-                cursorColor: Colors.white,
-                cursorWidth: 2.0,
-                readOnly: isReadOnly,
-                textAlignVertical: TextAlignVertical.center,
-                inputFormatters: [
-                  UpperCaseTextFormatter(),
-                ],
-                style: AppTextStyle.referenceCodeInputTextStyle,
-                decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 16),
-                  border: InputBorder.none,
-                  hintText: hasLabel ? '' : 'Referencia',
-                  hintStyle: AppTextStyle.referenceCodeHintTextStyle,
-                  isDense: true,
+            child: Center(
+              child: Theme(
+                data: getReferenceCodeTextSelectionTheme(context),
+                child: TextField(
+                  controller: mainCodeController,
+                  focusNode: mainFocusNode,
+                  cursorColor: Colors.white,
+                  cursorWidth: 2.0,
+                  readOnly: isReadOnly,
+                  inputFormatters: [
+                    UpperCaseTextFormatter(),
+                  ],
+                  style: AppTextStyle.referenceCodeInputTextStyle,
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 14),
+                    border: InputBorder.none,
+                    hintText: hasLabel ? '' : ReferenceCodeInputText.label.tr,
+                    hintStyle: AppTextStyle.referenceCodeHintTextStyle,
+                  ),
+                  onChanged: (value) {
+                    if (errorMessage != null) {
+                      setState(() {
+                        errorMessage = null;
+                      });
+                    }
+                  },
                 ),
-                onChanged: (value) {
-                  if (errorMessage != null) {
-                    setState(() {
-                      errorMessage = null;
-                    });
-                  }
-                },
               ),
             ),
           ),
@@ -250,7 +252,7 @@ class _ReferenceCodeInputState extends State<ReferenceCodeInput> {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 color: AppColors.getPrimaryBlueDependIsDarkMode(Get.isDarkMode),
-                child: Text('Referencia',
+                child: Text(ReferenceCodeInputText.label.tr,
                     style: TextStyleBase.bodyM.copyWith(
                       color: errorMessage != null && !isReadOnly
                           ? Colors.red
@@ -279,34 +281,35 @@ class _ReferenceCodeInputState extends State<ReferenceCodeInput> {
       child: Container(
         height: 60,
         decoration: getReferenceCodeInputDecoration(isReadOnly, errorMessage),
-        child: Theme(
-          data: getReferenceCodeTextSelectionTheme(context),
-          child: TextField(
-            controller: suffixCodeController,
-            focusNode: suffixFocusNode,
-            keyboardType: TextInputType.number,
-            textAlign: TextAlign.center,
-            textAlignVertical: TextAlignVertical.center,
-            cursorColor: Colors.white,
-            cursorWidth: 2.0,
-            readOnly: isReadOnly,
-            inputFormatters: [
-              FilteringTextInputFormatter.digitsOnly,
-              LengthLimitingTextInputFormatter(3),
-            ],
-            style: AppTextStyle.referenceCodeInputTextStyle,
-            decoration: const InputDecoration(
-              contentPadding: EdgeInsets.symmetric(horizontal: 8),
-              border: InputBorder.none,
-              isDense: true,
+        child: Center(
+          child: Theme(
+            data: getReferenceCodeTextSelectionTheme(context),
+            child: TextField(
+              controller: suffixCodeController,
+              focusNode: suffixFocusNode,
+              keyboardType: TextInputType.number,
+              textAlign: TextAlign.center,
+              cursorColor: Colors.white,
+              cursorWidth: 2.0,
+              readOnly: isReadOnly,
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+                LengthLimitingTextInputFormatter(3),
+              ],
+              style: AppTextStyle.referenceCodeInputTextStyle,
+              decoration: const InputDecoration(
+                contentPadding:
+                    EdgeInsets.symmetric(horizontal: 8, vertical: 14),
+                border: InputBorder.none,
+              ),
+              onChanged: (value) {
+                if (errorMessage != null) {
+                  setState(() {
+                    errorMessage = null;
+                  });
+                }
+              },
             ),
-            onChanged: (value) {
-              if (errorMessage != null) {
-                setState(() {
-                  errorMessage = null;
-                });
-              }
-            },
           ),
         ),
       ),
@@ -337,7 +340,7 @@ class _ReferenceCodeInputState extends State<ReferenceCodeInput> {
 
             if (mainCode.isEmpty || suffixCode.isEmpty) {
               setState(() {
-                errorMessage = 'Por favor, complete ambos campos';
+                errorMessage = ReferenceCodeInputText.bothFieldsRequired.tr;
               });
               controller.showErrorMessage(errorMessage!);
               return;

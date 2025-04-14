@@ -76,14 +76,14 @@ class SpanishMessages extends BaseMessages {
   String get tmtSelectHandDialogTitle => "Selecciona tu mano dominante";
 
   @override
-  String get tmtSelectHandDialogContent => "Usa la mano con la que te sientas más cómodo para realizar la prueba. Esto optimiza tu experiencia TMT test.";
+  String get tmtSelectHandDialogContent =>
+      "Usa la mano con la que te sientas más cómodo para realizar la prueba. Esto optimiza tu experiencia TMT test.";
 
   @override
   String get tmtSelectHandDialogRightHandButtonText => "Mano\nderecha";
 
   @override
   String get tmtSelectHandDialogLeftHandButtonText => "Mano\nizquierda";
-
 
   //--------------------------------------------Select Mode Practice Or Test Screen Text------------------------------------------------------
   @override
@@ -245,7 +245,8 @@ class SpanishMessages extends BaseMessages {
   String get currentUserDataScreenTitle => "Perfil de Usuario";
 
   @override
-  String get currentUserDataScreenNoUserFound => "No se encontró perfil de usuario";
+  String get currentUserDataScreenNoUserFound =>
+      "No se encontró perfil de usuario";
 
   @override
   String get currentUserDataScreenCreateProfile => "Crear Perfil";
@@ -270,10 +271,12 @@ class SpanishMessages extends BaseMessages {
   String get currentUserDataScreenCancelButton => "Cancelar";
 
   @override
-  String get currentUserDataScreenDeleteSuccess => "Perfil de usuario eliminado correctamente";
+  String get currentUserDataScreenDeleteSuccess =>
+      "Perfil de usuario eliminado correctamente";
 
   @override
-  String get currentUserDataScreenDeleteError => "Error al eliminar el perfil de usuario";
+  String get currentUserDataScreenDeleteError =>
+      "Error al eliminar el perfil de usuario";
 
   //--------------------------------------------User Result History Screen Text------------------------------------------------------
   @override
@@ -296,6 +299,34 @@ class SpanishMessages extends BaseMessages {
 
   @override
   String get userResultHistoryScreenSecondsUnit => "s";
+
+//--------------------------------------------Reference Code Input Text------------------------------------------------------
+  @override
+  String get referenceCodeInputLabel => "Referencia";
+
+  @override
+  String get referenceCodeInputBothFieldsRequired =>
+      "Por favor, complete ambos campos";
+
+  @override
+  String get referenceCodeInputEnterReferenceCode =>
+      "Por favor, introduce un código de referencia";
+
+  @override
+  String get referenceCodeInputCodeAlreadyUsed =>
+      "El código de referencia ya ha sido utilizado";
+
+  @override
+  String get referenceCodeInputValidReferenceCode =>
+      "Código de referencia válido";
+
+  @override
+  String get referenceCodeInputIncorrectReference =>
+      "La referencia no es correcta. Por favor verifíquela o contacte al neurólogo";
+
+  @override
+  String get referenceCodeInputValidationError =>
+      "Error al validar el código: ";
 }
 
 final es = SpanishMessages();
