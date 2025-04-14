@@ -4,15 +4,16 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   // Light mode colors
-  static const Color primaryBlue = Color(0xFF3086CF); // Main blue color
+  static const Color _primaryBlue = Color(0xFF3086CF); // Main blue color
   static const Color secondaryBlue = Color(0xFFE8F1FA); // Secondary blue color
-  static const Color secondaryBlueClear = Color(0xFFF8F9FE); // Clear secondary blue
+  static const Color secondaryBlueClear =
+      Color(0xFFF8F9FE); // Clear secondary blue
   static const Color mainBlackText = Color(0xFF222222); // Main black text color
   static const Color blueText = Color(0xFF0E47A1); // Blue text color
   static const Color mainRed = Color(0xFFD74343); // Red color
 
   // Dark mode colors
-  static const Color primaryBlueDark = Color(0xFF2375BC); // Darker blue color
+  static const Color _primaryBlueDark = Color(0xFF2375BC); // Darker blue color
   static const Color secondaryBlueDark =
       Color(0xFF1A3A5A); // Darker secondary blue
   static const Color darkBackground = Color(0xFF121212); // Dark background
@@ -44,12 +45,12 @@ class AppColors {
   // Dialog Colors - Light Mode
   static const Color customDialogTitleColor = mainBlackText;
   static const Color customDialogContentColor = Color(0xFF71727A);
-  static const Color customButtonColor = primaryBlue;
+  static const Color customButtonColor = _primaryBlue;
 
   // Dialog Colors - Dark Mode
   static const Color customDialogTitleColorDark = darkText;
   static const Color customDialogContentColorDark = Color(0xFFB0B0B0);
-  static const Color customButtonColorDark = primaryBlueDark;
+  static const Color customButtonColorDark = _primaryBlueDark;
 
   // Custom Primary Button Colors - Light Mode
   static const Color customPrimaryButtonDisabledBackgroundColor =
@@ -61,4 +62,20 @@ class AppColors {
       Color(0xFF2f2f2f);
   static const Color customPrimaryButtonDisabledTextColorDark =
       Color(0xFF616161);
+
+  static Color getPrimaryBlueDependIsDarkMode(bool isDarkMode) {
+    if (isDarkMode) {
+      return _primaryBlueDark;
+    } else {
+      return _primaryBlue;
+    }
+  }
+
+  static Color getPrimaryBlueColor() {
+    return _primaryBlue;
+  }
+
+  static Color getPrimaryBlueDarkColor() {
+    return _primaryBlueDark;
+  }
 }

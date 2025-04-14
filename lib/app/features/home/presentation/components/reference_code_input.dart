@@ -117,7 +117,7 @@ class _ReferenceCodeInputState extends State<ReferenceCodeInput> {
             width: double.infinity,
             height: 84,
             decoration: BoxDecoration(
-              color: const Color(0xFF3086D2),
+              color: AppColors.getPrimaryBlueDependIsDarkMode(Get.isDarkMode),
               borderRadius: BorderRadius.circular(10),
             ),
             padding: const EdgeInsets.symmetric(vertical: 12),
@@ -194,7 +194,7 @@ class _ReferenceCodeInputState extends State<ReferenceCodeInput> {
               top: -9,
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
-                color: const Color(0xFF3086D2),
+                color: AppColors.getPrimaryBlueDependIsDarkMode(Get.isDarkMode),
                 child: Text(
                   'Referencia',
                   style: TextStyle(

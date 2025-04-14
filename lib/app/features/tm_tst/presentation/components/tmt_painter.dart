@@ -214,7 +214,7 @@ class TmtPainter extends CustomPainter {
         nextCircleIndex < allCircles.length &&
         !connectedCircles.contains(currentCircle)) {
       final Paint cheatPaint = Paint()
-        ..color = isDarkMode ? AppColors.primaryBlueDark : AppColors.primaryBlue
+        ..color =AppColors.getPrimaryBlueDependIsDarkMode(Get.isDarkMode)
         ..style = PaintingStyle.stroke
         ..strokeWidth = TmtGameVariables.CIRCLE_ERROR_CORRECT_STROKE_WIDTH;
 
@@ -222,7 +222,7 @@ class TmtPainter extends CustomPainter {
           currentCircle.offset, TmtGameVariables.circleRadius, cheatPaint);
 
       final Paint fillPaint = Paint()
-        ..color = (isDarkMode ? AppColors.primaryBlueDark : AppColors.primaryBlue).withAlpha(51)
+        ..color = AppColors.getPrimaryBlueDependIsDarkMode(Get.isDarkMode).withAlpha(51)
         ..style = PaintingStyle.fill;
       canvas.drawCircle(
           currentCircle.offset, TmtGameVariables.circleRadius, fillPaint);

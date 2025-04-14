@@ -6,13 +6,12 @@ import 'AppColors.dart';
 import 'app_text_style_base.dart';
 
 class CustomInputDecoration {
-
   static final BorderRadius _defaultBorderRadius = BorderRadius.circular(12);
 
   static final _BORDER_WIDTH = 2.0;
 
   static final focusColor =
-      Get.isDarkMode ? AppColors.primaryBlueDark : AppColors.primaryBlue;
+      AppColors.getPrimaryBlueDependIsDarkMode(Get.isDarkMode);
 
   static InputDecoration commonInputDecoration() {
     return InputDecoration(
@@ -48,5 +47,3 @@ class CustomInputDecoration {
     color: AppColors.mainBlackText.withOpacity(0.5),
   );
 }
-
-
