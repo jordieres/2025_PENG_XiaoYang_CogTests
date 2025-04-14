@@ -69,7 +69,7 @@ class ReferenceCodeController extends GetxController {
       AppSnackbar.showCustomSnackbar(
         Get.context!,
         message,
-        backgroundColor: AppColors.mainRed.withAlpha(204),
+        backgroundColor: AppColors.mainRed.withAlpha(240),
       );
     }
   }
@@ -79,7 +79,7 @@ class ReferenceCodeController extends GetxController {
       AppSnackbar.showCustomSnackbar(
         Get.context!,
         message,
-        backgroundColor: Colors.green.withAlpha(204),
+        backgroundColor: Colors.green.withAlpha(240),
       );
     }
   }
