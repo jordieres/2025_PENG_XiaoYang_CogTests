@@ -171,10 +171,10 @@ class SelectModePracticeOrTest extends StatelessWidget with NavigationMixin {
                 child: InkWell(
                   splashColor: isDarkMode
                       ? Colors.white.withAlpha(51)
-                      : AppColors.primaryBlue.withAlpha(51),
+                      : AppColors.getPrimaryBlueColor().withAlpha(51),
                   highlightColor: isDarkMode
                       ? Colors.white.withAlpha(25)
-                      : AppColors.primaryBlue.withAlpha(25),
+                      : AppColors.getPrimaryBlueColor().withAlpha(25),
                   onTap: onTap,
                   child: Center(
                     child: Text(
@@ -197,7 +197,7 @@ class SelectModePracticeOrTest extends StatelessWidget with NavigationMixin {
               child: InkWell(
                 splashColor: isDarkMode
                     ? Colors.white.withAlpha(51)
-                    : AppColors.primaryBlue.withAlpha(51),
+                    : AppColors.getPrimaryBlueColor().withAlpha(51),
                 onTap: () {
                   _showHelpDialog(context, isPractice);
                 },

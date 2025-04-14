@@ -11,16 +11,16 @@ class AppTheme {
   // Light theme
   static ThemeData get light => ThemeData(
     brightness: Brightness.light,
-    primaryColor: AppColors.primaryBlue,
+    primaryColor: AppColors.getPrimaryBlueColor(),
     scaffoldBackgroundColor: Colors.white,
     appBarTheme: AppBarTheme(
       backgroundColor: Colors.white,
       elevation: 0,
-      iconTheme: IconThemeData(color: AppColors.primaryBlue),
+      iconTheme: IconThemeData(color: AppColors.getPrimaryBlueColor()),
       titleTextStyle: TextStyle(color: AppColors.mainBlackText),
     ),
     colorScheme: ColorScheme.light(
-      primary: AppColors.primaryBlue,
+      primary: AppColors.getPrimaryBlueColor(),
       secondary: AppColors.secondaryBlue,
       onPrimary: Colors.white,
       onSecondary: AppColors.mainBlackText,
@@ -32,14 +32,14 @@ class AppTheme {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.primaryBlue,
+        backgroundColor: AppColors.getPrimaryBlueColor(),
         foregroundColor: Colors.white,
       ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        foregroundColor: AppColors.primaryBlue,
-        side: BorderSide(color: AppColors.primaryBlue),
+        foregroundColor: AppColors.getPrimaryBlueColor(),
+        side: BorderSide(color: AppColors.getPrimaryBlueColor()),
       ),
     ),
     dialogTheme: DialogTheme(
@@ -55,16 +55,16 @@ class AppTheme {
   // Dark theme
   static ThemeData get dark => ThemeData(
     brightness: Brightness.dark,
-    primaryColor: AppColors.primaryBlueDark,
+    primaryColor: AppColors.getPrimaryBlueDarkColor(),
     scaffoldBackgroundColor: AppColors.darkBackground,
     appBarTheme: AppBarTheme(
       backgroundColor: AppColors.darkSurface,
       elevation: 0,
-      iconTheme: IconThemeData(color: AppColors.primaryBlueDark),
+      iconTheme: IconThemeData(color: AppColors.getPrimaryBlueDarkColor()),
       titleTextStyle: TextStyle(color: AppColors.darkText),
     ),
     colorScheme: ColorScheme.dark(
-      primary: AppColors.primaryBlueDark,
+      primary: AppColors.getPrimaryBlueDarkColor(),
       secondary: AppColors.secondaryBlueDark,
       surface: AppColors.darkSurface,
       background: AppColors.darkBackground,
@@ -80,14 +80,14 @@ class AppTheme {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.primaryBlueDark,
+        backgroundColor: AppColors.getPrimaryBlueDarkColor(),
         foregroundColor: AppColors.darkText,
       ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        foregroundColor: AppColors.primaryBlueDark,
-        side: BorderSide(color: AppColors.primaryBlueDark),
+        foregroundColor: AppColors.getPrimaryBlueDarkColor(),
+        side: BorderSide(color: AppColors.getPrimaryBlueDarkColor()),
       ),
     ),
     dialogTheme: DialogTheme(
