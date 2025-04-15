@@ -3,54 +3,65 @@ import 'package:get/get.dart';
 import '../../../../utils/ui/ui_utils.dart';
 import '../../../user/domain/entities/user_profile.dart';
 import '../../../user/domain/repository/user_profile_repository.dart';
+import '../../../user/presentation/contoller/user_profile_controller.dart';
 import '../../../../config/themes/AppColors.dart';
 
-class SelectUserController extends GetxController {
-  final UserProfileRepository _userProfileRepository =
-      Get.find<UserProfileRepository>();
+class SelectUserController extends UserProfileController {
   final RxList<String> userIds = <String>[].obs;
-  final Rx<UserProfile?> currentProfile = Rx<UserProfile?>(null);
-  final RxBool isLoading = false.obs;
+  final RxBool _needsRefresh = false.obs;
+
+  Rx<UserProfile?> get currentProfile => selectedProfile;
+
+  SelectUserController() : super(repository: Get.find<UserProfileRepository>());
 
   @override
   void onInit() {
     super.onInit();
-    loadUserIds();
-    loadCurrentProfile();
+    _updateUserIds();
+
+    ever(_needsRefresh, (_) {
+      if (_needsRefresh.value) {
+        _refreshData();
+        _needsRefresh.value = false;
+      }
+    });
+
+    ever(profiles, (_) {
+      _updateUserIds();
+    });
   }
 
-  Future<void> loadUserIds() async {
-    isLoading.value = true;
-    try {
-      final ids = await _userProfileRepository.getAllUserId();
-      userIds.value = ids;
-    } catch (e) {
-      showErrorMessage('Error al cargar IDs de usuarios: $e');
-    } finally {
-      isLoading.value = false;
-    }
+  void refreshAfterUserRegistration() {
+    _needsRefresh.value = true;
   }
 
-  Future<void> loadCurrentProfile() async {
-    isLoading.value = true;
-    try {
-      final profile = await _userProfileRepository.getCurrentProfile();
-      currentProfile.value = profile;
-    } catch (e) {
-      showErrorMessage('Error al cargar perfil actual: $e');
-    } finally {
-      isLoading.value = false;
-    }
+  Future<void> _refreshData() async {
+    await loadProfiles();
+    await loadCurrentProfile();
+  }
+
+  @override
+  Future<void> loadProfiles() async {
+    await super.loadProfiles();
+    _updateUserIds();
+  }
+
+  void _updateUserIds() {
+    userIds.value = profiles.map((profile) => profile.userId).toList();
+  }
+
+  UserProfile? getProfileByUserId(String userId) {
+    return profiles.firstWhereOrNull((profile) => profile.userId == userId);
   }
 
   Future<void> setCurrentProfile(String userId) async {
     isLoading.value = true;
     try {
-      await _userProfileRepository.setCurrentProfile(userId);
+      await repository.setCurrentProfile(userId);
       await loadCurrentProfile();
-      if (currentProfile.value != null) {
+      if (selectedProfile.value != null) {
         showSuccessMessage(
-            'Perfil seleccionado: ${currentProfile.value!.nickname}');
+            'Perfil seleccionado: ${selectedProfile.value!.nickname}');
       }
     } catch (e) {
       showErrorMessage('Error al establecer perfil: $e');
@@ -59,12 +70,31 @@ class SelectUserController extends GetxController {
     }
   }
 
-  Future<UserProfile?> getProfileByUserId(String userId) async {
+  @override
+  Future<void> deleteProfile(String userId) async {
+    isLoading.value = true;
     try {
-      return await _userProfileRepository.getProfileByUserId(userId);
+      final profile = getProfileByUserId(userId);
+      await repository.deleteProfileAndResultsHistory(userId);
+      profiles.removeWhere((profile) => profile.userId == userId);
+      userIds.remove(userId);
+
+      if (selectedProfile.value?.userId == userId) {
+        selectedProfile.value = null;
+        if (userIds.isNotEmpty) {
+          await setCurrentProfile(userIds[0]);
+        }
+      }
+
+      if (profile != null) {
+        showSuccessMessage('Perfil eliminado: ${profile.nickname}');
+      } else {
+        showSuccessMessage('Perfil eliminado');
+      }
     } catch (e) {
-      showErrorMessage('Error al obtener perfil por ID: $e');
-      return null;
+      showErrorMessage('Error al eliminar perfil: $e');
+    } finally {
+      isLoading.value = false;
     }
   }
 

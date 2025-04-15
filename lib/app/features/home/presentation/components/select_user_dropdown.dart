@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:msdtmt/app/features/home/presentation/components/select_user_profile_dialog.dart';
 import '../../../../config/routes/app_pages.dart';
 import '../../../../config/routes/app_route_observer.dart';
-import '../../../user/domain/entities/user_profile.dart';
 import '../controllers/select_user_profile_controller.dart';
 
 class SelectUserDropdown extends StatefulWidget {
@@ -14,7 +14,6 @@ class SelectUserDropdown extends StatefulWidget {
 
 class SelectUserDropdownState extends State<SelectUserDropdown> {
   Worker? _routeObserverWorker;
-  String? selectedUserId;
   late SelectUserController _controller;
 
   @override
@@ -27,8 +26,7 @@ class SelectUserDropdownState extends State<SelectUserDropdown> {
   void _routeChangeObserver() {
     _routeObserverWorker = ever(appRouteObserver.currentRouteName, (routeName) {
       if (routeName == Routes.home) {
-        _controller.loadUserIds();
-        _controller.loadCurrentProfile();
+        _controller.refreshAfterUserRegistration();
       }
     });
   }
@@ -39,63 +37,94 @@ class SelectUserDropdownState extends State<SelectUserDropdown> {
     super.dispose();
   }
 
+  void _showSelectUserDialog() {
+    if (_controller.currentProfile.value == null) {
+      Get.toNamed(Routes.register_user);
+      return;
+    }
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return SelectUserDialog(
+          controller: _controller,
+          onProfileSelected: (userId) {
+            _controller.setCurrentProfile(userId);
+          },
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Obx(() {
-          if (_controller.isLoading.value) {
-            return CircularProgressIndicator();
-          } else if (_controller.currentProfile.value != null) {
-            final profile = _controller.currentProfile.value!;
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+    return Obx(() {
+      final profile = _controller.currentProfile.value;
+
+      if (profile == null) {
+        return GestureDetector(
+          onTap: () {
+            Get.toNamed(Routes.register_user);
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.blue),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Nickname: ${profile.nickname}'),
-                Text('ID: ${profile.userId}'),
                 Text(
-                    'Sexo: ${profile.sex == Sex.male ? 'Masculino' : 'Femenino'}'),
-                Text(
-                    'Fecha de nacimiento: ${profile.birthDate.toIso8601String().split('T')[0]}'),
-              ],
-            );
-          } else {
-            return Text('No hay perfil de usuario seleccionado');
-          }
-        }),
-        SizedBox(height: 20),
-        Obx(() => DropdownButton<String>(
-              hint: Text('Seleccionar usuario'),
-              value: selectedUserId,
-              onChanged: (String? newValue) async {
-                if (newValue != null) {
-                  await _controller.setCurrentProfile(newValue);
-                  setState(() {
-                    selectedUserId = newValue;
-                  });
-                }
-              },
-              items: _controller.userIds
-                  .map<DropdownMenuItem<String>>((String userId) {
-                return DropdownMenuItem<String>(
-                  value: userId,
-                  child: FutureBuilder<UserProfile?>(
-                    future: _controller.getProfileByUserId(userId),
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Text('Cargando...');
-                      } else if (snapshot.hasData && snapshot.data != null) {
-                        return Text(snapshot.data!.nickname);
-                      } else {
-                        return Text(userId);
-                      }
-                    },
+                  "Crear usuario",
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.grey.shade600,
+                    fontStyle: FontStyle.italic,
                   ),
-                );
-              }).toList(),
-            )),
-      ],
-    );
+                ),
+                Icon(Icons.arrow_drop_down),
+              ],
+            ),
+          ),
+        );
+      } else {
+        return Row(
+          children: [
+            Text(
+              "Hola, ",
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            Expanded(
+              child: GestureDetector(
+                onTap: _showSelectUserDialog,
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.blue),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        profile.nickname,
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                      Icon(Icons.arrow_drop_down),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+      }
+    });
   }
 }
