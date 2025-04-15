@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -12,9 +14,25 @@ class UpperCaseTextFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {
+    String upperCaseText = newValue.text.toUpperCase();
+    String trimmedText = upperCaseText.trim();
+    int selectionBase = newValue.selection.baseOffset;
+    int selectionExtent = newValue.selection.extentOffset;
+
+    if (upperCaseText.length > trimmedText.length &&
+        selectionBase == upperCaseText.length) {
+      selectionBase = trimmedText.length;
+      selectionExtent = trimmedText.length;
+    } else {
+      selectionBase = min(selectionBase, trimmedText.length);
+      selectionExtent = min(selectionExtent, trimmedText.length);
+    }
     return TextEditingValue(
-      text: newValue.text.toUpperCase(),
-      selection: newValue.selection,
+      text: trimmedText,
+      selection: TextSelection(
+        baseOffset: selectionBase,
+        extentOffset: selectionExtent,
+      ),
     );
   }
 }
@@ -345,9 +363,7 @@ class _ReferenceCodeInputState extends State<ReferenceCodeInput> {
               controller.showErrorMessage(errorMessage!);
               return;
             }
-
-            final fullCode = '$mainCode-$suffixCode';
-            controller.validateReferenceCode(fullCode);
+            controller.validateReferenceCode(mainCode, suffixCode);
           }
         },
       ),
