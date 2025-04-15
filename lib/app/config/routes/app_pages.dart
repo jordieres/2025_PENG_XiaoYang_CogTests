@@ -6,6 +6,7 @@ import 'package:msdtmt/app/features/tm_tst/presentation/bindings/tmt_test_bindin
 import 'package:msdtmt/app/features/tm_tst/presentation/screens/tmt_test_screen.dart';
 
 import '../../features/home/presentation/binding/reference_validation_biding.dart';
+import '../../features/home/presentation/binding/select_user_profile_binding.dart';
 import '../../features/tm_tst/presentation/bindings/tmt_test_practice_binding.dart';
 import '../../features/tm_tst/presentation/screens/tmt_select_mode_practice_or_test.dart';
 import '../../features/tm_tst/presentation/screens/tmt_test_help.dart';
@@ -31,6 +32,7 @@ class AppPages {
       page: () => const HomePage(),
       bindings: [
         ReferenceValidationBinding(),
+        SelectUserBinding(),
         HomeScreenBinding(),
       ],
     ),
