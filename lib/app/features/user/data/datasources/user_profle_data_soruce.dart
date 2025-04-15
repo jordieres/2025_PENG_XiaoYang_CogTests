@@ -91,7 +91,7 @@ class UserProfileDataSourceImpl implements UserProfileDataSource {
       whereArgs: [userId],
     );
     await db.delete(
-      DatabaseConstants.userProfilesTable,
+      DatabaseConstants.userTestResultsTable,
       where: '${DatabaseConstants.userIdColumn} = ?',
       whereArgs: [userId],
     );
