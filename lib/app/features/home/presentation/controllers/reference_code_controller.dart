@@ -16,13 +16,13 @@ class ReferenceCodeController extends GetxController {
   final RxString errorMessage = ''.obs;
   final RxString fullReferenceCode = ''.obs;
 
-  Future<void> validateReferenceCode(String code) async {
-    if (code.isEmpty) {
+  Future<void> validateReferenceCode(String mainCode, String suffixCode) async {
+    if (mainCode.isEmpty || suffixCode.isEmpty) {
       errorMessage.value = ReferenceCodeInputText.enterReferenceCode.tr;
       showErrorMessage(errorMessage.value);
       return;
     }
-
+    String code = '${mainCode.trim()}-${suffixCode.trim()}';
     isValidating.value = true;
     errorMessage.value = '';
 

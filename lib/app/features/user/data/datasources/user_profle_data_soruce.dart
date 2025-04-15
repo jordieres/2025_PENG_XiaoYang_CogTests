@@ -9,19 +9,19 @@ import '../model/user_profile_model.dart';
 abstract class UserProfileDataSource {
   Future<List<UserProfileModel>> getAllProfiles();
 
-  Future<UserProfileModel?> getProfileByUserId(String userId);
-
   Future<UserProfileModel?> getProfileByNickname(String nickname);
 
   Future<void> saveProfile(UserProfileModel profile);
 
-  Future<void> deleteProfile(String userId);
+  Future<void> deleteProfileAndResultHistory(String userId);
 
   Future<List<String>> getAllNicknames();
 
   Future<List<String>> getAllUserId();
 
   Future<void> setCurrentProfile(String userId);
+
+  Future<void> clearCurrentProfile(String userId);
 
   Future<UserProfileModel?> getCurrentProfile();
 }
@@ -41,7 +41,6 @@ class UserProfileDataSourceImpl implements UserProfileDataSource {
         .toList();
   }
 
-  @override
   Future<UserProfileModel?> getProfileByUserId(String userId) async {
     final db = await databaseHelper.database;
     final profilesData = await db.query(
@@ -53,7 +52,6 @@ class UserProfileDataSourceImpl implements UserProfileDataSource {
     if (profilesData.isEmpty) {
       return null;
     }
-
     return UserProfileModel.fromMap(profilesData.first);
   }
 
@@ -82,16 +80,16 @@ class UserProfileDataSourceImpl implements UserProfileDataSource {
       profile.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
-    final currentProfileId = await LocalStorageServices.getCurrentProfileId();
-    if (currentProfileId == null || currentProfileId.isEmpty) {
-      await setCurrentProfile(profile.userId);
-    }
   }
 
   @override
-  Future<void> deleteProfile(String userId) async {
+  Future<void> deleteProfileAndResultHistory(String userId) async {
     final db = await databaseHelper.database;
-
+    await db.delete(
+      DatabaseConstants.userProfilesTable,
+      where: '${DatabaseConstants.userIdColumn} = ?',
+      whereArgs: [userId],
+    );
     await db.delete(
       DatabaseConstants.userProfilesTable,
       where: '${DatabaseConstants.userIdColumn} = ?',
@@ -128,6 +126,11 @@ class UserProfileDataSourceImpl implements UserProfileDataSource {
   @override
   Future<void> setCurrentProfile(String userId) async {
     await LocalStorageServices.setCurrentProfileId(userId);
+  }
+
+  @override
+  Future<void> clearCurrentProfile(String userId) async {
+    await LocalStorageServices.clearCurrentProfileId();
   }
 
   @override

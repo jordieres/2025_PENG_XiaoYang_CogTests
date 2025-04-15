@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalStorageServices {
   static final LocalStorageServices _localStorageServices =
-  LocalStorageServices._internal();
+      LocalStorageServices._internal();
 
   factory LocalStorageServices() {
     return _localStorageServices;
@@ -31,7 +31,8 @@ class LocalStorageServices {
     return await prefs.remove(_pendingResultsKey);
   }
 
-  static Future<bool> saveThemeSettings(bool isFollowSystem, ThemeMode themeMode) async {
+  static Future<bool> saveThemeSettings(
+      bool isFollowSystem, ThemeMode themeMode) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool(_systemThemeKey, isFollowSystem);
 
@@ -58,10 +59,7 @@ class LocalStorageServices {
             : ThemeMode.light;
       }
     }
-    return {
-      'isFollowSystem': isSystemTheme,
-      'themeMode': themeMode
-    };
+    return {'isFollowSystem': isSystemTheme, 'themeMode': themeMode};
   }
 
   static Future<bool> setCurrentProfileId(String userId) async {
@@ -72,5 +70,10 @@ class LocalStorageServices {
   static Future<String?> getCurrentProfileId() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString(_currentProfileKey);
+  }
+
+  static Future<bool> clearCurrentProfileId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return await prefs.remove(_currentProfileKey);
   }
 }

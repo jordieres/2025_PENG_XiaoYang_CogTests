@@ -2,17 +2,19 @@ import '../../data/datasources/user_profle_data_soruce.dart';
 import '../../data/model/user_profile_model.dart';
 import '../entities/user_profile.dart';
 
-
-
 abstract class UserProfileRepository {
   Future<List<UserProfile>> getAllProfiles();
-  Future<UserProfile?> getProfileByUserId(String userId);
+
   Future<UserProfile?> getProfileByNickname(String nickname);
+
   Future<void> saveProfile(UserProfile profile);
-  Future<void> deleteProfile(String userId);
-  Future<List<String>> getAllNicknames();
+
+  Future<void> deleteProfileAndResultsHistory(String userId);
+
   Future<List<String>> getAllUserId();
+
   Future<UserProfile?> getCurrentProfile();
+
   Future<void> setCurrentProfile(String userId);
 }
 
@@ -29,11 +31,6 @@ class UserProfileRepositoryImpl implements UserProfileRepository {
   }
 
   @override
-  Future<UserProfile?> getProfileByUserId(String userId) async {
-    return await profileDataSource.getProfileByUserId(userId);
-  }
-
-  @override
   Future<UserProfile?> getProfileByNickname(String nickname) async {
     return await profileDataSource.getProfileByNickname(nickname);
   }
@@ -41,17 +38,23 @@ class UserProfileRepositoryImpl implements UserProfileRepository {
   @override
   Future<void> saveProfile(UserProfile profile) async {
     await profileDataSource.saveProfile(UserProfileModel.fromEntity(profile));
+    final currentProfile = await getCurrentProfile();
+    if (currentProfile == null || currentProfile.userId.isEmpty) {
+      await setCurrentProfile(profile.userId);
+    }
   }
 
   @override
-  Future<void> deleteProfile(String userId) async {
-    await profileDataSource.deleteProfile(userId);
+  Future<void> deleteProfileAndResultsHistory(String userId) async {
+    await profileDataSource.deleteProfileAndResultHistory(userId);
+    final allCurrentIds = await getAllUserId();
+    if (allCurrentIds.isEmpty) {
+      await profileDataSource.clearCurrentProfile(userId);
+    } else {
+      await setCurrentProfile(allCurrentIds.first);
+    }
   }
 
-  @override
-  Future<List<String>> getAllNicknames() async {
-    return await profileDataSource.getAllNicknames();
-  }
 
   @override
   Future<List<String>> getAllUserId() async {
