@@ -5,16 +5,11 @@ import '../../domain/entities/user_profile.dart';
 
 class UserProfileModel extends UserProfile {
   UserProfileModel({
-    required String nickname,
-    required Sex sex,
-    required DateTime birthDate,
-    required EducationLevel educationLevel,
-  }) : super(
-          nickname: nickname,
-          sex: sex,
-          birthDate: birthDate,
-          educationLevel: educationLevel,
-        );
+    required super.nickname,
+    required super.sex,
+    required super.birthDate,
+    required super.educationLevel,
+  });
 
   UserProfileModel.withUserId({
     required String userId,
@@ -40,9 +35,6 @@ class UserProfileModel extends UserProfile {
             EducationLevel.fromValue(map['educationLevel'] as String));
   }
 
-
-
-
   Map<String, dynamic> toMap() {
     return {
       'userId': userId,
@@ -55,7 +47,7 @@ class UserProfileModel extends UserProfile {
 
   factory UserProfileModel.fromEntity(UserProfile entity) {
     return UserProfileModel(
-      nickname: entity.nickname,
+      nickname: entity.nickname.trim(),
       sex: entity.sex,
       birthDate: entity.birthDate,
       educationLevel: entity.educationLevel,
