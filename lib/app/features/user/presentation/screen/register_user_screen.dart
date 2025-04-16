@@ -286,6 +286,7 @@ class _RegisterUserScreenState
         AppSnackbar.showCustomSnackbar(
           context,
           TMTRegisterUserText.saveSuccess.tr,
+          backgroundColor: AppColors.testTMTCorrectCircleStroke.withAlpha(230),
         );
       }
     } catch (e) {
