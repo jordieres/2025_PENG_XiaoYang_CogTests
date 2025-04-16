@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:msdtmt/app/features/home/presentation/binding/home_screen_binding.dart';
-import 'package:msdtmt/app/features/home/presentation/screens/HomePage.dart';
+import 'package:msdtmt/app/features/home/presentation/screens/home_page.dart';
 import 'package:msdtmt/app/features/tm_tst/presentation/bindings/tmt_result_binding.dart';
 import 'package:msdtmt/app/features/tm_tst/presentation/bindings/tmt_test_binding.dart';
 import 'package:msdtmt/app/features/tm_tst/presentation/screens/tmt_test_screen.dart';
