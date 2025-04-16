@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:msdtmt/app/utils/helpers/app_helpers.dart';
 
-class HomeReferenceSelectUserWidthCalculator {
+class WidgetMaxWidthCalculator {
   static double getMaxWidth(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final isLandscape =

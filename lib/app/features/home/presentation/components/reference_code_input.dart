@@ -8,7 +8,7 @@ import 'package:msdtmt/app/config/themes/AppTextStyle.dart';
 import 'package:msdtmt/app/utils/helpers/app_helpers.dart';
 import '../../../../config/themes/app_text_style_base.dart';
 import '../../../../config/translation/app_translations.dart';
-import '../../domain/usecases/home_reference_select_user_width_calculator.dart';
+import '../../../../utils/helpers/widget_max_width_calculator.dart';
 import '../controllers/reference_code_controller.dart';
 
 class UpperCaseTextFormatter extends TextInputFormatter {
@@ -129,7 +129,7 @@ class _ReferenceCodeInputState extends State<ReferenceCodeInput> {
   Widget build(BuildContext context) {
     final hasLabel =
         mainFocusNode.hasFocus || mainCodeController.text.isNotEmpty;
-    final maxWidth = HomeReferenceSelectUserWidthCalculator.getMaxWidth(context);
+    final maxWidth = WidgetMaxWidthCalculator.getMaxWidth(context);
 
     return Obx(() {
       final isReadOnly = controller.isValidated.value;
