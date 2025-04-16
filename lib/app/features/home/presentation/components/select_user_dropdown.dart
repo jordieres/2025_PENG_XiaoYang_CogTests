@@ -7,7 +7,7 @@ import '../../../../config/routes/app_route_observer.dart';
 import '../../../../config/themes/AppColors.dart';
 import '../../../../config/translation/app_translations.dart';
 import '../../../../utils/mixins/app_mixins.dart';
-import '../../domain/usecases/home_reference_select_user_width_calculator.dart';
+import '../../../../utils/helpers/widget_max_width_calculator.dart';
 import '../controllers/select_user_profile_controller.dart';
 
 class SelectUserDropdown extends StatefulWidget {
@@ -149,7 +149,7 @@ class SelectUserDropdownState extends State<SelectUserDropdown>
 
   @override
   Widget build(BuildContext context) {
-    final maxWidth = HomeReferenceSelectUserWidthCalculator.getMaxWidth(context);
+    final maxWidth = WidgetMaxWidthCalculator.getMaxWidth(context);
 
     return Container(
       constraints: BoxConstraints(maxWidth: maxWidth),

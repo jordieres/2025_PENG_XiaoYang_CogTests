@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import '../../../../config/themes/AppTextStyle.dart';
 import '../../../../config/themes/input_decoration.dart';
 import '../../../../config/translation/app_translations.dart';
-import '../../../home/domain/usecases/home_reference_select_user_width_calculator.dart';
+import '../../../../utils/helpers/widget_max_width_calculator.dart';
 import '../../domain/entities/user_profile.dart';
 import '../../domain/usecase/register_user_screen_responsive_calculator.dart';
 import '../contoller/user_profile_controller.dart';
@@ -120,7 +120,7 @@ abstract class RegisterUserScreenBaseState<T extends RegisterUserScreenBase>
           return SingleChildScrollView(
             child: Center(
               child: Container(
-                width: HomeReferenceSelectUserWidthCalculator.getMaxWidth(context),
+                width: WidgetMaxWidthCalculator.getMaxWidth(context),
                 padding: const EdgeInsets.fromLTRB(
                     RegisterUserScreenResponsiveCalculator
                         .kContentHorizontalPadding,

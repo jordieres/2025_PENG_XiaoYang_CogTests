@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import '../../../../config/routes/app_pages.dart';
 import '../../../../utils/mixins/app_mixins.dart';
-import '../../domain/usecases/home_reference_select_user_width_calculator.dart';
+import '../../../../utils/helpers/widget_max_width_calculator.dart';
 import '../components/home_page_header.dart';
 import '../components/reference_code_input.dart';
 import '../components/select_user_dropdown.dart';
@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> with NavigationMixin {
   @override
   Widget build(BuildContext context) {
     final maxWidth =
-        HomeReferenceSelectUserWidthCalculator.getMaxWidth(context);
+        WidgetMaxWidthCalculator.getMaxWidth(context);
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
     return AnnotatedRegion<SystemUiOverlayStyle>(

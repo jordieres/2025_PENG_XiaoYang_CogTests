@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:msdtmt/app/shared_components/custom_primary_button.dart';
 import '../../../../config/translation/app_translations.dart';
 import '../../../../shared_components/custom_dialog.dart';
-import '../../domain/usecases/home_reference_select_user_width_calculator.dart';
+import '../../../../utils/helpers/widget_max_width_calculator.dart';
 import '../controllers/select_user_profile_controller.dart';
 
 class SelectUserDialog extends StatelessWidget {
@@ -18,7 +18,7 @@ class SelectUserDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final maxWidth = HomeReferenceSelectUserWidthCalculator.getMaxWidth(context);
+    final maxWidth = WidgetMaxWidthCalculator.getMaxWidth(context);
 
     return Dialog(
       shape: RoundedRectangleBorder(
