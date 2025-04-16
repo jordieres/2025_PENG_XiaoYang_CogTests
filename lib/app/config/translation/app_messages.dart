@@ -175,6 +175,14 @@ class SelectUserProfileDialogText {
   static String deleteButton = 'select_user_profile_dialog_delete_button';
   static String cancelDeleteButton =
       'select_user_profile_dialog_cancel_delete_button';
+  static String profileDeletedSuccess =
+      'select_user_profile_dialog_profile_deleted_success';
+  static String profileDeletedError =
+      'select_user_profile_dialog_profile_deleted_error';
+  static String profileSelectedSuccess =
+      'select_user_profile_dialog_profile_selected_success';
+  static String profileSelectedError =
+      'select_user_profile_dialog_profile_selected_error';
 }
 
 class SelectUserDropdownText {
@@ -421,6 +429,14 @@ abstract class BaseMessages {
 
   String get selectUserProfileDialogCancelDeleteButton;
 
+  String get selectUserProfileDialogProfileDeletedSuccess;
+
+  String get selectUserProfileDialogProfileDeletedError;
+
+  String get selectUserProfileDialogProfileSelectedSuccess;
+
+  String get selectUserProfileDialogProfileSelectedError;
+
   //--------------------------------------------Select User Dropdown Text------------------------------------------------------
   String get selectUserDropdownCreateUser;
 
@@ -606,6 +622,14 @@ abstract class BaseMessages {
             selectUserProfileDialogDeleteButton,
         SelectUserProfileDialogText.cancelDeleteButton:
             selectUserProfileDialogCancelDeleteButton,
+        SelectUserProfileDialogText.profileDeletedSuccess:
+            selectUserProfileDialogProfileDeletedSuccess,
+        SelectUserProfileDialogText.profileDeletedError:
+            selectUserProfileDialogProfileDeletedError,
+        SelectUserProfileDialogText.profileSelectedSuccess:
+            selectUserProfileDialogProfileSelectedSuccess,
+        SelectUserProfileDialogText.profileSelectedError:
+            selectUserProfileDialogProfileSelectedError,
         //--------------------------------------------Select User Dropdown Text------------------------------------------------------
         SelectUserDropdownText.createUser: selectUserDropdownCreateUser,
         SelectUserDropdownText.greeting: selectUserDropdownGreeting,

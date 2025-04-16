@@ -64,7 +64,6 @@ class SpanishMessages extends BaseMessages {
   @override
   String get languageNameChinese => "中文";
 
-
   //--------------------------------------------TMT Practice Text------------------------------------------------------
   @override
   String get tmtGamePracticeTmtAThenBDialogTitle =>
@@ -365,13 +364,30 @@ class SpanishMessages extends BaseMessages {
   String get selectUserProfileDialogDeleteConfirmTitle => "Eliminar perfil";
 
   @override
-  String get selectUserProfileDialogDeleteConfirmContent => "¿Está seguro que desea eliminar el perfil \"{user}\"?";
+  String get selectUserProfileDialogDeleteConfirmContent =>
+      "¿Está seguro que desea eliminar el perfil \"{user}\"?";
 
   @override
   String get selectUserProfileDialogDeleteButton => "Eliminar";
 
   @override
   String get selectUserProfileDialogCancelDeleteButton => "Cancelar";
+
+  @override
+  String get selectUserProfileDialogProfileDeletedSuccess =>
+      "Perfil eliminado:";
+
+  @override
+  String get selectUserProfileDialogProfileDeletedError =>
+      "Error al eliminar perfil";
+
+  @override
+  String get selectUserProfileDialogProfileSelectedSuccess =>
+      "Perfil seleccionado";
+
+  @override
+  String get selectUserProfileDialogProfileSelectedError =>
+      "Error al establecer perfil";
 
   //--------------------------------------------Select User Dropdown Text------------------------------------------------------
   @override

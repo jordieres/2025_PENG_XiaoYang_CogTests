@@ -350,6 +350,18 @@ class ChineseMessages extends BaseMessages {
   @override
   String get selectUserProfileDialogCancelDeleteButton => "取消";
 
+  @override
+  String get selectUserProfileDialogProfileDeletedSuccess => "用户已删除:";
+
+  @override
+  String get selectUserProfileDialogProfileDeletedError => "删除用户时出错";
+
+  @override
+  String get selectUserProfileDialogProfileSelectedSuccess => "已选择用户";
+
+  @override
+  String get selectUserProfileDialogProfileSelectedError => "设置用户时出错";
+
   //--------------------------------------------Select User Dropdown Text------------------------------------------------------
   @override
   String get selectUserDropdownCreateUser => "创建用户";
