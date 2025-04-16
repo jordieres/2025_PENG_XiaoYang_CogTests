@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../../config/translation/app_translations.dart';
 import '../../../../utils/ui/ui_utils.dart';
 import '../../../user/domain/entities/user_profile.dart';
 import '../../../user/domain/repository/user_profile_repository.dart';
@@ -61,10 +62,11 @@ class SelectUserController extends UserProfileController {
       await loadCurrentProfile();
       if (selectedProfile.value != null) {
         showSuccessMessage(
-            'Perfil seleccionado: ${selectedProfile.value!.nickname}');
+            '${SelectUserProfileDialogText.profileSelectedSuccess.tr}: ${selectedProfile.value!.nickname}');
       }
     } catch (e) {
-      showErrorMessage('Error al establecer perfil: $e');
+      showErrorMessage(
+          '${SelectUserProfileDialogText.profileSelectedError.tr}: $e');
     } finally {
       isLoading.value = false;
     }
@@ -87,12 +89,15 @@ class SelectUserController extends UserProfileController {
       }
 
       if (profile != null) {
-        showSuccessMessage('Perfil eliminado: ${profile.nickname}');
+        showSuccessMessage(
+            '${SelectUserProfileDialogText.profileDeletedSuccess.tr}: ${profile.nickname}');
       } else {
-        showSuccessMessage('Perfil eliminado');
+        showSuccessMessage(
+            SelectUserProfileDialogText.profileDeletedSuccess.tr);
       }
     } catch (e) {
-      showErrorMessage('Error al eliminar perfil: $e');
+      showErrorMessage(
+          '${SelectUserProfileDialogText.profileDeletedError.tr}: $e');
     } finally {
       isLoading.value = false;
     }

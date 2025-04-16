@@ -358,7 +358,7 @@ class EnglishMessages extends BaseMessages {
 
   @override
   String get selectUserProfileDialogDeleteConfirmContent =>
-      "Are you sure you want to delete the profile \"{user}\" ?";
+      "Are you sure you want to delete the profile \"{user}\"?";
 
   @override
   String get selectUserProfileDialogDeleteButton => "Delete";
@@ -366,13 +366,27 @@ class EnglishMessages extends BaseMessages {
   @override
   String get selectUserProfileDialogCancelDeleteButton => "Cancel";
 
+  @override
+  String get selectUserProfileDialogProfileDeletedSuccess => "Profile deleted:";
+
+  @override
+  String get selectUserProfileDialogProfileDeletedError =>
+      "Error deleting profile";
+
+  @override
+  String get selectUserProfileDialogProfileSelectedSuccess =>
+      "Profile selected";
+
+  @override
+  String get selectUserProfileDialogProfileSelectedError =>
+      "Error setting profile";
+
   //--------------------------------------------Select User Dropdown Text------------------------------------------------------
   @override
   String get selectUserDropdownCreateUser => "Create user";
 
   @override
   String get selectUserDropdownGreeting => "Hello, ";
-
 }
 
 final en = EnglishMessages();
