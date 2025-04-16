@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> with NavigationMixin {
         body: SafeArea(
           child: SingleChildScrollView(
             padding:
-                const EdgeInsets.symmetric(vertical: 20.0, horizontal: 16.0),
+                const EdgeInsets.symmetric(vertical: 20.0, horizontal: 18.0),
             child: Center(
               child: SizedBox(
                 width: maxWidth,

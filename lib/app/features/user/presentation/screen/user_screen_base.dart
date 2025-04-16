@@ -4,10 +4,12 @@ import 'package:intl/intl.dart';
 import '../../../../config/themes/AppTextStyle.dart';
 import '../../../../config/themes/input_decoration.dart';
 import '../../../../config/translation/app_translations.dart';
+import '../../../home/domain/usecases/home_reference_select_user_width_calculator.dart';
 import '../../domain/entities/user_profile.dart';
 import '../../domain/usecase/register_user_screen_responsive_calculator.dart';
 import '../contoller/user_profile_controller.dart';
 import '../../../../shared_components/custom_app_bar.dart';
+import '../../../../utils/helpers/app_helpers.dart';
 
 abstract class RegisterUserScreenBase extends StatefulWidget {
   const RegisterUserScreenBase({super.key});
@@ -53,7 +55,7 @@ abstract class RegisterUserScreenBaseState<T extends RegisterUserScreenBase>
   void updateFormHeight() {
     if (formBoxKey.currentContext != null && mounted) {
       final RenderBox box =
-          formBoxKey.currentContext!.findRenderObject() as RenderBox;
+      formBoxKey.currentContext!.findRenderObject() as RenderBox;
 
       if (box.hasSize) {
         setState(() {
@@ -118,10 +120,7 @@ abstract class RegisterUserScreenBaseState<T extends RegisterUserScreenBase>
           return SingleChildScrollView(
             child: Center(
               child: Container(
-                width: RegisterUserScreenResponsiveCalculator
-                    .calculateContainerWidth(
-                  context,
-                ),
+                width: HomeReferenceSelectUserWidthCalculator.getMaxWidth(context),
                 padding: const EdgeInsets.fromLTRB(
                     RegisterUserScreenResponsiveCalculator
                         .kContentHorizontalPadding,
@@ -331,7 +330,7 @@ abstract class RegisterUserScreenBaseState<T extends RegisterUserScreenBase>
       readOnly: true,
       enabled: false,
       decoration:
-          CustomInputDecoration.commonInputDecoration().copyWith(filled: true),
+      CustomInputDecoration.commonInputDecoration().copyWith(filled: true),
       style: CustomInputDecoration.textInputStyle,
     );
   }
@@ -347,12 +346,12 @@ abstract class RegisterUserScreenBaseState<T extends RegisterUserScreenBase>
       ),
       items: EducationLevel.values
           .map((level) => DropdownMenuItem(
-                value: level,
-                child: Text(
-                  getEducationLevelText(level),
-                  style: CustomInputDecoration.textInputStyle,
-                ),
-              ))
+        value: level,
+        child: Text(
+          getEducationLevelText(level),
+          style: CustomInputDecoration.textInputStyle,
+        ),
+      ))
           .toList(),
       onChanged: onEducationLevelChanged,
       validator: validateEducationLevelField,
