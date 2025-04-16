@@ -22,7 +22,8 @@ class UserProfileController extends GetxController {
   Future<void> loadProfiles() async {
     isLoading.value = true;
     try {
-      final allProfiles = await repository.getAllProfiles();
+      final allProfiles = fakeUserProfiles;
+      //await repository.getAllProfiles(); //TODO remove this
       profiles.value = allProfiles;
     } finally {
       isLoading.value = false;

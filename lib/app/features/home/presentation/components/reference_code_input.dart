@@ -8,6 +8,7 @@ import 'package:msdtmt/app/config/themes/AppTextStyle.dart';
 import 'package:msdtmt/app/utils/helpers/app_helpers.dart';
 import '../../../../config/themes/app_text_style_base.dart';
 import '../../../../config/translation/app_translations.dart';
+import '../../domain/usecases/home_reference_select_user_width_calculator.dart';
 import '../controllers/reference_code_controller.dart';
 
 class UpperCaseTextFormatter extends TextInputFormatter {
@@ -76,53 +77,6 @@ class _ReferenceCodeInputState extends State<ReferenceCodeInput> {
     );
   }
 
-  double _getMaxWidth(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final isLandscape =
-        MediaQuery.of(context).orientation == Orientation.landscape;
-    if (isLandscape) {
-      return _getLandScapeMaxWidth(screenWidth);
-    } else {
-      return _getPortraitMaxWidth(screenWidth);
-    }
-  }
-
-  double _getLandScapeMaxWidth(double screenWidth) {
-    final deviceType = DeviceHelper.deviceType;
-    switch (deviceType) {
-      case DeviceType.largeTablet:
-        return screenWidth * 0.5;
-      case DeviceType.mediumTablet:
-        return screenWidth * 0.5;
-      case DeviceType.smallTablet:
-        return screenWidth * 0.5;
-      case DeviceType.largePhone:
-        return screenWidth * 0.5;
-      case DeviceType.mediumPhone:
-        return screenWidth * 0.6;
-      case DeviceType.smallPhone:
-        return screenWidth * 0.9;
-    }
-  }
-
-  double _getPortraitMaxWidth(double screenWidth) {
-    final deviceType = DeviceHelper.deviceType;
-    switch (deviceType) {
-      case DeviceType.largeTablet:
-        return screenWidth * 0.55;
-      case DeviceType.mediumTablet:
-        return screenWidth * 0.65;
-      case DeviceType.smallTablet:
-        return screenWidth * 0.7;
-      case DeviceType.largePhone:
-        return screenWidth;
-      case DeviceType.mediumPhone:
-        return screenWidth;
-      case DeviceType.smallPhone:
-        return screenWidth;
-    }
-  }
-
   double _getIconSize() {
     if (DeviceHelper.isTablet) {
       return 30.0;
@@ -175,7 +129,7 @@ class _ReferenceCodeInputState extends State<ReferenceCodeInput> {
   Widget build(BuildContext context) {
     final hasLabel =
         mainFocusNode.hasFocus || mainCodeController.text.isNotEmpty;
-    final maxWidth = _getMaxWidth(context);
+    final maxWidth = HomeReferenceSelectUserWidthCalculator.getMaxWidth(context);
 
     return Obx(() {
       final isReadOnly = controller.isValidated.value;
