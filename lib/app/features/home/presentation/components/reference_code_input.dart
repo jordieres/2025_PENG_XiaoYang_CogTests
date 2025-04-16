@@ -145,7 +145,7 @@ class _ReferenceCodeInputState extends State<ReferenceCodeInput> {
                 height: 84,
                 decoration: BoxDecoration(
                   color:
-                      AppColors.getPrimaryBlueDependIsDarkMode(Get.isDarkMode),
+                      AppColors.getPrimaryBlueDependIsDarkMode(),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 padding: const EdgeInsets.symmetric(vertical: 12),
@@ -223,7 +223,7 @@ class _ReferenceCodeInputState extends State<ReferenceCodeInput> {
               top: -9,
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
-                color: AppColors.getPrimaryBlueDependIsDarkMode(Get.isDarkMode),
+                color: AppColors.getPrimaryBlueDependIsDarkMode(),
                 child: Text(ReferenceCodeInputText.label.tr,
                     style: TextStyleBase.bodyM.copyWith(
                       color: errorMessage != null && !isReadOnly

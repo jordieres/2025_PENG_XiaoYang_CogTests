@@ -1,6 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 class AppColors {
   // Light mode colors
@@ -63,8 +65,9 @@ class AppColors {
   static const Color customPrimaryButtonDisabledTextColorDark =
       Color(0xFF616161);
 
-  static Color getPrimaryBlueDependIsDarkMode(bool isDarkMode) {
-    if (isDarkMode) {
+  static Color getPrimaryBlueDependIsDarkMode({bool? isDarkMode}) {
+    final isDark = isDarkMode ?? Get.isDarkMode;
+    if (isDark) {
       return _primaryBlueDark;
     } else {
       return _primaryBlue;
