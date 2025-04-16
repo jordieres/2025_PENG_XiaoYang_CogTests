@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-
 import 'AppColors.dart';
 import 'app_text_style_base.dart';
 
@@ -11,7 +8,7 @@ class CustomInputDecoration {
   static final _BORDER_WIDTH = 2.0;
 
   static final focusColor =
-      AppColors.getPrimaryBlueDependIsDarkMode(Get.isDarkMode);
+      AppColors.getPrimaryBlueDependIsDarkMode();
 
   static InputDecoration commonInputDecoration() {
     return InputDecoration(
@@ -44,6 +41,6 @@ class CustomInputDecoration {
   static var textInputStyle = TextStyleBase.bodyM.copyWith();
 
   static var textReadOnlyStyle = TextStyleBase.bodyM.copyWith(
-    color: AppColors.mainBlackText.withOpacity(0.5),
+    color: AppColors.mainBlackText.withAlpha(127),
   );
 }
