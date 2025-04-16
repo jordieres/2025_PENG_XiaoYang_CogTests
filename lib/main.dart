@@ -6,7 +6,7 @@ import 'app/config/routes/app_route_observer.dart';
 import 'app/config/themes/app_theme.dart';
 import 'app/config/themes/theme_controller.dart';
 import 'app/config/translation/app_translations.dart';
-import 'app/features/home/presentation/screens/HomePage.dart';
+import 'app/features/home/presentation/screens/home_page.dart';
 import 'app/features/tm_tst/data/repositories/pending_result_repository_impl.dart';
 import 'app/features/tm_tst/domain/repository/pending_result_repository.dart';
 import 'app/features/tm_tst/domain/usecases/tmt_result/pending_result_use_case.dart';
