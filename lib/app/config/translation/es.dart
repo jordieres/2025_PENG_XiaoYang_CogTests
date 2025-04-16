@@ -322,7 +322,7 @@ class SpanishMessages extends BaseMessages {
 
   @override
   String get referenceCodeInputIncorrectReference =>
-      "La referencia no es correcta. Por favor verifíquela o contacte al neurólogo";
+      "La referencia no es correcta. Por favor verifíquela o contacte al neurólogo.";
 
   @override
   String get referenceCodeInputValidationError =>
