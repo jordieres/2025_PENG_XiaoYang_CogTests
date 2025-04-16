@@ -20,6 +20,16 @@ class TMTGameText {
       'tmt_game_tmt_help_tmt_secondary_button_text';
 }
 
+class HomeHeaderText {
+  static String selectThemeTitle = 'home_header_select_theme_title';
+  static String lightModeOption = 'home_header_light_mode_option';
+  static String darkModeOption = 'home_header_dark_mode_option';
+  static String systemThemeOption = 'home_header_system_theme_option';
+  static String english = 'language_name_english';
+  static String spanish = 'language_name_spanish';
+  static String chinese = 'language_name_chinese';
+}
+
 class TMTGamePracticesText {
   static String tmtGamePracticeTmtAThenBDialogTitle =
       'tmt_game_practice_tmt_a_then_b_dialog_title';
@@ -158,10 +168,13 @@ class SelectUserProfileDialogText {
   static String title = 'select_user_profile_dialog_title';
   static String noProfiles = 'select_user_profile_dialog_no_profiles';
   static String cancelButton = 'select_user_profile_dialog_cancel_button';
-  static String deleteConfirmTitle = 'select_user_profile_dialog_delete_confirm_title';
-  static String deleteConfirmContent = 'select_user_profile_dialog_delete_confirm_content';
+  static String deleteConfirmTitle =
+      'select_user_profile_dialog_delete_confirm_title';
+  static String deleteConfirmContent =
+      'select_user_profile_dialog_delete_confirm_content';
   static String deleteButton = 'select_user_profile_dialog_delete_button';
-  static String cancelDeleteButton = 'select_user_profile_dialog_cancel_delete_button';
+  static String cancelDeleteButton =
+      'select_user_profile_dialog_cancel_delete_button';
 }
 
 class SelectUserDropdownText {
@@ -193,6 +206,21 @@ abstract class BaseMessages {
   String get tmtGameTmtHelpTmtPrimaryButtonText;
 
   String get tmtGameTmtHelpTmtSecondaryButtonText;
+
+  //--------------------------------------------Home Header Text------------------------------------------------------
+  String get homeHeaderSelectThemeTitle;
+
+  String get homeHeaderLightModeOption;
+
+  String get homeHeaderDarkModeOption;
+
+  String get homeHeaderSystemThemeOption;
+
+  String get languageNameEnglish;
+
+  String get languageNameSpanish;
+
+  String get languageNameChinese;
 
   //--------------------------------------------TMT Practice Text------------------------------------------------------
 
@@ -399,171 +427,187 @@ abstract class BaseMessages {
   String get selectUserDropdownGreeting;
 
   Map<String, String> get messages => {
-    TMTGameText.tmtGameCircleBegin: tmtGameCircleBegin,
-    TMTGameText.tmtGameCircleEnd: tmtGameCircleEnd,
-    TMTGameText.tmtGamePartACompletedTitle: tmtGamePartACompletedTitle,
-    TMTGameText.tmtGamePartACompletedBody: tmtGamePartACompletedBody,
-    TMTGameText.tmtGamePartBCompletedConfirmationButton:
-    tmtGamePartBCompletedConfirmationButton,
-    TMTGameText.tmtGameTmtScreenAppBarTime: tmtGameTmtScreenAppBarTime,
-    TMTGameText.tmtGameTmtHelpTmtATitle: tmtGameTmtHelpTmtATitle,
-    TMTGameText.tmtGameTmtHelpTmtADescription:
-    tmtGameTmtHelpTmtADescription,
-    TMTGameText.tmtGameTmtHelpTmtBTitle: tmtGameTmtHelpTmtBTitle,
-    TMTGameText.tmtGameTmtHelpTmtBDescription:
-    tmtGameTmtHelpTmtBDescription,
-    TMTGameText.tmtGameTmtHelpTmtPrimaryButtonText:
-    tmtGameTmtHelpTmtPrimaryButtonText,
-    TMTGameText.tmtGameTmtHelpTmtSecondaryButtonText:
-    tmtGameTmtHelpTmtSecondaryButtonText,
-    //--------------------------------------------TMT Practice Text------------------------------------------------------
-    TMTGamePracticesText.tmtGamePracticeTmtAThenBDialogTitle:
-    tmtGamePracticeTmtAThenBDialogTitle,
-    TMTGamePracticesText.tmtGamePracticeTmtAThenBDialogCancelButtonText:
-    tmtGamePracticeTmtAThenBDialogCancelButtonText,
-    TMTGamePracticesText.tmtGamePracticeTmtAThenBDialogPrimaryButtonText:
-    tmtGamePracticeTmtAThenBDialogPrimaryButtonText,
-    TMTGamePracticesText.tmtGamePracticeOnlyTmtAOrTmtBDialogTitle:
-    tmtGamePracticeOnlyTmtAOrTmtBDialogTitle,
-    TMTGamePracticesText
-        .tmtGamePracticeOnlyTmtAOrTmtBDialogCancelButtonText:
-    tmtGamePracticeOnlyTmtAOrTmtBDialogCancelButtonText,
-    TMTGamePracticesText
-        .tmtGamePracticeOnlyTmtAOrTmtBDialogPrimaryButtonText:
-    tmtGamePracticeOnlyTmtAOrTmtBDialogPrimaryButtonText,
-    TMTGamePracticesText.tmtGamePracticeTmtAPageTitle:
-    tmtGamePracticeTmtAPageTitle,
-    TMTGamePracticesText.tmtGamePracticeTmtBPageTitle:
-    tmtGamePracticeTmtBPageTitle,
-    //--------------------------------------------TMT Select Hand Dialog Text------------------------------------------------------
-    TmtSelectHandDialogText.title: tmtSelectHandDialogTitle,
-    TmtSelectHandDialogText.content: tmtSelectHandDialogContent,
-    TmtSelectHandDialogText.rightHandButtonText:
-    tmtSelectHandDialogRightHandButtonText,
-    TmtSelectHandDialogText.leftHandButtonText:
-    tmtSelectHandDialogLeftHandButtonText,
-    //--------------------------------------------Select Mode Practice Or Test Screen Text------------------------------------------------------
-    SelectModePracticeOrTestText.title: selectModePracticeOrTestTitle,
-    SelectModePracticeOrTestText.questionText:
-    selectModePracticeOrTestQuestionText,
-    SelectModePracticeOrTestText.practiceButtonText:
-    selectModePracticeOrTestPracticeButtonText,
-    SelectModePracticeOrTestText.testButtonText:
-    selectModePracticeOrTestTestButtonText,
-    SelectModePracticeOrTestText.practiceModeTitle:
-    selectModePracticeOrTestPracticeModeTitle,
-    SelectModePracticeOrTestText.practiceModeContent:
-    selectModePracticeOrTestPracticeModeContent,
-    SelectModePracticeOrTestText.testModeTitle:
-    selectModePracticeOrTestTestModeTitle,
-    SelectModePracticeOrTestText.testModeContent:
-    selectModePracticeOrTestTestModeContent,
-    SelectModePracticeOrTestText.buttonUnderstood:
-    selectModePracticeOrTestButtonUnderstood,
+        TMTGameText.tmtGameCircleBegin: tmtGameCircleBegin,
+        TMTGameText.tmtGameCircleEnd: tmtGameCircleEnd,
+        TMTGameText.tmtGamePartACompletedTitle: tmtGamePartACompletedTitle,
+        TMTGameText.tmtGamePartACompletedBody: tmtGamePartACompletedBody,
+        TMTGameText.tmtGamePartBCompletedConfirmationButton:
+            tmtGamePartBCompletedConfirmationButton,
+        TMTGameText.tmtGameTmtScreenAppBarTime: tmtGameTmtScreenAppBarTime,
+        TMTGameText.tmtGameTmtHelpTmtATitle: tmtGameTmtHelpTmtATitle,
+        TMTGameText.tmtGameTmtHelpTmtADescription:
+            tmtGameTmtHelpTmtADescription,
+        TMTGameText.tmtGameTmtHelpTmtBTitle: tmtGameTmtHelpTmtBTitle,
+        TMTGameText.tmtGameTmtHelpTmtBDescription:
+            tmtGameTmtHelpTmtBDescription,
+        TMTGameText.tmtGameTmtHelpTmtPrimaryButtonText:
+            tmtGameTmtHelpTmtPrimaryButtonText,
+        TMTGameText.tmtGameTmtHelpTmtSecondaryButtonText:
+            tmtGameTmtHelpTmtSecondaryButtonText,
 
-    //--------------------------------------------TMT Result Screen Text------------------------------------------------------
-    TMTResultScreen.title: tmtResultScreenTitle,
-    TMTResultScreen.sessionText: tmtResultScreenSessionText,
-    TMTResultScreen.tmtATitle: tmtResultScreenTmtATitle,
-    TMTResultScreen.tmtBTitle: tmtResultScreenTmtBTitle,
-    TMTResultScreen.durationLabel: tmtResultScreenDurationLabel,
-    TMTResultScreen.errorsLabel: tmtResultScreenErrorsLabel,
-    TMTResultScreen.thanksMessage: tmtResultScreenThanksMessage,
-    TMTResultScreen.finishButton: tmtResultScreenFinishButton,
-    TMTResultScreen.loadingResults: tmtResultScreenLoadingResults,
-    TMTResultScreen.secondsUnit: tmtResultScreenSecondsUnit,
-    TMTResultScreen.errorMessage: tmtResultScreenErrorMessage,
-    //--------------------------------------------Register User Screen Text------------------------------------------------------
-    TMTRegisterUserText.title: registerUserTitle,
-    TMTRegisterUserText.nicknameLabel: registerUserNicknameLabel,
-    TMTRegisterUserText.nicknameHint: registerUserNicknameHint,
-    TMTRegisterUserText.nicknameError: registerUserNicknameError,
-    TMTRegisterUserText.nicknameExistsError:
-    registerUserNicknameExistsError,
-    TMTRegisterUserText.sexLabel: registerUserSexLabel,
-    TMTRegisterUserText.sexMale: registerUserSexMale,
-    TMTRegisterUserText.sexFemale: registerUserSexFemale,
-    TMTRegisterUserText.sexError: registerUserSexError,
-    TMTRegisterUserText.birthDateLabel: registerUserBirthDateLabel,
-    TMTRegisterUserText.birthDateHint: registerUserBirthDateHint,
-    TMTRegisterUserText.birthDateError: registerUserBirthDateError,
-    TMTRegisterUserText.birthDatePickerTitle:
-    registerUserBirthDatePickerTitle,
-    TMTRegisterUserText.birthDatePickerCancel:
-    registerUserBirthDatePickerCancel,
-    TMTRegisterUserText.birthDatePickerConfirm:
-    registerUserBirthDatePickerConfirm,
-    TMTRegisterUserText.educationLabel: registerUserEducationLabel,
-    TMTRegisterUserText.educationHint: registerUserEducationHint,
-    TMTRegisterUserText.educationError: registerUserEducationError,
-    TMTRegisterUserText.educationPrimary: registerUserEducationPrimary,
-    TMTRegisterUserText.educationSecondary: registerUserEducationSecondary,
-    TMTRegisterUserText.educationGraduate: registerUserEducationGraduate,
-    TMTRegisterUserText.educationMaster: registerUserEducationMaster,
-    TMTRegisterUserText.educationDoctorate: registerUserEducationDoctorate,
-    TMTRegisterUserText.saveButton: registerUserSaveButton,
-    TMTRegisterUserText.cancelButton: registerUserCancelButton,
-    TMTRegisterUserText.formError: registerUserFormError,
-    TMTRegisterUserText.saveSuccess: registerUserSaveSuccess,
-    TMTRegisterUserText.saveError: registerUserSaveError,
+        //--------------------------------------------Home Header Text------------------------------------------------------
+        HomeHeaderText.selectThemeTitle: homeHeaderSelectThemeTitle,
+        HomeHeaderText.lightModeOption: homeHeaderLightModeOption,
+        HomeHeaderText.darkModeOption: homeHeaderDarkModeOption,
+        HomeHeaderText.systemThemeOption: homeHeaderSystemThemeOption,
+        HomeHeaderText.english: languageNameEnglish,
+        HomeHeaderText.spanish: languageNameSpanish,
+        HomeHeaderText.chinese: languageNameChinese,
 
-    //--------------------------------------------Current User Data Screen Text------------------------------------------------------
-    CurrentUserDataScreenText.title: currentUserDataScreenTitle,
-    CurrentUserDataScreenText.noUserFound: currentUserDataScreenNoUserFound,
-    CurrentUserDataScreenText.createProfile:
-    currentUserDataScreenCreateProfile,
-    CurrentUserDataScreenText.deleteProfile:
-    currentUserDataScreenDeleteProfile,
-    CurrentUserDataScreenText.backButton: currentUserDataScreenBackButton,
-    CurrentUserDataScreenText.confirmDeleteTitle:
-    currentUserDataScreenConfirmDeleteTitle,
-    CurrentUserDataScreenText.confirmDeleteContent:
-    currentUserDataScreenConfirmDeleteContent,
-    CurrentUserDataScreenText.confirmDeleteButton:
-    currentUserDataScreenConfirmDeleteButton,
-    CurrentUserDataScreenText.cancelButton:
-    currentUserDataScreenCancelButton,
-    CurrentUserDataScreenText.deleteSuccess:
-    currentUserDataScreenDeleteSuccess,
-    CurrentUserDataScreenText.deleteError: currentUserDataScreenDeleteError,
+        //--------------------------------------------TMT Practice Text------------------------------------------------------
+        TMTGamePracticesText.tmtGamePracticeTmtAThenBDialogTitle:
+            tmtGamePracticeTmtAThenBDialogTitle,
+        TMTGamePracticesText.tmtGamePracticeTmtAThenBDialogCancelButtonText:
+            tmtGamePracticeTmtAThenBDialogCancelButtonText,
+        TMTGamePracticesText.tmtGamePracticeTmtAThenBDialogPrimaryButtonText:
+            tmtGamePracticeTmtAThenBDialogPrimaryButtonText,
+        TMTGamePracticesText.tmtGamePracticeOnlyTmtAOrTmtBDialogTitle:
+            tmtGamePracticeOnlyTmtAOrTmtBDialogTitle,
+        TMTGamePracticesText
+                .tmtGamePracticeOnlyTmtAOrTmtBDialogCancelButtonText:
+            tmtGamePracticeOnlyTmtAOrTmtBDialogCancelButtonText,
+        TMTGamePracticesText
+                .tmtGamePracticeOnlyTmtAOrTmtBDialogPrimaryButtonText:
+            tmtGamePracticeOnlyTmtAOrTmtBDialogPrimaryButtonText,
+        TMTGamePracticesText.tmtGamePracticeTmtAPageTitle:
+            tmtGamePracticeTmtAPageTitle,
+        TMTGamePracticesText.tmtGamePracticeTmtBPageTitle:
+            tmtGamePracticeTmtBPageTitle,
+        //--------------------------------------------TMT Select Hand Dialog Text------------------------------------------------------
+        TmtSelectHandDialogText.title: tmtSelectHandDialogTitle,
+        TmtSelectHandDialogText.content: tmtSelectHandDialogContent,
+        TmtSelectHandDialogText.rightHandButtonText:
+            tmtSelectHandDialogRightHandButtonText,
+        TmtSelectHandDialogText.leftHandButtonText:
+            tmtSelectHandDialogLeftHandButtonText,
+        //--------------------------------------------Select Mode Practice Or Test Screen Text------------------------------------------------------
+        SelectModePracticeOrTestText.title: selectModePracticeOrTestTitle,
+        SelectModePracticeOrTestText.questionText:
+            selectModePracticeOrTestQuestionText,
+        SelectModePracticeOrTestText.practiceButtonText:
+            selectModePracticeOrTestPracticeButtonText,
+        SelectModePracticeOrTestText.testButtonText:
+            selectModePracticeOrTestTestButtonText,
+        SelectModePracticeOrTestText.practiceModeTitle:
+            selectModePracticeOrTestPracticeModeTitle,
+        SelectModePracticeOrTestText.practiceModeContent:
+            selectModePracticeOrTestPracticeModeContent,
+        SelectModePracticeOrTestText.testModeTitle:
+            selectModePracticeOrTestTestModeTitle,
+        SelectModePracticeOrTestText.testModeContent:
+            selectModePracticeOrTestTestModeContent,
+        SelectModePracticeOrTestText.buttonUnderstood:
+            selectModePracticeOrTestButtonUnderstood,
 
-    //--------------------------------------------User Result History Screen Text------------------------------------------------------
-    UserResultHistoryScreenText.title: userResultHistoryScreenTitle,
-    UserResultHistoryScreenText.noData: userResultHistoryScreenNoData,
-    UserResultHistoryScreenText.dateHeader:
-    userResultHistoryScreenDateHeader,
-    UserResultHistoryScreenText.referenceHeader:
-    userResultHistoryScreenReferenceHeader,
-    UserResultHistoryScreenText.tmtAHeader:
-    userResultHistoryScreenTmtAHeader,
-    UserResultHistoryScreenText.tmtBHeader:
-    userResultHistoryScreenTmtBHeader,
-    UserResultHistoryScreenText.secondsUnit:
-    userResultHistoryScreenSecondsUnit,
-    //--------------------------------------------Reference Code Input Text------------------------------------------------------
-    ReferenceCodeInputText.label: referenceCodeInputLabel,
-    ReferenceCodeInputText.bothFieldsRequired:
-    referenceCodeInputBothFieldsRequired,
-    ReferenceCodeInputText.enterReferenceCode:
-    referenceCodeInputEnterReferenceCode,
-    ReferenceCodeInputText.codeAlreadyUsed:
-    referenceCodeInputCodeAlreadyUsed,
-    ReferenceCodeInputText.validReferenceCode:
-    referenceCodeInputValidReferenceCode,
-    ReferenceCodeInputText.incorrectReference:
-    referenceCodeInputIncorrectReference,
-    ReferenceCodeInputText.validationError:
-    referenceCodeInputValidationError,
-    //--------------------------------------------Select User Profile Dialog Text------------------------------------------------------
-    SelectUserProfileDialogText.title: selectUserProfileDialogTitle,
-    SelectUserProfileDialogText.noProfiles: selectUserProfileDialogNoProfiles,
-    SelectUserProfileDialogText.cancelButton: selectUserProfileDialogCancelButton,
-    SelectUserProfileDialogText.deleteConfirmTitle: selectUserProfileDialogDeleteConfirmTitle,
-    SelectUserProfileDialogText.deleteConfirmContent: selectUserProfileDialogDeleteConfirmContent,
-    SelectUserProfileDialogText.deleteButton: selectUserProfileDialogDeleteButton,
-    SelectUserProfileDialogText.cancelDeleteButton: selectUserProfileDialogCancelDeleteButton,
-    //--------------------------------------------Select User Dropdown Text------------------------------------------------------
-    SelectUserDropdownText.createUser: selectUserDropdownCreateUser,
-    SelectUserDropdownText.greeting: selectUserDropdownGreeting,
-  };
+        //--------------------------------------------TMT Result Screen Text------------------------------------------------------
+        TMTResultScreen.title: tmtResultScreenTitle,
+        TMTResultScreen.sessionText: tmtResultScreenSessionText,
+        TMTResultScreen.tmtATitle: tmtResultScreenTmtATitle,
+        TMTResultScreen.tmtBTitle: tmtResultScreenTmtBTitle,
+        TMTResultScreen.durationLabel: tmtResultScreenDurationLabel,
+        TMTResultScreen.errorsLabel: tmtResultScreenErrorsLabel,
+        TMTResultScreen.thanksMessage: tmtResultScreenThanksMessage,
+        TMTResultScreen.finishButton: tmtResultScreenFinishButton,
+        TMTResultScreen.loadingResults: tmtResultScreenLoadingResults,
+        TMTResultScreen.secondsUnit: tmtResultScreenSecondsUnit,
+        TMTResultScreen.errorMessage: tmtResultScreenErrorMessage,
+        //--------------------------------------------Register User Screen Text------------------------------------------------------
+        TMTRegisterUserText.title: registerUserTitle,
+        TMTRegisterUserText.nicknameLabel: registerUserNicknameLabel,
+        TMTRegisterUserText.nicknameHint: registerUserNicknameHint,
+        TMTRegisterUserText.nicknameError: registerUserNicknameError,
+        TMTRegisterUserText.nicknameExistsError:
+            registerUserNicknameExistsError,
+        TMTRegisterUserText.sexLabel: registerUserSexLabel,
+        TMTRegisterUserText.sexMale: registerUserSexMale,
+        TMTRegisterUserText.sexFemale: registerUserSexFemale,
+        TMTRegisterUserText.sexError: registerUserSexError,
+        TMTRegisterUserText.birthDateLabel: registerUserBirthDateLabel,
+        TMTRegisterUserText.birthDateHint: registerUserBirthDateHint,
+        TMTRegisterUserText.birthDateError: registerUserBirthDateError,
+        TMTRegisterUserText.birthDatePickerTitle:
+            registerUserBirthDatePickerTitle,
+        TMTRegisterUserText.birthDatePickerCancel:
+            registerUserBirthDatePickerCancel,
+        TMTRegisterUserText.birthDatePickerConfirm:
+            registerUserBirthDatePickerConfirm,
+        TMTRegisterUserText.educationLabel: registerUserEducationLabel,
+        TMTRegisterUserText.educationHint: registerUserEducationHint,
+        TMTRegisterUserText.educationError: registerUserEducationError,
+        TMTRegisterUserText.educationPrimary: registerUserEducationPrimary,
+        TMTRegisterUserText.educationSecondary: registerUserEducationSecondary,
+        TMTRegisterUserText.educationGraduate: registerUserEducationGraduate,
+        TMTRegisterUserText.educationMaster: registerUserEducationMaster,
+        TMTRegisterUserText.educationDoctorate: registerUserEducationDoctorate,
+        TMTRegisterUserText.saveButton: registerUserSaveButton,
+        TMTRegisterUserText.cancelButton: registerUserCancelButton,
+        TMTRegisterUserText.formError: registerUserFormError,
+        TMTRegisterUserText.saveSuccess: registerUserSaveSuccess,
+        TMTRegisterUserText.saveError: registerUserSaveError,
+
+        //--------------------------------------------Current User Data Screen Text------------------------------------------------------
+        CurrentUserDataScreenText.title: currentUserDataScreenTitle,
+        CurrentUserDataScreenText.noUserFound: currentUserDataScreenNoUserFound,
+        CurrentUserDataScreenText.createProfile:
+            currentUserDataScreenCreateProfile,
+        CurrentUserDataScreenText.deleteProfile:
+            currentUserDataScreenDeleteProfile,
+        CurrentUserDataScreenText.backButton: currentUserDataScreenBackButton,
+        CurrentUserDataScreenText.confirmDeleteTitle:
+            currentUserDataScreenConfirmDeleteTitle,
+        CurrentUserDataScreenText.confirmDeleteContent:
+            currentUserDataScreenConfirmDeleteContent,
+        CurrentUserDataScreenText.confirmDeleteButton:
+            currentUserDataScreenConfirmDeleteButton,
+        CurrentUserDataScreenText.cancelButton:
+            currentUserDataScreenCancelButton,
+        CurrentUserDataScreenText.deleteSuccess:
+            currentUserDataScreenDeleteSuccess,
+        CurrentUserDataScreenText.deleteError: currentUserDataScreenDeleteError,
+
+        //--------------------------------------------User Result History Screen Text------------------------------------------------------
+        UserResultHistoryScreenText.title: userResultHistoryScreenTitle,
+        UserResultHistoryScreenText.noData: userResultHistoryScreenNoData,
+        UserResultHistoryScreenText.dateHeader:
+            userResultHistoryScreenDateHeader,
+        UserResultHistoryScreenText.referenceHeader:
+            userResultHistoryScreenReferenceHeader,
+        UserResultHistoryScreenText.tmtAHeader:
+            userResultHistoryScreenTmtAHeader,
+        UserResultHistoryScreenText.tmtBHeader:
+            userResultHistoryScreenTmtBHeader,
+        UserResultHistoryScreenText.secondsUnit:
+            userResultHistoryScreenSecondsUnit,
+        //--------------------------------------------Reference Code Input Text------------------------------------------------------
+        ReferenceCodeInputText.label: referenceCodeInputLabel,
+        ReferenceCodeInputText.bothFieldsRequired:
+            referenceCodeInputBothFieldsRequired,
+        ReferenceCodeInputText.enterReferenceCode:
+            referenceCodeInputEnterReferenceCode,
+        ReferenceCodeInputText.codeAlreadyUsed:
+            referenceCodeInputCodeAlreadyUsed,
+        ReferenceCodeInputText.validReferenceCode:
+            referenceCodeInputValidReferenceCode,
+        ReferenceCodeInputText.incorrectReference:
+            referenceCodeInputIncorrectReference,
+        ReferenceCodeInputText.validationError:
+            referenceCodeInputValidationError,
+        //--------------------------------------------Select User Profile Dialog Text------------------------------------------------------
+        SelectUserProfileDialogText.title: selectUserProfileDialogTitle,
+        SelectUserProfileDialogText.noProfiles:
+            selectUserProfileDialogNoProfiles,
+        SelectUserProfileDialogText.cancelButton:
+            selectUserProfileDialogCancelButton,
+        SelectUserProfileDialogText.deleteConfirmTitle:
+            selectUserProfileDialogDeleteConfirmTitle,
+        SelectUserProfileDialogText.deleteConfirmContent:
+            selectUserProfileDialogDeleteConfirmContent,
+        SelectUserProfileDialogText.deleteButton:
+            selectUserProfileDialogDeleteButton,
+        SelectUserProfileDialogText.cancelDeleteButton:
+            selectUserProfileDialogCancelDeleteButton,
+        //--------------------------------------------Select User Dropdown Text------------------------------------------------------
+        SelectUserDropdownText.createUser: selectUserDropdownCreateUser,
+        SelectUserDropdownText.greeting: selectUserDropdownGreeting,
+      };
 }

@@ -42,17 +42,17 @@ class HomeHeader extends StatelessWidget {
   }
 
   String _getDisplayTextForLocale(String? languageCode) {
-    if (languageCode == null) return 'ES';
+    if (languageCode == null) return HomeHeaderText.spanish.tr;
 
     switch (languageCode.toLowerCase()) {
-      case 'en':
-        return 'EN';
-      case 'es':
-        return 'ES';
-      case 'zh':
-        return '中文';
+      case AppTranslations.ENGLISH_LANGUAGE_CODE:
+        return HomeHeaderText.english.tr;
+      case AppTranslations.SPANISH_LANGUAGE_CODE:
+        return HomeHeaderText.spanish.tr;
+      case AppTranslations.CHINESE_LANGUAGE_CODE:
+        return HomeHeaderText.chinese.tr;
       default:
-        return languageCode.toUpperCase();
+        return HomeHeaderText.spanish.tr;
     }
   }
 
@@ -106,15 +106,18 @@ class HomeHeader extends StatelessWidget {
       items: [
         PopupMenuItem(
           onTap: () => Get.updateLocale(AppTranslations.ENGLISH),
-          child: Text('EN', style: TextStyle(color: Colors.white)),
+          child: Text(HomeHeaderText.english.tr,
+              style: TextStyle(color: Colors.white)),
         ),
         PopupMenuItem(
           onTap: () => Get.updateLocale(AppTranslations.SPANISH),
-          child: Text('ES', style: TextStyle(color: Colors.white)),
+          child: Text(HomeHeaderText.spanish.tr,
+              style: TextStyle(color: Colors.white)),
         ),
         PopupMenuItem(
           onTap: () => Get.updateLocale(AppTranslations.CHINIES),
-          child: Text('中文', style: TextStyle(color: Colors.white)),
+          child: Text(HomeHeaderText.chinese.tr,
+              style: TextStyle(color: Colors.white)),
         ),
       ],
     );
@@ -124,13 +127,13 @@ class HomeHeader extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Select Theme'),
+        title: Text(HomeHeaderText.selectThemeTitle.tr),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
               leading: const Icon(Icons.light_mode),
-              title: const Text('Light Mode'),
+              title: Text(HomeHeaderText.lightModeOption.tr),
               onTap: () {
                 controller.setLightMode();
                 Navigator.pop(context);
@@ -138,7 +141,7 @@ class HomeHeader extends StatelessWidget {
             ),
             ListTile(
               leading: const Icon(Icons.dark_mode),
-              title: const Text('Dark Mode'),
+              title: Text(HomeHeaderText.darkModeOption.tr),
               onTap: () {
                 controller.setDarkMode();
                 Navigator.pop(context);
@@ -146,7 +149,7 @@ class HomeHeader extends StatelessWidget {
             ),
             ListTile(
               leading: const Icon(Icons.brightness_auto),
-              title: const Text('System Theme'),
+              title: Text(HomeHeaderText.systemThemeOption.tr),
               onTap: () {
                 controller.setSystemTheme();
                 Navigator.pop(context);
