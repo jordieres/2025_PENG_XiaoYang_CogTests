@@ -6,8 +6,8 @@ import '../../../../utils/helpers/app_helpers.dart';
 class RegisterUserScreenResponsiveCalculator {
 
   static const double kContentTopPadding = 62.0;
-  static const double kContentHorizontalPadding = 16.0;
-  static const double kContentBottomPadding = 16.0;
+  static const double kContentHorizontalPadding = 24.0;
+  static const double kContentBottomPadding = 24.0;
   static const double kDefaultSpacing = 42.0;
 
   static double calculateContainerWidth(BuildContext context) {
