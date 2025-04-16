@@ -77,54 +77,54 @@ class _UserResultHistoryScreenState extends State<UserResultHistoryScreen> {
         return Center(
           child: SizedBox(
             width: contentWidth,
-            child: _buildResultsTable(),
+            child: _buildResultsTable(context),
           ),
         );
       }),
     );
   }
 
-  Widget _buildResultsTable() {
+  Widget _buildResultsTable(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
         children: [
           Container(
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.surface,
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(8),
                 topRight: Radius.circular(8),
               ),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey.withAlpha(25),
+                  color: Theme.of(context).shadowColor.withOpacity(0.1),
                   spreadRadius: 1,
                   blurRadius: 4,
                   offset: const Offset(0, 1),
                 ),
               ],
             ),
-            child: _buildTableHeader(),
+            child: _buildTableHeader(context),
           ),
           Expanded(
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Theme.of(context).colorScheme.surface,
                 borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(8),
                   bottomRight: Radius.circular(8),
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withAlpha(25),
+                    color: Theme.of(context).shadowColor.withOpacity(0.1),
                     spreadRadius: 1,
                     blurRadius: 4,
                     offset: const Offset(0, 1),
                   ),
                 ],
               ),
-              child: _buildTableBody(),
+              child: _buildTableBody(context),
             ),
           ),
         ],
@@ -132,12 +132,12 @@ class _UserResultHistoryScreenState extends State<UserResultHistoryScreen> {
     );
   }
 
-  Widget _buildTableHeader() {
+  Widget _buildTableHeader(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-      decoration: const BoxDecoration(
-        color: Color(0xFFD1D1D1), // Light gray background for header
-        borderRadius: BorderRadius.only(
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.primaryContainer,
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(8),
           topRight: Radius.circular(8),
         ),
@@ -179,7 +179,7 @@ class _UserResultHistoryScreenState extends State<UserResultHistoryScreen> {
     );
   }
 
-  Widget _buildTableBody() {
+  Widget _buildTableBody(BuildContext context) {
     final dateFormat = getLocalizedDateFormat();
 
     return ListView.separated(
@@ -187,17 +187,20 @@ class _UserResultHistoryScreenState extends State<UserResultHistoryScreen> {
       physics: const AlwaysScrollableScrollPhysics(),
       shrinkWrap: true,
       itemCount: _controller.testResults.length,
-      separatorBuilder: (context, index) =>
-          const Divider(height: 1, thickness: 1),
+      separatorBuilder: (context, index) => Divider(
+        height: 1,
+        thickness: 1,
+        color: Theme.of(context).dividerColor,
+      ),
       itemBuilder: (context, index) {
         final result = _controller.testResults[index];
-        return _buildResultRow(result, dateFormat);
+        return _buildResultRow(context, result, dateFormat);
       },
     );
   }
 
   Widget _buildResultRow(
-      UserTestLocalDataResult result, DateFormat dateFormat) {
+      BuildContext context, UserTestLocalDataResult result, DateFormat dateFormat) {
     final secondsUnit = UserResultHistoryScreenText.secondsUnit.tr;
 
     return Container(
