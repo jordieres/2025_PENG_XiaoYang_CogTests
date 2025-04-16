@@ -111,7 +111,7 @@ class SelectUserDialog extends StatelessWidget {
           cancelButtonText: SelectUserProfileDialogText.cancelDeleteButton.tr,
           onPrimaryPressed: () {
             controller.deleteProfile(userId);
-            Get.back();
+            Navigator.of(context).pop();
           },
           onCancelPressed: () {
             Get.back();

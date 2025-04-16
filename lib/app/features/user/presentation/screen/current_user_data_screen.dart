@@ -3,11 +3,13 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:msdtmt/app/config/themes/app_text_style_base.dart';
 import 'package:msdtmt/app/shared_components/custom_dialog.dart';
+import '../../../../config/routes/app_pages.dart';
 import '../../../../config/themes/AppColors.dart';
 import '../../../../config/translation/app_translations.dart';
 import '../../../../shared_components/custom_app_bar.dart';
 import '../../../../shared_components/custom_primary_button.dart';
 import '../../../../shared_components/custom_secondary_button.dart';
+import '../../../../utils/mixins/app_mixins.dart';
 import '../../../../utils/ui/ui_utils.dart';
 import '../../domain/entities/user_profile.dart';
 import '../screen/user_screen_base.dart';
@@ -20,7 +22,8 @@ class CurrentUserDataScreen extends RegisterUserScreenBase {
 }
 
 class _CurrentUserDataScreenState
-    extends RegisterUserScreenBaseState<CurrentUserDataScreen> {
+    extends RegisterUserScreenBaseState<CurrentUserDataScreen>
+    with NavigationMixin {
   @override
   bool get isReadOnly => true;
 
@@ -124,8 +127,17 @@ class _CurrentUserDataScreenState
     });
 
     try {
+      final profiles = await controller.repository.getAllProfiles();
+      final isLastProfile = profiles.length <= 1;
+
       await controller.deleteProfile(currentProfile!.userId);
-      Get.back();
+
+      if (isLastProfile) {
+        navigateAllToHome();
+      } else {
+        Get.back();
+      }
+
       if (mounted) {
         AppSnackbar.showCustomSnackbar(
           context,
