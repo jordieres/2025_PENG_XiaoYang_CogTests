@@ -61,19 +61,24 @@ class SelectUserDialog extends StatelessWidget {
                     separatorBuilder: (context, index) => Divider(height: 1),
                     itemBuilder: (context, index) {
                       final profile = controller.profiles[index];
-                      return ListTile(
-                        title: Text(profile.nickname),
-                        trailing: IconButton(
-                          icon: Icon(Icons.delete),
-                          onPressed: () {
-                            _confirmDeleteProfile(
-                                context, profile.userId, profile.nickname);
-                          },
-                        ),
+                      return InkWell(
                         onTap: () {
                           onProfileSelected(profile.userId);
                           Get.back();
                         },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: ListTile(
+                            title: Text(profile.nickname),
+                            trailing: IconButton(
+                              icon: Icon(Icons.delete),
+                              onPressed: () {
+                                _confirmDeleteProfile(
+                                    context, profile.userId, profile.nickname);
+                              },
+                            ),
+                          ),
+                        ),
                       );
                     },
                   );
