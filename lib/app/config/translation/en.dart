@@ -320,6 +320,37 @@ class EnglishMessages extends BaseMessages {
 
   @override
   String get referenceCodeInputValidationError => "Error validating the code: ";
+
+  //--------------------------------------------Select User Profile Dialog Text------------------------------------------------------
+  @override
+  String get selectUserProfileDialogTitle => "Select profile";
+
+  @override
+  String get selectUserProfileDialogNoProfiles => "No profiles available";
+
+  @override
+  String get selectUserProfileDialogCancelButton => "Cancel";
+
+  @override
+  String get selectUserProfileDialogDeleteConfirmTitle => "Delete profile";
+
+  @override
+  String get selectUserProfileDialogDeleteConfirmContent =>
+      "Are you sure you want to delete the profile \"{user}\" ?";
+
+  @override
+  String get selectUserProfileDialogDeleteButton => "Delete";
+
+  @override
+  String get selectUserProfileDialogCancelDeleteButton => "Cancel";
+
+  //--------------------------------------------Select User Dropdown Text------------------------------------------------------
+  @override
+  String get selectUserDropdownCreateUser => "Create user";
+
+  @override
+  String get selectUserDropdownGreeting => "Hello, ";
+
 }
 
 final en = EnglishMessages();
