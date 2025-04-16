@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../config/translation/app_translations.dart';
 import '../../../../utils/ui/ui_utils.dart';
@@ -118,7 +117,7 @@ class SelectUserController extends UserProfileController {
       AppSnackbar.showCustomSnackbar(
         Get.context!,
         message,
-        backgroundColor: Colors.green.withAlpha(240),
+        backgroundColor: AppColors.testTMTCorrectCircleStroke.withAlpha(230),
       );
     }
   }
