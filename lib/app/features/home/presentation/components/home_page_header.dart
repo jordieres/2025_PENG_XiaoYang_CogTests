@@ -24,15 +24,15 @@ class HomeHeader extends StatelessWidget {
         Row(
           children: [
             Obx(() => IconButton(
-                  icon: Icon(
-                    themeController.isDarkMode
-                        ? Icons.dark_mode
-                        : Icons.light_mode,
-                  ),
-                  onPressed: () {
-                    _showThemeDialog(context, themeController);
-                  },
-                )),
+              icon: Icon(
+                themeController.isDarkMode
+                    ? Icons.dark_mode
+                    : Icons.light_mode,
+              ),
+              onPressed: () {
+                _showThemeDialog(context, themeController);
+              },
+            )),
             const SizedBox(width: 12),
             _buildLanguageSelector(context),
           ],
@@ -86,15 +86,16 @@ class HomeHeader extends StatelessWidget {
   void _showLanguageMenu(BuildContext context) {
     final RenderBox button = context.findRenderObject() as RenderBox;
     final RenderBox overlay =
-        Navigator.of(context).overlay!.context.findRenderObject() as RenderBox;
-    final RelativeRect position = RelativeRect.fromRect(
-      Rect.fromPoints(
-        button.localToGlobal(Offset(0, button.size.height), ancestor: overlay),
-        button.localToGlobal(
-            Offset(button.size.width, button.size.height + 150),
-            ancestor: overlay),
-      ),
-      Offset.zero & overlay.size,
+    Navigator.of(context).overlay!.context.findRenderObject() as RenderBox;
+
+    final buttonPosition = button.localToGlobal(Offset.zero, ancestor: overlay);
+    final double menuWidth = 120.0;
+
+    final RelativeRect position = RelativeRect.fromLTRB(
+      buttonPosition.dx + button.size.width - menuWidth,
+      buttonPosition.dy + button.size.height,
+      overlay.size.width - (buttonPosition.dx + button.size.width),
+      0,
     );
 
     showMenu(
