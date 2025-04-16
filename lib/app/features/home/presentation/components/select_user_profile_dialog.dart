@@ -24,7 +24,10 @@ class SelectUserDialog extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
       ),
       child: Container(
-        constraints: BoxConstraints(maxWidth: maxWidth),
+        constraints: BoxConstraints(
+          maxWidth: maxWidth,
+          maxHeight: MediaQuery.of(context).size.height * 0.8,
+        ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -38,42 +41,44 @@ class SelectUserDialog extends StatelessWidget {
             ),
             SizedBox(height: 42),
             Divider(height: 1),
-            Obx(() {
-              if (controller.isLoading.value) {
-                return Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Center(child: CircularProgressIndicator()),
-                );
-              } else if (controller.profiles.isEmpty) {
-                return Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Text('No hay perfiles disponibles'),
-                );
-              } else {
-                return ListView.separated(
-                  shrinkWrap: true,
-                  itemCount: controller.profiles.length,
-                  separatorBuilder: (context, index) => Divider(height: 1),
-                  itemBuilder: (context, index) {
-                    final profile = controller.profiles[index];
-                    return ListTile(
-                      title: Text(profile.nickname),
-                      trailing: IconButton(
-                        icon: Icon(Icons.delete),
-                        onPressed: () {
-                          _confirmDeleteProfile(
-                              context, profile.userId, profile.nickname);
+            Expanded(
+              child: Obx(() {
+                if (controller.isLoading.value) {
+                  return Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Center(child: CircularProgressIndicator()),
+                  );
+                } else if (controller.profiles.isEmpty) {
+                  return Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text('No hay perfiles disponibles'),
+                  );
+                } else {
+                  return ListView.separated(
+                    shrinkWrap: true,
+                    itemCount: controller.profiles.length,
+                    separatorBuilder: (context, index) => Divider(height: 1),
+                    itemBuilder: (context, index) {
+                      final profile = controller.profiles[index];
+                      return ListTile(
+                        title: Text(profile.nickname),
+                        trailing: IconButton(
+                          icon: Icon(Icons.delete),
+                          onPressed: () {
+                            _confirmDeleteProfile(
+                                context, profile.userId, profile.nickname);
+                          },
+                        ),
+                        onTap: () {
+                          onProfileSelected(profile.userId);
+                          Get.back();
                         },
-                      ),
-                      onTap: () {
-                        onProfileSelected(profile.userId);
-                        Get.back();
-                      },
-                    );
-                  },
-                );
-              }
-            }),
+                      );
+                    },
+                  );
+                }
+              }),
+            ),
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: SizedBox(
