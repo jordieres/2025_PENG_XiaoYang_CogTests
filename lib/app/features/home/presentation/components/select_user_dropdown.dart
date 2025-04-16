@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:msdtmt/app/features/home/presentation/components/select_user_profile_dialog.dart';
 import '../../../../config/routes/app_pages.dart';
 import '../../../../config/routes/app_route_observer.dart';
+import '../../../../config/translation/app_translations.dart';
 import '../../domain/usecases/home_reference_select_user_width_calculator.dart';
 import '../controllers/select_user_profile_controller.dart';
 
@@ -60,7 +61,7 @@ class SelectUserDropdownState extends State<SelectUserDropdown> {
   @override
   Widget build(BuildContext context) {
     final maxWidth = HomeReferenceSelectUserWidthCalculator.getMaxWidth(context);
-    
+
     return Container(
       constraints: BoxConstraints(maxWidth: maxWidth),
       child: Obx(() {
@@ -81,7 +82,7 @@ class SelectUserDropdownState extends State<SelectUserDropdown> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Crear usuario",
+                    SelectUserDropdownText.createUser.tr,
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.grey.shade600,
@@ -97,7 +98,7 @@ class SelectUserDropdownState extends State<SelectUserDropdown> {
           return Row(
             children: [
               Text(
-                "Hola, ",
+                SelectUserDropdownText.greeting.tr,
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,

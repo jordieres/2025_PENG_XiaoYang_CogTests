@@ -304,6 +304,35 @@ class ChineseMessages extends BaseMessages {
 
   @override
   String get referenceCodeInputValidationError => "验证编号时出错: ";
+
+  //--------------------------------------------Select User Profile Dialog Text------------------------------------------------------
+  @override
+  String get selectUserProfileDialogTitle => "选择用户";
+
+  @override
+  String get selectUserProfileDialogNoProfiles => "没有可用的用户";
+
+  @override
+  String get selectUserProfileDialogCancelButton => "取消";
+
+  @override
+  String get selectUserProfileDialogDeleteConfirmTitle => "删除用户";
+
+  @override
+  String get selectUserProfileDialogDeleteConfirmContent => "您确定要删除\"{user}\"吗？";
+
+  @override
+  String get selectUserProfileDialogDeleteButton => "删除";
+
+  @override
+  String get selectUserProfileDialogCancelDeleteButton => "取消";
+
+  //--------------------------------------------Select User Dropdown Text------------------------------------------------------
+  @override
+  String get selectUserDropdownCreateUser => "创建用户";
+
+  @override
+  String get selectUserDropdownGreeting => "你好, ";
 }
 
 final zh = ChineseMessages();

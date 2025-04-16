@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:msdtmt/app/shared_components/custom_primary_button.dart';
+import '../../../../config/translation/app_translations.dart';
 import '../../../../shared_components/custom_dialog.dart';
 import '../../domain/usecases/home_reference_select_user_width_calculator.dart';
 import '../controllers/select_user_profile_controller.dart';
@@ -18,7 +19,7 @@ class SelectUserDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final maxWidth = HomeReferenceSelectUserWidthCalculator.getMaxWidth(context);
-    
+
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
@@ -33,7 +34,7 @@ class SelectUserDialog extends StatelessWidget {
           children: [
             SizedBox(height: 24),
             Text(
-              'Seleccionar perfil',
+              SelectUserProfileDialogText.title.tr,
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -51,7 +52,7 @@ class SelectUserDialog extends StatelessWidget {
                 } else if (controller.profiles.isEmpty) {
                   return Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: Text('No hay perfiles disponibles'),
+                    child: Text(SelectUserProfileDialogText.noProfiles.tr),
                   );
                 } else {
                   return ListView.separated(
@@ -84,7 +85,7 @@ class SelectUserDialog extends StatelessWidget {
               child: SizedBox(
                 width: double.infinity,
                 child: CustomPrimaryButton(
-                  text: 'Cancel',
+                  text: SelectUserProfileDialogText.cancelButton.tr,
                   onPressed: () {
                     Get.back();
                   },
@@ -103,11 +104,11 @@ class SelectUserDialog extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return CustomDialog(
-          title: 'Eliminar perfil',
-          content: '¿Está seguro que desea eliminar el perfil "$nickname"?',
+          title: SelectUserProfileDialogText.deleteConfirmTitle.tr,
+          content: SelectUserProfileDialogText.deleteConfirmContent.tr.replaceAll('{user}', nickname),
           mode: DialogMode.confirmCancel,
-          primaryButtonText: 'Eliminar',
-          cancelButtonText: 'Cancelar',
+          primaryButtonText: SelectUserProfileDialogText.deleteButton.tr,
+          cancelButtonText: SelectUserProfileDialogText.cancelDeleteButton.tr,
           onPrimaryPressed: () {
             controller.deleteProfile(userId);
             Get.back();
