@@ -50,9 +50,9 @@ class _HomePageState extends State<HomePage> with NavigationMixin {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const ReferenceCodeInput(),
-              const SizedBox(height: 20),
               const SelectUserDropdown(),
+              const SizedBox(height: 20),
+              const ReferenceCodeInput(),
               const SizedBox(height: 20),
               Obx(() => ElevatedButton(
                     onPressed: _referenceCodeController.isValidated.value

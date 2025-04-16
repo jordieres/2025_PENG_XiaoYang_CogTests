@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:msdtmt/app/config/themes/app_text_style_base.dart';
 import 'package:msdtmt/app/features/home/presentation/components/select_user_profile_dialog.dart';
 import '../../../../config/routes/app_pages.dart';
 import '../../../../config/routes/app_route_observer.dart';
+import '../../../../config/themes/AppColors.dart';
 import '../../../../config/translation/app_translations.dart';
+import '../../../../utils/mixins/app_mixins.dart';
 import '../../domain/usecases/home_reference_select_user_width_calculator.dart';
 import '../controllers/select_user_profile_controller.dart';
 
@@ -14,9 +17,21 @@ class SelectUserDropdown extends StatefulWidget {
   State<StatefulWidget> createState() => SelectUserDropdownState();
 }
 
-class SelectUserDropdownState extends State<SelectUserDropdown> {
+class SelectUserDropdownState extends State<SelectUserDropdown>
+    with NavigationMixin {
   Worker? _routeObserverWorker;
   late SelectUserController _controller;
+
+  final BoxDecoration _boxDecoration = BoxDecoration(
+    border: Border.all(
+      color: AppColors.getPrimaryBlueDependIsDarkMode(),
+      width: 2,
+    ),
+    borderRadius: BorderRadius.circular(8),
+  );
+
+  final BorderRadius _borderRadius = BorderRadius.circular(8);
+  final EdgeInsets _containerPadding = EdgeInsets.symmetric(horizontal: 16, vertical: 12);
 
   @override
   void initState() {
@@ -58,6 +73,80 @@ class SelectUserDropdownState extends State<SelectUserDropdown> {
     );
   }
 
+  Widget _buildDropDownIcon() {
+    return Icon(
+      Icons.arrow_drop_down,
+      color: AppColors.getPrimaryBlueDependIsDarkMode(),
+    );
+  }
+
+  Widget _buildCreateUserWidget() {
+    return Material(
+      color: Colors.transparent,
+      child: Ink(
+        decoration: _boxDecoration,
+        child: InkWell(
+          borderRadius: _borderRadius,
+          onTap: () {
+            toRegisterUser();
+          },
+          child: Padding(
+            padding: _containerPadding,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  SelectUserDropdownText.createUser.tr,
+                  style: TextStyleBase.h2.copyWith(
+                    color: Colors.grey.shade600,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+                _buildDropDownIcon(),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildUserProfileWidget(dynamic profile) {
+    return Row(
+      children: [
+        Text(
+          SelectUserDropdownText.greeting.tr,
+          style: TextStyleBase.h2,
+        ),
+        Expanded(
+          child: Material(
+            color: Colors.transparent,
+            child: Ink(
+              decoration: _boxDecoration,
+              child: InkWell(
+                borderRadius: _borderRadius,
+                onTap: _showSelectUserDialog,
+                child: Padding(
+                  padding: _containerPadding,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        profile.nickname,
+                        style: TextStyleBase.h2,
+                      ),
+                      _buildDropDownIcon(),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final maxWidth = HomeReferenceSelectUserWidthCalculator.getMaxWidth(context);
@@ -66,71 +155,9 @@ class SelectUserDropdownState extends State<SelectUserDropdown> {
       constraints: BoxConstraints(maxWidth: maxWidth),
       child: Obx(() {
         final profile = _controller.currentProfile.value;
-
-        if (profile == null) {
-          return GestureDetector(
-            onTap: () {
-              Get.toNamed(Routes.register_user);
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.blue),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    SelectUserDropdownText.createUser.tr,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.grey.shade600,
-                      fontStyle: FontStyle.italic,
-                    ),
-                  ),
-                  Icon(Icons.arrow_drop_down),
-                ],
-              ),
-            ),
-          );
-        } else {
-          return Row(
-            children: [
-              Text(
-                SelectUserDropdownText.greeting.tr,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Expanded(
-                child: GestureDetector(
-                  onTap: _showSelectUserDialog,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.blue),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          profile.nickname,
-                          style: TextStyle(
-                            fontSize: 16,
-                          ),
-                        ),
-                        Icon(Icons.arrow_drop_down),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          );
-        }
+        return profile == null
+            ? _buildCreateUserWidget()
+            : _buildUserProfileWidget(profile);
       }),
     );
   }
