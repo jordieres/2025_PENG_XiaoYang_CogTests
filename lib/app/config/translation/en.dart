@@ -41,6 +41,28 @@ class EnglishMessages extends BaseMessages {
   @override
   String get tmtGameTmtHelpTmtSecondaryButtonText => "Start Formal Test";
 
+  //--------------------------------------------Home Header Text------------------------------------------------------
+  @override
+  String get homeHeaderSelectThemeTitle => "Select Theme";
+
+  @override
+  String get homeHeaderLightModeOption => "Light Mode";
+
+  @override
+  String get homeHeaderDarkModeOption => "Dark Mode";
+
+  @override
+  String get homeHeaderSystemThemeOption => "System Theme";
+
+  @override
+  String get languageNameEnglish => "EN";
+
+  @override
+  String get languageNameSpanish => "ES";
+
+  @override
+  String get languageNameChinese => "中文";
+
   //--------------------------------------------TMT Practice Text------------------------------------------------------
   @override
   String get tmtGamePracticeTmtAThenBDialogTitle =>

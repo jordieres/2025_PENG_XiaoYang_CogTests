@@ -42,6 +42,29 @@ class SpanishMessages extends BaseMessages {
   @override
   String get tmtGameTmtHelpTmtSecondaryButtonText => "Inicar Test Formal";
 
+  //--------------------------------------------Home Header Text------------------------------------------------------
+  @override
+  String get homeHeaderSelectThemeTitle => "Seleccionar Tema";
+
+  @override
+  String get homeHeaderLightModeOption => "Modo Claro";
+
+  @override
+  String get homeHeaderDarkModeOption => "Modo Oscuro";
+
+  @override
+  String get homeHeaderSystemThemeOption => "Tema del Sistema";
+
+  @override
+  String get languageNameEnglish => "EN";
+
+  @override
+  String get languageNameSpanish => "ES";
+
+  @override
+  String get languageNameChinese => "中文";
+
+
   //--------------------------------------------TMT Practice Text------------------------------------------------------
   @override
   String get tmtGamePracticeTmtAThenBDialogTitle =>

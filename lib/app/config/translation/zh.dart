@@ -39,6 +39,28 @@ class ChineseMessages extends BaseMessages {
   @override
   String get tmtGameTmtHelpTmtSecondaryButtonText => "开始正式的测试";
 
+  //--------------------------------------------Home Header Text------------------------------------------------------
+  @override
+  String get homeHeaderSelectThemeTitle => "选择主题";
+
+  @override
+  String get homeHeaderLightModeOption => "浅色模式";
+
+  @override
+  String get homeHeaderDarkModeOption => "深色模式";
+
+  @override
+  String get homeHeaderSystemThemeOption => "系统主题";
+
+  @override
+  String get languageNameEnglish => "EN";
+
+  @override
+  String get languageNameSpanish => "ES";
+
+  @override
+  String get languageNameChinese => "中文";
+
   //--------------------------------------------TMT Practice Text------------------------------------------------------
   @override
   String get tmtGamePracticeTmtAThenBDialogTitle => "重复这个TMT A练习还是继续下一个挑战？";
@@ -319,7 +341,8 @@ class ChineseMessages extends BaseMessages {
   String get selectUserProfileDialogDeleteConfirmTitle => "删除用户";
 
   @override
-  String get selectUserProfileDialogDeleteConfirmContent => "您确定要删除\"{user}\"吗？";
+  String get selectUserProfileDialogDeleteConfirmContent =>
+      "您确定要删除\"{user}\"吗？";
 
   @override
   String get selectUserProfileDialogDeleteButton => "删除";
