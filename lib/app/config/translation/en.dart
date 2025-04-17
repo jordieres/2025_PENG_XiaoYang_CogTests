@@ -387,6 +387,36 @@ class EnglishMessages extends BaseMessages {
 
   @override
   String get selectUserDropdownGreeting => "Hello, ";
+
+  //--------------------------------------------TMT Test Button Card Text------------------------------------------------------
+  @override
+  String get tmtTestButtonCardStartTest => "Start\nTMT Test";
+
+  @override
+  String get tmtTestButtonCardNumberOfCircles => "Number of Circles";
+
+  @override
+  String get tmtTestButtonCardDialogTitle => "Number of Circles";
+
+  @override
+  String get tmtTestButtonCardChooseBetween => "Choose between:";
+
+  @override
+  String get tmtTestButtonCardCompleteTest => "25 circles: Complete test.";
+
+  @override
+  String get tmtTestButtonCardSimplifiedVersion =>
+      "15 circles: Simplified version for small screens.";
+
+  @override
+  String get tmtTestButtonCardConsultNeurologist =>
+      "For more details, consult with your neurologist.";
+
+  @override
+  String get tmtTestButtonCardUnderstood => "Understood";
+
+  @override
+  String get tmtTestButtonCardCancel => "Cancel";
 }
 
 final en = EnglishMessages();

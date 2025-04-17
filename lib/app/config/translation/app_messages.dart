@@ -190,6 +190,18 @@ class SelectUserDropdownText {
   static String greeting = 'select_user_dropdown_greeting';
 }
 
+class TmtTestButtonCardText {
+  static String startTest = 'tmt_test_button_card_start_test';
+  static String numberOfCircles = 'tmt_test_button_card_number_of_circles';
+  static String dialogTitle = 'tmt_test_button_card_dialog_title';
+  static String chooseBetween = 'tmt_test_button_card_choose_between';
+  static String completeTest = 'tmt_test_button_card_complete_test';
+  static String simplifiedVersion = 'tmt_test_button_card_simplified_version';
+  static String consultNeurologist = 'tmt_test_button_card_consult_neurologist';
+  static String understood = 'tmt_test_button_card_understood';
+  static String cancel = 'tmt_test_button_card_cancel';
+}
+
 abstract class BaseMessages {
   String get tmtGameCircleBegin;
 
@@ -442,6 +454,25 @@ abstract class BaseMessages {
 
   String get selectUserDropdownGreeting;
 
+  //--------------------------------------------TMT Test Button Card Text------------------------------------------------------
+  String get tmtTestButtonCardStartTest;
+
+  String get tmtTestButtonCardNumberOfCircles;
+
+  String get tmtTestButtonCardDialogTitle;
+
+  String get tmtTestButtonCardChooseBetween;
+
+  String get tmtTestButtonCardCompleteTest;
+
+  String get tmtTestButtonCardSimplifiedVersion;
+
+  String get tmtTestButtonCardConsultNeurologist;
+
+  String get tmtTestButtonCardUnderstood;
+
+  String get tmtTestButtonCardCancel;
+
   Map<String, String> get messages => {
         TMTGameText.tmtGameCircleBegin: tmtGameCircleBegin,
         TMTGameText.tmtGameCircleEnd: tmtGameCircleEnd,
@@ -633,5 +664,17 @@ abstract class BaseMessages {
         //--------------------------------------------Select User Dropdown Text------------------------------------------------------
         SelectUserDropdownText.createUser: selectUserDropdownCreateUser,
         SelectUserDropdownText.greeting: selectUserDropdownGreeting,
+        //--------------------------------------------TMT Test Button Card Text------------------------------------------------------
+        TmtTestButtonCardText.startTest: tmtTestButtonCardStartTest,
+        TmtTestButtonCardText.numberOfCircles: tmtTestButtonCardNumberOfCircles,
+        TmtTestButtonCardText.dialogTitle: tmtTestButtonCardDialogTitle,
+        TmtTestButtonCardText.chooseBetween: tmtTestButtonCardChooseBetween,
+        TmtTestButtonCardText.completeTest: tmtTestButtonCardCompleteTest,
+        TmtTestButtonCardText.simplifiedVersion:
+            tmtTestButtonCardSimplifiedVersion,
+        TmtTestButtonCardText.consultNeurologist:
+            tmtTestButtonCardConsultNeurologist,
+        TmtTestButtonCardText.understood: tmtTestButtonCardUnderstood,
+        TmtTestButtonCardText.cancel: tmtTestButtonCardCancel,
       };
 }
