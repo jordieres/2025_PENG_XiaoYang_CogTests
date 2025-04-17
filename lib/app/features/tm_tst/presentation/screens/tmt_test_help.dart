@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:msdtmt/app/config/themes/AppTextStyle.dart';
 import 'package:msdtmt/app/features/tm_tst/presentation/screens/tmt_test_practice_screen.dart';
 
+import '../../../../config/themes/app_text_style_base.dart';
 import '../../../../config/translation/app_translations.dart';
 import '../../../../shared_components/custom_app_bar.dart';
 import '../../../../shared_components/custom_primary_button.dart';
 import '../../../../shared_components/custom_secondary_button.dart';
 import '../../../../utils/helpers/app_helpers.dart';
+import '../../../../utils/helpers/widget_max_width_calculator.dart';
 import '../../../../utils/mixins/app_mixins.dart';
 
 enum TmtHelpMode { TMT_TEST_A, TMT_TEST_B, TMT_PRACTICE_A, TMT_PRACTICE_B }
@@ -45,10 +48,7 @@ class TmtTestHelpPage extends StatelessWidget with NavigationMixin {
                           child: Text(
                             _getHelpDescription(tmtHelpMode),
                             textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                            ),
+                            style: TextStyleBase.bodyXL,
                           ),
                         ),
                       ),
@@ -60,6 +60,7 @@ class TmtTestHelpPage extends StatelessWidget with NavigationMixin {
 
             // Fixed buttons at bottom
             Container(
+              width: WidgetMaxWidthCalculator.getMaxWidth(context),
               padding: const EdgeInsets.all(24),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -70,7 +71,7 @@ class TmtTestHelpPage extends StatelessWidget with NavigationMixin {
                       _toPracticePage(tmtHelpMode);
                     },
                   ),
-                  SizedBox(height: DeviceHelper.isTablet ? 28 : 22),
+                  SizedBox(height: DeviceHelper.isTablet ? 18 : 12),
                   CustomSecondaryButton(
                     text: TMTGameText.tmtGameTmtHelpTmtSecondaryButtonText.tr,
                     onPressed: () {
