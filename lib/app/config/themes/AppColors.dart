@@ -18,6 +18,8 @@ class AppColors {
   static const Color _primaryBlueDark = Color(0xFF2375BC); // Darker blue color
   static const Color secondaryBlueDark =
       Color(0xFF1A3A5A); // Darker secondary blue
+  static const Color secondaryBlueClearDark =
+      Color(0xFF2A2D35); // Darker clear secondary blue
   static const Color darkBackground = Color(0xFF121212); // Dark background
   static const Color darkSurface = Color(0xFF1E1E1E); // Dark surface color
   static const Color darkText = Color(0xFFFFFFFF); // Dark mode text color
