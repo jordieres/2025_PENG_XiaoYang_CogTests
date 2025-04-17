@@ -368,6 +368,34 @@ class ChineseMessages extends BaseMessages {
 
   @override
   String get selectUserDropdownGreeting => "你好, ";
+
+  //--------------------------------------------Tmt Test Button Card Text------------------------------------------------------
+  @override
+  String get tmtTestButtonCardStartTest => "开始\nTMT测试";
+
+  @override
+  String get tmtTestButtonCardNumberOfCircles => "圆圈数量";
+
+  @override
+  String get tmtTestButtonCardDialogTitle => "圆圈数量";
+
+  @override
+  String get tmtTestButtonCardChooseBetween => "选择以下选项:";
+
+  @override
+  String get tmtTestButtonCardCompleteTest => "25个圆圈: 完整测试。";
+
+  @override
+  String get tmtTestButtonCardSimplifiedVersion => "15个圆圈: 小屏幕简化版本。";
+
+  @override
+  String get tmtTestButtonCardConsultNeurologist => "了解更多的详情，请咨询您的神经科医生。";
+
+  @override
+  String get tmtTestButtonCardUnderstood => "明白了";
+
+  @override
+  String get tmtTestButtonCardCancel => "取消";
 }
 
 final zh = ChineseMessages();

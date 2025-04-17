@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:msdtmt/app/config/themes/AppColors.dart';
 import 'package:msdtmt/app/constans/app_constants.dart';
 import 'package:msdtmt/app/features/tm_tst/domain/entities/tmt_game/tmt_game_variable.dart';
@@ -7,6 +8,7 @@ import 'package:msdtmt/app/shared_components/custom_dialog.dart';
 import 'package:msdtmt/app/utils/mixins/app_mixins.dart';
 
 import '../../../../config/themes/app_text_style_base.dart';
+import '../../../../config/translation/app_translations.dart';
 import '../../domain/entities/home_ui_constant_variable.dart';
 
 enum CircleNumberOption {
@@ -124,7 +126,7 @@ class _TmtTestButtonCardState extends State<TmtTestButtonCard>
                 }
               : null,
           child: Center(
-            child: Text('Empezar\nTest TMT',
+            child: Text(TmtTestButtonCardText.startTest.tr,
                 textAlign: TextAlign.center,
                 style: TextStyleBase.h2.copyWith(
                   color: isDarkMode ? AppColors.darkText : AppColors.blueText,
@@ -142,7 +144,7 @@ class _TmtTestButtonCardState extends State<TmtTestButtonCard>
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('Número de Círculos',
+          Text(TmtTestButtonCardText.numberOfCircles.tr,
               textAlign: TextAlign.center,
               style: TextStyleBase.h4.copyWith(
                 color: isDarkMode ? AppColors.darkText : AppColors.blueText,
@@ -288,24 +290,23 @@ class _TmtTestButtonCardState extends State<TmtTestButtonCard>
       context: context,
       builder: (BuildContext context) {
         return CustomDialog(
-          title: 'Número de Círculos',
+          title: TmtTestButtonCardText.dialogTitle.tr,
           content: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('Elige entre:'),
+              Text(TmtTestButtonCardText.chooseBetween.tr),
               const SizedBox(height: 8),
-              _buildBulletPoint('25 círculos: Test completo.'),
-              _buildBulletPoint(
-                  '15 círculos: Versión simplificada para pantallas pequeñas.'),
+              _buildBulletPoint(TmtTestButtonCardText.completeTest.tr),
+              _buildBulletPoint(TmtTestButtonCardText.simplifiedVersion.tr),
               const SizedBox(height: 16),
-              Text('Para más detalles, consulta con tu neurólogo.',
+              Text(TmtTestButtonCardText.consultNeurologist.tr,
                   style: TextStyle(fontStyle: FontStyle.italic)),
             ],
           ),
           mode: DialogMode.confirmCancel,
-          primaryButtonText: 'Entendido',
-          cancelButtonText: 'Cancel',
+          primaryButtonText: TmtTestButtonCardText.understood.tr,
+          cancelButtonText: TmtTestButtonCardText.cancel.tr,
           onPrimaryPressed: () {
             Navigator.of(context).pop();
           },
