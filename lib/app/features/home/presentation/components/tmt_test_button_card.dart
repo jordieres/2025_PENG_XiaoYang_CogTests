@@ -1,0 +1,332 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:msdtmt/app/config/themes/AppColors.dart';
+import 'package:msdtmt/app/constans/app_constants.dart';
+import 'package:msdtmt/app/features/tm_tst/domain/entities/tmt_game/tmt_game_variable.dart';
+import 'package:msdtmt/app/shared_components/custom_dialog.dart';
+import 'package:msdtmt/app/utils/mixins/app_mixins.dart';
+
+import '../../../../config/themes/app_text_style_base.dart';
+import '../../domain/entities/home_ui_constant_variable.dart';
+
+enum CircleNumberOption {
+  twentyFive(25),
+  fifteen(15);
+
+  final int value;
+
+  const CircleNumberOption(this.value);
+}
+
+class TmtTestButtonCard extends StatefulWidget {
+  final String referenceCode;
+  final VoidCallback? onStartTest;
+
+  const TmtTestButtonCard({
+    super.key,
+    required this.referenceCode,
+    this.onStartTest,
+  });
+
+  @override
+  State<TmtTestButtonCard> createState() => _TmtTestButtonCardState();
+}
+
+class _TmtTestButtonCardState extends State<TmtTestButtonCard>
+    with NavigationMixin {
+  CircleNumberOption selectedCircleNumber = CircleNumberOption.twentyFive;
+  final controller = TextEditingController();
+  final focusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    controller.text = selectedCircleNumber.value.toString();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    focusNode.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final isActive = widget.referenceCode.isNotEmpty;
+
+    return Stack(
+      children: [
+        Card(
+          elevation: 0,
+          color: isDarkMode
+              ? AppColors.secondaryBlueClearDark
+              : AppColors.secondaryBlueClear,
+          shape: RoundedRectangleBorder(
+            borderRadius:
+                BorderRadius.circular(HomeUIConstantVariable.cardCornerRadius),
+          ),
+          child: Opacity(
+            opacity: HomeUIConstantVariable.getOpacityDependIsEnable(isActive),
+            child: SizedBox(
+              height: 158,
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: _buildStartTestButton(context, isDarkMode, isActive),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: _buildCircleNumberSelector(
+                        context, isDarkMode, isActive),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        if (!isActive)
+          Positioned.fill(
+            child: Center(
+              child: HomeUIConstantVariable.lockIcon,
+            ),
+          ),
+      ],
+    );
+  }
+
+  Widget _buildStartTestButton(
+      BuildContext context, bool isDarkMode, bool isActive) {
+    return ClipRRect(
+      borderRadius:
+          BorderRadius.circular(HomeUIConstantVariable.cardCornerRadius),
+      child: Material(
+        color:
+            isDarkMode ? AppColors.secondaryBlueDark : AppColors.secondaryBlue,
+        child: InkWell(
+          splashColor: isDarkMode
+              ? Colors.white.withAlpha(51)
+              : AppColors.getPrimaryBlueColor().withAlpha(51),
+          highlightColor: isDarkMode
+              ? Colors.white.withAlpha(25)
+              : AppColors.getPrimaryBlueColor().withAlpha(25),
+          onTap: isActive
+              ? () {
+                  TmtGameVariables.CIRCLE_NUMBER = selectedCircleNumber.value;
+                  //TODO saved in shared preferences
+                  if (widget.onStartTest != null) {
+                    widget.onStartTest!();
+                  } else {
+                    toSelectedPracticeOrTest(widget.referenceCode);
+                  }
+                }
+              : null,
+          child: Center(
+            child: Text('Empezar\nTest TMT',
+                textAlign: TextAlign.center,
+                style: TextStyleBase.h2.copyWith(
+                  color: isDarkMode ? AppColors.darkText : AppColors.blueText,
+                )),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCircleNumberSelector(
+      BuildContext context, bool isDarkMode, bool isActive) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('Número de Círculos',
+              textAlign: TextAlign.center,
+              style: TextStyleBase.h4.copyWith(
+                color: isDarkMode ? AppColors.darkText : AppColors.blueText,
+              )),
+          const SizedBox(height: 16),
+          Row(
+            children: [
+              Expanded(
+                child:
+                    _buildCircleNumberDropdown(context, isDarkMode, isActive),
+              ),
+              const SizedBox(width: 8),
+              _buildHelpButton(context),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCircleNumberDropdown(
+      BuildContext context, bool isDarkMode, bool isActive) {
+    final primaryColor =
+        AppColors.getPrimaryBlueDependIsDarkMode(isDarkMode: isDarkMode);
+
+    return SizedBox(
+      height: 46,
+      child: DropdownMenu<CircleNumberOption>(
+        enabled: isActive,
+        controller: controller,
+        focusNode: focusNode,
+        initialSelection: selectedCircleNumber,
+        expandedInsets: EdgeInsets.zero,
+        trailingIcon: Icon(
+          Icons.arrow_drop_down,
+          color: primaryColor,
+          size: 24,
+        ),
+        selectedTrailingIcon: Icon(
+          Icons.arrow_drop_up,
+          color: primaryColor,
+          size: 24,
+        ),
+        inputDecorationTheme: InputDecorationTheme(
+          isDense: true,
+          contentPadding: const EdgeInsets.symmetric(horizontal: 12),
+          border: OutlineInputBorder(
+            borderRadius:
+                BorderRadius.circular(HomeUIConstantVariable.cardCornerRadius),
+            borderSide: BorderSide(color: primaryColor, width: 2),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius:
+                BorderRadius.circular(HomeUIConstantVariable.cardCornerRadius),
+            borderSide: BorderSide(color: primaryColor, width: 2),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius:
+                BorderRadius.circular(HomeUIConstantVariable.cardCornerRadius),
+            borderSide: BorderSide(color: primaryColor, width: 2),
+          ),
+          filled: false,
+        ),
+        menuStyle: MenuStyle(
+          elevation: WidgetStateProperty.all(8),
+          backgroundColor: WidgetStateProperty.all(
+            isDarkMode ? AppColors.darkSurface : Colors.white,
+          ),
+          shape: WidgetStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(
+                  HomeUIConstantVariable.cardCornerRadius),
+              side: BorderSide(color: primaryColor, width: 2),
+            ),
+          ),
+        ),
+        onSelected: isActive
+            ? (CircleNumberOption? option) {
+                if (option != null) {
+                  setState(() {
+                    selectedCircleNumber = option;
+                    controller.text = option.value.toString();
+                    TmtGameVariables.CIRCLE_NUMBER = option.value;
+                  });
+                }
+              }
+            : null,
+        dropdownMenuEntries: CircleNumberOption.values
+            .map<DropdownMenuEntry<CircleNumberOption>>(
+          (CircleNumberOption option) {
+            return DropdownMenuEntry<CircleNumberOption>(
+              value: option,
+              label: option.value.toString(),
+              style: MenuItemButton.styleFrom(
+                textStyle: TextStyle(
+                  color: isDarkMode ? Colors.white : Colors.black87,
+                  fontSize: 16,
+                ),
+              ),
+            );
+          },
+        ).toList(),
+      ),
+    );
+  }
+
+  Widget _buildHelpButton(BuildContext context) {
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+
+    return ClipOval(
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          splashColor: isDarkMode
+              ? Colors.white.withAlpha(51)
+              : AppColors.getPrimaryBlueColor().withAlpha(51),
+          onTap: () => _showCircleNumberInfoDialog(context),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: isDarkMode
+                ? SvgPicture.asset(
+                    ImageVectorPath.help,
+                    width: 30,
+                    height: 30,
+                    colorFilter: const ColorFilter.mode(
+                      AppColors.darkText,
+                      BlendMode.srcIn,
+                    ),
+                  )
+                : SvgPicture.asset(
+                    ImageVectorPath.help,
+                    width: 30,
+                    height: 30,
+                  ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _showCircleNumberInfoDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return CustomDialog(
+          title: 'Número de Círculos',
+          content: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('Elige entre:'),
+              const SizedBox(height: 8),
+              _buildBulletPoint('25 círculos: Test completo.'),
+              _buildBulletPoint(
+                  '15 círculos: Versión simplificada para pantallas pequeñas.'),
+              const SizedBox(height: 16),
+              Text('Para más detalles, consulta con tu neurólogo.',
+                  style: TextStyle(fontStyle: FontStyle.italic)),
+            ],
+          ),
+          mode: DialogMode.confirmCancel,
+          primaryButtonText: 'Entendido',
+          cancelButtonText: 'Cancel',
+          onPrimaryPressed: () {
+            Navigator.of(context).pop();
+          },
+          onCancelPressed: () {
+            Navigator.of(context).pop();
+          },
+        );
+      },
+    );
+  }
+
+  Widget _buildBulletPoint(String text) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 8.0, bottom: 4.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('• ', style: TextStyle(fontWeight: FontWeight.bold)),
+          Expanded(child: Text(text)),
+        ],
+      ),
+    );
+  }
+}

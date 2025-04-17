@@ -163,7 +163,7 @@ class _SelectModePracticeOrTestState extends State<SelectModePracticeOrTest>
     required bool isPractice,
   }) {
     final Color outerCardColor = isDarkMode
-        ? AppColors.secondaryBlueDark.withAlpha(178)
+        ? AppColors.secondaryBlueClearDark
         : AppColors.secondaryBlueClear;
 
     final Color innerCardColor =

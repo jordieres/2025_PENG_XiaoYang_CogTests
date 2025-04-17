@@ -7,6 +7,7 @@ import '../../../../utils/helpers/widget_max_width_calculator.dart';
 import '../components/home_page_header.dart';
 import '../components/reference_code_input.dart';
 import '../components/select_user_dropdown.dart';
+import '../components/tmt_test_button_card.dart'; // Import the new component
 import '../controllers/reference_code_controller.dart';
 
 class HomePage extends StatefulWidget {
@@ -28,22 +29,21 @@ class _HomePageState extends State<HomePage> with NavigationMixin {
   @override
   Widget build(BuildContext context) {
     final maxWidth =
-        WidgetMaxWidthCalculator.getMaxWidth(context);
+    WidgetMaxWidthCalculator.getMaxWidth(context);
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
         statusBarBrightness: isDarkMode ? Brightness.light : Brightness.dark,
-        // iOS
         statusBarIconBrightness:
-            isDarkMode ? Brightness.light : Brightness.dark, // Android
+        isDarkMode ? Brightness.light : Brightness.dark,
       ),
       child: Scaffold(
         body: SafeArea(
           child: SingleChildScrollView(
             padding:
-                const EdgeInsets.symmetric(vertical: 20.0, horizontal: 18.0),
+            const EdgeInsets.symmetric(vertical: 20.0, horizontal: 18.0),
             child: Center(
               child: SizedBox(
                 width: maxWidth,
@@ -56,18 +56,16 @@ class _HomePageState extends State<HomePage> with NavigationMixin {
                     const SizedBox(height: 20),
                     const ReferenceCodeInput(),
                     const SizedBox(height: 20),
-                    Obx(() => ElevatedButton(
-                          onPressed: _referenceCodeController.isValidated.value
-                              ? () => toSelectedPracticeOrTest(
-                                  _referenceCodeController
-                                      .getFullReferenceCode())
-                              : null,
-                          style: ElevatedButton.styleFrom(
-                            disabledBackgroundColor: Colors.grey.shade300,
-                            disabledForegroundColor: Colors.grey.shade600,
-                          ),
-                          child: const Text('Empezar TMT Test'),
-                        )),
+                    // Replace the old button with the new TMT Test button card
+                    Obx(() => TmtTestButtonCard(
+                      referenceCode: _referenceCodeController.isValidated.value
+                          ? _referenceCodeController.getFullReferenceCode()
+                          : '',
+                      onStartTest: _referenceCodeController.isValidated.value
+                          ? () => toSelectedPracticeOrTest(
+                          _referenceCodeController.getFullReferenceCode())
+                          : null,
+                    )),
                     const SizedBox(height: 10),
                     ElevatedButton(
                       onPressed: () => toRegisterUser(),
