@@ -4,10 +4,11 @@ import 'package:get/get.dart';
 import '../../../../config/routes/app_pages.dart';
 import '../../../../utils/mixins/app_mixins.dart';
 import '../../../../utils/helpers/widget_max_width_calculator.dart';
+import '../components/home_card_button.dart';
 import '../components/home_page_header.dart';
 import '../components/reference_code_input.dart';
 import '../components/select_user_dropdown.dart';
-import '../components/tmt_test_button_card.dart'; // Import the new component
+import '../components/tmt_test_button_card.dart';
 import '../controllers/reference_code_controller.dart';
 
 class HomePage extends StatefulWidget {
@@ -28,22 +29,19 @@ class _HomePageState extends State<HomePage> with NavigationMixin {
 
   @override
   Widget build(BuildContext context) {
-    final maxWidth =
-    WidgetMaxWidthCalculator.getMaxWidth(context);
+    final maxWidth = WidgetMaxWidthCalculator.getMaxWidth(context);
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
         statusBarBrightness: isDarkMode ? Brightness.light : Brightness.dark,
-        statusBarIconBrightness:
-        isDarkMode ? Brightness.light : Brightness.dark,
+        statusBarIconBrightness: isDarkMode ? Brightness.light : Brightness.dark,
       ),
       child: Scaffold(
         body: SafeArea(
           child: SingleChildScrollView(
-            padding:
-            const EdgeInsets.symmetric(vertical: 20.0, horizontal: 18.0),
+            padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 18.0),
             child: Center(
               child: SizedBox(
                 width: maxWidth,
@@ -56,7 +54,7 @@ class _HomePageState extends State<HomePage> with NavigationMixin {
                     const SizedBox(height: 20),
                     const ReferenceCodeInput(),
                     const SizedBox(height: 20),
-                    // Replace the old button with the new TMT Test button card
+                    // TMT Test Button Card
                     Obx(() => TmtTestButtonCard(
                       referenceCode: _referenceCodeController.isValidated.value
                           ? _referenceCodeController.getFullReferenceCode()
@@ -66,20 +64,32 @@ class _HomePageState extends State<HomePage> with NavigationMixin {
                           _referenceCodeController.getFullReferenceCode())
                           : null,
                     )),
-                    const SizedBox(height: 10),
-                    ElevatedButton(
+                    const SizedBox(height: 20),
+                    // Row with two half-height buttons
+                    Row(
+                      children: [
+                        Expanded(
+                          child: HomeCardButton(
+                            text: "Visualizar Mis Datos",
+                            onPressed: () => Get.toNamed(Routes.current_user_data),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: HomeCardButton(
+                            text: "Mirar Mis Historias",
+
+                            onPressed: () => Get.toNamed(Routes.tmt_user_history),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    // Full-width button for creating a new profile
+                    HomeCardButton(
+                      text: "Crear nuevo perfil",
+                      middleHeight: true,
                       onPressed: () => toRegisterUser(),
-                      child: const Text("Ir a Alta Usuario"),
-                    ),
-                    const SizedBox(height: 10),
-                    ElevatedButton(
-                      onPressed: () => Get.toNamed(Routes.tmt_user_history),
-                      child: const Text("Historial TMT"),
-                    ),
-                    const SizedBox(height: 10),
-                    ElevatedButton(
-                      onPressed: () => Get.toNamed(Routes.current_user_data),
-                      child: const Text("Ir a Current User"),
                     ),
                   ],
                 ),

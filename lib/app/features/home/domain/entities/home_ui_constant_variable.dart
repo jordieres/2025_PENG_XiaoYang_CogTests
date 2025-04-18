@@ -7,6 +7,9 @@ class HomeUIConstantVariable {
   static const enableOpacity = 1.0;
   static const disableOpacity = 0.3;
 
+  static const double tmtTestButtonCardHeight = 142;
+  static const double buttonCardHeight = 120;
+
   static double getOpacityDependIsEnable(bool isEnable) {
     return isEnable ? enableOpacity : disableOpacity;
   }
