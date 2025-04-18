@@ -417,6 +417,16 @@ class EnglishMessages extends BaseMessages {
 
   @override
   String get tmtTestButtonCardCancel => "Cancel";
+
+//--------------------------------------------Home Card Button Text------------------------------------------------------
+  @override
+  String get homeCardButtonVisualizeMyData => "View My Data";
+
+  @override
+  String get homeCardButtonViewMyHistory => "View My History";
+
+  @override
+  String get homeCardButtonCreateNewProfile => "Create New Profile";
 }
 
 final en = EnglishMessages();
