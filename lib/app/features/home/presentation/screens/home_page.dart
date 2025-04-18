@@ -41,7 +41,7 @@ class _HomePageState extends State<HomePage> with NavigationMixin {
       child: Scaffold(
         body: SafeArea(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 18.0),
+            padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 18.0),
             child: Center(
               child: SizedBox(
                 width: maxWidth,
@@ -49,11 +49,11 @@ class _HomePageState extends State<HomePage> with NavigationMixin {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const HomeHeader(),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 38),
                     const SelectUserDropdown(),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 32),
                     const ReferenceCodeInput(),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 24),
                     // TMT Test Button Card
                     Obx(() => TmtTestButtonCard(
                       referenceCode: _referenceCodeController.isValidated.value
@@ -64,7 +64,7 @@ class _HomePageState extends State<HomePage> with NavigationMixin {
                           _referenceCodeController.getFullReferenceCode())
                           : null,
                     )),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 24),
                     // Row with two half-height buttons
                     Row(
                       children: [
@@ -74,7 +74,7 @@ class _HomePageState extends State<HomePage> with NavigationMixin {
                             onPressed: () => Get.toNamed(Routes.current_user_data),
                           ),
                         ),
-                        const SizedBox(width: 10),
+                        const SizedBox(width: 23),
                         Expanded(
                           child: HomeCardButton(
                             text: "Mirar Mis Historias",
@@ -84,7 +84,7 @@ class _HomePageState extends State<HomePage> with NavigationMixin {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 24 ),
                     // Full-width button for creating a new profile
                     HomeCardButton(
                       text: "Crear nuevo perfil",
