@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import '../../../../config/routes/app_pages.dart';
 import '../../../../utils/mixins/app_mixins.dart';
 import '../../../../utils/helpers/widget_max_width_calculator.dart';
 import '../components/home_card_button.dart';
@@ -41,13 +40,13 @@ class _HomePageState extends State<HomePage> with NavigationMixin {
         statusBarColor: Colors.transparent,
         statusBarBrightness: isDarkMode ? Brightness.light : Brightness.dark,
         statusBarIconBrightness:
-        isDarkMode ? Brightness.light : Brightness.dark,
+            isDarkMode ? Brightness.light : Brightness.dark,
       ),
       child: Scaffold(
         body: SafeArea(
           child: SingleChildScrollView(
             padding:
-            const EdgeInsets.symmetric(vertical: 24.0, horizontal: 18.0),
+                const EdgeInsets.symmetric(vertical: 24.0, horizontal: 18.0),
             child: Center(
               child: SizedBox(
                 width: maxWidth,
@@ -58,49 +57,51 @@ class _HomePageState extends State<HomePage> with NavigationMixin {
                     const SizedBox(height: 38),
                     const SelectUserDropdown(),
                     const SizedBox(height: 32),
-                    // ReferenceCodeInput with conditional isActive
                     Obx(() => ReferenceCodeInput(
-                      isActive: _selectUserController.currentProfile.value != null,
-                    )),
+                          isActive:
+                              _selectUserController.currentProfile.value !=
+                                  null,
+                        )),
                     const SizedBox(height: 24),
                     // TMT Test Button Card
                     Obx(() => TmtTestButtonCard(
-                      referenceCode: _referenceCodeController
-                          .isValidated.value
-                          ? _referenceCodeController.getFullReferenceCode()
-                          : '',
-                      onStartTest:
-                      _referenceCodeController.isValidated.value
-                          ? () => toSelectedPracticeOrTest(
-                          _referenceCodeController
-                              .getFullReferenceCode())
-                          : null,
-                    )),
+                          referenceCode: _referenceCodeController
+                                  .isValidated.value
+                              ? _referenceCodeController.getFullReferenceCode()
+                              : '',
+                          onStartTest:
+                              _referenceCodeController.isValidated.value
+                                  ? () => toSelectedPracticeOrTest(
+                                      _referenceCodeController
+                                          .getFullReferenceCode())
+                                  : null,
+                        )),
                     const SizedBox(height: 24),
                     // Row with two half-height buttons - conditionally active
                     Obx(() => Row(
-                      children: [
-                        Expanded(
-                          child: HomeCardButton(
-                            text: HomeCardButtonText.visualizeMyData.tr,
-                            onPressed: () =>
-                                Get.toNamed(Routes.current_user_data),
-                            isActive: _selectUserController.currentProfile.value != null,
-                          ),
-                        ),
-                        const SizedBox(width: 23),
-                        Expanded(
-                          child: HomeCardButton(
-                            text: HomeCardButtonText.viewMyHistory.tr,
-                            onPressed: () =>
-                                Get.toNamed(Routes.tmt_user_history),
-                            isActive: _selectUserController.currentProfile.value != null,
-                          ),
-                        ),
-                      ],
-                    )),
+                          children: [
+                            Expanded(
+                              child: HomeCardButton(
+                                text: HomeCardButtonText.visualizeMyData.tr,
+                                onPressed: () => toCurrentUserData(),
+                                isActive: _selectUserController
+                                        .currentProfile.value !=
+                                    null,
+                              ),
+                            ),
+                            const SizedBox(width: 23),
+                            Expanded(
+                              child: HomeCardButton(
+                                text: HomeCardButtonText.viewMyHistory.tr,
+                                onPressed: () => toUserTmtResultHistory(),
+                                isActive: _selectUserController
+                                        .currentProfile.value !=
+                                    null,
+                              ),
+                            ),
+                          ],
+                        )),
                     const SizedBox(height: 24),
-                    // Full-width button for creating a new profile - always active
                     HomeCardButton(
                       text: HomeCardButtonText.createNewProfile.tr,
                       middleHeight: true,
