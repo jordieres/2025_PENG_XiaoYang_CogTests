@@ -102,19 +102,23 @@ class _TmtTestPageState extends State<TmtTestPage>
 
   void _resetTmtA() {
     _testTmtFlowStateController.resetStatusTmtA();
-    setState(() {
-      _boardController = TmtGameBoardController(
-          key: UniqueKey(), flowController: _testTmtFlowStateController);
-      _resetTimer();
+    _testTmtFlowStateController.initializeGameConfig().then((bool isLoaded) {
+      setState(() {
+        _boardController = TmtGameBoardController(
+            key: UniqueKey(), flowController: _testTmtFlowStateController);
+        _resetTimer();
+      });
     });
   }
 
   void _resetTmtB() {
     _testTmtFlowStateController.resetStatusTmtB();
-    setState(() {
-      _boardController = TmtGameBoardController(
-          key: UniqueKey(), flowController: _testTmtFlowStateController);
-      _setStartTime(_testTmtFlowStateController.getTmtATimeInSec());
+    _testTmtFlowStateController.initializeGameConfig().then((bool isLoaded) {
+      setState(() {
+        _boardController = TmtGameBoardController(
+            key: UniqueKey(), flowController: _testTmtFlowStateController);
+        _setStartTime(_testTmtFlowStateController.getTmtATimeInSec());
+      });
     });
   }
 
