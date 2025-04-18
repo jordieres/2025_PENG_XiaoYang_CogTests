@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:msdtmt/app/utils/helpers/app_helpers.dart';
 
+import '../../usecases/tmt_game_config_use_case.dart';
+
 class TmtGameVariables {
   static const double _REFERENCE_LINE_STROKE_WIDTH_FACTOR =
       0.136; // Use circle radius 22 , line stroke width 3
@@ -39,9 +41,8 @@ class TmtGameVariables {
     CIRCLE_NUMBER = PRACTICE_CIRCLE_NUMBER;
   }
 
-  static void setTestModeCalculate() {
-    CIRCLE_NUMBER = 5; //TODO put 25
-    //TODO getNUmber circle depend on user preference
+  static Future<void> setTestModeCalculate(TmtGameConfigUseCase tmtGameConfigUseCase) async {
+    CIRCLE_NUMBER = await tmtGameConfigUseCase.getCircleNumber();
   }
 
   static void calculateTMTGameVariables(double maxWidth, double maxHeight) {

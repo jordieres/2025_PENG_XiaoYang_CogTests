@@ -12,11 +12,19 @@ enum TmtTestStateFlow {
   TEST_COMPLETED
 }
 
-
 abstract class BaseTmtTestFlowController extends GetxController {
   final Rx<TmtTestStateFlow> testState = TmtTestStateFlow.READY.obs;
   TmtMetricsController metricsController = TmtMetricsController();
 
+  final RxBool isConfigLoaded = false.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    initializeGameConfig();
+  }
+
+  Future<bool> initializeGameConfig();
 
   void startTest() {
     switch (testState.value) {

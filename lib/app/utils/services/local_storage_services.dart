@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../features/tm_tst/domain/entities/tmt_game/tmt_game_variable.dart';
+
 class LocalStorageServices {
   static final LocalStorageServices _localStorageServices =
       LocalStorageServices._internal();
@@ -13,6 +15,7 @@ class LocalStorageServices {
   static const String _themeKey = 'theme_mode';
   static const String _systemThemeKey = 'system_theme';
   static const String _currentProfileKey = 'current_profile_id';
+  static const String _circleNumberKey = 'tmt_circle_number';
 
   LocalStorageServices._internal();
 
@@ -75,5 +78,16 @@ class LocalStorageServices {
   static Future<bool> clearCurrentProfileId() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return await prefs.remove(_currentProfileKey);
+  }
+
+  static Future<bool> saveCircleNumber(int circleNumber) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return await prefs.setInt(_circleNumberKey, circleNumber);
+  }
+
+  static Future<int> getCircleNumber() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getInt(_circleNumberKey) ??
+        TmtGameVariables.DEFAULT_CIRCLE_NUMBER;
   }
 }

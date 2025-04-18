@@ -9,6 +9,7 @@ import 'package:msdtmt/app/utils/mixins/app_mixins.dart';
 
 import '../../../../config/themes/app_text_style_base.dart';
 import '../../../../config/translation/app_translations.dart';
+import '../../../tm_tst/domain/usecases/tmt_game_config_use_case.dart';
 import '../../domain/entities/home_ui_constant_variable.dart';
 
 enum CircleNumberOption {
@@ -18,6 +19,13 @@ enum CircleNumberOption {
   final int value;
 
   const CircleNumberOption(this.value);
+
+  static CircleNumberOption fromValue(int value) {
+    return CircleNumberOption.values.firstWhere(
+      (option) => option.value == value,
+      orElse: () => twentyFive,
+    );
+  }
 }
 
 class TmtTestButtonCard extends StatefulWidget {
@@ -39,11 +47,16 @@ class _TmtTestButtonCardState extends State<TmtTestButtonCard>
   CircleNumberOption selectedCircleNumber = CircleNumberOption.twentyFive;
   final controller = TextEditingController();
   final focusNode = FocusNode();
+  late TmtGameConfigUseCase tmtGameConfigUseCase;
 
   @override
   void initState() {
     super.initState();
-    controller.text = selectedCircleNumber.value.toString();
+    tmtGameConfigUseCase = Get.find<TmtGameConfigUseCase>();
+    tmtGameConfigUseCase.getCircleNumber().then((value) {
+      selectedCircleNumber = CircleNumberOption.fromValue(value);
+      controller.text = selectedCircleNumber.value.toString();
+    });
   }
 
   @override
@@ -116,8 +129,6 @@ class _TmtTestButtonCardState extends State<TmtTestButtonCard>
               : AppColors.getPrimaryBlueColor().withAlpha(25),
           onTap: isActive
               ? () {
-                  TmtGameVariables.CIRCLE_NUMBER = selectedCircleNumber.value;
-                  //TODO saved in shared preferences
                   if (widget.onStartTest != null) {
                     widget.onStartTest!();
                   } else {
@@ -226,8 +237,8 @@ class _TmtTestButtonCardState extends State<TmtTestButtonCard>
                 if (option != null) {
                   setState(() {
                     selectedCircleNumber = option;
+                    _tmtNumBerCircleConfig(selectedCircleNumber);
                     controller.text = option.value.toString();
-                    TmtGameVariables.CIRCLE_NUMBER = option.value;
                   });
                 }
               }
@@ -329,5 +340,9 @@ class _TmtTestButtonCardState extends State<TmtTestButtonCard>
         ],
       ),
     );
+  }
+
+  _tmtNumBerCircleConfig(CircleNumberOption circleNumberOption) async {
+    await tmtGameConfigUseCase.saveCircleNumber(circleNumberOption.value);
   }
 }
