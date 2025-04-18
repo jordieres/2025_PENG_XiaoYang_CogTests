@@ -202,6 +202,12 @@ class TmtTestButtonCardText {
   static String cancel = 'tmt_test_button_card_cancel';
 }
 
+class HomeCardButtonText {
+  static String visualizeMyData = 'home_card_button_visualize_my_data';
+  static String viewMyHistory = 'home_card_button_view_my_history';
+  static String createNewProfile = 'home_card_button_create_new_profile';
+}
+
 abstract class BaseMessages {
   String get tmtGameCircleBegin;
 
@@ -473,6 +479,13 @@ abstract class BaseMessages {
 
   String get tmtTestButtonCardCancel;
 
+  //--------------------------------------------Home Card Button Text------------------------------------------------------
+  String get homeCardButtonVisualizeMyData;
+
+  String get homeCardButtonViewMyHistory;
+
+  String get homeCardButtonCreateNewProfile;
+
   Map<String, String> get messages => {
         TMTGameText.tmtGameCircleBegin: tmtGameCircleBegin,
         TMTGameText.tmtGameCircleEnd: tmtGameCircleEnd,
@@ -676,5 +689,9 @@ abstract class BaseMessages {
             tmtTestButtonCardConsultNeurologist,
         TmtTestButtonCardText.understood: tmtTestButtonCardUnderstood,
         TmtTestButtonCardText.cancel: tmtTestButtonCardCancel,
+        //--------------------------------------------Home Card Button Text------------------------------------------------------
+        HomeCardButtonText.visualizeMyData: homeCardButtonVisualizeMyData,
+        HomeCardButtonText.viewMyHistory: homeCardButtonViewMyHistory,
+        HomeCardButtonText.createNewProfile: homeCardButtonCreateNewProfile,
       };
 }

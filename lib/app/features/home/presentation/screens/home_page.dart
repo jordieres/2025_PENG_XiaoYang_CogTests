@@ -10,6 +10,7 @@ import '../components/reference_code_input.dart';
 import '../components/select_user_dropdown.dart';
 import '../components/tmt_test_button_card.dart';
 import '../controllers/reference_code_controller.dart';
+import '../../../../config/translation/app_translations.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -36,12 +37,14 @@ class _HomePageState extends State<HomePage> with NavigationMixin {
       value: SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
         statusBarBrightness: isDarkMode ? Brightness.light : Brightness.dark,
-        statusBarIconBrightness: isDarkMode ? Brightness.light : Brightness.dark,
+        statusBarIconBrightness:
+            isDarkMode ? Brightness.light : Brightness.dark,
       ),
       child: Scaffold(
         body: SafeArea(
           child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 18.0),
+            padding:
+                const EdgeInsets.symmetric(vertical: 24.0, horizontal: 18.0),
             child: Center(
               child: SizedBox(
                 width: maxWidth,
@@ -56,38 +59,42 @@ class _HomePageState extends State<HomePage> with NavigationMixin {
                     const SizedBox(height: 24),
                     // TMT Test Button Card
                     Obx(() => TmtTestButtonCard(
-                      referenceCode: _referenceCodeController.isValidated.value
-                          ? _referenceCodeController.getFullReferenceCode()
-                          : '',
-                      onStartTest: _referenceCodeController.isValidated.value
-                          ? () => toSelectedPracticeOrTest(
-                          _referenceCodeController.getFullReferenceCode())
-                          : null,
-                    )),
+                          referenceCode: _referenceCodeController
+                                  .isValidated.value
+                              ? _referenceCodeController.getFullReferenceCode()
+                              : '',
+                          onStartTest:
+                              _referenceCodeController.isValidated.value
+                                  ? () => toSelectedPracticeOrTest(
+                                      _referenceCodeController
+                                          .getFullReferenceCode())
+                                  : null,
+                        )),
                     const SizedBox(height: 24),
                     // Row with two half-height buttons
                     Row(
                       children: [
                         Expanded(
                           child: HomeCardButton(
-                            text: "Visualizar Mis Datos",
-                            onPressed: () => Get.toNamed(Routes.current_user_data),
+                            text: HomeCardButtonText.visualizeMyData.tr,
+                            onPressed: () =>
+                                Get.toNamed(Routes.current_user_data),
                           ),
                         ),
                         const SizedBox(width: 23),
                         Expanded(
                           child: HomeCardButton(
-                            text: "Mirar Mis Historias",
-
-                            onPressed: () => Get.toNamed(Routes.tmt_user_history),
+                            text: HomeCardButtonText.viewMyHistory.tr,
+                            onPressed: () =>
+                                Get.toNamed(Routes.tmt_user_history),
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 24 ),
+                    const SizedBox(height: 24),
                     // Full-width button for creating a new profile
                     HomeCardButton(
-                      text: "Crear nuevo perfil",
+                      text: HomeCardButtonText.createNewProfile.tr,
                       middleHeight: true,
                       onPressed: () => toRegisterUser(),
                     ),

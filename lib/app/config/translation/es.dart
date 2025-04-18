@@ -425,6 +425,16 @@ class SpanishMessages extends BaseMessages {
 
   @override
   String get tmtTestButtonCardCancel => "Cancelar";
+
+  //--------------------------------------------Home Card Button Text------------------------------------------------------
+  @override
+  String get homeCardButtonVisualizeMyData => "Visualizar Mis Datos";
+
+  @override
+  String get homeCardButtonViewMyHistory => "Mirar Mis Historias";
+
+  @override
+  String get homeCardButtonCreateNewProfile => "Crear nuevo perfil";
 }
 
 final es = SpanishMessages();
