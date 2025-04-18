@@ -11,13 +11,13 @@ class HomeCardButton extends StatelessWidget {
   final bool isActive;
 
   const HomeCardButton({
-    super.key,
+    Key? key,
     required this.text,
     required this.onPressed,
     this.middleHeight = false,
     this.icon,
     this.isActive = true,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +38,8 @@ class HomeCardButton extends StatelessWidget {
             opacity: HomeUIConstantVariable.getOpacityDependIsEnable(isActive),
             child: SizedBox(
               height: middleHeight
-                  ? HomeUIConstantVariable.buttonCardHeight / 2
-                  : HomeUIConstantVariable.buttonCardHeight,
+                  ? HomeUIConstantVariable.tmtTestButtonCardHeight / 2
+                  : HomeUIConstantVariable.tmtTestButtonCardHeight,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(
                     HomeUIConstantVariable.cardCornerRadius),
@@ -55,14 +55,19 @@ class HomeCardButton extends StatelessWidget {
                         ? Colors.white.withAlpha(25)
                         : AppColors.getPrimaryBlueColor().withAlpha(25),
                     onTap: isActive ? onPressed : null,
-                    child: Center(
-                      child: Text(
-                        text,
-                        textAlign: TextAlign.center,
-                        style: TextStyleBase.h2.copyWith(
-                          color: isDarkMode
-                              ? AppColors.darkText
-                              : AppColors.blueText,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal:
+                              HomeUIConstantVariable.cardHorizontalPadding),
+                      child: Center(
+                        child: Text(
+                          text,
+                          textAlign: TextAlign.center,
+                          style: TextStyleBase.h2.copyWith(
+                            color: isDarkMode
+                                ? AppColors.darkText
+                                : AppColors.blueText,
+                          ),
                         ),
                       ),
                     ),

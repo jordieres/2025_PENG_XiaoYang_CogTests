@@ -135,12 +135,16 @@ class _TmtTestButtonCardState extends State<TmtTestButtonCard>
                   }
                 }
               : null,
-          child: Center(
-            child: Text(TmtTestButtonCardText.startTest.tr,
-                textAlign: TextAlign.center,
-                style: TextStyleBase.h2.copyWith(
-                  color: isDarkMode ? AppColors.darkText : AppColors.blueText,
-                )),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+                horizontal: HomeUIConstantVariable.cardHorizontalPadding),
+            child: Center(
+              child: Text(TmtTestButtonCardText.startTest.tr,
+                  textAlign: TextAlign.center,
+                  style: TextStyleBase.h2.copyWith(
+                    color: isDarkMode ? AppColors.darkText : AppColors.blueText,
+                  )),
+            ),
           ),
         ),
       ),
