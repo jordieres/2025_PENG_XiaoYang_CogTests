@@ -10,6 +10,7 @@ import '../../../../config/themes/app_text_style_base.dart';
 import '../../../../config/translation/app_translations.dart';
 import '../../../../utils/helpers/widget_max_width_calculator.dart';
 import '../controllers/reference_code_controller.dart';
+import '../../domain/entities/home_ui_constant_variable.dart';
 
 class UpperCaseTextFormatter extends TextInputFormatter {
   @override
@@ -39,7 +40,12 @@ class UpperCaseTextFormatter extends TextInputFormatter {
 }
 
 class ReferenceCodeInput extends StatefulWidget {
-  const ReferenceCodeInput({super.key});
+  final bool isActive;
+
+  const ReferenceCodeInput({
+    super.key,
+    this.isActive = true,
+  });
 
   @override
   State<ReferenceCodeInput> createState() => _ReferenceCodeInputState();
@@ -134,44 +140,56 @@ class _ReferenceCodeInputState extends State<ReferenceCodeInput> {
     return Obx(() {
       final isReadOnly = controller.isValidated.value;
 
-      return Center(
-        child: Container(
-          constraints: BoxConstraints(maxWidth: maxWidth),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                width: double.infinity,
-                height: 84,
-                decoration: BoxDecoration(
-                  color:
-                      AppColors.getPrimaryBlueDependIsDarkMode(),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                padding: const EdgeInsets.symmetric(vertical: 12),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const SizedBox(width: 20),
-                    _buildMainInputField(hasLabel, isReadOnly),
-                    _buildSeparator(),
-                    _buildSuffixInputField(isReadOnly),
-                    _buildActionButton(isReadOnly),
-                    const SizedBox(width: 18),
-                  ],
-                ),
-              ),
-              if (errorMessage != null && !isReadOnly)
-                Padding(
-                  padding: const EdgeInsets.only(left: 16, top: 8),
-                  child: Text(
-                    errorMessage!,
-                    style: AppTextStyle.referenceCodeInputErrorTextStyle,
+      return Stack(
+        children: [
+          Center(
+            child: Container(
+              constraints: BoxConstraints(maxWidth: maxWidth),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: double.infinity,
+                    height: 84,
+                    decoration: BoxDecoration(
+                      color: AppColors.getPrimaryBlueDependIsDarkMode(),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    child: Opacity(
+                      opacity: HomeUIConstantVariable.getOpacityDependIsEnable(widget.isActive),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const SizedBox(width: 20),
+                          _buildMainInputField(hasLabel, isReadOnly),
+                          _buildSeparator(),
+                          _buildSuffixInputField(isReadOnly),
+                          _buildActionButton(isReadOnly),
+                          const SizedBox(width: 18),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
-            ],
+                  if (errorMessage != null && !isReadOnly && widget.isActive)
+                    Padding(
+                      padding: const EdgeInsets.only(left: 16, top: 8),
+                      child: Text(
+                        errorMessage!,
+                        style: AppTextStyle.referenceCodeInputErrorTextStyle,
+                      ),
+                    ),
+                ],
+              ),
+            ),
           ),
-        ),
+          if (!widget.isActive)
+            Positioned.fill(
+              child: Center(
+                child: HomeUIConstantVariable.lockIcon,
+              ),
+            ),
+        ],
       );
     });
   }
@@ -185,7 +203,7 @@ class _ReferenceCodeInputState extends State<ReferenceCodeInput> {
           Container(
             height: 60,
             decoration:
-                getReferenceCodeInputDecoration(isReadOnly, errorMessage),
+            getReferenceCodeInputDecoration(isReadOnly, errorMessage),
             child: Center(
               child: Theme(
                 data: getReferenceCodeTextSelectionTheme(context),
@@ -194,7 +212,7 @@ class _ReferenceCodeInputState extends State<ReferenceCodeInput> {
                   focusNode: mainFocusNode,
                   cursorColor: Colors.white,
                   cursorWidth: 2.0,
-                  readOnly: isReadOnly,
+                  readOnly: isReadOnly || !widget.isActive,
                   inputFormatters: [
                     UpperCaseTextFormatter(),
                   ],
@@ -263,7 +281,7 @@ class _ReferenceCodeInputState extends State<ReferenceCodeInput> {
               textAlign: TextAlign.center,
               cursorColor: Colors.white,
               cursorWidth: 2.0,
-              readOnly: isReadOnly,
+              readOnly: isReadOnly || !widget.isActive,
               inputFormatters: [
                 FilteringTextInputFormatter.digitsOnly,
                 LengthLimitingTextInputFormatter(3),
@@ -271,7 +289,7 @@ class _ReferenceCodeInputState extends State<ReferenceCodeInput> {
               style: AppTextStyle.referenceCodeInputTextStyle,
               decoration: const InputDecoration(
                 contentPadding:
-                    EdgeInsets.symmetric(horizontal: 8, vertical: 14),
+                EdgeInsets.symmetric(horizontal: 8, vertical: 14),
                 border: InputBorder.none,
               ),
               onChanged: (value) {
@@ -294,16 +312,16 @@ class _ReferenceCodeInputState extends State<ReferenceCodeInput> {
       child: IconButton(
         icon: isReadOnly
             ? Icon(
-                Icons.edit,
-                color: Colors.white,
-                size: _getIconSize(),
-              )
+          Icons.edit,
+          color: Colors.white,
+          size: _getIconSize(),
+        )
             : Icon(
-                Icons.check,
-                color: Colors.white,
-                size: _getIconSize(),
-              ),
-        onPressed: () {
+          Icons.check,
+          color: Colors.white,
+          size: _getIconSize(),
+        ),
+        onPressed: widget.isActive ? () {
           if (isReadOnly) {
             controller.resetValidation();
           } else {
@@ -319,7 +337,7 @@ class _ReferenceCodeInputState extends State<ReferenceCodeInput> {
             }
             controller.validateReferenceCode(mainCode, suffixCode);
           }
-        },
+        } : null,
       ),
     );
   }
