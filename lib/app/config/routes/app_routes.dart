@@ -2,6 +2,7 @@ part of 'app_pages.dart';
 
 /// used to switch pages
 class Routes {
+  static const splash = _Paths.splash;
   static const home = _Paths.home;
   static const tmt_test = _Paths.tmt_test;
   static const tmt_results = _Paths.tmt_results;
@@ -16,6 +17,7 @@ class Routes {
 
 /// contains a list of route names.
 class _Paths {
+  static const splash = '/splash';
   static const home = '/home';
   static const tmt_test = '/tmt_test';
   static const tmt_results = '/tmt_results';
