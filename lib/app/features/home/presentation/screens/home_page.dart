@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -29,43 +28,30 @@ class _HomePageState extends State<HomePage> with NavigationMixin {
     super.initState();
     _referenceCodeController = Get.find<ReferenceCodeController>();
     _selectUserController = Get.find<SelectUserController>();
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   }
 
   @override
   Widget build(BuildContext context) {
     final maxWidth = WidgetMaxWidthCalculator.getMaxWidth(context);
-    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final theme = Theme.of(context);
+    final isDarkMode = theme.brightness == Brightness.dark;
 
-    if (Platform.isIOS) {
-      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        statusBarBrightness: isDarkMode ? Brightness.dark : Brightness.light,
-        statusBarIconBrightness:
-            isDarkMode ? Brightness.light : Brightness.dark,
-      ));
-    } else {
-      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-        statusBarIconBrightness:
-            isDarkMode ? Brightness.light : Brightness.dark,
-      ));
-    }
+    final Brightness statusBarIconBrightness =
+        isDarkMode ? Brightness.light : Brightness.dark;
+    final Brightness navigationBarIconBrightness =
+        isDarkMode ? Brightness.light : Brightness.dark;
+    final Color navigationBarColor = theme.scaffoldBackgroundColor;
+
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: statusBarIconBrightness,
+      statusBarBrightness: isDarkMode ? Brightness.dark : Brightness.light,
+      systemNavigationBarColor: navigationBarColor,
+      systemNavigationBarIconBrightness: navigationBarIconBrightness,
+      systemNavigationBarDividerColor: Colors.transparent,
+    ));
 
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(0),
-        child: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-          systemOverlayStyle: SystemUiOverlayStyle(
-            statusBarColor: Colors.transparent,
-            statusBarBrightness:
-                isDarkMode ? Brightness.dark : Brightness.light,
-            statusBarIconBrightness:
-                isDarkMode ? Brightness.light : Brightness.dark,
-          ),
-        ),
-      ),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(vertical: 24.0, horizontal: 18.0),
