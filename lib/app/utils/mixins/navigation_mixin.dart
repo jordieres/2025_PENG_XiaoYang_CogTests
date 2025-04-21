@@ -25,6 +25,14 @@ mixin NavigationMixin {
     Get.toNamed(Routes.register_user);
   }
 
+  void toUserTmtResultHistory() {
+    Get.toNamed(Routes.tmt_user_history);
+  }
+
+  void toCurrentUserData() {
+    Get.toNamed(Routes.current_user_data);
+  }
+
   void toSelectedPracticeOrTest(String tmtReferenceCode) {
     Get.toNamed(Routes.tmt_select_practice_or_test,
         arguments: tmtReferenceCode);
