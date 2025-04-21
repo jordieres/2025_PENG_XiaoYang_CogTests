@@ -7,6 +7,7 @@ import 'package:msdtmt/app/features/tm_tst/presentation/screens/tmt_test_screen.
 
 import '../../features/home/presentation/binding/reference_validation_biding.dart';
 import '../../features/home/presentation/binding/select_user_profile_binding.dart';
+import '../../features/splash/splash_screen.dart';
 import '../../features/tm_tst/presentation/bindings/tmt_game_config_biding.dart';
 import '../../features/tm_tst/presentation/bindings/tmt_test_practice_binding.dart';
 import '../../features/tm_tst/presentation/screens/tmt_select_mode_practice_or_test.dart';
@@ -25,9 +26,13 @@ part 'app_routes.dart';
 /// contains all configuration pages
 class AppPages {
   /// when the app is opened, this page will be the first to be shown
-  static const initial = Routes.home;
+  static const initial = Routes.splash;
 
   static final routes = [
+    GetPage(
+      name: _Paths.splash,
+      page: () => const CustomSplashScreen(),
+    ),
     GetPage(
       name: _Paths.home,
       page: () => const HomePage(),

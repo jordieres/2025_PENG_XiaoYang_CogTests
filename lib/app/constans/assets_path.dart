@@ -14,8 +14,10 @@ class ImageAnimationPath {
   // static const myAnim = "$_folderPath/my_anim.json";
 }
 
-class ImagePngPath {
-  static const _folderPath = "assets/icons";
+class ImageSplashPath {
+  static const _folderPath = "assets/splash";
+  static const universityLogo = "$_folderPath/university_logo.png";
+  static const supportLogo = "$_folderPath/support_logo.png";
 }
 
 class ImageVectorPath {

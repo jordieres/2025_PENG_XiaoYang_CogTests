@@ -1,0 +1,13 @@
+flutter_native_splash:
+  color: "#4090E5"
+  image: assets/splash/MS-dTMT.png
+
+
+  android_12:
+    color: "#4090E5"
+    image: assets/splash/MS-dTMT.png
+
+  android: true
+  ios: true
+  web: false
+  fullscreen: true

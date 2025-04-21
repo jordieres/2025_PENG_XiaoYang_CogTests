@@ -256,15 +256,15 @@ class SpanishMessages extends BaseMessages {
       "Por favor, rellena todos los campos marcados.";
 
   @override
-  String get registerUserSaveSuccess => "Usuario registrado correctamente";
+  String get registerUserSaveSuccess => "Perfil registrado correctamente";
 
   @override
   String get registerUserSaveError =>
-      "Error al guardar el usuario. Inténtalo de nuevo.";
+      "Error al guardar el perfil. Inténtalo de nuevo.";
 
   //--------------------------------------------Current User Data Screen Text------------------------------------------------------
   @override
-  String get currentUserDataScreenTitle => "Perfil de Usuario";
+  String get currentUserDataScreenTitle => "Mi Perfil";
 
   @override
   String get currentUserDataScreenNoUserFound =>
@@ -284,7 +284,7 @@ class SpanishMessages extends BaseMessages {
 
   @override
   String get currentUserDataScreenConfirmDeleteContent =>
-      "¿Estás seguro de que quieres eliminar este perfil de usuario? Esta acción no se puede deshacer.";
+      "¿Estás seguro de que quieres eliminar este perfil? Esta acción no se puede deshacer.";
 
   @override
   String get currentUserDataScreenConfirmDeleteButton => "Eliminar";
@@ -294,11 +294,11 @@ class SpanishMessages extends BaseMessages {
 
   @override
   String get currentUserDataScreenDeleteSuccess =>
-      "Perfil de usuario eliminado correctamente";
+      "Perfil eliminado correctamente";
 
   @override
   String get currentUserDataScreenDeleteError =>
-      "Error al eliminar el perfil de usuario";
+      "Error al eliminar el perfil";
 
   //--------------------------------------------User Result History Screen Text------------------------------------------------------
   @override
@@ -391,7 +391,7 @@ class SpanishMessages extends BaseMessages {
 
   //--------------------------------------------Select User Dropdown Text------------------------------------------------------
   @override
-  String get selectUserDropdownCreateUser => "Crear usuario";
+  String get selectUserDropdownCreateUser => "Crear perfil";
 
   @override
   String get selectUserDropdownGreeting => "Hola, ";
@@ -425,6 +425,16 @@ class SpanishMessages extends BaseMessages {
 
   @override
   String get tmtTestButtonCardCancel => "Cancelar";
+
+  //--------------------------------------------Home Card Button Text------------------------------------------------------
+  @override
+  String get homeCardButtonVisualizeMyData => "Visualizar Mis Datos";
+
+  @override
+  String get homeCardButtonViewMyHistory => "Mirar Mis Historias";
+
+  @override
+  String get homeCardButtonCreateNewProfile => "Crear nuevo perfil";
 }
 
 final es = SpanishMessages();

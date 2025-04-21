@@ -3,7 +3,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:msdtmt/app/config/themes/AppColors.dart';
 import 'package:msdtmt/app/constans/app_constants.dart';
-import 'package:msdtmt/app/features/tm_tst/domain/entities/tmt_game/tmt_game_variable.dart';
 import 'package:msdtmt/app/shared_components/custom_dialog.dart';
 import 'package:msdtmt/app/utils/mixins/app_mixins.dart';
 
@@ -85,7 +84,7 @@ class _TmtTestButtonCardState extends State<TmtTestButtonCard>
           child: Opacity(
             opacity: HomeUIConstantVariable.getOpacityDependIsEnable(isActive),
             child: SizedBox(
-              height: 158,
+              height: HomeUIConstantVariable.tmtTestButtonCardHeight,
               child: Row(
                 children: [
                   Expanded(
@@ -136,12 +135,16 @@ class _TmtTestButtonCardState extends State<TmtTestButtonCard>
                   }
                 }
               : null,
-          child: Center(
-            child: Text(TmtTestButtonCardText.startTest.tr,
-                textAlign: TextAlign.center,
-                style: TextStyleBase.h2.copyWith(
-                  color: isDarkMode ? AppColors.darkText : AppColors.blueText,
-                )),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+                horizontal: HomeUIConstantVariable.cardHorizontalPadding),
+            child: Center(
+              child: Text(TmtTestButtonCardText.startTest.tr,
+                  textAlign: TextAlign.center,
+                  style: TextStyleBase.h2.copyWith(
+                    color: isDarkMode ? AppColors.darkText : AppColors.blueText,
+                  )),
+            ),
           ),
         ),
       ),

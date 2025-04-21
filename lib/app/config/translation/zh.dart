@@ -396,6 +396,16 @@ class ChineseMessages extends BaseMessages {
 
   @override
   String get tmtTestButtonCardCancel => "取消";
+
+  //--------------------------------------------Home Card Button Text------------------------------------------------------
+  @override
+  String get homeCardButtonVisualizeMyData => "查看我的数据";
+
+  @override
+  String get homeCardButtonViewMyHistory => "查看我的历史";
+
+  @override
+  String get homeCardButtonCreateNewProfile => "创建新用户";
 }
 
 final zh = ChineseMessages();
