@@ -31,57 +31,75 @@ class TmtTestHelpPage extends StatelessWidget with NavigationMixin {
         title: _getHelpTitle(tmtHelpMode),
       ),
       body: SafeArea(
-        child: Column(
-          children: [
-            // Scrollable content area with vertically centered text
-            Expanded(
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  return SingleChildScrollView(
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                        minHeight: constraints.maxHeight,
-                      ),
-                      child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(24),
-                          child: Text(
-                            _getHelpDescription(tmtHelpMode),
-                            textAlign: TextAlign.center,
-                            style: TextStyleBase.bodyXL,
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            final buttonsHeight = DeviceHelper.isTablet ? 130.0 : 120.0;
+            final textWidget = Text(
+              _getHelpDescription(tmtHelpMode),
+              textAlign: TextAlign.center,
+              style: TextStyleBase.bodyXL,
+            );
+
+            final TextPainter textPainter = TextPainter(
+              text: TextSpan(
+                  text: _getHelpDescription(tmtHelpMode),
+                  style: TextStyleBase.bodyXL),
+              textDirection: TextDirection.ltr,
+              maxLines: null,
+              textAlign: TextAlign.center,
+            )..layout(maxWidth: constraints.maxWidth - 48);
+
+            final textHeight = textPainter.height;
+            final availableSpace =
+                constraints.maxHeight - textHeight - buttonsHeight;
+            final spacing = availableSpace / 2;
+
+            return SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: constraints.maxHeight,
+                ),
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(24),
+                    child: SizedBox(
+                      width: WidgetMaxWidthCalculator.getMaxWidth(context),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          textWidget,
+                          SizedBox(height: spacing > 0 ? spacing : 40),
+                          SizedBox(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                CustomPrimaryButton(
+                                  text: TMTGameText
+                                      .tmtGameTmtHelpTmtPrimaryButtonText.tr,
+                                  onPressed: () {
+                                    _toPracticePage(tmtHelpMode);
+                                  },
+                                ),
+                                SizedBox(
+                                    height: DeviceHelper.isTablet ? 18 : 12),
+                                CustomSecondaryButton(
+                                  text: TMTGameText
+                                      .tmtGameTmtHelpTmtSecondaryButtonText.tr,
+                                  onPressed: () {
+                                    Get.back();
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
+                        ],
                       ),
                     ),
-                  );
-                },
-              ),
-            ),
-
-            // Fixed buttons at bottom
-            Container(
-              width: WidgetMaxWidthCalculator.getMaxWidth(context),
-              padding: const EdgeInsets.all(24),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  CustomPrimaryButton(
-                    text: TMTGameText.tmtGameTmtHelpTmtPrimaryButtonText.tr,
-                    onPressed: () {
-                      _toPracticePage(tmtHelpMode);
-                    },
                   ),
-                  SizedBox(height: DeviceHelper.isTablet ? 18 : 12),
-                  CustomSecondaryButton(
-                    text: TMTGameText.tmtGameTmtHelpTmtSecondaryButtonText.tr,
-                    onPressed: () {
-                      Get.back();
-                    },
-                  ),
-                ],
+                ),
               ),
-            ),
-          ],
+            );
+          },
         ),
       ),
     );
