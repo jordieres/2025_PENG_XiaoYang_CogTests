@@ -5,7 +5,7 @@ import '../../../../config/translation/app_translations.dart';
 import '../../../../shared_components/custom_dialog.dart';
 import '../../domain/entities/result/tmt_game_hand_used.dart';
 
-Future<TmtGameHandUsed> showTmtSelectHandDialogGetX() async {
+Future<TmtGameHandUsed?> showTmtSelectHandDialogGetX() async {
   final result = await Get.dialog<TmtGameHandUsed>(
     CustomDialog(
       title: TmtSelectHandDialogText.title.tr,
@@ -24,9 +24,10 @@ Future<TmtGameHandUsed> showTmtSelectHandDialogGetX() async {
       onLeftPrimaryPressed: () {
         Get.back(result: TmtGameHandUsed.LEFT);
       },
-      dismissibleByBackButton: false,
+      dismissibleByBackButton: true,
     ),
-    barrierDismissible: false,
+    barrierDismissible: true,
   );
-  return result ?? TmtGameHandUsed.RIGHT;
+
+  return result;
 }

@@ -98,14 +98,7 @@ class _SelectModePracticeOrTestState extends State<SelectModePracticeOrTest>
             child: _buildOptionCard(
               context: context,
               title: SelectModePracticeOrTestText.testButtonText.tr,
-              onTap: () async {
-                TmtGameHandUsed selectedHand =
-                    await showTmtSelectHandDialogGetX();
-                toTmtTest(TmtGameInitData(
-                  tmtGameHandUsed: selectedHand,
-                  tmtGameCodeId: tmtGameCodeId,
-                ));
-              },
+              onTap: _handleTestModeSelection,
               isPractice: false,
             ),
           ),
@@ -140,20 +133,23 @@ class _SelectModePracticeOrTestState extends State<SelectModePracticeOrTest>
             child: _buildOptionCard(
               context: context,
               title: SelectModePracticeOrTestText.testButtonText.tr,
-              onTap: () async {
-                TmtGameHandUsed selectedHand =
-                    await showTmtSelectHandDialogGetX();
-                toTmtTest(TmtGameInitData(
-                  tmtGameHandUsed: selectedHand,
-                  tmtGameCodeId: tmtGameCodeId,
-                ));
-              },
+              onTap: _handleTestModeSelection,
               isPractice: false,
             ),
           ),
         ],
       ),
     );
+  }
+
+  Future<void> _handleTestModeSelection() async {
+    TmtGameHandUsed? selectedHand = await showTmtSelectHandDialogGetX();
+    if (selectedHand != null) {
+      toTmtTest(TmtGameInitData(
+        tmtGameHandUsed: selectedHand,
+        tmtGameCodeId: tmtGameCodeId,
+      ));
+    }
   }
 
   Widget _buildOptionCard({
