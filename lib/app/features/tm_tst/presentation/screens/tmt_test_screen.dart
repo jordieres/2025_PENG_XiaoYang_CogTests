@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:msdtmt/app/features/tm_tst/presentation/components/tmt_game_board_controller.dart';
 import 'package:msdtmt/app/features/tm_tst/presentation/controllers/tmt_test_flow_state_controller.dart';
+import 'package:msdtmt/app/utils/services/app_logger.dart';
+import 'package:msdtmt/app/utils/ui/ui_utils.dart';
 import '../../../../config/routes/app_pages.dart';
 import '../../../../config/routes/app_route_observer.dart';
 import '../../../../config/themes/AppColors.dart';
 import '../../../../config/translation/app_translations.dart';
 import '../../../../shared_components/custom_dialog.dart';
+import '../../../../utils/mixins/app_mixins.dart';
+import '../../domain/entities/result/tmt_game_init_data.dart';
 import '../components/tmt_test_app_bar.dart';
 import '../controllers/base_tmt_test_flow_contoller.dart';
 
@@ -19,9 +23,11 @@ class TmtTestPage extends StatefulWidget {
   }
 }
 
-class _TmtTestPageState extends State<TmtTestPage> with WidgetsBindingObserver {
+class _TmtTestPageState extends State<TmtTestPage>
+    with WidgetsBindingObserver, NavigationMixin {
   TmtGameBoardController? _boardController;
   late TmtTestFlowStateController _testTmtFlowStateController;
+  late TmtGameInitData tmtGameInitData;
   Worker? _stateWorker;
   Worker? _routeObserverWorker;
 
@@ -34,6 +40,18 @@ class _TmtTestPageState extends State<TmtTestPage> with WidgetsBindingObserver {
     _tmtTestFlowStateObserver();
     _tmtTestRouteChangeObserver();
     WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _getArgument();
+    });
+  }
+
+  void _getArgument() {
+    try {
+      tmtGameInitData = Get.arguments as TmtGameInitData;
+    } catch (e) {
+      AppSnackbar.showCustomSnackbar(context, "Error argument");
+      navigateToHome();
+    }
   }
 
   void _tmtTestFlowStateObserver() {
@@ -47,7 +65,7 @@ class _TmtTestPageState extends State<TmtTestPage> with WidgetsBindingObserver {
         }
       } else if (state == TmtTestStateFlow.TEST_COMPLETED) {
         _pauseTimer();
-        Get.offNamed(Routes.tmt_results);
+        navigateToResultScreen(tmtGameInitData);
       }
     });
   }
@@ -72,7 +90,7 @@ class _TmtTestPageState extends State<TmtTestPage> with WidgetsBindingObserver {
   void didChangeMetrics() {
     // When change screen orientation
     setState(() {
-      final currentStatus= _testTmtFlowStateController.testState.value;
+      final currentStatus = _testTmtFlowStateController.testState.value;
       if (currentStatus == TmtTestStateFlow.TMT_A_IN_PROGRESS ||
           currentStatus == TmtTestStateFlow.READY) {
         _resetTmtA();
@@ -84,19 +102,23 @@ class _TmtTestPageState extends State<TmtTestPage> with WidgetsBindingObserver {
 
   void _resetTmtA() {
     _testTmtFlowStateController.resetStatusTmtA();
-    setState(() {
-      _boardController = TmtGameBoardController(
-          key: UniqueKey(), flowController: _testTmtFlowStateController);
-      _resetTimer();
+    _testTmtFlowStateController.initializeGameConfig().then((bool isLoaded) {
+      setState(() {
+        _boardController = TmtGameBoardController(
+            key: UniqueKey(), flowController: _testTmtFlowStateController);
+        _resetTimer();
+      });
     });
   }
 
   void _resetTmtB() {
     _testTmtFlowStateController.resetStatusTmtB();
-    setState(() {
-      _boardController = TmtGameBoardController(
-          key: UniqueKey(), flowController: _testTmtFlowStateController);
-      _setStartTime(_testTmtFlowStateController.getTmtATimeInSec());
+    _testTmtFlowStateController.initializeGameConfig().then((bool isLoaded) {
+      setState(() {
+        _boardController = TmtGameBoardController(
+            key: UniqueKey(), flowController: _testTmtFlowStateController);
+        _setStartTime(_testTmtFlowStateController.getTmtATimeInSec());
+      });
     });
   }
 
@@ -149,7 +171,8 @@ class _TmtTestPageState extends State<TmtTestPage> with WidgetsBindingObserver {
       builder: (context) => CustomDialog(
         mode: DialogMode.singleButton,
         title: TMTGameText.tmtGamePartACompletedBody.tr,
-        primaryButtonText: TMTGameText.tmtGamePartBCompletedConfirmationButton.tr,
+        primaryButtonText:
+            TMTGameText.tmtGamePartBCompletedConfirmationButton.tr,
         onPrimaryPressed: () {
           Get.back();
           setState(() {
@@ -167,7 +190,9 @@ class _TmtTestPageState extends State<TmtTestPage> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: isDarkMode ? AppColors.testTMTBoardBackgroundDark : AppColors.testTMTBoardBackground,
+      backgroundColor: isDarkMode
+          ? AppColors.testTMTBoardBackgroundDark
+          : AppColors.testTMTBoardBackground,
       appBar: TmtCustomAppBar(
         title: _getAppBarTitle(),
         isTestTypeA: _isTestTypeA(),

@@ -15,4 +15,6 @@ class ApiConstants {
   static const String codeIdField = "codeid";
   static const String dateDataField = "date_data";
 
+  static const String referenceCodeValid = "OK";
+  static const String referenceCodeInvalid = "Nok";
 }

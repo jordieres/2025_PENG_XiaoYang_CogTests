@@ -59,7 +59,7 @@ class RestApiServices {
         apiError,
         data: e.response?.data,
         code: e.response?.statusCode,
-        headers: e.response?.headers?.map,
+        headers: e.response?.headers.map,
       );
     } catch (e) {
       final error = UnknownApiError(e.toString());

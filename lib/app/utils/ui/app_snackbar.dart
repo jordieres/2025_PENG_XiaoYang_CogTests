@@ -1,35 +1,47 @@
 part of ui_utils;
 
-/// contains all snackbar templates
 class AppSnackbar {
+  static bool _isSnackbarVisible = false;
+
   static void showCustomSnackbar(
     BuildContext context,
     String message, {
     int durationInSeconds = 2,
-    Color backgroundColor = Colors.black87,
+    Color? backgroundColor,
   }) {
-    final screenWidth = MediaQuery.of(context).size.width;
+    if (_isSnackbarVisible) {
+      return;
+    }
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Center(
+    backgroundColor ??= Theme.of(context).colorScheme.inverseSurface;
+    _isSnackbarVisible = true;
+    Get.showSnackbar(
+      GetSnackBar(
+        messageText: Center(
           child: Text(
             message,
             textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.white),
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onInverseSurface,
+            ),
           ),
         ),
         duration: Duration(seconds: durationInSeconds),
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        padding: EdgeInsets.symmetric(
-          horizontal: screenWidth * 0.2, // 20% padding on both sides
-          vertical: 12,
-        ),
+        snackPosition: SnackPosition.BOTTOM,
         backgroundColor: backgroundColor,
+        margin: EdgeInsets.symmetric(
+          horizontal: Get.width * 0.1,
+          vertical: 20,
+        ),
+        borderRadius: 10,
+        isDismissible: true,
+        forwardAnimationCurve: Curves.easeOutCirc,
+        onTap: (_) {
+          Get.closeCurrentSnackbar();
+        },
       ),
-    );
+    ).future.then((_) {
+      _isSnackbarVisible = false;
+    });
   }
 }

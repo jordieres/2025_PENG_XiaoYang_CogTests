@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../features/tm_tst/domain/entities/tmt_game/tmt_game_variable.dart';
+
 class LocalStorageServices {
   static final LocalStorageServices _localStorageServices =
-  LocalStorageServices._internal();
+      LocalStorageServices._internal();
 
   factory LocalStorageServices() {
     return _localStorageServices;
@@ -12,6 +14,8 @@ class LocalStorageServices {
   static const String _pendingResultsKey = 'pending_tmt_results';
   static const String _themeKey = 'theme_mode';
   static const String _systemThemeKey = 'system_theme';
+  static const String _currentProfileKey = 'current_profile_id';
+  static const String _circleNumberKey = 'tmt_circle_number';
 
   LocalStorageServices._internal();
 
@@ -30,7 +34,8 @@ class LocalStorageServices {
     return await prefs.remove(_pendingResultsKey);
   }
 
-  static Future<bool> saveThemeSettings(bool isFollowSystem, ThemeMode themeMode) async {
+  static Future<bool> saveThemeSettings(
+      bool isFollowSystem, ThemeMode themeMode) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool(_systemThemeKey, isFollowSystem);
 
@@ -57,9 +62,32 @@ class LocalStorageServices {
             : ThemeMode.light;
       }
     }
-    return {
-      'isFollowSystem': isSystemTheme,
-      'themeMode': themeMode
-    };
+    return {'isFollowSystem': isSystemTheme, 'themeMode': themeMode};
+  }
+
+  static Future<bool> setCurrentProfileId(String userId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return await prefs.setString(_currentProfileKey, userId);
+  }
+
+  static Future<String?> getCurrentProfileId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString(_currentProfileKey);
+  }
+
+  static Future<bool> clearCurrentProfileId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return await prefs.remove(_currentProfileKey);
+  }
+
+  static Future<bool> saveCircleNumber(int circleNumber) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return await prefs.setInt(_circleNumberKey, circleNumber);
+  }
+
+  static Future<int> getCircleNumber() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getInt(_circleNumberKey) ??
+        TmtGameVariables.DEFAULT_CIRCLE_NUMBER;
   }
 }
