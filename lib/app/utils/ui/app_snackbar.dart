@@ -18,7 +18,12 @@ class AppSnackbar {
 
     final maxWidth = WidgetMaxWidthCalculator.getMaxWidth(context);
     final horizontalMargin = (Get.width - maxWidth) / 2;
-    final safeHorizontalMargin = horizontalMargin > 0 ? horizontalMargin : 0.0;
+    var safeHorizontalMargin = horizontalMargin > 0 ? horizontalMargin : 0.0;
+
+    final defaultMargin = Get.width * 0.1;
+    if (safeHorizontalMargin < defaultMargin) {
+      safeHorizontalMargin = defaultMargin;
+    }
 
     Get.showSnackbar(
       GetSnackBar(
