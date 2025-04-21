@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
+import '../helpers/widget_max_width_calculator.dart';
+
 part 'app_bottomshet.dart';
 part 'app_snackbar.dart';
 // in this file focused on adding extension for some widget
