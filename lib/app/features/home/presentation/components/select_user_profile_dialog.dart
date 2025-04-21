@@ -1,0 +1,128 @@
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:msdtmt/app/shared_components/custom_primary_button.dart';
+import '../../../../config/translation/app_translations.dart';
+import '../../../../shared_components/custom_dialog.dart';
+import '../../../../utils/helpers/widget_max_width_calculator.dart';
+import '../controllers/select_user_profile_controller.dart';
+
+class SelectUserDialog extends StatelessWidget {
+  final SelectUserController controller;
+  final Function(String) onProfileSelected;
+
+  const SelectUserDialog({
+    super.key,
+    required this.controller,
+    required this.onProfileSelected,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final maxWidth = WidgetMaxWidthCalculator.getMaxWidth(context);
+
+    return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Container(
+        constraints: BoxConstraints(
+          maxWidth: maxWidth,
+          maxHeight: MediaQuery.of(context).size.height * 0.8,
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(height: 24),
+            Text(
+              SelectUserProfileDialogText.title.tr,
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 42),
+            Divider(height: 1),
+            Expanded(
+              child: Obx(() {
+                if (controller.isLoading.value) {
+                  return Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Center(child: CircularProgressIndicator()),
+                  );
+                } else if (controller.profiles.isEmpty) {
+                  return Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(SelectUserProfileDialogText.noProfiles.tr),
+                  );
+                } else {
+                  return ListView.separated(
+                    shrinkWrap: true,
+                    itemCount: controller.profiles.length,
+                    separatorBuilder: (context, index) => Divider(height: 1),
+                    itemBuilder: (context, index) {
+                      final profile = controller.profiles[index];
+                      return InkWell(
+                        onTap: () {
+                          onProfileSelected(profile.userId);
+                          Get.back();
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: ListTile(
+                            title: Text(profile.nickname),
+                            trailing: IconButton(
+                              icon: Icon(Icons.delete),
+                              onPressed: () {
+                                _confirmDeleteProfile(
+                                    context, profile.userId, profile.nickname);
+                              },
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                }
+              }),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: SizedBox(
+                width: double.infinity,
+                child: CustomPrimaryButton(
+                  text: SelectUserProfileDialogText.cancelButton.tr,
+                  onPressed: () {
+                    Get.back();
+                  },
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _confirmDeleteProfile(
+      BuildContext context, String userId, String nickname) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return CustomDialog(
+          title: SelectUserProfileDialogText.deleteConfirmTitle.tr,
+          content: SelectUserProfileDialogText.deleteConfirmContent.tr.replaceAll('{user}', nickname),
+          mode: DialogMode.confirmCancel,
+          primaryButtonText: SelectUserProfileDialogText.deleteButton.tr,
+          cancelButtonText: SelectUserProfileDialogText.cancelDeleteButton.tr,
+          onPrimaryPressed: () {
+            controller.deleteProfile(userId);
+            Navigator.of(context).pop();
+          },
+          onCancelPressed: () {
+            Get.back();
+          },
+        );
+      },
+    );
+  }
+}

@@ -6,9 +6,7 @@ import 'AppFontWeight.dart';
 import 'app_text_style_base.dart';
 
 class AppTextStyle {
-  static var appBarTitle = (TextStyleBase.h4).copyWith(
-    color: Get.isDarkMode ? AppColors.darkText : AppColors.mainBlackText,
-  );
+  static var appBarTitle = (TextStyleBase.h4).copyWith();
 
   static var tmtGameCircleText = TextStyle(
     color: AppColors.mainBlackText,
@@ -50,5 +48,27 @@ class AppTextStyle {
 
   static var tmtResultThanksText = TextStyleBase.bodyS.copyWith(
     color: Get.isDarkMode ? AppColors.darkText : AppColors.blueText,
+  );
+
+  static var selectModeTitle = TextStyleBase.h2.copyWith();
+
+  static var registerUserLabelText = TextStyleBase.h5.copyWith();
+
+  static var tmtResultHistoryTabletHeaderText = TextStyleBase.h4;
+
+  static var tmtResultHistoryTabletContentText = TextStyleBase.bodyM;
+
+
+  //-------------------------reference code Input-------------------------
+  static var referenceCodeInputTextStyle = TextStyleBase.bodyL.copyWith(
+    color: Colors.white,
+  );
+
+  static var referenceCodeHintTextStyle = TextStyleBase.bodyL.copyWith(
+    color: Colors.white,
+  );
+
+  static var referenceCodeInputErrorTextStyle = TextStyleBase.bodyS.copyWith(
+    color: AppColors.mainRed,
   );
 }

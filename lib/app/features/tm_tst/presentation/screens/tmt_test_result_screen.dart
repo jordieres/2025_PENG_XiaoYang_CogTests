@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:msdtmt/app/features/user/presentation/contoller/test_result_controller.dart';
 import '../../../../config/routes/app_pages.dart';
 import '../../../../config/themes/AppTextStyle.dart';
 import '../../../../config/themes/app_text_style_base.dart';
 import '../../../../config/translation/app_translations.dart';
 import '../../../../shared_components/custom_primary_button.dart';
 import '../../../../utils/helpers/app_helpers.dart';
+import '../../../../utils/mixins/app_mixins.dart';
 import '../../../../utils/services/app_logger.dart';
 import '../../../../utils/services/request_state.dart';
 import '../../../../utils/ui/ui_utils.dart';
-import '../../domain/entities/result/tmt_game_hand_used.dart';
+import '../../../user/domain/entities/user_test_local_data_result.dart';
 import '../../domain/entities/result/tmt_game_init_data.dart';
 import '../../domain/usecases/tmt_result/tmt_result_screen_responsive_calculator.dart';
 import '../components/tmt_result_card.dart';
-import '../controllers/tmt_result_controller.dart';
+import '../controllers/tmt_result_report_controller.dart';
 import '../controllers/tmt_test_flow_state_controller.dart';
 
 class TmtResultsScreen extends StatefulWidget {
@@ -23,11 +25,13 @@ class TmtResultsScreen extends StatefulWidget {
   State<TmtResultsScreen> createState() => _TmtResultsScreenState();
 }
 
-class _TmtResultsScreenState extends State<TmtResultsScreen> {
+class _TmtResultsScreenState extends State<TmtResultsScreen>
+    with NavigationMixin {
   final ScrollController _scrollController = ScrollController();
   bool _showScrollIndicator = false;
   final GlobalKey _contentKey = GlobalKey();
   final GlobalKey _cardKey = GlobalKey();
+  bool _isLoadingTestResults = true;
 
   static const String _loggerTag = 'TmtResultsScreen';
 
@@ -36,7 +40,10 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
   late ResultLayoutMetrics _metrics;
 
   late TmtTestFlowStateController _testController;
-  late TmtResultController _resultController;
+  late TmtResultReportController _resultController;
+  late TestResultLocalDataController _testResultLocalDataController;
+
+  late TmtGameInitData tmtGameInitData;
 
   int _timeCompleteA = 0;
   int _timeCompleteB = 0;
@@ -51,7 +58,8 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
   void initState() {
     super.initState();
     _testController = Get.find<TmtTestFlowStateController>();
-    _resultController = Get.find<TmtResultController>();
+    _resultController = Get.find<TmtResultReportController>();
+    _testResultLocalDataController = Get.find<TestResultLocalDataController>();
 
     _lastOrientation = MediaQuery.of(Get.context!).orientation;
     _metrics =
@@ -73,10 +81,20 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
       if (state is RequestInitial) {
       } else if (state is RequestLoading) {
       } else if (state is RequestSuccess) {
+        _saveTestResultToLocal();
       } else if (state is RequestError) {
         _showErrorSnackBar(state.message);
       }
     });
+  }
+
+  void _saveTestResultToLocal() {
+    _testResultLocalDataController.saveTestResult(UserTestLocalDataResult(
+      referenceCode: tmtGameInitData.tmtGameCodeId,
+      date: DateTime.now(),
+      tmtATime: _timeCompleteA.toDouble(),
+      tmtBTime: _timeCompleteB.toDouble(),
+    ));
   }
 
   void _showErrorSnackBar(String? message) {
@@ -84,6 +102,18 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
       context,
       TMTResultScreen.errorMessage.tr,
     );
+  }
+
+  Future<void> _loadNumberOfSessions() async {
+    _isLoadingTestResults = true;
+    await _testResultLocalDataController.loadCurrentUserTestResults();
+
+    if (mounted) {
+      setState(() {
+        _numSessions = _testResultLocalDataController.testResults.length + 1;
+        _isLoadingTestResults = false;
+      });
+    }
   }
 
   void _loadTestResults() {
@@ -96,17 +126,15 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
     _errorsA = metrics.numberErrorA;
     _errorsB = metrics.numberErrorB;
 
-    _numSessions = 1; //TODO get number of sessions from local storage
+    _numSessions = 1;
+    _isLoadingTestResults = true;
+    _loadNumberOfSessions();
   }
 
   Future<void> _sendResults() async {
     if (_resultsSent) return;
     try {
-      final tmtGameInitData = TmtGameInitData(
-          tmtGameHandUsed: TmtGameHandUsed.RIGHT, //TODO parse from HomeScreen
-          tmtGameCodeId: "74829-23" //TODO parse from HomeScreen
-          );
-
+      tmtGameInitData = Get.arguments as TmtGameInitData;
       await _resultController.reportResults(
           _testController.metricsController, tmtGameInitData);
       _resultsSent = true;
@@ -194,15 +222,23 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
     DeviceHelper.calculateAgain(context);
     _metrics = TmtResultResponsiveCalculator.calculateLayoutMetrics(context);
 
-    return Scaffold(
-      body: SafeArea(
-        child: Obx(() {
-          if (_resultController.isLoading) {
-            return _buildLoadingScreen();
-          } else {
-            return _buildResultContent();
-          }
-        }),
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        if (!didPop) {
+          navigateAllToHome();
+        }
+      },
+      child: Scaffold(
+        body: SafeArea(
+          child: Obx(() {
+            if (_resultController.isLoading || _isLoadingTestResults) {
+              return _buildLoadingScreen();
+            } else {
+              return _buildResultContent();
+            }
+          }),
+        ),
       ),
     );
   }
@@ -271,7 +307,7 @@ class _TmtResultsScreenState extends State<TmtResultsScreen> {
                   CustomPrimaryButton(
                     text: TMTResultScreen.finishButton.tr,
                     onPressed: () {
-                      Get.offAllNamed(Routes.home);
+                      navigateAllToHome();
                     },
                   ),
                   SizedBox(height: _metrics.bottomMargin),

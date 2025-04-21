@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:msdtmt/app/features/tm_tst/domain/entities/tmt_game_variable.dart';
+import 'package:msdtmt/app/features/tm_tst/domain/entities/tmt_game/tmt_game_variable.dart';
 
 class TmtGameCalculate {
   /// Checks whether a given point is located inside a specified circle.

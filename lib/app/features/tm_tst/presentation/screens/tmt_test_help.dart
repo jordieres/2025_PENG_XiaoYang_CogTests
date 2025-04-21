@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:msdtmt/app/config/themes/AppTextStyle.dart';
 import 'package:msdtmt/app/features/tm_tst/presentation/screens/tmt_test_practice_screen.dart';
 
+import '../../../../config/themes/app_text_style_base.dart';
 import '../../../../config/translation/app_translations.dart';
 import '../../../../shared_components/custom_app_bar.dart';
 import '../../../../shared_components/custom_primary_button.dart';
 import '../../../../shared_components/custom_secondary_button.dart';
 import '../../../../utils/helpers/app_helpers.dart';
+import '../../../../utils/helpers/widget_max_width_calculator.dart';
 import '../../../../utils/mixins/app_mixins.dart';
 
 enum TmtHelpMode { TMT_TEST_A, TMT_TEST_B, TMT_PRACTICE_A, TMT_PRACTICE_B }
@@ -22,42 +25,53 @@ class TmtTestHelpPage extends StatelessWidget with NavigationMixin {
     } catch (e) {
       tmtHelpMode = TmtHelpMode.TMT_TEST_A;
     }
+
     return Scaffold(
       appBar: CustomAppBar(
         title: _getHelpTitle(tmtHelpMode),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
+      body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            // Scrollable content area with vertically centered text
             Expanded(
-              child: Center(
-                child: Text(
-                  _getHelpTitle(tmtHelpMode),
-                  //TODO change text description depending on the mode
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  return SingleChildScrollView(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight: constraints.maxHeight,
+                      ),
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(24),
+                          child: Text(
+                            _getHelpDescription(tmtHelpMode),
+                            textAlign: TextAlign.center,
+                            style: TextStyleBase.bodyXL,
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(bottom: DeviceHelper.isTablet ? 46 : 40),
+
+            // Fixed buttons at bottom
+            Container(
+              width: WidgetMaxWidthCalculator.getMaxWidth(context),
+              padding: const EdgeInsets.all(24),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   CustomPrimaryButton(
                     text: TMTGameText.tmtGameTmtHelpTmtPrimaryButtonText.tr,
-                    //TODO change text depending on the mode
                     onPressed: () {
                       _toPracticePage(tmtHelpMode);
                     },
                   ),
-                  SizedBox(height: DeviceHelper.isTablet ? 28 : 22),
-                  //TODO visibility depending on the mode
+                  SizedBox(height: DeviceHelper.isTablet ? 18 : 12),
                   CustomSecondaryButton(
                     text: TMTGameText.tmtGameTmtHelpTmtSecondaryButtonText.tr,
                     onPressed: () {
@@ -81,6 +95,17 @@ class TmtTestHelpPage extends StatelessWidget with NavigationMixin {
       case TmtHelpMode.TMT_TEST_B:
       case TmtHelpMode.TMT_PRACTICE_B:
         return TMTGameText.tmtGameTmtHelpTmtBTitle.tr;
+    }
+  }
+
+  String _getHelpDescription(TmtHelpMode tmtHelpMode) {
+    switch (tmtHelpMode) {
+      case TmtHelpMode.TMT_TEST_A:
+      case TmtHelpMode.TMT_PRACTICE_A:
+        return TMTGameText.tmtGameTmtHelpTmtADescription.tr;
+      case TmtHelpMode.TMT_TEST_B:
+      case TmtHelpMode.TMT_PRACTICE_B:
+        return TMTGameText.tmtGameTmtHelpTmtBDescription.tr;
     }
   }
 

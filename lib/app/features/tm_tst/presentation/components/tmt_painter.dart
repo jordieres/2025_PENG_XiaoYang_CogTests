@@ -5,8 +5,8 @@ import 'package:msdtmt/app/utils/helpers/app_helpers.dart';
 import '../../../../config/themes/AppColors.dart';
 import '../../../../config/themes/AppTextStyle.dart';
 import '../../../../config/translation/app_translations.dart';
-import '../../domain/entities/tmt_game_circle.dart';
-import '../../domain/entities/tmt_game_variable.dart';
+import '../../domain/entities/tmt_game/tmt_game_circle.dart';
+import '../../domain/entities/tmt_game/tmt_game_variable.dart';
 
 class TmtPainter extends CustomPainter {
   final List<TmtGameCircle> allCircles;
@@ -214,7 +214,7 @@ class TmtPainter extends CustomPainter {
         nextCircleIndex < allCircles.length &&
         !connectedCircles.contains(currentCircle)) {
       final Paint cheatPaint = Paint()
-        ..color = isDarkMode ? AppColors.primaryBlueDark : AppColors.primaryBlue
+        ..color =AppColors.getPrimaryBlueDependIsDarkMode()
         ..style = PaintingStyle.stroke
         ..strokeWidth = TmtGameVariables.CIRCLE_ERROR_CORRECT_STROKE_WIDTH;
 
@@ -222,7 +222,7 @@ class TmtPainter extends CustomPainter {
           currentCircle.offset, TmtGameVariables.circleRadius, cheatPaint);
 
       final Paint fillPaint = Paint()
-        ..color = (isDarkMode ? AppColors.primaryBlueDark : AppColors.primaryBlue).withAlpha(51)
+        ..color = AppColors.getPrimaryBlueDependIsDarkMode().withAlpha(51)
         ..style = PaintingStyle.fill;
       canvas.drawCircle(
           currentCircle.offset, TmtGameVariables.circleRadius, fillPaint);
