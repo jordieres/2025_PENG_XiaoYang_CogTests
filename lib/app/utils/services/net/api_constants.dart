@@ -17,4 +17,5 @@ class ApiConstants {
 
   static const String referenceCodeValid = "OK";
   static const String referenceCodeInvalid = "Nok";
+  static const String referenceCodeNumberExists = "exists";
 }

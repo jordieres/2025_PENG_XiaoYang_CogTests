@@ -11,37 +11,46 @@ class ValidateReferenceCodeUseCase {
   });
 
   Future<ReferenceValidationResult> execute(String referenceCode) async {
-    final isUsedLocally =
-        await repository.isReferenceCodeUsedLocally(referenceCode);
-
-    if (isUsedLocally) {
+    if (await repository.isReferenceCodeUsedLocally(referenceCode)) {
       return ReferenceValidationResult(
         isValid: false,
         isUsedLocally: true,
+        isExists: true,
       );
     }
 
     final resultData =
         await repository.validateReferenceCodeRemotely(referenceCode);
 
-    final messageValue = resultData.data[ApiConstants.messageField];
-
-    if (resultData.result) {
-      if (StringHelper.equalsIgnoreCase(
-          messageValue, ApiConstants.referenceCodeValid)) {
-        return ReferenceValidationResult(isValid: true, isUsedLocally: false);
-      } else {
-        return ReferenceValidationResult(
-          isValid: false,
-          isUsedLocally: false
-        );
-      }
-    } else {
+    if (!resultData.result) {
       return ReferenceValidationResult(
         isValid: false,
         isUsedLocally: false,
+        isExists: true,
         errorMessage: resultData.errorMessage,
       );
     }
+
+    final messageValue = resultData.data[ApiConstants.messageField];
+    final isValidMessage = StringHelper.equalsIgnoreCase(
+        messageValue, ApiConstants.referenceCodeValid);
+
+    if (!isValidMessage) {
+      return ReferenceValidationResult(
+        isValid: false,
+        isExists: true,
+        isUsedLocally: false,
+      );
+    }
+
+    final numberExists =
+        resultData.data[ApiConstants.referenceCodeNumberExists];
+    final bool isCodeExists = numberExists != null && numberExists > 0;
+
+    return ReferenceValidationResult(
+      isValid: true,
+      isExists: isCodeExists,
+      isUsedLocally: false,
+    );
   }
 }

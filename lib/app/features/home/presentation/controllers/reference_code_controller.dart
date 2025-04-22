@@ -17,40 +17,40 @@ class ReferenceCodeController extends GetxController {
   final RxString fullReferenceCode = ''.obs;
 
   Future<void> validateReferenceCode(String mainCode, String suffixCode) async {
+    isValidating.value = true;
+    isValidated.value = false;
+    errorMessage.value = '';
+
     if (mainCode.isEmpty || suffixCode.isEmpty) {
       errorMessage.value = ReferenceCodeInputText.enterReferenceCode.tr;
       showErrorMessage(errorMessage.value);
+      isValidating.value = false;
       return;
     }
+
     String code = '${mainCode.trim()}-${suffixCode.trim()}';
-    isValidating.value = true;
-    errorMessage.value = '';
 
     try {
       final result = await validateReferenceCodeUseCase.execute(code);
 
       if (result.isUsedLocally) {
         errorMessage.value = ReferenceCodeInputText.codeAlreadyUsed.tr;
-        showErrorMessage(errorMessage.value);
-        isValidated.value = false;
-        return;
-      }
-
-      if (result.isValid) {
+      } else if (!result.isValid) {
+        errorMessage.value = result.errorMessage ?? ReferenceCodeInputText.incorrectReference.tr;
+      } else if (result.isExists) {
+        errorMessage.value = ReferenceCodeInputText.codeAlreadyUsed.tr;
+      } else {
         fullReferenceCode.value = code;
         isValidated.value = true;
         showSuccessMessage(ReferenceCodeInputText.validReferenceCode.tr);
-      } else {
-        errorMessage.value =
-            result.errorMessage ?? ReferenceCodeInputText.incorrectReference.tr;
+      }
+
+      if (!isValidated.value && errorMessage.isNotEmpty) {
         showErrorMessage(errorMessage.value);
-        isValidated.value = false;
       }
     } catch (e) {
-      errorMessage.value =
-          '${ReferenceCodeInputText.validationError.tr}${e.toString()}';
+      errorMessage.value = '${ReferenceCodeInputText.validationError.tr}${e.toString()}';
       showErrorMessage(errorMessage.value);
-      isValidated.value = false;
     } finally {
       isValidating.value = false;
     }
