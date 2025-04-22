@@ -54,7 +54,7 @@ class _TmtGameBoardControllerState extends State<TmtGameBoardController> {
   bool _isLoading = true;
 
   // Add cheat mode boolean
-  bool _isCheatModeEnabled = true; // TODO deactivate cheat mode
+  bool _isCheatModeEnabled = false;
 
   double _constraintsMaxWidth = 0;
   double _constraintsMaxHeight = 0;
