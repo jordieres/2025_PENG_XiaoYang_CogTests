@@ -186,81 +186,116 @@ class _TmtTestButtonCardState extends State<TmtTestButtonCard>
 
     return SizedBox(
       height: 46,
-      child: DropdownMenu<CircleNumberOption>(
-        enabled: isActive,
-        controller: controller,
-        focusNode: focusNode,
-        initialSelection: selectedCircleNumber,
-        expandedInsets: EdgeInsets.zero,
-        trailingIcon: Icon(
-          Icons.arrow_drop_down,
-          color: primaryColor,
-          size: 24,
-        ),
-        selectedTrailingIcon: Icon(
-          Icons.arrow_drop_up,
-          color: primaryColor,
-          size: 24,
-        ),
-        inputDecorationTheme: InputDecorationTheme(
-          isDense: true,
-          contentPadding: const EdgeInsets.symmetric(horizontal: 12),
-          border: OutlineInputBorder(
-            borderRadius:
-                BorderRadius.circular(HomeUIConstantVariable.cardCornerRadius),
-            borderSide: BorderSide(color: primaryColor, width: 2),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius:
-                BorderRadius.circular(HomeUIConstantVariable.cardCornerRadius),
-            borderSide: BorderSide(color: primaryColor, width: 2),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius:
-                BorderRadius.circular(HomeUIConstantVariable.cardCornerRadius),
-            borderSide: BorderSide(color: primaryColor, width: 2),
-          ),
-          filled: false,
-        ),
-        menuStyle: MenuStyle(
-          elevation: WidgetStateProperty.all(8),
-          backgroundColor: WidgetStateProperty.all(
-            isDarkMode ? AppColors.darkSurface : Colors.white,
-          ),
-          shape: WidgetStateProperty.all(
-            RoundedRectangleBorder(
+      child: Stack(
+        children: [
+          Container(
+            height: 46,
+            decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(
                   HomeUIConstantVariable.cardCornerRadius),
-              side: BorderSide(color: primaryColor, width: 2),
+              border: Border.all(color: primaryColor, width: 2),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 24),
+                  child: Text(
+                    selectedCircleNumber.value.toString(),
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: isDarkMode ? Colors.white : Colors.black87,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
-        ),
-        onSelected: isActive
-            ? (CircleNumberOption? option) {
-                if (option != null) {
-                  setState(() {
-                    selectedCircleNumber = option;
-                    _tmtNumBerCircleConfig(selectedCircleNumber);
-                    controller.text = option.value.toString();
-                  });
-                }
-              }
-            : null,
-        dropdownMenuEntries: CircleNumberOption.values
-            .map<DropdownMenuEntry<CircleNumberOption>>(
-          (CircleNumberOption option) {
-            return DropdownMenuEntry<CircleNumberOption>(
-              value: option,
-              label: option.value.toString(),
-              style: MenuItemButton.styleFrom(
-                textStyle: TextStyle(
-                  color: isDarkMode ? Colors.white : Colors.black87,
-                  fontSize: 16,
+          Positioned.fill(
+            child: DropdownMenu<CircleNumberOption>(
+              enabled: isActive,
+              controller: controller,
+              focusNode: focusNode,
+              initialSelection: selectedCircleNumber,
+              expandedInsets: EdgeInsets.zero,
+              textStyle: TextStyle(
+                fontSize: 16,
+                color: Colors.transparent,
+              ),
+              leadingIcon: SizedBox.shrink(),
+              trailingIcon: Icon(
+                Icons.arrow_drop_down,
+                color: primaryColor,
+                size: 24,
+              ),
+              selectedTrailingIcon: Icon(
+                Icons.arrow_drop_up,
+                color: primaryColor,
+                size: 24,
+              ),
+              inputDecorationTheme: InputDecorationTheme(
+                isDense: true,
+                contentPadding: EdgeInsets.zero,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(
+                      HomeUIConstantVariable.cardCornerRadius),
+                  borderSide: BorderSide(color: Colors.transparent),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(
+                      HomeUIConstantVariable.cardCornerRadius),
+                  borderSide: BorderSide(color: Colors.transparent),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(
+                      HomeUIConstantVariable.cardCornerRadius),
+                  borderSide: BorderSide(color: Colors.transparent),
+                ),
+                filled: false,
+              ),
+              menuStyle: MenuStyle(
+                elevation: WidgetStateProperty.all(8),
+                backgroundColor: WidgetStateProperty.all(
+                  isDarkMode ? AppColors.darkSurface : Colors.white,
+                ),
+                shape: WidgetStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(
+                        HomeUIConstantVariable.cardCornerRadius),
+                    side: BorderSide(color: primaryColor, width: 2),
+                  ),
                 ),
               ),
-            );
-          },
-        ).toList(),
+              onSelected: isActive
+                  ? (CircleNumberOption? option) {
+                      if (option != null) {
+                        setState(() {
+                          selectedCircleNumber = option;
+                          _tmtNumBerCircleConfig(selectedCircleNumber);
+                          controller.text = option.value.toString();
+                        });
+                      }
+                    }
+                  : null,
+              dropdownMenuEntries: CircleNumberOption.values
+                  .map<DropdownMenuEntry<CircleNumberOption>>(
+                (CircleNumberOption option) {
+                  return DropdownMenuEntry<CircleNumberOption>(
+                    value: option,
+                    label: option.value.toString(),
+                    style: MenuItemButton.styleFrom(
+                      textStyle: TextStyle(
+                        color: isDarkMode ? Colors.white : Colors.black87,
+                        fontSize: 16,
+                      ),
+                      alignment: Alignment.center,
+                    ),
+                  );
+                },
+              ).toList(),
+            ),
+          ),
+        ],
       ),
     );
   }
