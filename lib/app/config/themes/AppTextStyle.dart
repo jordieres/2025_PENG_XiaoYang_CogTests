@@ -24,17 +24,19 @@ class AppTextStyle {
 
   static var customDialogTitle = (TextStyleBase.h3).copyWith();
 
-  static var customDialogContent = (TextStyleBase.bodyS).copyWith(
-      color: Get.isDarkMode
-          ? AppColors.darkText
-          : AppColors.customDialogContentColor);
+  static TextStyle customDialogContent(bool isDarkMode) {
+    return (TextStyleBase.bodyS).copyWith(
+        color: isDarkMode
+            ? AppColors.darkText
+            : AppColors.customDialogContentColor);
+  }
 
   static var customDialogButton = (TextStyleBase.actionM).copyWith(
     color: AppColors.darkText,
   );
 
   static var customDialogOutlinedButton =
-  (TextStyleBase.actionM).copyWith(color: AppColors.customButtonColor);
+      (TextStyleBase.actionM).copyWith(color: AppColors.customButtonColor);
 
   static var customPrimaryButtonText = (TextStyleBase.actionM).copyWith(
     color: AppColors.darkText,
@@ -57,7 +59,6 @@ class AppTextStyle {
   static var tmtResultHistoryTabletHeaderText = TextStyleBase.h4;
 
   static var tmtResultHistoryTabletContentText = TextStyleBase.bodyM;
-
 
   //-------------------------reference code Input-------------------------
   static var referenceCodeInputTextStyle = TextStyleBase.bodyL.copyWith(
