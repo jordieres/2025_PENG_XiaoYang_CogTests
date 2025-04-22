@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import '../../config/routes/app_pages.dart';
 import '../../config/routes/app_route_observer.dart';
@@ -10,10 +9,7 @@ import '../../config/translation/app_translations.dart';
 import '../../constans/app_constants.dart';
 import '../../utils/helpers/app_helpers.dart';
 import '../../utils/helpers/widget_max_width_calculator.dart';
-import '../../utils/services/net/rest_api_services.dart';
 import '../../utils/services/work_manager_handler.dart';
-import '../tm_tst/data/repositories/pending_result_repository_impl.dart';
-import '../tm_tst/domain/usecases/tmt_result/pending_result_use_case.dart';
 
 class CustomSplashScreen extends StatefulWidget {
   const CustomSplashScreen({super.key});
@@ -37,16 +33,6 @@ class _CustomSplashScreenState extends State<CustomSplashScreen> {
   Future<void> _initialize() async {
     await Future.delayed(const Duration(seconds: 2));
     await WorkManagerHandler.initializeWorkManager();
-    final tmtPendingUseCase = PendingResultUseCase(
-        pendingResultRepository: PendingResultRepositoryImpl(
-      restApiServices,
-    ));
-
-    tmtPendingUseCase.hasPendingResults().then((hasPendingResults) {
-      if (hasPendingResults) {
-        tmtPendingUseCase.sendPendingResults();
-      }
-    });
     _launchFullApp();
   }
 
