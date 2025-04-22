@@ -1,0 +1,16 @@
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/launcher_icon/app_icon.png" # 你的图标图片路径
+
+  background_color_ios: "#ffffff"
+
+  # 可选：针对特定平台指定不同的图片
+  # image_path_android: "assets/images/android_app_icon.png"
+  # image_path_ios: "assets/images/ios_app_icon.png"
+  # 可选：移除安卓的旧图标
+  # remove_alpha_ios: true # 可选：移除 iOS 图标的 Alpha 通道
+  # background_color_android: "#ffffff" # 可选：安卓背景色
+  # foreground_image_android: "assets/images/foreground.png" # 可选：安卓前景图 (适用于自适应图标)
+  # adaptive_icon_background: "#ffffff" # 可选：自适应图标背景色
+  # adaptive_icon_foreground: "assets/images/foreground.png" # 可选：自适应图标前景图
