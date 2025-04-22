@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import '../config/themes/AppColors.dart';
 import '../config/themes/AppTextStyle.dart';
 
@@ -16,19 +18,19 @@ class CustomDialog extends StatelessWidget {
   final VoidCallback? onLeftPrimaryPressed;
   final bool dismissibleByBackButton;
 
-  const CustomDialog({
-    Key? key,
-    required this.title,
-    required this.mode,
-    required this.primaryButtonText,
-    required this.onPrimaryPressed,
-    this.content,
-    this.cancelButtonText,
-    this.onCancelPressed,
-    this.onLeftPrimaryButtonText,
-    this.onLeftPrimaryPressed,
-    this.dismissibleByBackButton = false
-  }) : super(key: key);
+  const CustomDialog(
+      {Key? key,
+      required this.title,
+      required this.mode,
+      required this.primaryButtonText,
+      required this.onPrimaryPressed,
+      this.content,
+      this.cancelButtonText,
+      this.onCancelPressed,
+      this.onLeftPrimaryButtonText,
+      this.onLeftPrimaryPressed,
+      this.dismissibleByBackButton = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +47,7 @@ class CustomDialog extends StatelessWidget {
       if (content is String) {
         contentWidget = Text(
           content,
-          style: AppTextStyle.customDialogContent,
+          style: AppTextStyle.customDialogContent(Get.isDarkMode),
           textAlign: TextAlign.center,
         );
       } else if (content is Widget) {
@@ -53,7 +55,6 @@ class CustomDialog extends StatelessWidget {
       }
     }
 
-    // 使用 PopScope 替代 WillPopScope
     final dialogContent = Container(
       constraints: BoxConstraints(
         maxWidth: maxWidth,
