@@ -9,6 +9,7 @@ import '../../config/themes/theme_controller.dart';
 import '../../config/translation/app_translations.dart';
 import '../../constans/app_constants.dart';
 import '../../utils/helpers/app_helpers.dart';
+import '../../utils/helpers/widget_max_width_calculator.dart';
 import '../../utils/services/net/rest_api_services.dart';
 import '../../utils/services/work_manager_handler.dart';
 import '../tm_tst/data/repositories/pending_result_repository_impl.dart';
@@ -46,7 +47,7 @@ class _CustomSplashScreenState extends State<CustomSplashScreen> {
         tmtPendingUseCase.sendPendingResults();
       }
     });
-     _launchFullApp();
+    _launchFullApp();
   }
 
   void _launchFullApp() {
@@ -102,15 +103,24 @@ class _CustomSplashScreenState extends State<CustomSplashScreen> {
                   'Designed by:',
                   style: _splashTextStyle,
                 ),
-                Image.asset(ImageSplashPath.universityLogo),
+                SizedBox(height: 8),
+                Image.asset(
+                  ImageSplashPath.universityLogo,
+                  height: 100,
+                ),
+                SizedBox(height: 8),
                 Text(
                   'With the support from:',
                   style: _splashTextStyle,
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 8),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: Image.asset(ImageSplashPath.supportLogo),
+                  child: Image.asset(
+                    ImageSplashPath.supportLogo,
+                    height: 32,
+                    width: WidgetMaxWidthCalculator.getMaxWidth(context),
+                  ),
                 ),
               ],
             ),

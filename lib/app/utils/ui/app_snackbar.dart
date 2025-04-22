@@ -15,6 +15,16 @@ class AppSnackbar {
 
     backgroundColor ??= Theme.of(context).colorScheme.inverseSurface;
     _isSnackbarVisible = true;
+
+    final maxWidth = WidgetMaxWidthCalculator.getMaxWidth(context);
+    final horizontalMargin = (Get.width - maxWidth) / 2;
+    var safeHorizontalMargin = horizontalMargin > 0 ? horizontalMargin : 0.0;
+
+    final defaultMargin = Get.width * 0.1;
+    if (safeHorizontalMargin < defaultMargin) {
+      safeHorizontalMargin = defaultMargin;
+    }
+
     Get.showSnackbar(
       GetSnackBar(
         messageText: Center(
@@ -30,7 +40,7 @@ class AppSnackbar {
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: backgroundColor,
         margin: EdgeInsets.symmetric(
-          horizontal: Get.width * 0.1,
+          horizontal: safeHorizontalMargin,
           vertical: 20,
         ),
         borderRadius: 10,
