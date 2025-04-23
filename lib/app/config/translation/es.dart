@@ -428,10 +428,10 @@ class SpanishMessages extends BaseMessages {
 
   //--------------------------------------------Home Card Button Text------------------------------------------------------
   @override
-  String get homeCardButtonVisualizeMyData => "Visualizar Mis Datos";
+  String get homeCardButtonVisualizeMyData => "Ver mi Perfil";
 
   @override
-  String get homeCardButtonViewMyHistory => "Mirar Mis Historias";
+  String get homeCardButtonViewMyHistory => "Ver mis Tests";
 
   @override
   String get homeCardButtonCreateNewProfile => "Crear nuevo perfil";

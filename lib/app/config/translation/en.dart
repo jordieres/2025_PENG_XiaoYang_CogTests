@@ -420,10 +420,10 @@ class EnglishMessages extends BaseMessages {
 
 //--------------------------------------------Home Card Button Text------------------------------------------------------
   @override
-  String get homeCardButtonVisualizeMyData => "View My Data";
+  String get homeCardButtonVisualizeMyData => "View my profile";
 
   @override
-  String get homeCardButtonViewMyHistory => "View My History";
+  String get homeCardButtonViewMyHistory => "View my tests";
 
   @override
   String get homeCardButtonCreateNewProfile => "Create New Profile";

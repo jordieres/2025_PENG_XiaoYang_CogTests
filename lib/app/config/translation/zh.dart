@@ -399,10 +399,10 @@ class ChineseMessages extends BaseMessages {
 
   //--------------------------------------------Home Card Button Text------------------------------------------------------
   @override
-  String get homeCardButtonVisualizeMyData => "查看我的数据";
+  String get homeCardButtonVisualizeMyData => "查看我的资料";
 
   @override
-  String get homeCardButtonViewMyHistory => "查看我的历史";
+  String get homeCardButtonViewMyHistory => "查看我的测试";
 
   @override
   String get homeCardButtonCreateNewProfile => "创建新用户";
