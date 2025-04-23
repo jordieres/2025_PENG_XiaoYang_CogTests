@@ -137,7 +137,8 @@ class SelectUserDropdownState extends State<SelectUserDropdown>
           final nameWidth = totalWidth - greetingWidth;
 
           return Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.baseline,
+            textBaseline: TextBaseline.alphabetic,
             children: [
               greetingText,
               const SizedBox(width: 8),
