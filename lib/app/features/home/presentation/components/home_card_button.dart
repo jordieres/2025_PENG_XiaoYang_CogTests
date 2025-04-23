@@ -77,12 +77,7 @@ class HomeCardButton extends StatelessWidget {
             ),
           ),
         ),
-        if (!isActive)
-          Positioned.fill(
-            child: Center(
-              child: HomeUIConstantVariable.lockIcon,
-            ),
-          ),
+        if (!isActive) HomeUIConstantVariable.lockIconWidget,
       ],
     );
   }

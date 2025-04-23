@@ -157,7 +157,8 @@ class _ReferenceCodeInputState extends State<ReferenceCodeInput> {
                     ),
                     padding: const EdgeInsets.symmetric(vertical: 12),
                     child: Opacity(
-                      opacity: HomeUIConstantVariable.getOpacityDependIsEnable(widget.isActive),
+                      opacity: HomeUIConstantVariable.getOpacityDependIsEnable(
+                          widget.isActive),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
@@ -183,12 +184,7 @@ class _ReferenceCodeInputState extends State<ReferenceCodeInput> {
               ),
             ),
           ),
-          if (!widget.isActive)
-            Positioned.fill(
-              child: Center(
-                child: HomeUIConstantVariable.lockIcon,
-              ),
-            ),
+          if (!widget.isActive) HomeUIConstantVariable.lockIconWidget,
         ],
       );
     });
@@ -203,7 +199,7 @@ class _ReferenceCodeInputState extends State<ReferenceCodeInput> {
           Container(
             height: 60,
             decoration:
-            getReferenceCodeInputDecoration(isReadOnly, errorMessage),
+                getReferenceCodeInputDecoration(isReadOnly, errorMessage),
             child: Center(
               child: Theme(
                 data: getReferenceCodeTextSelectionTheme(context),
@@ -289,7 +285,7 @@ class _ReferenceCodeInputState extends State<ReferenceCodeInput> {
               style: AppTextStyle.referenceCodeInputTextStyle,
               decoration: const InputDecoration(
                 contentPadding:
-                EdgeInsets.symmetric(horizontal: 8, vertical: 14),
+                    EdgeInsets.symmetric(horizontal: 8, vertical: 14),
                 border: InputBorder.none,
               ),
               onChanged: (value) {
@@ -312,32 +308,35 @@ class _ReferenceCodeInputState extends State<ReferenceCodeInput> {
       child: IconButton(
         icon: isReadOnly
             ? Icon(
-          Icons.edit,
-          color: Colors.white,
-          size: _getIconSize(),
-        )
+                Icons.edit,
+                color: Colors.white,
+                size: _getIconSize(),
+              )
             : Icon(
-          Icons.check,
-          color: Colors.white,
-          size: _getIconSize(),
-        ),
-        onPressed: widget.isActive ? () {
-          if (isReadOnly) {
-            controller.resetValidation();
-          } else {
-            final mainCode = mainCodeController.text;
-            final suffixCode = suffixCodeController.text;
+                Icons.check,
+                color: Colors.white,
+                size: _getIconSize(),
+              ),
+        onPressed: widget.isActive
+            ? () {
+                if (isReadOnly) {
+                  controller.resetValidation();
+                } else {
+                  final mainCode = mainCodeController.text;
+                  final suffixCode = suffixCodeController.text;
 
-            if (mainCode.isEmpty || suffixCode.isEmpty) {
-              setState(() {
-                errorMessage = ReferenceCodeInputText.bothFieldsRequired.tr;
-              });
-              controller.showErrorMessage(errorMessage!);
-              return;
-            }
-            controller.validateReferenceCode(mainCode, suffixCode);
-          }
-        } : null,
+                  if (mainCode.isEmpty || suffixCode.isEmpty) {
+                    setState(() {
+                      errorMessage =
+                          ReferenceCodeInputText.bothFieldsRequired.tr;
+                    });
+                    controller.showErrorMessage(errorMessage!);
+                    return;
+                  }
+                  controller.validateReferenceCode(mainCode, suffixCode);
+                }
+              }
+            : null,
       ),
     );
   }

@@ -5,7 +5,7 @@ import '../../../../config/themes/AppColors.dart';
 
 class HomeUIConstantVariable {
   static const enableOpacity = 1.0;
-  static const disableOpacity = 0.3;
+  static const disableOpacity = 0.25;
 
   static const double tmtTestButtonCardHeight = 142;
   static const double buttonCardHeight = 120;
@@ -19,7 +19,20 @@ class HomeUIConstantVariable {
 
   static Icon lockIcon = Icon(
     Icons.lock_outline,
-    color: AppColors.mainRed.withAlpha(178),
-    size: 32,
+    color: AppColors.mainRed,
+    size: 36,
+  );
+
+  static Widget lockIconWidget = Positioned.fill(
+    child: Center(
+      child: Container(
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: Color(0xFFB8B3B3),
+          shape: BoxShape.circle,
+        ),
+        child: HomeUIConstantVariable.lockIcon,
+      ),
+    ),
   );
 }

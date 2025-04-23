@@ -101,12 +101,7 @@ class _TmtTestButtonCardState extends State<TmtTestButtonCard>
             ),
           ),
         ),
-        if (!isActive)
-          Positioned.fill(
-            child: Center(
-              child: HomeUIConstantVariable.lockIcon,
-            ),
-          ),
+        if (!isActive) HomeUIConstantVariable.lockIconWidget,
       ],
     );
   }
