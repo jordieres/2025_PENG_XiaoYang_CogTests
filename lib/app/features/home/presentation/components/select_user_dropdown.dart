@@ -77,6 +77,7 @@ class SelectUserDropdownState extends State<SelectUserDropdown>
     return Icon(
       Icons.arrow_drop_down,
       color: AppColors.getPrimaryBlueDependIsDarkMode(),
+      size: 28,
     );
   }
 
@@ -112,38 +113,60 @@ class SelectUserDropdownState extends State<SelectUserDropdown>
   }
 
   Widget _buildUserProfileWidget(dynamic profile) {
-    return Row(
-      children: [
-        Text(
-          SelectUserDropdownText.greeting.tr,
-          style: TextStyleBase.h2,
-        ),
-        Expanded(
-          child: Material(
-            color: Colors.transparent,
-            child: Ink(
-              decoration: _boxDecoration,
-              child: InkWell(
-                borderRadius: _borderRadius,
-                onTap: _showSelectUserDialog,
-                child: Padding(
-                  padding: _containerPadding,
+    return LayoutBuilder(
+        builder: (context, constraints) {
+          final totalWidth = constraints.maxWidth;
+
+          final greetingText = Text(
+            SelectUserDropdownText.greeting.tr,
+            style: TextStyleBase.h1,
+          );
+
+          final textSpan = TextSpan(
+            text: SelectUserDropdownText.greeting.tr,
+            style: TextStyleBase.h1,
+          );
+          final textPainter = TextPainter(
+            text: textSpan,
+            textDirection: TextDirection.ltr,
+            maxLines: 1,
+          )..layout();
+
+          final greetingWidth = textPainter.width + 16;
+
+          final nameWidth = totalWidth - greetingWidth;
+
+          return Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              greetingText,
+              const SizedBox(width: 8),
+              Container(
+                constraints: BoxConstraints(maxWidth: nameWidth*0.9),
+                child: InkWell(
+                  onTap: _showSelectUserDialog,
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        profile.nickname,
-                        style: TextStyleBase.h2,
+                      Flexible(
+                        child: Text(
+                          profile.nickname,
+                          style: TextStyleBase.h2.copyWith(
+                            color: AppColors.getPrimaryBlueDependIsDarkMode(),
+                          ),
+                          softWrap: true,
+                        ),
                       ),
                       _buildDropDownIcon(),
                     ],
                   ),
                 ),
               ),
-            ),
-          ),
-        ),
-      ],
+              const Spacer(),
+            ],
+          );
+        }
     );
   }
 
