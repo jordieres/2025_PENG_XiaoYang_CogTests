@@ -6,6 +6,7 @@ import 'package:msdtmt/app/constans/app_constants.dart';
 import 'package:msdtmt/app/shared_components/custom_dialog.dart';
 import 'package:msdtmt/app/utils/mixins/app_mixins.dart';
 
+import '../../../../config/themes/AppTextStyle.dart';
 import '../../../../config/themes/app_text_style_base.dart';
 import '../../../../config/translation/app_translations.dart';
 import '../../../tm_tst/domain/usecases/tmt_game_config_use_case.dart';
@@ -67,7 +68,7 @@ class _TmtTestButtonCardState extends State<TmtTestButtonCard>
 
   @override
   Widget build(BuildContext context) {
-    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final isDarkMode = Get.isDarkMode;
     final isActive = widget.referenceCode.isNotEmpty;
 
     return Stack(
@@ -136,7 +137,7 @@ class _TmtTestButtonCardState extends State<TmtTestButtonCard>
             child: Center(
               child: Text(TmtTestButtonCardText.startTest.tr,
                   textAlign: TextAlign.center,
-                  style: TextStyleBase.h2.copyWith(
+                  style: TextStyleBase.h1.copyWith(
                     color: isDarkMode ? AppColors.darkText : AppColors.blueText,
                   )),
             ),
@@ -155,10 +156,10 @@ class _TmtTestButtonCardState extends State<TmtTestButtonCard>
         children: [
           Text(TmtTestButtonCardText.numberOfCircles.tr,
               textAlign: TextAlign.center,
-              style: TextStyleBase.h4.copyWith(
+              style: TextStyleBase.h3.copyWith(
                 color: isDarkMode ? AppColors.darkText : AppColors.blueText,
               )),
-          const SizedBox(height: 16),
+          const SizedBox(height: 20),
           Row(
             children: [
               Expanded(
@@ -171,6 +172,15 @@ class _TmtTestButtonCardState extends State<TmtTestButtonCard>
           ),
         ],
       ),
+    );
+  }
+
+  Icon circleNumberDropdownIcon(IconData icon) {
+    return Icon(
+      icon,
+      color:
+          AppColors.getPrimaryBlueDependIsDarkMode(isDarkMode: Get.isDarkMode),
+      size: 24,
     );
   }
 
@@ -197,8 +207,7 @@ class _TmtTestButtonCardState extends State<TmtTestButtonCard>
                   padding: const EdgeInsets.only(right: 24),
                   child: Text(
                     selectedCircleNumber.value.toString(),
-                    style: TextStyle(
-                      fontSize: 16,
+                    style: AppTextStyle.circleNumberDropdownTextSize.copyWith(
                       color: isDarkMode ? Colors.white : Colors.black87,
                     ),
                   ),
@@ -213,21 +222,13 @@ class _TmtTestButtonCardState extends State<TmtTestButtonCard>
               focusNode: focusNode,
               initialSelection: selectedCircleNumber,
               expandedInsets: EdgeInsets.zero,
-              textStyle: TextStyle(
-                fontSize: 16,
+              textStyle: AppTextStyle.circleNumberDropdownTextSize.copyWith(
                 color: Colors.transparent,
               ),
               leadingIcon: SizedBox.shrink(),
-              trailingIcon: Icon(
-                Icons.arrow_drop_down,
-                color: primaryColor,
-                size: 24,
-              ),
-              selectedTrailingIcon: Icon(
-                Icons.arrow_drop_up,
-                color: primaryColor,
-                size: 24,
-              ),
+              trailingIcon: circleNumberDropdownIcon(Icons.arrow_drop_down),
+              selectedTrailingIcon:
+                  circleNumberDropdownIcon(Icons.arrow_drop_up),
               inputDecorationTheme: InputDecorationTheme(
                 isDense: true,
                 contentPadding: EdgeInsets.zero,
@@ -279,9 +280,9 @@ class _TmtTestButtonCardState extends State<TmtTestButtonCard>
                     value: option,
                     label: option.value.toString(),
                     style: MenuItemButton.styleFrom(
-                      textStyle: TextStyle(
+                      textStyle:
+                          AppTextStyle.circleNumberDropdownTextSize.copyWith(
                         color: isDarkMode ? Colors.white : Colors.black87,
-                        fontSize: 16,
                       ),
                       alignment: Alignment.center,
                     ),
@@ -311,8 +312,8 @@ class _TmtTestButtonCardState extends State<TmtTestButtonCard>
             child: isDarkMode
                 ? SvgPicture.asset(
                     ImageVectorPath.help,
-                    width: 30,
-                    height: 30,
+                    width: 34,
+                    height: 34,
                     colorFilter: const ColorFilter.mode(
                       AppColors.darkText,
                       BlendMode.srcIn,
@@ -320,8 +321,8 @@ class _TmtTestButtonCardState extends State<TmtTestButtonCard>
                   )
                 : SvgPicture.asset(
                     ImageVectorPath.help,
-                    width: 30,
-                    height: 30,
+                    width: 34,
+                    height: 34,
                   ),
           ),
         ),
