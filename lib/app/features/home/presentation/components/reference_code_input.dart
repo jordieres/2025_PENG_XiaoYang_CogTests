@@ -157,7 +157,7 @@ class _ReferenceCodeInputState extends State<ReferenceCodeInput> {
                     ),
                     padding: const EdgeInsets.symmetric(vertical: 12),
                     child: Opacity(
-                      opacity: HomeUIConstantVariable.getOpacityDependIsEnable(
+                      opacity: HomeUIConstantVariable.getOpacityDependIsEnableReferenceValidation(
                           widget.isActive),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
