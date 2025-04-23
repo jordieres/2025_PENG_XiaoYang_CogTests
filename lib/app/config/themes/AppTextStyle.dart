@@ -52,7 +52,7 @@ class AppTextStyle {
     color: Get.isDarkMode ? AppColors.darkText : AppColors.blueText,
   );
 
-  static var selectModeTitle = TextStyleBase.h2.copyWith();
+  static var selectModeTitle = TextStyleBase.h1.copyWith();
 
   static var registerUserLabelText = TextStyleBase.h5.copyWith();
 
