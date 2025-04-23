@@ -8,8 +8,9 @@ class HomeUIConstantVariable {
   static const _disableOpacity = 0.1;
   static const _disableOpacityForReferenceValidation = 0.3;
 
-  static const double tmtTestButtonCardHeight = 142;
-  static const double buttonCardHeight = 120;
+  static const double tmtTestButtonCardHeight = 162;
+  static const double buttonCardMiddleHeight = 80;
+  static const double buttonCardHeight = 100;
   static const double cardHorizontalPadding = 24.0;
 
   static double getOpacityDependIsEnable(bool isEnable) {

@@ -72,4 +72,7 @@ class AppTextStyle {
   static var referenceCodeInputErrorTextStyle = TextStyleBase.bodyS.copyWith(
     color: AppColors.mainRed,
   );
+
+  //-------------------------tmt card button-------------------------
+  static var circleNumberDropdownTextSize = TextStyle(fontSize: 18);
 }
