@@ -23,6 +23,8 @@ class UserProfileController extends GetxController {
     isLoading.value = true;
     try {
       final allProfiles = await repository.getAllProfiles();
+      allProfiles.sort((a, b) =>
+          a.nickname.toLowerCase().compareTo(b.nickname.toLowerCase()));
       profiles.value = allProfiles;
     } finally {
       isLoading.value = false;
@@ -46,7 +48,6 @@ class UserProfileController extends GetxController {
     }
   }
 
-
   Future<void> saveProfile(UserProfile profile) async {
     isLoading.value = true;
     try {
@@ -69,7 +70,6 @@ class UserProfileController extends GetxController {
       isLoading.value = false;
     }
   }
-
 
   Future<UserProfile?> getProfileByNickname(String nickname) async {
     return await repository.getProfileByNickname(nickname);
