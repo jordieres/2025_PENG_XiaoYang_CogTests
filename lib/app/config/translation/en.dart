@@ -296,7 +296,7 @@ class EnglishMessages extends BaseMessages {
 
   //--------------------------------------------User Result History Screen Text------------------------------------------------------
   @override
-  String get userResultHistoryScreenTitle => "History";
+  String get userResultHistoryScreenTitle => "My Tests";
 
   @override
   String get userResultHistoryScreenNoData => "No results available";
@@ -381,6 +381,14 @@ class EnglishMessages extends BaseMessages {
   String get selectUserProfileDialogProfileSelectedError =>
       "Error setting profile";
 
+  @override
+  String get selectUserProfileDialogSearchAnchorSearchBarHint =>
+      "Search profiles";
+
+  @override
+  String get selectUserProfileDialogSearchAnchorSearchBarNotFound =>
+      'No profiles match your search';
+
   //--------------------------------------------Select User Dropdown Text------------------------------------------------------
   @override
   String get selectUserDropdownCreateUser => "Create profile";
@@ -420,10 +428,10 @@ class EnglishMessages extends BaseMessages {
 
 //--------------------------------------------Home Card Button Text------------------------------------------------------
   @override
-  String get homeCardButtonVisualizeMyData => "View My Data";
+  String get homeCardButtonVisualizeMyData => "View my profile";
 
   @override
-  String get homeCardButtonViewMyHistory => "View My History";
+  String get homeCardButtonViewMyHistory => "View my tests";
 
   @override
   String get homeCardButtonCreateNewProfile => "Create New Profile";

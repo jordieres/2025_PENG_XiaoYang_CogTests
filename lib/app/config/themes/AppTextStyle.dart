@@ -52,7 +52,7 @@ class AppTextStyle {
     color: Get.isDarkMode ? AppColors.darkText : AppColors.blueText,
   );
 
-  static var selectModeTitle = TextStyleBase.h2.copyWith();
+  static var selectModeTitle = TextStyleBase.h1.copyWith();
 
   static var registerUserLabelText = TextStyleBase.h5.copyWith();
 
@@ -72,4 +72,7 @@ class AppTextStyle {
   static var referenceCodeInputErrorTextStyle = TextStyleBase.bodyS.copyWith(
     color: AppColors.mainRed,
   );
+
+  //-------------------------tmt card button-------------------------
+  static var circleNumberDropdownTextSize = TextStyle(fontSize: 18);
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import '../config/themes/AppColors.dart';
 import '../config/themes/AppTextStyle.dart';
 
@@ -19,18 +18,17 @@ class CustomDialog extends StatelessWidget {
   final bool dismissibleByBackButton;
 
   const CustomDialog(
-      {Key? key,
-      required this.title,
-      required this.mode,
-      required this.primaryButtonText,
-      required this.onPrimaryPressed,
-      this.content,
-      this.cancelButtonText,
-      this.onCancelPressed,
-      this.onLeftPrimaryButtonText,
-      this.onLeftPrimaryPressed,
-      this.dismissibleByBackButton = false})
-      : super(key: key);
+      {super.key,
+        required this.title,
+        required this.mode,
+        required this.primaryButtonText,
+        required this.onPrimaryPressed,
+        this.content,
+        this.cancelButtonText,
+        this.onCancelPressed,
+        this.onLeftPrimaryButtonText,
+        this.onLeftPrimaryPressed,
+        this.dismissibleByBackButton = false});
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +36,7 @@ class CustomDialog extends StatelessWidget {
 
     final orientation = MediaQuery.of(context).orientation;
     final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
 
     final maxWidth = orientation == Orientation.landscape
         ? screenWidth * 0.5
@@ -70,7 +69,16 @@ class CustomDialog extends StatelessWidget {
           ),
           if (contentWidget != null) ...[
             const SizedBox(height: 16.0),
-            contentWidget,
+            Flexible(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxHeight: screenHeight * 0.6,
+                ),
+                child: SingleChildScrollView(
+                  child: contentWidget,
+                ),
+              ),
+            ),
           ],
           SizedBox(height: contentWidget != null ? 24.0 : 20.0),
           _buildButtons(context),
