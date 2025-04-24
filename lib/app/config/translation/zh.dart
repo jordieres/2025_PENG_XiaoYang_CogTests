@@ -285,7 +285,7 @@ class ChineseMessages extends BaseMessages {
 
   //--------------------------------------------User Result History Screen Text------------------------------------------------------
   @override
-  String get userResultHistoryScreenTitle => "历史记录";
+  String get userResultHistoryScreenTitle => "我的测试";
 
   @override
   String get userResultHistoryScreenNoData => "没有可用结果";
@@ -362,6 +362,13 @@ class ChineseMessages extends BaseMessages {
   @override
   String get selectUserProfileDialogProfileSelectedError => "设置用户时出错";
 
+  @override
+  String get selectUserProfileDialogSearchAnchorSearchBarHint => "搜索用户资料";
+
+  @override
+  String get selectUserProfileDialogSearchAnchorSearchBarNotFound =>
+      '没有符合您搜索条件的用户资料';
+
   //--------------------------------------------Select User Dropdown Text------------------------------------------------------
   @override
   String get selectUserDropdownCreateUser => "创建用户";
@@ -399,10 +406,10 @@ class ChineseMessages extends BaseMessages {
 
   //--------------------------------------------Home Card Button Text------------------------------------------------------
   @override
-  String get homeCardButtonVisualizeMyData => "查看我的数据";
+  String get homeCardButtonVisualizeMyData => "查看我的资料";
 
   @override
-  String get homeCardButtonViewMyHistory => "查看我的历史";
+  String get homeCardButtonViewMyHistory => "查看我的测试";
 
   @override
   String get homeCardButtonCreateNewProfile => "创建新用户";

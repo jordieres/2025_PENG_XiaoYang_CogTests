@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import '../../config/routes/app_pages.dart';
 import '../../config/routes/app_route_observer.dart';
 import '../../config/themes/app_theme.dart';
@@ -24,10 +25,22 @@ class _CustomSplashScreenState extends State<CustomSplashScreen> {
     fontSize: 16,
   );
 
+  String _appVersion = '';
+  String _buildNumber = '';
+
   @override
   void initState() {
     super.initState();
+    _getVersionInfo();
     _initialize();
+  }
+
+  Future<void> _getVersionInfo() async {
+    final PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    setState(() {
+      _appVersion = packageInfo.version;
+      _buildNumber = packageInfo.buildNumber;
+    });
   }
 
   Future<void> _initialize() async {
@@ -111,6 +124,14 @@ class _CustomSplashScreenState extends State<CustomSplashScreen> {
               ],
             ),
             SizedBox(height: 20),
+            Text(
+              'Version $_appVersion($_buildNumber)',
+              style: _splashTextStyle.copyWith(
+                fontSize: 14,
+                color: Colors.white.withAlpha(180),
+              ),
+            ),
+            SizedBox(height: 12),
           ],
         ),
       ),

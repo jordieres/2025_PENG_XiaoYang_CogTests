@@ -38,8 +38,8 @@ class HomeCardButton extends StatelessWidget {
             opacity: HomeUIConstantVariable.getOpacityDependIsEnable(isActive),
             child: SizedBox(
               height: middleHeight
-                  ? HomeUIConstantVariable.tmtTestButtonCardHeight / 2
-                  : HomeUIConstantVariable.tmtTestButtonCardHeight,
+                  ? HomeUIConstantVariable.buttonCardMiddleHeight
+                  : HomeUIConstantVariable.buttonCardHeight,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(
                     HomeUIConstantVariable.cardCornerRadius),
@@ -77,12 +77,7 @@ class HomeCardButton extends StatelessWidget {
             ),
           ),
         ),
-        if (!isActive)
-          Positioned.fill(
-            child: Center(
-              child: HomeUIConstantVariable.lockIcon,
-            ),
-          ),
+        if (!isActive) HomeUIConstantVariable.lockIconWidget,
       ],
     );
   }

@@ -67,6 +67,9 @@ class AppColors {
   static const Color customPrimaryButtonDisabledTextColorDark =
       Color(0xFF616161);
 
+  //Select User Dialog Colors
+  static const Color userProfileDividerColor = Color(0xFFCEC4D0);
+
   static Color getPrimaryBlueDependIsDarkMode({bool? isDarkMode}) {
     final isDark = isDarkMode ?? Get.isDarkMode;
     if (isDark) {

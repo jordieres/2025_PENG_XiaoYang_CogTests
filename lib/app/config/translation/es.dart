@@ -302,7 +302,7 @@ class SpanishMessages extends BaseMessages {
 
   //--------------------------------------------User Result History Screen Text------------------------------------------------------
   @override
-  String get userResultHistoryScreenTitle => "Historia";
+  String get userResultHistoryScreenTitle => "Mis Tests";
 
   @override
   String get userResultHistoryScreenNoData => "No hay resultados disponibles";
@@ -389,6 +389,15 @@ class SpanishMessages extends BaseMessages {
   String get selectUserProfileDialogProfileSelectedError =>
       "Error al establecer perfil";
 
+  @override
+  String get selectUserProfileDialogSearchAnchorSearchBarHint =>
+      "Buscar perfiles";
+
+  @override
+  String get selectUserProfileDialogSearchAnchorSearchBarNotFound =>
+      'Ningún perfil coincide con tu búsqueda';
+
+
   //--------------------------------------------Select User Dropdown Text------------------------------------------------------
   @override
   String get selectUserDropdownCreateUser => "Crear perfil";
@@ -428,10 +437,10 @@ class SpanishMessages extends BaseMessages {
 
   //--------------------------------------------Home Card Button Text------------------------------------------------------
   @override
-  String get homeCardButtonVisualizeMyData => "Visualizar Mis Datos";
+  String get homeCardButtonVisualizeMyData => "Ver mi Perfil";
 
   @override
-  String get homeCardButtonViewMyHistory => "Mirar Mis Historias";
+  String get homeCardButtonViewMyHistory => "Ver mis Tests";
 
   @override
   String get homeCardButtonCreateNewProfile => "Crear nuevo perfil";
