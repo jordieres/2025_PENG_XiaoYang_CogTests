@@ -183,6 +183,11 @@ class SelectUserProfileDialogText {
       'select_user_profile_dialog_profile_selected_success';
   static String profileSelectedError =
       'select_user_profile_dialog_profile_selected_error';
+
+  static String searchAnchorSearchBarHint =
+      'select_user_profile_dialog_search_anchor_search_bar_hint';
+  static String searchAnchorSearchBarNotFound =
+      'select_user_profile_dialog_search_anchor_search_bar_not_found';
 }
 
 class SelectUserDropdownText {
@@ -455,6 +460,10 @@ abstract class BaseMessages {
 
   String get selectUserProfileDialogProfileSelectedError;
 
+  String get selectUserProfileDialogSearchAnchorSearchBarHint;
+
+  String get selectUserProfileDialogSearchAnchorSearchBarNotFound;
+
   //--------------------------------------------Select User Dropdown Text------------------------------------------------------
   String get selectUserDropdownCreateUser;
 
@@ -674,6 +683,11 @@ abstract class BaseMessages {
             selectUserProfileDialogProfileSelectedSuccess,
         SelectUserProfileDialogText.profileSelectedError:
             selectUserProfileDialogProfileSelectedError,
+        SelectUserProfileDialogText.searchAnchorSearchBarHint:
+            selectUserProfileDialogSearchAnchorSearchBarHint,
+        SelectUserProfileDialogText.searchAnchorSearchBarNotFound:
+            selectUserProfileDialogSearchAnchorSearchBarNotFound,
+
         //--------------------------------------------Select User Dropdown Text------------------------------------------------------
         SelectUserDropdownText.createUser: selectUserDropdownCreateUser,
         SelectUserDropdownText.greeting: selectUserDropdownGreeting,

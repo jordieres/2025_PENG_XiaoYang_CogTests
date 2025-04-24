@@ -362,6 +362,13 @@ class ChineseMessages extends BaseMessages {
   @override
   String get selectUserProfileDialogProfileSelectedError => "设置用户时出错";
 
+  @override
+  String get selectUserProfileDialogSearchAnchorSearchBarHint => "搜索用户资料";
+
+  @override
+  String get selectUserProfileDialogSearchAnchorSearchBarNotFound =>
+      '没有符合您搜索条件的用户资料';
+
   //--------------------------------------------Select User Dropdown Text------------------------------------------------------
   @override
   String get selectUserDropdownCreateUser => "创建用户";
