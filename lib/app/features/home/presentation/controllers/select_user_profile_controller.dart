@@ -9,6 +9,7 @@ import '../../../../config/themes/AppColors.dart';
 class SelectUserController extends UserProfileController {
   final RxList<String> userIds = <String>[].obs;
   final RxBool _needsRefresh = false.obs;
+  final RxString searchQuery = ''.obs;
 
   Rx<UserProfile?> get currentProfile => selectedProfile;
 
@@ -52,6 +53,21 @@ class SelectUserController extends UserProfileController {
 
   UserProfile? getProfileByUserId(String userId) {
     return profiles.firstWhereOrNull((profile) => profile.userId == userId);
+  }
+
+  List<UserProfile> getFilteredProfiles() {
+    if (searchQuery.value.isEmpty) {
+      return profiles;
+    }
+    return profiles
+        .where((profile) => profile.nickname
+        .toLowerCase()
+        .contains(searchQuery.value.toLowerCase()))
+        .toList();
+  }
+
+  void clearSearchQuery() {
+    searchQuery.value = '';
   }
 
   Future<void> setCurrentProfile(String userId) async {
