@@ -214,7 +214,7 @@ class _SelectUserDialogState extends State<SelectUserDialog> {
                   ),
                   Expanded(
                     child: Text(
-                      'Search profiles',
+                      SelectUserProfileDialogText.searchAnchorSearchBarHint.tr,
                       style: TextStyleBase.bodyL.copyWith(
                         color: Theme.of(context).hintColor,
                       ),
@@ -250,7 +250,7 @@ class _SelectUserDialogState extends State<SelectUserDialog> {
           return [
             ListTile(
               title: Text(
-                'No profiles match your search',
+                SelectUserProfileDialogText.searchAnchorSearchBarNotFound.tr,
                 style: TextStyleBase.bodyL,
               ),
             )

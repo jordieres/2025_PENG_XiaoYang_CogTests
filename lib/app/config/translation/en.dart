@@ -381,6 +381,14 @@ class EnglishMessages extends BaseMessages {
   String get selectUserProfileDialogProfileSelectedError =>
       "Error setting profile";
 
+  @override
+  String get selectUserProfileDialogSearchAnchorSearchBarHint =>
+      "Search profiles";
+
+  @override
+  String get selectUserProfileDialogSearchAnchorSearchBarNotFound =>
+      'No profiles match your search';
+
   //--------------------------------------------Select User Dropdown Text------------------------------------------------------
   @override
   String get selectUserDropdownCreateUser => "Create profile";
