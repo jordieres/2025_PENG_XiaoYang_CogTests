@@ -22,48 +22,96 @@ class SelectUserDialog extends StatefulWidget {
   State<SelectUserDialog> createState() => _SelectUserDialogState();
 }
 
-class _SelectUserDialogState extends State<SelectUserDialog> {
+class _SelectUserDialogState extends State<SelectUserDialog> with WidgetsBindingObserver {
   late SearchController searchController;
   bool _isSearchOpen = false;
+  bool _isKeyboardVisible = false;
+  bool _isWaitingForKeyboardHide = false;
+  Function? _pendingActionAfterKeyboardHide;
 
   @override
   void initState() {
     super.initState();
     searchController = SearchController();
+    WidgetsBinding.instance.addObserver(this);
+    _updateKeyboardVisibility();
   }
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     if (!_isSearchOpen) {
       searchController.dispose();
     }
     super.dispose();
   }
 
+  @override
+  void didChangeMetrics() {
+    super.didChangeMetrics();
+    final bool previousKeyboardVisibility = _isKeyboardVisible;
+    _updateKeyboardVisibility();
+
+    if (previousKeyboardVisibility && !_isKeyboardVisible && _isWaitingForKeyboardHide) {
+      _pendingActionAfterKeyboardHide?.call();
+      _isWaitingForKeyboardHide = false;
+      _pendingActionAfterKeyboardHide = null;
+    }
+  }
+
+  void _updateKeyboardVisibility() {
+    final bottomInset = WidgetsBinding.instance.window.viewInsets.bottom;
+    final isVisible = bottomInset > 0;
+    if (_isKeyboardVisible != isVisible && mounted) {
+      setState(() {
+        _isKeyboardVisible = isVisible;
+      });
+    } else {
+      _isKeyboardVisible = isVisible;
+    }
+  }
+
+  void _runAfterKeyboardHide(Function action) {
+    FocusScope.of(context).unfocus();
+
+    Future.delayed(Duration(milliseconds: 50), () {
+      _updateKeyboardVisibility();
+      if (!_isKeyboardVisible) {
+        action();
+      } else {
+        _isWaitingForKeyboardHide = true;
+        _pendingActionAfterKeyboardHide = action;
+      }
+    });
+  }
+
   bool get _isLandscape =>
       MediaQuery.of(context).orientation == Orientation.landscape;
 
   EdgeInsets get _listTilePadding => EdgeInsets.symmetric(
-        horizontal: 16.0,
-        vertical: _isLandscape ? 4.0 : 8.0,
-      );
+    horizontal: 16.0,
+    vertical: _isLandscape ? 4.0 : 8.0,
+  );
 
   EdgeInsets get _dialogPadding => EdgeInsets.all(_isLandscape ? 8.0 : 16.0);
 
   Widget _buildProfileListTile(dynamic profile, {bool isFromSearch = false}) {
     return InkWell(
-      onTap: () => _handleProfileSelection(profile.userId, isFromSearch),
       child: ListTile(
         dense: _isLandscape,
         contentPadding: _listTilePadding,
         title: Text(profile.nickname, style: TextStyleBase.bodyL),
         trailing: IconButton(
           icon: Icon(Icons.delete),
+          tooltip: SelectUserProfileDialogText.deleteButton.tr,
           onPressed: () {
+            FocusManager.instance.primaryFocus?.unfocus();
+
             _confirmDeleteProfile(context, profile.userId, profile.nickname,
                 isFromSearch: isFromSearch);
           },
         ),
+        onTap: () => _handleProfileSelection(profile.userId, isFromSearch),
       ),
     );
   }
@@ -86,7 +134,7 @@ class _SelectUserDialogState extends State<SelectUserDialog> {
     final maxWidth = WidgetMaxWidthCalculator.getMaxWidth(context);
     final screenHeight = MediaQuery.of(context).size.height;
     final heightConstraint =
-        _isLandscape ? screenHeight * 0.9 : screenHeight * 0.8;
+    _isLandscape ? screenHeight * 0.9 : screenHeight * 0.8;
 
     return Dialog(
       shape: RoundedRectangleBorder(
@@ -227,7 +275,6 @@ class _SelectUserDialogState extends State<SelectUserDialog> {
         );
       },
       viewOnChanged: (value) {
-        // This is called when the search text changes
       },
       viewBuilder: (suggestions) {
         _isSearchOpen = true;
@@ -267,32 +314,40 @@ class _SelectUserDialogState extends State<SelectUserDialog> {
   void _confirmDeleteProfile(
       BuildContext context, String userId, String nickname,
       {bool isFromSearch = false}) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return CustomDialog(
-          title: SelectUserProfileDialogText.deleteConfirmTitle.tr,
-          content: SelectUserProfileDialogText.deleteConfirmContent.tr
-              .replaceAll('{user}', nickname),
-          mode: DialogMode.confirmCancel,
-          primaryButtonText: SelectUserProfileDialogText.deleteButton.tr,
-          cancelButtonText: SelectUserProfileDialogText.cancelDeleteButton.tr,
-          onPrimaryPressed: () async {
-            Navigator.of(context).pop();
-            await widget.controller.deleteProfile(userId);
+    _runAfterKeyboardHide(() {
+      if (!mounted) return;
 
-            if (isFromSearch && mounted) {
-              final currentQuery = searchController.text;
-              searchController.text = '';
-              await Future.delayed(Duration(milliseconds: 50));
-              searchController.text = currentQuery;
-            }
-          },
-          onCancelPressed: () {
-            Navigator.of(context).pop();
-          },
-        );
-      },
-    );
+      showDialog(
+        context: context,
+        builder: (BuildContext dialogContext) {
+          return CustomDialog(
+            title: SelectUserProfileDialogText.deleteConfirmTitle.tr,
+            content: SelectUserProfileDialogText.deleteConfirmContent.tr
+                .replaceAll('{user}', nickname),
+            mode: DialogMode.confirmCancel,
+            primaryButtonText: SelectUserProfileDialogText.deleteButton.tr,
+            cancelButtonText: SelectUserProfileDialogText.cancelDeleteButton.tr,
+            onPrimaryPressed: () async {
+              Navigator.of(dialogContext).pop();
+
+              if (!mounted) return;
+              await widget.controller.deleteProfile(userId);
+
+              if (isFromSearch && mounted) {
+                final currentQuery = searchController.text;
+                searchController.text = '';
+                await Future.delayed(Duration(milliseconds: 50));
+                if (mounted) {
+                  searchController.text = currentQuery;
+                }
+              }
+            },
+            onCancelPressed: () {
+              Navigator.of(dialogContext).pop();
+            },
+          );
+        },
+      );
+    });
   }
 }
