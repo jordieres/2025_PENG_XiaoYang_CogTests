@@ -285,7 +285,7 @@ class ChineseMessages extends BaseMessages {
 
   //--------------------------------------------User Result History Screen Text------------------------------------------------------
   @override
-  String get userResultHistoryScreenTitle => "历史记录";
+  String get userResultHistoryScreenTitle => "我的测试";
 
   @override
   String get userResultHistoryScreenNoData => "没有可用结果";

@@ -296,7 +296,7 @@ class EnglishMessages extends BaseMessages {
 
   //--------------------------------------------User Result History Screen Text------------------------------------------------------
   @override
-  String get userResultHistoryScreenTitle => "History";
+  String get userResultHistoryScreenTitle => "My Tests";
 
   @override
   String get userResultHistoryScreenNoData => "No results available";

@@ -302,7 +302,7 @@ class SpanishMessages extends BaseMessages {
 
   //--------------------------------------------User Result History Screen Text------------------------------------------------------
   @override
-  String get userResultHistoryScreenTitle => "Historia";
+  String get userResultHistoryScreenTitle => "Mis Tests";
 
   @override
   String get userResultHistoryScreenNoData => "No hay resultados disponibles";
