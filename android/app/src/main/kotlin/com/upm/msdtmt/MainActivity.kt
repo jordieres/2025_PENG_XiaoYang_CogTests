@@ -1,4 +1,4 @@
-package es.upm.msdtmt
+package com.upm.msdtmt
 
 import io.flutter.embedding.android.FlutterActivity
 
