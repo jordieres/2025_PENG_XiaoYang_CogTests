@@ -110,12 +110,6 @@ class _SelectUserDialogState extends State<SelectUserDialog> {
                 style: TextStyleBase.h3,
               ),
             ),
-            SizedBox(height: 16),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: _buildSearchAnchor(),
-            ),
-            SizedBox(height: 16),
             Expanded(
               child: _buildProfileList(),
             ),
@@ -141,25 +135,39 @@ class _SelectUserDialogState extends State<SelectUserDialog> {
     return Obx(() {
       if (widget.controller.isLoading.value) {
         return Center(child: CircularProgressIndicator());
-      } else if (widget.controller.profiles.isEmpty) {
-        return Center(
-          child: Text(
-            SelectUserProfileDialogText.noProfiles.tr,
-            style: TextStyleBase.bodyL,
-          ),
-        );
       } else {
-        return ListView.separated(
+        return ListView(
           shrinkWrap: true,
-          itemCount: widget.controller.profiles.length,
-          separatorBuilder: (context, index) => Divider(
-            height: 1,
-            color: AppColors.userProfileDividerColor,
-          ),
-          itemBuilder: (context, index) {
-            final profile = widget.controller.profiles[index];
-            return _buildProfileListTile(profile);
-          },
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: _buildSearchAnchor(),
+            ),
+            SizedBox(height: 16),
+            if (widget.controller.profiles.isEmpty)
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(32.0),
+                  child: Text(
+                    SelectUserProfileDialogText.noProfiles.tr,
+                    style: TextStyleBase.bodyL,
+                  ),
+                ),
+              )
+            else
+              ...widget.controller.profiles.map((profile) {
+                return Column(
+                  children: [
+                    _buildProfileListTile(profile),
+                    if (profile != widget.controller.profiles.last)
+                      Divider(
+                        height: 1,
+                        color: AppColors.userProfileDividerColor,
+                      ),
+                  ],
+                );
+              }).toList(),
+          ],
         );
       }
     });
