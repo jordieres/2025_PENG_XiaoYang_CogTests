@@ -27,3 +27,32 @@ flutter build apk --debug
 ```bash
 flutter build apk --release
 ```
+
+### Build App Bundle
+
+Before building add the following to `android/local.properties`:
+
+```properties
+storeFile=YOUR_PATH_TO_KEYSTORE
+storePassword=YOUR_KEYSTORE_PASSWORD
+keyAlias=YOUR_KEY_ALIAS
+keyPassword=YOUR_KEY_PASSWORD
+```
+
+Then run the following command to build the app bundle:
+
+```bash
+flutter build appbundle --release
+```
+
+You can find it in the following directory:
+
+`Windows:`
+```bash
+start .\\build\\app\\outputs\\bundle\\release\\ 
+```
+
+`macOS/Linux:`
+```bash
+open ./build/app/outputs/bundle/release/
+```

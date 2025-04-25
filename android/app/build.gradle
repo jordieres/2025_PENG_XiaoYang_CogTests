@@ -5,6 +5,14 @@ plugins {
     id "dev.flutter.flutter-gradle-plugin"
 }
 
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
+}
+
 android {
     namespace = "com.upm.msdtmt"
     compileSdk = flutter.compileSdkVersion
@@ -17,6 +25,15 @@ android {
 
     kotlinOptions {
         jvmTarget = "17"
+    }
+
+    signingConfigs {
+        release {
+            storeFile localProperties['storeFile'] ? file(localProperties['storeFile']) : null
+            storePassword localProperties['storePassword']
+            keyAlias localProperties['keyAlias']
+            keyPassword localProperties['keyPassword']
+        }
     }
 
     defaultConfig {
