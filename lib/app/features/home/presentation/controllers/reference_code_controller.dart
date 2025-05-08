@@ -40,7 +40,7 @@ class ReferenceCodeController extends GetxController {
       } else if (!result.isValid) {
         errorMessage.value =
             result.errorMessage ?? ReferenceCodeInputText.incorrectReference.tr;
-      } else if (result.isExists()) {
+      } else if (result.canUse()) {
         errorMessage.value = ReferenceCodeInputText.codeAlreadyUsed.tr;
       } else {
         fullReferenceCode.value = code;
@@ -54,7 +54,7 @@ class ReferenceCodeController extends GetxController {
       }
     } catch (e) {
       errorMessage.value =
-      '${ReferenceCodeInputText.validationError.tr}${e.toString()}';
+          '${ReferenceCodeInputText.validationError.tr}${e.toString()}';
       showErrorMessage(errorMessage.value);
     } finally {
       isValidating.value = false;

@@ -37,7 +37,7 @@ class ReferenceValidationResult {
     this.errorMessage,
   });
 
-  isExists() {
-    return numberExists >= 2;
+  canUse() {
+    return numberExists >= 2 || handsUsed == HandsUsed.BOTH;
   }
 }
