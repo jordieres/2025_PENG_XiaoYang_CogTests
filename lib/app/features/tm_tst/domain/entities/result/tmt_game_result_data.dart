@@ -31,6 +31,7 @@ class TmtGameResultData {
   final double timeCompleteA; // in seconds
   final double timeCompleteB; // in seconds
   final String deviceModel;
+  final double diagonalInches;
 
   final double scoreA;
   final double scoreA1;
@@ -71,6 +72,7 @@ class TmtGameResultData {
     required this.timeCompleteA,
     required this.timeCompleteB,
     required this.deviceModel,
+    required this.diagonalInches,
     required this.scoreA,
     required this.scoreA1,
     required this.scoreA2,
@@ -138,6 +140,7 @@ class TmtGameResultData {
       timeCompleteA: controller.testTimeMetrics.calculateTimeCompleteTmtA(),
       timeCompleteB: controller.testTimeMetrics.calculateTimeCompleteTmtB(),
       deviceModel: deviceModel,
+      diagonalInches: 10.38, //TODO get from device
       scoreA: controller.testTimeMetrics.calculateTimeCompleteTmtA(),
       scoreA1: scoreA1,
       scoreA2: scoreA2,

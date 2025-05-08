@@ -32,6 +32,7 @@ class TmtResultModel {
   final double timeCompleteA;
   final double timeCompleteB;
   final String deviceModel;
+  final double diagonalInches;
   final double scoreA;
   final double scoreA1;
   final double scoreA2;
@@ -70,6 +71,7 @@ class TmtResultModel {
     required this.timeCompleteA,
     required this.timeCompleteB,
     required this.deviceModel,
+    required this.diagonalInches,
     required this.scoreA,
     required this.scoreA1,
     required this.scoreA2,
@@ -116,6 +118,7 @@ class TmtResultModel {
       timeCompleteA: entity.timeCompleteA,
       timeCompleteB: entity.timeCompleteB,
       deviceModel: entity.deviceModel,
+      diagonalInches: entity.diagonalInches,
       scoreA: entity.timeCompleteA,
       scoreA1: entity.scoreA1,
       scoreA2: entity.scoreA2,
@@ -166,6 +169,7 @@ class TmtResultModel {
       TmtResultModelConstant.TIME_COMPLETE_A: timeCompleteA,
       TmtResultModelConstant.TIME_COMPLETE_B: timeCompleteB,
       TmtResultModelConstant.DEVICE: deviceModel,
+      TmtResultModelConstant.DIAGNONAL_INCHES: diagonalInches,
       TmtResultModelConstant.SCORE_A: scoreA,
       TmtResultModelConstant.SCORE_A1: scoreA1,
       TmtResultModelConstant.SCORE_A2: scoreA2,
