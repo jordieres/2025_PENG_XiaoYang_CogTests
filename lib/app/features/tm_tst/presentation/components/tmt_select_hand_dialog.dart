@@ -25,14 +25,14 @@ Future<TmtGameHandUsed?> showTmtSelectHandDialogGetX(
 Future<TmtGameHandUsed?> showOnlyRightHandDialog() async {
   return await Get.dialog<TmtGameHandUsed>(
     CustomDialog(
-      title: TmtSelectHandDialogText.title.tr,
+      title: TmtSelectHandDialogText.rightHandOnlyTitle.tr,
       content: Text(
-        "La mano izquierda ya ha sido utilizada. Por favor usa tu mano derecha para este test.",
+        TmtSelectHandDialogText.rightHandOnlyContent.tr,
         textAlign: TextAlign.center,
       ),
       mode: DialogMode.singleButton,
       primaryButtonText:
-          "${TmtSelectHandDialogText.rightHandButtonText.tr} \u{1F449}",
+          TmtSelectHandDialogText.useRightHandButton.tr + rightHandEmoji,
       onPrimaryPressed: () {
         Get.back(result: TmtGameHandUsed.RIGHT);
       },
@@ -45,14 +45,14 @@ Future<TmtGameHandUsed?> showOnlyRightHandDialog() async {
 Future<TmtGameHandUsed?> showOnlyLeftHandDialog() async {
   return await Get.dialog<TmtGameHandUsed>(
     CustomDialog(
-      title: TmtSelectHandDialogText.title.tr,
+      title: TmtSelectHandDialogText.leftHandOnlyTitle.tr,
       content: Text(
-        "La mano derecha ya ha sido utilizada. Por favor usa tu mano izquierda para este test.",
+        TmtSelectHandDialogText.leftHandOnlyContent.tr,
         textAlign: TextAlign.center,
       ),
       mode: DialogMode.singleButton,
       primaryButtonText:
-          "\u{1F448} ${TmtSelectHandDialogText.leftHandButtonText.tr}",
+          leftHandEmoji + TmtSelectHandDialogText.useLeftHandButton.tr,
       onPrimaryPressed: () {
         Get.back(result: TmtGameHandUsed.LEFT);
       },
@@ -65,19 +65,19 @@ Future<TmtGameHandUsed?> showOnlyLeftHandDialog() async {
 Future<TmtGameHandUsed?> showBothHandsDialog() async {
   return await Get.dialog<TmtGameHandUsed>(
     CustomDialog(
-      title: TmtSelectHandDialogText.title.tr,
+      title: TmtSelectHandDialogText.firstTimeTitle.tr,
       content: Text(
-        TmtSelectHandDialogText.content.tr,
+        TmtSelectHandDialogText.firstTimeContent.tr,
         textAlign: TextAlign.center,
       ),
       mode: DialogMode.twoMainButtons,
       primaryButtonText:
-          "${TmtSelectHandDialogText.rightHandButtonText.tr} \u{1F449}",
+          TmtSelectHandDialogText.rightHandButtonText.tr + rightHandEmoji,
       onPrimaryPressed: () {
         Get.back(result: TmtGameHandUsed.RIGHT);
       },
       onLeftPrimaryButtonText:
-          "\u{1F448} ${TmtSelectHandDialogText.leftHandButtonText.tr}",
+          leftHandEmoji + TmtSelectHandDialogText.leftHandButtonText.tr,
       onLeftPrimaryPressed: () {
         Get.back(result: TmtGameHandUsed.LEFT);
       },
@@ -86,3 +86,6 @@ Future<TmtGameHandUsed?> showBothHandsDialog() async {
     barrierDismissible: true,
   );
 }
+
+final leftHandEmoji = "\u{1F448} ";
+final rightHandEmoji = " \u{1F449}";

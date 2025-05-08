@@ -98,17 +98,42 @@ class SpanishMessages extends BaseMessages {
 
   //--------------------------------------------TMT Select Hand Dialog Text------------------------------------------------------
   @override
-  String get tmtSelectHandDialogTitle => "Selecciona tu mano dominante";
+  String get tmtSelectHandDialogFirstTimeTitle =>
+      "Seleccione la mano para el Test TMT";
 
   @override
-  String get tmtSelectHandDialogContent =>
-      "Usa la mano con la que te sientas más cómodo para realizar la prueba. Esto optimiza tu experiencia TMT test.";
+  String get tmtSelectHandDialogFirstTimeContent =>
+      "Por favor, seleccione qué mano desea utilizar para este test TMT. Pruebas futuras podrían requerir alternar ambas manos para garantizar una evaluación completa.";
+
+  @override
+  String get tmtSelectHandDialogLeftHandButtonText => "Mano\nizquierda";
 
   @override
   String get tmtSelectHandDialogRightHandButtonText => "Mano\nderecha";
 
   @override
-  String get tmtSelectHandDialogLeftHandButtonText => "Mano\nizquierda";
+  String get tmtSelectHandDialogRightHandOnlyTitle =>
+      "Test TMT: Por favor use la mano derecha";
+
+  @override
+  String get tmtSelectHandDialogRightHandOnlyContent =>
+      "Usted utilizó su mano izquierda en el test TMT anterior. Para garantizar resultados válidos, por favor use su mano derecha para este test.";
+
+  @override
+  String get tmtSelectHandDialogUseRightHandButton =>
+      "Iniciar test con mano derecha";
+
+  @override
+  String get tmtSelectHandDialogLeftHandOnlyTitle =>
+      "Test TMT: Por favor use la mano izquierda";
+
+  @override
+  String get tmtSelectHandDialogLeftHandOnlyContent =>
+      "Usted utilizó su mano derecha en el test TMT anterior. Para garantizar resultados válidos, por favor use su mano izquierda para este test.";
+
+  @override
+  String get tmtSelectHandDialogUseLeftHandButton =>
+      "Iniciar test con mano izquierda";
 
   //--------------------------------------------Select Mode Practice Or Test Screen Text------------------------------------------------------
   @override

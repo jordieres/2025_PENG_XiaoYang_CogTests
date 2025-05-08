@@ -91,16 +91,37 @@ class ChineseMessages extends BaseMessages {
 
   //--------------------------------------------TMT Select Hand Dialog Text------------------------------------------------------
   @override
-  String get tmtSelectHandDialogTitle => "选择您要使用的手";
+  String get tmtSelectHandDialogFirstTimeTitle => "选择 TMT 测试用手";
 
   @override
-  String get tmtSelectHandDialogContent => "使用您感觉最舒适的手进行测试。这将优化您的TMT测试体验。";
+  String get tmtSelectHandDialogFirstTimeContent =>
+      "请选择您本次 TMT 测试希望使用的手。后续测试可能需要您交替使用双手以确保评估的全面性。";
+
+  @override
+  String get tmtSelectHandDialogLeftHandButtonText => "左手";
 
   @override
   String get tmtSelectHandDialogRightHandButtonText => "右手";
 
   @override
-  String get tmtSelectHandDialogLeftHandButtonText => "左手";
+  String get tmtSelectHandDialogRightHandOnlyTitle => "TMT 测试：请使用右手";
+
+  @override
+  String get tmtSelectHandDialogRightHandOnlyContent =>
+      "您上次 TMT 测试使用了左手。根据测试要求，为确保结果的有效性，本次测试请使用右手。";
+
+  @override
+  String get tmtSelectHandDialogUseRightHandButton => "使用右手开始测试";
+
+  @override
+  String get tmtSelectHandDialogLeftHandOnlyTitle => "TMT 测试：请使用左手";
+
+  @override
+  String get tmtSelectHandDialogLeftHandOnlyContent =>
+      "您上次 TMT 测试使用了右手。根据测试要求，为确保结果的有效性，本次测试请使用左手。";
+
+  @override
+  String get tmtSelectHandDialogUseLeftHandButton => "使用左手开始测试";
 
   //--------------------------------------------Select Mode Practice Or Test Screen Text------------------------------------------------------
   @override

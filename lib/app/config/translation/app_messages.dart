@@ -19,7 +19,6 @@ class TMTGameText {
   static String tmtGameTmtHelpTmtSecondaryButtonText =
       'tmt_game_tmt_help_tmt_secondary_button_text';
   static String tmtGameCountdownMessage = 'tmt_game_countdown_message';
-
 }
 
 class HomeHeaderText {
@@ -53,12 +52,29 @@ class TMTGamePracticesText {
 }
 
 class TmtSelectHandDialogText {
-  static String title = 'tmt_select_hand_dialog_title';
-  static String content = 'tmt_select_hand_dialog_content';
-  static String rightHandButtonText =
-      'tmt_select_hand_dialog_right_hand_button_text';
+  // Scenario 1: First-time user
+  static String firstTimeTitle = 'tmt_select_hand_dialog_first_time_title';
+  static String firstTimeContent = 'tmt_select_hand_dialog_first_time_content';
   static String leftHandButtonText =
       'tmt_select_hand_dialog_left_hand_button_text';
+  static String rightHandButtonText =
+      'tmt_select_hand_dialog_right_hand_button_text';
+
+  // Scenario 2: User previously used left hand
+  static String rightHandOnlyTitle =
+      'tmt_select_hand_dialog_right_hand_only_title';
+  static String rightHandOnlyContent =
+      'tmt_select_hand_dialog_right_hand_only_content';
+  static String useRightHandButton =
+      'tmt_select_hand_dialog_use_right_hand_button';
+
+  // Scenario 3: User previously used right hand
+  static String leftHandOnlyTitle =
+      'tmt_select_hand_dialog_left_hand_only_title';
+  static String leftHandOnlyContent =
+      'tmt_select_hand_dialog_left_hand_only_content';
+  static String useLeftHandButton =
+      'tmt_select_hand_dialog_use_left_hand_button';
 }
 
 class SelectModePracticeOrTestText {
@@ -216,7 +232,6 @@ class HomeCardButtonText {
 }
 
 abstract class BaseMessages {
-
   //--------------------------------------------TMT Game Text------------------------------------------------------
   String get tmtGameCircleBegin;
 
@@ -278,13 +293,25 @@ abstract class BaseMessages {
   String get tmtGamePracticeTmtBPageTitle;
 
   //--------------------------------------------TMT Select Hand Dialog Text------------------------------------------------------
-  String get tmtSelectHandDialogTitle;
+  String get tmtSelectHandDialogFirstTimeTitle;
 
-  String get tmtSelectHandDialogContent;
+  String get tmtSelectHandDialogFirstTimeContent;
+
+  String get tmtSelectHandDialogLeftHandButtonText;
 
   String get tmtSelectHandDialogRightHandButtonText;
 
-  String get tmtSelectHandDialogLeftHandButtonText;
+  String get tmtSelectHandDialogRightHandOnlyTitle;
+
+  String get tmtSelectHandDialogRightHandOnlyContent;
+
+  String get tmtSelectHandDialogUseRightHandButton;
+
+  String get tmtSelectHandDialogLeftHandOnlyTitle;
+
+  String get tmtSelectHandDialogLeftHandOnlyContent;
+
+  String get tmtSelectHandDialogUseLeftHandButton;
 
   //--------------------------------------------Select Mode Practice Or Test Screen Text------------------------------------------------------
 
@@ -551,12 +578,26 @@ abstract class BaseMessages {
         TMTGamePracticesText.tmtGamePracticeTmtBPageTitle:
             tmtGamePracticeTmtBPageTitle,
         //--------------------------------------------TMT Select Hand Dialog Text------------------------------------------------------
-        TmtSelectHandDialogText.title: tmtSelectHandDialogTitle,
-        TmtSelectHandDialogText.content: tmtSelectHandDialogContent,
-        TmtSelectHandDialogText.rightHandButtonText:
-            tmtSelectHandDialogRightHandButtonText,
+        TmtSelectHandDialogText.firstTimeTitle:
+            tmtSelectHandDialogFirstTimeTitle,
+        TmtSelectHandDialogText.firstTimeContent:
+            tmtSelectHandDialogFirstTimeContent,
         TmtSelectHandDialogText.leftHandButtonText:
             tmtSelectHandDialogLeftHandButtonText,
+        TmtSelectHandDialogText.rightHandButtonText:
+            tmtSelectHandDialogRightHandButtonText,
+        TmtSelectHandDialogText.rightHandOnlyTitle:
+            tmtSelectHandDialogRightHandOnlyTitle,
+        TmtSelectHandDialogText.rightHandOnlyContent:
+            tmtSelectHandDialogRightHandOnlyContent,
+        TmtSelectHandDialogText.useRightHandButton:
+            tmtSelectHandDialogUseRightHandButton,
+        TmtSelectHandDialogText.leftHandOnlyTitle:
+            tmtSelectHandDialogLeftHandOnlyTitle,
+        TmtSelectHandDialogText.leftHandOnlyContent:
+            tmtSelectHandDialogLeftHandOnlyContent,
+        TmtSelectHandDialogText.useLeftHandButton:
+            tmtSelectHandDialogUseLeftHandButton,
         //--------------------------------------------Select Mode Practice Or Test Screen Text------------------------------------------------------
         SelectModePracticeOrTestText.title: selectModePracticeOrTestTitle,
         SelectModePracticeOrTestText.questionText:
