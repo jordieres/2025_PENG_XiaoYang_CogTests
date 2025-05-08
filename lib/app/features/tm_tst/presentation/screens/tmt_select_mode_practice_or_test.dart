@@ -11,6 +11,7 @@ import '../../../../shared_components/custom_app_bar.dart';
 import '../../../../shared_components/custom_dialog.dart';
 import '../../../../utils/mixins/app_mixins.dart';
 import '../../../../utils/helpers/app_helpers.dart';
+import '../../../home/domain/entities/reference_validation_result_entity.dart';
 import '../../domain/entities/result/tmt_game_hand_used.dart';
 import '../../domain/entities/result/tmt_game_init_data.dart';
 import '../../domain/usecases/select_mode_practice_or_test_responsive_calculate.dart';
@@ -27,17 +28,23 @@ class SelectModePracticeOrTest extends StatefulWidget {
 
 class _SelectModePracticeOrTestState extends State<SelectModePracticeOrTest>
     with NavigationMixin {
-
   String tmtGameCodeId = "";
+  HandsUsed handsUsed = HandsUsed.NONE;
+
   bool get isDarkMode => Get.isDarkMode;
 
   @override
   void initState() {
     super.initState();
     try {
-      tmtGameCodeId = Get.arguments as String;
+      final args = Get.arguments as Map<String, dynamic>;
+      tmtGameCodeId =
+          args[ToSelectedPracticeOrTestArguments.referenceCode] as String;
+      handsUsed =
+          args[ToSelectedPracticeOrTestArguments.handsUsed] as HandsUsed;
     } catch (e) {
       tmtGameCodeId = "";
+      handsUsed = HandsUsed.NONE;
     }
   }
 
@@ -143,7 +150,8 @@ class _SelectModePracticeOrTestState extends State<SelectModePracticeOrTest>
   }
 
   Future<void> _handleTestModeSelection() async {
-    TmtGameHandUsed? selectedHand = await showTmtSelectHandDialogGetX();
+    TmtGameHandUsed? selectedHand =
+        await showTmtSelectHandDialogGetX(handsUsed);
     if (selectedHand != null) {
       toTmtTest(TmtGameInitData(
         tmtGameHandUsed: selectedHand,

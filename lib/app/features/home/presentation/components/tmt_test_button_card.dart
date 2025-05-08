@@ -11,6 +11,7 @@ import '../../../../config/themes/app_text_style_base.dart';
 import '../../../../config/translation/app_translations.dart';
 import '../../../tm_tst/domain/usecases/tmt_game_config_use_case.dart';
 import '../../domain/entities/home_ui_constant_variable.dart';
+import '../../domain/entities/reference_validation_result_entity.dart';
 
 enum CircleNumberOption {
   twentyFive(25),
@@ -31,10 +32,12 @@ enum CircleNumberOption {
 class TmtTestButtonCard extends StatefulWidget {
   final String referenceCode;
   final VoidCallback? onStartTest;
+  final HandsUsed handsUsed;
 
   const TmtTestButtonCard({
     super.key,
     required this.referenceCode,
+    this.handsUsed = HandsUsed.NONE,
     this.onStartTest,
   });
 
@@ -127,7 +130,8 @@ class _TmtTestButtonCardState extends State<TmtTestButtonCard>
                   if (widget.onStartTest != null) {
                     widget.onStartTest!();
                   } else {
-                    toSelectedPracticeOrTest(widget.referenceCode);
+                    toSelectedPracticeOrTest(
+                        widget.referenceCode, widget.handsUsed);
                   }
                 }
               : null,
