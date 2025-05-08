@@ -1,3 +1,4 @@
+import 'package:display_metrics/display_metrics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
@@ -53,27 +54,29 @@ class _CustomSplashScreenState extends State<CustomSplashScreen> {
     DeviceHelper.init(context);
     final ThemeController themeController = Get.put(ThemeController());
 
-    runApp(Obx(() => GetMaterialApp(
-          debugShowCheckedModeBanner: false,
-          navigatorObservers: [appRouteObserver],
-          initialRoute: Routes.home,
-          getPages: AppPages.routes,
-          translations: AppTranslations(),
-          locale: AppTranslations.locale,
-          fallbackLocale: AppTranslations.fallbackLocale,
-          localizationsDelegates: const [
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: [
-            AppTranslations.ENGLISH,
-            AppTranslations.SPANISH,
-            AppTranslations.CHINIES
-          ],
-          theme: AppTheme.light,
-          darkTheme: AppTheme.dark,
-          themeMode: themeController.themeMode,
+    runApp(Obx(() => DisplayMetricsWidget(
+          child: GetMaterialApp(
+            debugShowCheckedModeBanner: false,
+            navigatorObservers: [appRouteObserver],
+            initialRoute: Routes.home,
+            getPages: AppPages.routes,
+            translations: AppTranslations(),
+            locale: AppTranslations.locale,
+            fallbackLocale: AppTranslations.fallbackLocale,
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: [
+              AppTranslations.ENGLISH,
+              AppTranslations.SPANISH,
+              AppTranslations.CHINIES
+            ],
+            theme: AppTheme.light,
+            darkTheme: AppTheme.dark,
+            themeMode: themeController.themeMode,
+          ),
         )));
   }
 
