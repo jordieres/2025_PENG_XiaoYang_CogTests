@@ -1,5 +1,7 @@
 import 'package:msdtmt/app/features/tm_tst/domain/entities/metric/metric_static_values.dart';
 
+import '../tmt_game/tmt_game_variable.dart';
+
 class TmtTestTimeMetric {
   DateTime? timeStartTest;
   DateTime? timeStartTmtA;
@@ -81,11 +83,15 @@ class TmtTestTimeMetric {
     _scoresCalculated = false;
   }
 
+  /// Rest 3 seconds because of the countdown at the beginning of the TMT test Part B.
+  ///  No need to rest for the countdown at the beginning of Part A
+  ///  because Part A starts before the countdown finishes.
   double calculateTimeCompleteTest() {
     return timeEndTest != null && timeStartTest != null
         ? (timeEndTest!.difference(timeStartTest!).abs().inMilliseconds /
-                MetricStaticValues.SEND_METRIC_THRESHOLD_MS)
-            .toDouble()
+                    MetricStaticValues.SEND_METRIC_THRESHOLD_MS)
+                .toDouble() -
+            TmtGameVariables.TMT_COUNTDOWN_TO_START_DURATION
         : 0.0;
   }
 
@@ -111,7 +117,8 @@ class TmtTestTimeMetric {
     if (timeStartTmtA != null) {
       if (tmtACircleTimestamps.containsKey(MetricStaticValues.SECTION_1_END)) {
         _scoreA1 = tmtACircleTimestamps[MetricStaticValues.SECTION_1_END]!
-                .difference(timeStartTmtA!).abs()
+                .difference(timeStartTmtA!)
+                .abs()
                 .inMilliseconds /
             MetricStaticValues.SEND_METRIC_THRESHOLD_MS;
       }
@@ -119,7 +126,8 @@ class TmtTestTimeMetric {
       if (tmtACircleTimestamps.containsKey(MetricStaticValues.SECTION_2_END)) {
         _scoreA2 = tmtACircleTimestamps[MetricStaticValues.SECTION_1_END + 1]!
                 .difference(
-                    tmtACircleTimestamps[MetricStaticValues.SECTION_2_END]!).abs()
+                    tmtACircleTimestamps[MetricStaticValues.SECTION_2_END]!)
+                .abs()
                 .inMilliseconds /
             MetricStaticValues.SEND_METRIC_THRESHOLD_MS;
       }
@@ -127,7 +135,8 @@ class TmtTestTimeMetric {
       if (tmtACircleTimestamps.containsKey(MetricStaticValues.SECTION_3_END)) {
         _scoreA3 = tmtACircleTimestamps[MetricStaticValues.SECTION_2_END + 1]!
                 .difference(
-                    tmtACircleTimestamps[MetricStaticValues.SECTION_3_END]!).abs()
+                    tmtACircleTimestamps[MetricStaticValues.SECTION_3_END]!)
+                .abs()
                 .inMilliseconds /
             MetricStaticValues.SEND_METRIC_THRESHOLD_MS;
       }
@@ -135,7 +144,8 @@ class TmtTestTimeMetric {
       if (tmtACircleTimestamps.containsKey(MetricStaticValues.SECTION_4_END)) {
         _scoreA4 = tmtACircleTimestamps[MetricStaticValues.SECTION_3_END + 1]!
                 .difference(
-                    tmtACircleTimestamps[MetricStaticValues.SECTION_4_END]!).abs()
+                    tmtACircleTimestamps[MetricStaticValues.SECTION_4_END]!)
+                .abs()
                 .inMilliseconds /
             MetricStaticValues.SEND_METRIC_THRESHOLD_MS;
       }
@@ -143,7 +153,8 @@ class TmtTestTimeMetric {
       if (tmtACircleTimestamps.containsKey(MetricStaticValues.SECTION_5_END)) {
         _scoreA5 = tmtACircleTimestamps[MetricStaticValues.SECTION_4_END + 1]!
                 .difference(
-                    tmtACircleTimestamps[MetricStaticValues.SECTION_5_END]!).abs()
+                    tmtACircleTimestamps[MetricStaticValues.SECTION_5_END]!)
+                .abs()
                 .inMilliseconds /
             MetricStaticValues.SEND_METRIC_THRESHOLD_MS;
       }
@@ -152,7 +163,8 @@ class TmtTestTimeMetric {
     if (timeStartTmtB != null) {
       if (tmtBCircleTimestamps.containsKey(MetricStaticValues.SECTION_1_END)) {
         _scoreB1 = tmtBCircleTimestamps[MetricStaticValues.SECTION_1_END]!
-                .difference(timeStartTmtB!).abs()
+                .difference(timeStartTmtB!)
+                .abs()
                 .inMilliseconds /
             MetricStaticValues.SEND_METRIC_THRESHOLD_MS;
       }
@@ -160,7 +172,8 @@ class TmtTestTimeMetric {
       if (tmtBCircleTimestamps.containsKey(MetricStaticValues.SECTION_2_END)) {
         _scoreB2 = tmtBCircleTimestamps[MetricStaticValues.SECTION_1_END + 1]!
                 .difference(
-                    tmtBCircleTimestamps[MetricStaticValues.SECTION_2_END]!).abs()
+                    tmtBCircleTimestamps[MetricStaticValues.SECTION_2_END]!)
+                .abs()
                 .inMilliseconds /
             MetricStaticValues.SEND_METRIC_THRESHOLD_MS;
       }
@@ -168,7 +181,8 @@ class TmtTestTimeMetric {
       if (tmtBCircleTimestamps.containsKey(MetricStaticValues.SECTION_3_END)) {
         _scoreB3 = tmtBCircleTimestamps[MetricStaticValues.SECTION_2_END + 1]!
                 .difference(
-                    tmtBCircleTimestamps[MetricStaticValues.SECTION_3_END]!).abs()
+                    tmtBCircleTimestamps[MetricStaticValues.SECTION_3_END]!)
+                .abs()
                 .inMilliseconds /
             MetricStaticValues.SEND_METRIC_THRESHOLD_MS;
       }
@@ -176,7 +190,8 @@ class TmtTestTimeMetric {
       if (tmtBCircleTimestamps.containsKey(MetricStaticValues.SECTION_4_END)) {
         _scoreB4 = tmtBCircleTimestamps[MetricStaticValues.SECTION_3_END + 1]!
                 .difference(
-                    tmtBCircleTimestamps[MetricStaticValues.SECTION_4_END]!).abs()
+                    tmtBCircleTimestamps[MetricStaticValues.SECTION_4_END]!)
+                .abs()
                 .inMilliseconds /
             MetricStaticValues.SEND_METRIC_THRESHOLD_MS;
       }
@@ -184,7 +199,8 @@ class TmtTestTimeMetric {
       if (tmtBCircleTimestamps.containsKey(MetricStaticValues.SECTION_5_END)) {
         _scoreB5 = tmtBCircleTimestamps[MetricStaticValues.SECTION_4_END + 1]!
                 .difference(
-                    tmtBCircleTimestamps[MetricStaticValues.SECTION_5_END]!).abs()
+                    tmtBCircleTimestamps[MetricStaticValues.SECTION_5_END]!)
+                .abs()
                 .inMilliseconds /
             MetricStaticValues.SEND_METRIC_THRESHOLD_MS;
       }

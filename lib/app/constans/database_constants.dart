@@ -13,8 +13,10 @@ class DatabaseConstants {
   static const String educationLevelColumn = 'educationLevel';
 
   ///User result tablet columns
+  static const String resultIdColumn = 'resultId';
   static const String referenceCodeColumn = 'referenceCode';
   static const String dateColumn = 'date';
   static const String tmtATimeColumn = 'tmtATime';
   static const String tmtBTimeColumn = 'tmtBTime';
+  static const String handUsedColumn = 'handUsed';
 }

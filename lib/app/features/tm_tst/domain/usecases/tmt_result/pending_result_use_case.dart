@@ -78,6 +78,7 @@ class PendingResultUseCase {
               date: pendingResult.date,
               tmtATime: pendingResult.tmtATime,
               tmtBTime: pendingResult.tmtBTime,
+              handUsed: pendingResult.handUsed,
             ));
           }
         } else {

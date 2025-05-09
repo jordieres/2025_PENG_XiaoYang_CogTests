@@ -1,4 +1,5 @@
 import 'package:sqflite/sqflite.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../../../constans/database_constants.dart';
 import '../../../../utils/services/user_data_base_helper.dart';
@@ -6,9 +7,14 @@ import '../../../../utils/services/local_storage_services.dart';
 import '../model/user_test_result_local_data_model.dart';
 
 abstract class TestResultLocalDataSource {
-  Future<List<UserTestResultLocalDataModel>> getTestResultsByUserId(String userId);
-  Future<List<UserTestResultLocalDataModel>> getTestResultsByNickname(String nickname);
+  Future<List<UserTestResultLocalDataModel>> getTestResultsByUserId(
+      String userId);
+
+  Future<List<UserTestResultLocalDataModel>> getTestResultsByNickname(
+      String nickname);
+
   Future<void> saveTestResult(UserTestResultLocalDataModel result);
+
   Future<bool> isReferenceCodeUsed(String referenceCode);
 }
 
@@ -17,9 +23,9 @@ class TestResultDataSourceImpl implements TestResultLocalDataSource {
 
   TestResultDataSourceImpl({required this.databaseHelper});
 
-
   @override
-  Future<List<UserTestResultLocalDataModel>> getTestResultsByUserId(String userId) async {
+  Future<List<UserTestResultLocalDataModel>> getTestResultsByUserId(
+      String userId) async {
     final db = await databaseHelper.database;
     final resultsData = await db.query(
       DatabaseConstants.userTestResultsTable,
@@ -34,7 +40,8 @@ class TestResultDataSourceImpl implements TestResultLocalDataSource {
   }
 
   @override
-  Future<List<UserTestResultLocalDataModel>> getTestResultsByNickname(String nickname) async {
+  Future<List<UserTestResultLocalDataModel>> getTestResultsByNickname(
+      String nickname) async {
     final db = await databaseHelper.database;
 
     final profilesData = await db.query(
@@ -62,6 +69,7 @@ class TestResultDataSourceImpl implements TestResultLocalDataSource {
     }
 
     final resultMap = result.toMap();
+    resultMap[DatabaseConstants.resultIdColumn] = const Uuid().v4();
     resultMap[DatabaseConstants.userIdColumn] = currentProfileId;
 
     await db.insert(
@@ -85,6 +93,6 @@ class TestResultDataSourceImpl implements TestResultLocalDataSource {
       [referenceCode, currentProfileId],
     ));
 
-    return count != null && count > 0;
+    return count != null && count > 0; //TODO put 2
   }
 }

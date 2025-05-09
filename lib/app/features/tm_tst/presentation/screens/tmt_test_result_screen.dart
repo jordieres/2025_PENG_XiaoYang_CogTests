@@ -94,6 +94,7 @@ class _TmtResultsScreenState extends State<TmtResultsScreen>
       date: DateTime.now(),
       tmtATime: _timeCompleteA.toDouble(),
       tmtBTime: _timeCompleteB.toDouble(),
+      handUsed: tmtGameInitData.tmtGameHandUsed.value,
     ));
   }
 

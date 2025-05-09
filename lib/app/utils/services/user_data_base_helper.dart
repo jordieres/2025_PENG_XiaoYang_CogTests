@@ -42,15 +42,17 @@ class UserDatabaseHelper {
     ''');
 
     await db.execute('''
-      CREATE TABLE ${DatabaseConstants.userTestResultsTable}(
-        ${DatabaseConstants.referenceCodeColumn} TEXT PRIMARY KEY,
-        ${DatabaseConstants.userIdColumn} TEXT NOT NULL,
-        ${DatabaseConstants.dateColumn} TEXT NOT NULL,
-        ${DatabaseConstants.tmtATimeColumn} REAL NOT NULL,
-        ${DatabaseConstants.tmtBTimeColumn} REAL NOT NULL,
-        FOREIGN KEY (${DatabaseConstants.userIdColumn}) REFERENCES ${DatabaseConstants.userProfilesTable}(${DatabaseConstants.userIdColumn})
-      )
-    ''');
+    CREATE TABLE ${DatabaseConstants.userTestResultsTable}(
+      ${DatabaseConstants.resultIdColumn} TEXT PRIMARY KEY,
+      ${DatabaseConstants.referenceCodeColumn} TEXT NOT NULL,
+      ${DatabaseConstants.userIdColumn} TEXT NOT NULL,
+      ${DatabaseConstants.dateColumn} TEXT NOT NULL,
+      ${DatabaseConstants.tmtATimeColumn} REAL NOT NULL,
+      ${DatabaseConstants.tmtBTimeColumn} REAL NOT NULL,
+      ${DatabaseConstants.handUsedColumn} TEXT NOT NULL,
+      FOREIGN KEY (${DatabaseConstants.userIdColumn}) REFERENCES ${DatabaseConstants.userProfilesTable}(${DatabaseConstants.userIdColumn})
+    )
+  ''');
   }
 
   Future<void> close() async {
