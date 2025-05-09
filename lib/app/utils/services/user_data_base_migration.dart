@@ -8,15 +8,15 @@ class UserDatabaseMigration {
   static Future<void> migrateV1ToV2(Database db) async {
     // 1. Create temporary table with new structure
     await db.execute('''
-      CREATE TABLE ${DatabaseConstants.userTestResultsTable***REMOVED***_temp(
-        ${DatabaseConstants.resultIdColumn***REMOVED*** TEXT PRIMARY KEY,
-        ${DatabaseConstants.referenceCodeColumn***REMOVED*** TEXT NOT NULL,
-        ${DatabaseConstants.userIdColumn***REMOVED*** TEXT NOT NULL,
-        ${DatabaseConstants.dateColumn***REMOVED*** TEXT NOT NULL,
-        ${DatabaseConstants.tmtATimeColumn***REMOVED*** REAL NOT NULL,
-        ${DatabaseConstants.tmtBTimeColumn***REMOVED*** REAL NOT NULL,
-        ${DatabaseConstants.handUsedColumn***REMOVED*** TEXT NOT NULL,
-        FOREIGN KEY (${DatabaseConstants.userIdColumn***REMOVED***) REFERENCES ${DatabaseConstants.userProfilesTable***REMOVED***(${DatabaseConstants.userIdColumn***REMOVED***)
+      CREATE TABLE ${DatabaseConstants.userTestResultsTable}_temp(
+        ${DatabaseConstants.resultIdColumn} TEXT PRIMARY KEY,
+        ${DatabaseConstants.referenceCodeColumn} TEXT NOT NULL,
+        ${DatabaseConstants.userIdColumn} TEXT NOT NULL,
+        ${DatabaseConstants.dateColumn} TEXT NOT NULL,
+        ${DatabaseConstants.tmtATimeColumn} REAL NOT NULL,
+        ${DatabaseConstants.tmtBTimeColumn} REAL NOT NULL,
+        ${DatabaseConstants.handUsedColumn} TEXT NOT NULL,
+        FOREIGN KEY (${DatabaseConstants.userIdColumn}) REFERENCES ${DatabaseConstants.userProfilesTable}(${DatabaseConstants.userIdColumn})
       )
     ''');
 
@@ -30,15 +30,14 @@ class UserDatabaseMigration {
       newRow[DatabaseConstants.resultIdColumn] = newId;
       newRow[DatabaseConstants.handUsedColumn] = 'D'; // Default value
 
-      await db.insert('${DatabaseConstants.userTestResultsTable***REMOVED***_temp', newRow);
-    ***REMOVED***
+      await db.insert('${DatabaseConstants.userTestResultsTable}_temp', newRow);
+    }
 
     // 3. Drop original table
-    await db.execute('DROP TABLE ${DatabaseConstants.userTestResultsTable***REMOVED***');
+    await db.execute('DROP TABLE ${DatabaseConstants.userTestResultsTable}');
 
     // 4. Rename temporary table to original name
     await db.execute(
-        'ALTER TABLE ${DatabaseConstants.userTestResultsTable***REMOVED***_temp RENAME TO ${DatabaseConstants.userTestResultsTable***REMOVED***'
-    );
-  ***REMOVED***
-***REMOVED***
+        'ALTER TABLE ${DatabaseConstants.userTestResultsTable}_temp RENAME TO ${DatabaseConstants.userTestResultsTable}');
+  }
+}
