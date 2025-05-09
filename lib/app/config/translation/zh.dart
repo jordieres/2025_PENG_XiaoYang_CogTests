@@ -329,6 +329,15 @@ class ChineseMessages extends BaseMessages {
   @override
   String get userResultHistoryScreenSecondsUnit => "秒";
 
+  @override
+  String get userResultHistoryScreenHandUsedHeader => "使用的手";
+
+  @override
+  String get userResultHistoryScreenRightHand => "右手";
+
+  @override
+  String get userResultHistoryScreenLeftHand => "左手";
+
 //--------------------------------------------Reference Code Input Text------------------------------------------------------
   @override
   String get referenceCodeInputLabel => "参考编号";

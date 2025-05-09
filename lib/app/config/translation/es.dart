@@ -349,6 +349,15 @@ class SpanishMessages extends BaseMessages {
   @override
   String get userResultHistoryScreenSecondsUnit => "s";
 
+  @override
+  String get userResultHistoryScreenHandUsedHeader => "Mano Usada";
+
+  @override
+  String get userResultHistoryScreenRightHand => "Derecha";
+
+  @override
+  String get userResultHistoryScreenLeftHand => "Izquierda";
+
 //--------------------------------------------Reference Code Input Text------------------------------------------------------
   @override
   String get referenceCodeInputLabel => "Referencia";

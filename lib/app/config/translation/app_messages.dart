@@ -150,6 +150,9 @@ class UserResultHistoryScreenText {
   static String tmtAHeader = 'user_result_history_screen_tmt_a_header';
   static String tmtBHeader = 'user_result_history_screen_tmt_b_header';
   static String secondsUnit = 'user_result_history_screen_seconds_unit';
+  static String handUsedHeader = 'user_result_history_screen_hand_used_header';
+  static String rightHand = 'user_result_history_screen_right_hand';
+  static String leftHand = 'user_result_history_screen_left_hand';
 }
 
 class CurrentUserDataScreenText {
@@ -455,6 +458,12 @@ abstract class BaseMessages {
 
   String get userResultHistoryScreenSecondsUnit;
 
+  String get userResultHistoryScreenHandUsedHeader;
+
+  String get userResultHistoryScreenRightHand;
+
+  String get userResultHistoryScreenLeftHand;
+
   //--------------------------------------------Reference Code Input Text------------------------------------------------------
   String get referenceCodeInputLabel;
 
@@ -696,6 +705,10 @@ abstract class BaseMessages {
             userResultHistoryScreenTmtBHeader,
         UserResultHistoryScreenText.secondsUnit:
             userResultHistoryScreenSecondsUnit,
+        UserResultHistoryScreenText.handUsedHeader:
+            userResultHistoryScreenHandUsedHeader,
+        UserResultHistoryScreenText.rightHand: userResultHistoryScreenRightHand,
+        UserResultHistoryScreenText.leftHand: userResultHistoryScreenLeftHand,
         //--------------------------------------------Reference Code Input Text------------------------------------------------------
         ReferenceCodeInputText.label: referenceCodeInputLabel,
         ReferenceCodeInputText.bothFieldsRequired:

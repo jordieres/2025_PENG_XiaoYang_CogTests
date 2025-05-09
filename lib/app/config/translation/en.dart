@@ -343,6 +343,15 @@ class EnglishMessages extends BaseMessages {
   @override
   String get userResultHistoryScreenSecondsUnit => "s";
 
+  @override
+  String get userResultHistoryScreenHandUsedHeader => "Hand Used";
+
+  @override
+  String get userResultHistoryScreenRightHand => "Right";
+
+  @override
+  String get userResultHistoryScreenLeftHand => "Left";
+
   //--------------------------------------------Reference Code Input Text------------------------------------------------------
 
   @override
