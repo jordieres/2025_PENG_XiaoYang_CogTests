@@ -1,3 +1,4 @@
+import 'package:msdtmt/app/utils/services/user_data_base_migration.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -27,6 +28,7 @@ class UserDatabaseHelper {
       path,
       version: DatabaseConstants.databaseVersion,
       onCreate: _createDatabase,
+      onUpgrade: _onUpgradeDatabase,
     );
   }
 
@@ -66,5 +68,12 @@ class UserDatabaseHelper {
     final path = join(databasesPath, DatabaseConstants.databaseName);
     await databaseFactory.deleteDatabase(path);
     _database = null;
+  }
+
+  Future<void> _onUpgradeDatabase(
+      Database db, int oldVersion, int newVersion) async {
+    if (oldVersion < DatabaseConstants.databaseVersion) {
+      await UserDatabaseMigration.migrateV1ToV2(db);
+    }
   }
 }

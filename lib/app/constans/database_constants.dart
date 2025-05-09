@@ -1,6 +1,6 @@
 class DatabaseConstants {
   static const String databaseName = 'user_database.db';
-  static const int databaseVersion = 1;
+  static const int databaseVersion = 2;
 
   static const String userProfilesTable = 'user_profiles';
   static const String userTestResultsTable = 'user_test_results';
