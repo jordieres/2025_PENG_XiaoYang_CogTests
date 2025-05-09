@@ -37,6 +37,8 @@ class TmtGameVariables {
 
   static int ERROR_CIRLCLE_APPEAR_DURATION = 500; // ms
 
+  static int TMT_COUNTDOWN_TO_START_DURATION = 3; // seconds
+
   static void setPracticeModeCalculate() {
     CIRCLE_NUMBER = PRACTICE_CIRCLE_NUMBER;
   }

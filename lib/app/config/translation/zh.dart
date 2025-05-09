@@ -39,6 +39,9 @@ class ChineseMessages extends BaseMessages {
   @override
   String get tmtGameTmtHelpTmtSecondaryButtonText => "开始正式的测试";
 
+  @override
+  String get tmtGameCountdownMessage => "准备好！测试将在以下时间开始...";
+
   //--------------------------------------------Home Header Text------------------------------------------------------
   @override
   String get homeHeaderSelectThemeTitle => "选择主题";

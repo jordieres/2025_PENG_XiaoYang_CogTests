@@ -42,6 +42,9 @@ class SpanishMessages extends BaseMessages {
   @override
   String get tmtGameTmtHelpTmtSecondaryButtonText => "Inicar Test Formal";
 
+  @override
+  String get tmtGameCountdownMessage => "¡Prepárate! La prueba comenzará en...";
+
   //--------------------------------------------Home Header Text------------------------------------------------------
   @override
   String get homeHeaderSelectThemeTitle => "Seleccionar Tema";
@@ -297,8 +300,7 @@ class SpanishMessages extends BaseMessages {
       "Perfil eliminado correctamente";
 
   @override
-  String get currentUserDataScreenDeleteError =>
-      "Error al eliminar el perfil";
+  String get currentUserDataScreenDeleteError => "Error al eliminar el perfil";
 
   //--------------------------------------------User Result History Screen Text------------------------------------------------------
   @override
@@ -396,7 +398,6 @@ class SpanishMessages extends BaseMessages {
   @override
   String get selectUserProfileDialogSearchAnchorSearchBarNotFound =>
       'Ningún perfil coincide con tu búsqueda';
-
 
   //--------------------------------------------Select User Dropdown Text------------------------------------------------------
   @override

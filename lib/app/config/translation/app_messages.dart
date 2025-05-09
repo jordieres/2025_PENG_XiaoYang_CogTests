@@ -18,6 +18,8 @@ class TMTGameText {
       'tmt_game_tmt_help_tmt_primary_button_text';
   static String tmtGameTmtHelpTmtSecondaryButtonText =
       'tmt_game_tmt_help_tmt_secondary_button_text';
+  static String tmtGameCountdownMessage = 'tmt_game_countdown_message';
+
 }
 
 class HomeHeaderText {
@@ -214,6 +216,8 @@ class HomeCardButtonText {
 }
 
 abstract class BaseMessages {
+
+  //--------------------------------------------TMT Game Text------------------------------------------------------
   String get tmtGameCircleBegin;
 
   String get tmtGameCircleEnd;
@@ -237,6 +241,8 @@ abstract class BaseMessages {
   String get tmtGameTmtHelpTmtPrimaryButtonText;
 
   String get tmtGameTmtHelpTmtSecondaryButtonText;
+
+  String get tmtGameCountdownMessage;
 
   //--------------------------------------------Home Header Text------------------------------------------------------
   String get homeHeaderSelectThemeTitle;
@@ -496,6 +502,7 @@ abstract class BaseMessages {
   String get homeCardButtonCreateNewProfile;
 
   Map<String, String> get messages => {
+        //--------------------------------------------TMT Game Text------------------------------------------------------
         TMTGameText.tmtGameCircleBegin: tmtGameCircleBegin,
         TMTGameText.tmtGameCircleEnd: tmtGameCircleEnd,
         TMTGameText.tmtGamePartACompletedTitle: tmtGamePartACompletedTitle,
@@ -513,6 +520,7 @@ abstract class BaseMessages {
             tmtGameTmtHelpTmtPrimaryButtonText,
         TMTGameText.tmtGameTmtHelpTmtSecondaryButtonText:
             tmtGameTmtHelpTmtSecondaryButtonText,
+        TMTGameText.tmtGameCountdownMessage: tmtGameCountdownMessage,
 
         //--------------------------------------------Home Header Text------------------------------------------------------
         HomeHeaderText.selectThemeTitle: homeHeaderSelectThemeTitle,

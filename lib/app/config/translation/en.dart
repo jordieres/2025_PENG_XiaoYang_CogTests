@@ -41,6 +41,9 @@ class EnglishMessages extends BaseMessages {
   @override
   String get tmtGameTmtHelpTmtSecondaryButtonText => "Start Formal Test";
 
+  @override
+  String get tmtGameCountdownMessage => 'Get ready! The test will start in...';
+
   //--------------------------------------------Home Header Text------------------------------------------------------
   @override
   String get homeHeaderSelectThemeTitle => "Select Theme";
