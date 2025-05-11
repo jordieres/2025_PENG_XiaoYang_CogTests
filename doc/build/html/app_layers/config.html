@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Configuration Layer &mdash; MSDTmt  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Shared Components Layer" href="shared_components.html" />
+    <link rel="prev" title="Application Layers" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            MSDTmt
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Project Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../features/index.html">Feature Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Feature-First Architecture</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Application Layers</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Configuration Layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#key-components">Key Components</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#theme-configuration">Theme Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#routing-configuration">Routing Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#translation-configuration">Translation Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#benefits-of-the-configuration-layer">Benefits of the Configuration Layer</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="shared_components.html">Shared Components Layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html">Utilities Layer</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MSDTmt</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Application Layers</a></li>
+      <li class="breadcrumb-item active">Configuration Layer</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/app_layers/config.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="configuration-layer">
+<h1>Configuration Layer<a class="headerlink" href="#configuration-layer" title="Link to this heading"></a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>The Configuration layer manages application-wide settings, themes, routes, and translations for the MS-dTMT application. This layer centralizes configuration management, making it easier to adjust application behavior across different environments and providing consistent styling throughout the app.</p>
+</section>
+<section id="key-components">
+<h2>Key Components<a class="headerlink" href="#key-components" title="Link to this heading"></a></h2>
+<section id="theme-configuration">
+<h3>Theme Configuration<a class="headerlink" href="#theme-configuration" title="Link to this heading"></a></h3>
+<p><strong>AppColors</strong></p>
+<p>The AppColors class defines the application’s color scheme, including:</p>
+<ul class="simple">
+<li><p>Primary colors (<code class="docutils literal notranslate"><span class="pre">_primaryBlue</span></code>, <code class="docutils literal notranslate"><span class="pre">_primaryBlueDark</span></code>) for buttons and highlights</p></li>
+<li><p>Secondary colors (<code class="docutils literal notranslate"><span class="pre">secondaryBlue</span></code>, <code class="docutils literal notranslate"><span class="pre">secondaryBlueDark</span></code>) for subtle accents</p></li>
+<li><p>Text colors (<code class="docutils literal notranslate"><span class="pre">mainBlackText</span></code>, <code class="docutils literal notranslate"><span class="pre">darkText</span></code>, <code class="docutils literal notranslate"><span class="pre">blueText</span></code>) for proper contrast</p></li>
+<li><p>Special colors for TMT test components (<code class="docutils literal notranslate"><span class="pre">testTMTBoardBackground</span></code>, <code class="docutils literal notranslate"><span class="pre">testTMTCorrectCircleStroke</span></code>)</p></li>
+<li><p>Dialog colors and button colors with dark mode variants</p></li>
+</ul>
+<p>The class provides helper methods like <code class="docutils literal notranslate"><span class="pre">getPrimaryBlueDependIsDarkMode()</span></code> to retrieve theme-appropriate colors based on the current mode, ensuring visual consistency across the application.</p>
+<p><strong>AppTextStyle</strong></p>
+<p>The AppTextStyle class defines specific text styles for application components:</p>
+<ul class="simple">
+<li><p>App bar titles with <code class="docutils literal notranslate"><span class="pre">appBarTitle</span></code></p></li>
+<li><p>TMT game text with <code class="docutils literal notranslate"><span class="pre">tmtGameCircleText</span></code> and <code class="docutils literal notranslate"><span class="pre">tmtGameCircleBeginAndLastText</span></code></p></li>
+<li><p>Custom dialog components with <code class="docutils literal notranslate"><span class="pre">customDialogTitle</span></code> and <code class="docutils literal notranslate"><span class="pre">customDialogContent</span></code></p></li>
+<li><p>Button text styles with <code class="docutils literal notranslate"><span class="pre">customPrimaryButtonText</span></code> and <code class="docutils literal notranslate"><span class="pre">customDialogButton</span></code></p></li>
+<li><p>TMT result components with <code class="docutils literal notranslate"><span class="pre">tmtResultCardText</span></code> and <code class="docutils literal notranslate"><span class="pre">tmtResultThanksText</span></code></p></li>
+<li><p>Various screen-specific styles for forms and headers</p></li>
+</ul>
+<p><strong>TextStyleBase</strong></p>
+<p>TextStyleBase provides the foundation for all typography in the application, defining:</p>
+<ul class="simple">
+<li><p>Base text sizes for different categories (heading, body, action, caption)</p></li>
+<li><p>Scale factors for tablet vs. phone displays</p></li>
+<li><p>Font weight variations</p></li>
+<li><p>Standardized styles for hierarchy (h1-h5, bodyXL-bodyXS, actionL-actionS)</p></li>
+</ul>
+<p>This class ensures typography consistency and adapts text sizes based on device type.</p>
+<p><strong>AppFontWeight</strong></p>
+<p>AppFontWeight defines standardized font weight constants used throughout the application:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">thin</span></code> (w100)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">extraLight</span></code> (w200)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">light</span></code> (w300)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">normal</span></code> (w400)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">medium</span></code> (w500)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">semiBold</span></code> (w600)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">bold</span></code> (w700)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">extraBold</span></code> (w800)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">black</span></code> (w900)</p></li>
+</ul>
+<p>This ensures typography consistency and follows design system principles.</p>
+<p><strong>ThemeController</strong></p>
+<p>ThemeController manages the application’s theme state, providing:</p>
+<ul class="simple">
+<li><p>Theme persistence between app sessions using SharedPreferences</p></li>
+<li><p>Methods to toggle between light, dark, and system themes</p></li>
+<li><p>Observable state with Rx properties</p></li>
+<li><p>Helper properties like <code class="docutils literal notranslate"><span class="pre">isDarkMode</span></code> for responsive UI</p></li>
+</ul>
+<p><strong>AppTheme</strong></p>
+<p>AppTheme defines complete ThemeData configurations for both light and dark modes:</p>
+<ul class="simple">
+<li><p>Base application theme</p></li>
+<li><p>Light theme with appropriate surfaces, text colors, and component styles</p></li>
+<li><p>Dark theme with adjusted colors and contrast levels</p></li>
+<li><p>Consistent component theming across both modes</p></li>
+</ul>
+<p><strong>InputDecoration</strong></p>
+<p>The CustomInputDecoration class provides consistent styling for form input fields:</p>
+<ul class="simple">
+<li><p>Border radius and styling</p></li>
+<li><p>Focus states with primary color highlighting</p></li>
+<li><p>Error state visualization</p></li>
+<li><p>Text styles for input, hint, and read-only states</p></li>
+</ul>
+</section>
+<section id="routing-configuration">
+<h3>Routing Configuration<a class="headerlink" href="#routing-configuration" title="Link to this heading"></a></h3>
+<p><strong>AppRoutes</strong></p>
+<p>The Routes class defines constants for all application routes:</p>
+<ul class="simple">
+<li><p>Screen paths like home, tmt_test, register_user</p></li>
+<li><p>Organized naming conventions</p></li>
+<li><p>Route name constants for consistent navigation</p></li>
+</ul>
+<p><strong>AppPages</strong></p>
+<p>AppPages defines the application’s navigation structure:</p>
+<ul class="simple">
+<li><p>Initial route configuration</p></li>
+<li><p>Page-to-route mapping with GetPage implementation</p></li>
+<li><p>Binding registration for each route</p></li>
+<li><p>Screen widget association</p></li>
+</ul>
+<p>This configuration enables dependency injection during navigation and maintains a modular structure.</p>
+<p><strong>AppRouteObserver</strong></p>
+<p>AppRouteObserver monitors navigation events throughout the application:</p>
+<ul class="simple">
+<li><p>Tracks current route with Rx properties</p></li>
+<li><p>Observes route changes (push, pop, etc.)</p></li>
+<li><p>Updates current route name for reactive UI updates</p></li>
+<li><p>Enables components to react to navigation changes</p></li>
+</ul>
+</section>
+<section id="translation-configuration">
+<h3>Translation Configuration<a class="headerlink" href="#translation-configuration" title="Link to this heading"></a></h3>
+<p><strong>AppTranslations</strong></p>
+<p>AppTranslations manages internationalization for the application:</p>
+<ul class="simple">
+<li><p>Support for multiple languages (English, Spanish, Chinese)</p></li>
+<li><p>Device locale detection</p></li>
+<li><p>Fallback locale handling</p></li>
+<li><p>Translation key management</p></li>
+</ul>
+<p><strong>Message Classes</strong></p>
+<p>The configuration includes structured message classes for different features:</p>
+<ul class="simple">
+<li><p>TMT game text translations</p></li>
+<li><p>Form labels and error messages</p></li>
+<li><p>Button texts and dialog content</p></li>
+<li><p>Screen titles and instructions</p></li>
+</ul>
+<p>These classes organize translations by feature area, making maintenance easier.</p>
+</section>
+</section>
+<section id="benefits-of-the-configuration-layer">
+<h2>Benefits of the Configuration Layer<a class="headerlink" href="#benefits-of-the-configuration-layer" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>Consistency</strong>: Ensures visual and behavioral consistency throughout the application</p></li>
+<li><p><strong>Maintainability</strong>: Centralizes configuration, making updates simpler and more reliable</p></li>
+<li><p><strong>Adaptability</strong>: Facilitates theme switching and responsive design</p></li>
+<li><p><strong>Internationalization</strong>: Supports multiple languages with organized translation structure</p></li>
+<li><p><strong>Organization</strong>: Separates configuration concerns from business logic</p></li>
+</ol>
+<p>The Configuration layer plays a critical role in maintaining a well-structured application by isolating settings and styles from implementation details, following the separation of concerns principle.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Application Layers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="shared_components.html" class="btn btn-neutral float-right" title="Shared Components Layer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, xiaoyang peng.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:msdtmt/app/features/tm_tst/domain/entities/result/tmt_game_hand_used.dart';
 import 'package:msdtmt/app/features/user/domain/entities/user_test_local_data_result.dart';
 import '../../../../config/themes/AppTextStyle.dart';
 import '../../../../config/themes/app_text_style_base.dart';
@@ -42,6 +43,16 @@ class _UserResultHistoryScreenState extends State<UserResultHistoryScreen> {
   DateFormat getLocalizedDateFormat() {
     final locale = Get.locale?.toString() ?? 'en_US';
     return DateFormat.yMd(locale);
+  }
+
+  String _getHandUsedText(String? handUsed) {
+    if (handUsed == TmtGameHandUsed.RIGHT.value) {
+      return UserResultHistoryScreenText.rightHand.tr;
+    } else if (handUsed == TmtGameHandUsed.LEFT.value) {
+      return UserResultHistoryScreenText.leftHand.tr;
+    } else {
+      return '-';
+    }
   }
 
   @override
@@ -117,7 +128,7 @@ class _UserResultHistoryScreenState extends State<UserResultHistoryScreen> {
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Theme.of(context).shadowColor.withOpacity(0.1),
+                    color: Theme.of(context).shadowColor.withAlpha(25),
                     spreadRadius: 1,
                     blurRadius: 4,
                     offset: const Offset(0, 1),
@@ -174,6 +185,14 @@ class _UserResultHistoryScreenState extends State<UserResultHistoryScreen> {
               textAlign: TextAlign.center,
             ),
           ),
+          Expanded(
+            flex: 2,
+            child: Text(
+              UserResultHistoryScreenText.handUsedHeader.tr,
+              style: AppTextStyle.tmtResultHistoryTabletHeaderText,
+              textAlign: TextAlign.center,
+            ),
+          ),
         ],
       ),
     );
@@ -199,8 +218,8 @@ class _UserResultHistoryScreenState extends State<UserResultHistoryScreen> {
     );
   }
 
-  Widget _buildResultRow(
-      BuildContext context, UserTestLocalDataResult result, DateFormat dateFormat) {
+  Widget _buildResultRow(BuildContext context, UserTestLocalDataResult result,
+      DateFormat dateFormat) {
     final secondsUnit = UserResultHistoryScreenText.secondsUnit.tr;
 
     return Container(
@@ -233,6 +252,14 @@ class _UserResultHistoryScreenState extends State<UserResultHistoryScreen> {
             flex: 2,
             child: Text(
               '${result.tmtBTime.toStringAsFixed(0)}$secondsUnit',
+              style: AppTextStyle.tmtResultHistoryTabletContentText,
+              textAlign: TextAlign.center,
+            ),
+          ),
+          Expanded(
+            flex: 2,
+            child: Text(
+              _getHandUsedText(result.handUsed),
               style: AppTextStyle.tmtResultHistoryTabletContentText,
               textAlign: TextAlign.center,
             ),

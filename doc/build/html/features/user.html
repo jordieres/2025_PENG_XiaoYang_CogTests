@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Module &mdash; MSDTmt  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Presentation Layer" href="user/presentation.html" />
+    <link rel="prev" title="Data Layer" href="tm_tst/data.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            MSDTmt
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Project Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Feature Modules</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="splash.html">Splash Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="home.html">Home Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tm_tst.html">Trail Making Test Module Overview</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">User Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-structure">Module Structure</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="user/presentation.html">Presentation Layer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="user/domain.html">Domain Layer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="user/data.html">Data Layer</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#key-features">Key Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#core-components">Core Components</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#presentation-layer">Presentation Layer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#domain-layer">Domain Layer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#data-layer">Data Layer</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#database-design">Database Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#user-registration-flow">User Registration Flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#integration-points">Integration Points</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="home/index.html">Home Module Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tm_tst/index.html">Trail Making Test Module Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/index.html">User Module Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Feature-First Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_layers/index.html">Application Layers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MSDTmt</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Feature Modules</a></li>
+      <li class="breadcrumb-item active">User Module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/features/user.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="user-module">
+<h1>User Module<a class="headerlink" href="#user-module" title="Link to this heading"></a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>The User module manages user profiles and test result history in the MS-dTMT application. It provides functionality for creating, viewing, and managing user profiles along with storing and displaying their test performance results.</p>
+</section>
+<section id="module-structure">
+<h2>Module Structure<a class="headerlink" href="#module-structure" title="Link to this heading"></a></h2>
+<p>The User module follows a clean architecture approach with three distinct layers:</p>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Architectural Layers:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="user/presentation.html">Presentation Layer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user/domain.html">Domain Layer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user/data.html">Data Layer</a></li>
+</ul>
+</div>
+</section>
+<section id="key-features">
+<h2>Key Features<a class="headerlink" href="#key-features" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p>User profile creation and management</p></li>
+<li><p>Selection of active user from multiple profiles</p></li>
+<li><p>Storage of TMT test results by user</p></li>
+<li><p>Viewing test history with performance metrics</p></li>
+<li><p>Deletion of user profiles with associated test results</p></li>
+</ul>
+</section>
+<section id="core-components">
+<h2>Core Components<a class="headerlink" href="#core-components" title="Link to this heading"></a></h2>
+<section id="presentation-layer">
+<h3>Presentation Layer<a class="headerlink" href="#presentation-layer" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Screens</strong>:
+- <code class="docutils literal notranslate"><span class="pre">RegisterUserScreen</span></code>: Form for creating new user profiles
+- <code class="docutils literal notranslate"><span class="pre">CurrentUserDataScreen</span></code>: View and manage existing user profile
+- <code class="docutils literal notranslate"><span class="pre">UserResultHistoryScreen</span></code>: Display test results history
+- <code class="docutils literal notranslate"><span class="pre">UserScreenBase</span></code>: Base class for shared screen functionality</p></li>
+<li><p><strong>Controllers</strong>:
+- <code class="docutils literal notranslate"><span class="pre">UserProfileController</span></code>: Manages user profile state and operations
+- <code class="docutils literal notranslate"><span class="pre">TestResultLocalDataController</span></code>: Handles test result data operations</p></li>
+<li><p><strong>Bindings</strong>:
+- <code class="docutils literal notranslate"><span class="pre">UserProfileBinding</span></code>: Dependency injection for user profile components
+- <code class="docutils literal notranslate"><span class="pre">UserHistoryBinding</span></code>: Dependency injection for history components</p></li>
+</ul>
+</section>
+<section id="domain-layer">
+<h3>Domain Layer<a class="headerlink" href="#domain-layer" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Entities</strong>:
+- <code class="docutils literal notranslate"><span class="pre">UserProfile</span></code>: Core domain entity with user identification and demographic information
+- <code class="docutils literal notranslate"><span class="pre">UserTestLocalDataResult</span></code>: Domain entity for test result data</p></li>
+<li><p><strong>Repository Interfaces</strong>:
+- <code class="docutils literal notranslate"><span class="pre">UserProfileRepository</span></code>: Interface for user profile data operations
+- <code class="docutils literal notranslate"><span class="pre">TestResultLocalDataRepository</span></code>: Interface for test result operations</p></li>
+</ul>
+</section>
+<section id="data-layer">
+<h3>Data Layer<a class="headerlink" href="#data-layer" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Models</strong>:
+- <code class="docutils literal notranslate"><span class="pre">UserProfileModel</span></code>: Data model for user profile serialization
+- <code class="docutils literal notranslate"><span class="pre">UserTestResultLocalDataModel</span></code>: Data model for test result serialization</p></li>
+<li><p><strong>Data Sources</strong>:
+- <code class="docutils literal notranslate"><span class="pre">UserProfileDataSource</span></code>: Interface for user data storage operations
+- <code class="docutils literal notranslate"><span class="pre">TestResultLocalDataSource</span></code>: Interface for test result storage operations</p></li>
+</ul>
+</section>
+</section>
+<section id="database-design">
+<h2>Database Design<a class="headerlink" href="#database-design" title="Link to this heading"></a></h2>
+<p>The User module utilizes SQLite database with the following tables:</p>
+<dl class="simple">
+<dt><strong>userProfilesTable</strong>:</dt><dd><ul class="simple">
+<li><p>userId (TEXT PRIMARY KEY)</p></li>
+<li><p>nickname (TEXT)</p></li>
+<li><p>sex (TEXT)</p></li>
+<li><p>birthDate (TEXT)</p></li>
+<li><p>educationLevel (TEXT)</p></li>
+</ul>
+</dd>
+<dt><strong>userTestResultsTable</strong>:</dt><dd><ul class="simple">
+<li><p>referenceCode (TEXT)</p></li>
+<li><p>userId (TEXT FOREIGN KEY)</p></li>
+<li><p>date (TEXT)</p></li>
+<li><p>tmtATime (REAL)</p></li>
+<li><p>tmtBTime (REAL)</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="user-registration-flow">
+<h2>User Registration Flow<a class="headerlink" href="#user-registration-flow" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p>User enters profile information (nickname, sex, birth date, education level)</p></li>
+<li><p>System validates input (required fields, unique nickname)</p></li>
+<li><p>On validation success, system:
+- Generates UUID for the user
+- Creates UserProfile entity
+- Converts to UserProfileModel
+- Stores in SQLite database
+- Sets as current active user</p></li>
+</ol>
+</section>
+<section id="integration-points">
+<h2>Integration Points<a class="headerlink" href="#integration-points" title="Link to this heading"></a></h2>
+<p>The User module integrates with:</p>
+<ul class="simple">
+<li><p><strong>Home Module</strong>: For user selection and navigation to user screens</p></li>
+<li><p><strong>TMT Test Module</strong>: For recording test results associated with users</p></li>
+<li><p><strong>Database Services</strong>: For persistent storage of user data</p></li>
+<li><p><strong>Navigation System</strong>: For routing between user-related screens</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="tm_tst/data.html" class="btn btn-neutral float-left" title="Data Layer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="user/presentation.html" class="btn btn-neutral float-right" title="Presentation Layer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, xiaoyang peng.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

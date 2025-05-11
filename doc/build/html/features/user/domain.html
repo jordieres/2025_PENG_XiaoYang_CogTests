@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Domain Layer &mdash; MSDTmt  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Data Layer" href="data.html" />
+    <link rel="prev" title="Presentation Layer" href="presentation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            MSDTmt
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Project Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Feature Modules</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../splash.html">Splash Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../home.html">Home Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tm_tst.html">Trail Making Test Module Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user.html">User Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../home/index.html">Home Module Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tm_tst/index.html">Trail Making Test Module Documentation</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">User Module Documentation</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="presentation.html">Presentation Layer</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Domain Layer</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#entities">Entities</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#repository-interfaces">Repository Interfaces</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="data.html">Data Layer</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture.html">Feature-First Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../app_layers/index.html">Application Layers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">MSDTmt</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Feature Modules</a></li>
+          <li class="breadcrumb-item"><a href="../user.html">User Module</a></li>
+      <li class="breadcrumb-item active">Domain Layer</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/features/user/domain.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="domain-layer">
+<h1>Domain Layer<a class="headerlink" href="#domain-layer" title="Link to this heading"></a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>The Domain Layer of the User module contains the business logic and rules that are independent of UI implementation and data sources. It defines entities, repository interfaces, and use cases that encapsulate the core functionality of the user feature.</p>
+</section>
+<section id="entities">
+<h2>Entities<a class="headerlink" href="#entities" title="Link to this heading"></a></h2>
+<section id="userprofile">
+<h3>UserProfile<a class="headerlink" href="#userprofile" title="Link to this heading"></a></h3>
+<p>User profile entity (<code class="docutils literal notranslate"><span class="pre">lib/app/features/user/domain/entities/user_profile.dart</span></code>):</p>
+<ul class="simple">
+<li><p>Core entity with the following properties:
+* <code class="docutils literal notranslate"><span class="pre">userId</span></code>: String identifier (generated with UUID)
+* <code class="docutils literal notranslate"><span class="pre">nickname</span></code>: Display name
+* <code class="docutils literal notranslate"><span class="pre">sex</span></code>: Enum with values male(“M”) and female(“F”)
+* <code class="docutils literal notranslate"><span class="pre">birthDate</span></code>: DateTime for birth date
+* <code class="docutils literal notranslate"><span class="pre">educationLevel</span></code>: Enum with values primary(“1”), secondary(“2”), graduate(“G”), master(“M”), doctorate(“D”)</p></li>
+<li><p>Provides two constructors:
+* Basic constructor with required fields (nickname, sex, birthDate, educationLevel)
+* withUserId constructor for existing users</p></li>
+</ul>
+</section>
+<section id="usertestlocaldataresult">
+<h3>UserTestLocalDataResult<a class="headerlink" href="#usertestlocaldataresult" title="Link to this heading"></a></h3>
+<p>Test result entity (<code class="docutils literal notranslate"><span class="pre">lib/app/features/user/domain/entities/user_test_local_data_result.dart</span></code>):</p>
+<ul class="simple">
+<li><p>Simple data class with the following properties:
+* <code class="docutils literal notranslate"><span class="pre">referenceCode</span></code>: String identifier for the test session
+* <code class="docutils literal notranslate"><span class="pre">date</span></code>: DateTime when test was completed
+* <code class="docutils literal notranslate"><span class="pre">tmtATime</span></code>: double representing completion time for TMT-A test
+* <code class="docutils literal notranslate"><span class="pre">tmtBTime</span></code>: double representing completion time for TMT-B test</p></li>
+</ul>
+</section>
+</section>
+<section id="repository-interfaces">
+<h2>Repository Interfaces<a class="headerlink" href="#repository-interfaces" title="Link to this heading"></a></h2>
+<section id="userprofilerepository">
+<h3>UserProfileRepository<a class="headerlink" href="#userprofilerepository" title="Link to this heading"></a></h3>
+<p>User repository interface (<code class="docutils literal notranslate"><span class="pre">lib/app/features/user/domain/repository/user_profile_repository.dart</span></code>):</p>
+<ul class="simple">
+<li><p>Defines contract for user data operations:
+* <code class="docutils literal notranslate"><span class="pre">getAllProfiles()</span></code>: Returns List&lt;UserProfile&gt;
+* <code class="docutils literal notranslate"><span class="pre">getProfileByNickname(String</span> <span class="pre">nickname)</span></code>: Returns UserProfile?
+* <code class="docutils literal notranslate"><span class="pre">saveProfile(UserProfile</span> <span class="pre">profile)</span></code>: Void future method
+* <code class="docutils literal notranslate"><span class="pre">deleteProfileAndResultsHistory(String</span> <span class="pre">userId)</span></code>: Void future method
+* <code class="docutils literal notranslate"><span class="pre">getAllUserId()</span></code>: Returns List&lt;String&gt;
+* <code class="docutils literal notranslate"><span class="pre">getCurrentProfile()</span></code>: Returns UserProfile?
+* <code class="docutils literal notranslate"><span class="pre">setCurrentProfile(String</span> <span class="pre">userId)</span></code>: Void future method</p></li>
+</ul>
+</section>
+<section id="testresultlocaldatarepository">
+<h3>TestResultLocalDataRepository<a class="headerlink" href="#testresultlocaldatarepository" title="Link to this heading"></a></h3>
+<p>Test result repository interface (<code class="docutils literal notranslate"><span class="pre">lib/app/features/user/domain/repository/test_result_local_data_repository.dart</span></code>):</p>
+<ul class="simple">
+<li><p>Defines contract for test result operations:
+* <code class="docutils literal notranslate"><span class="pre">getTestResultsByUserId(String</span> <span class="pre">userId)</span></code>: Returns List&lt;UserTestLocalDataResult&gt;
+* <code class="docutils literal notranslate"><span class="pre">getTestResultsByNickname(String</span> <span class="pre">nickname)</span></code>: Returns List&lt;UserTestLocalDataResult&gt;
+* <code class="docutils literal notranslate"><span class="pre">saveTestResult(UserTestLocalDataResult</span> <span class="pre">result)</span></code>: Void future method
+* <code class="docutils literal notranslate"><span class="pre">isReferenceCodeUsed(String</span> <span class="pre">referenceCode)</span></code>: Returns bool future</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="presentation.html" class="btn btn-neutral float-left" title="Presentation Layer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="data.html" class="btn btn-neutral float-right" title="Data Layer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, xiaoyang peng.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

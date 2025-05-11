@@ -33,9 +33,11 @@ mixin NavigationMixin {
     Get.toNamed(Routes.current_user_data);
   }
 
-  void toSelectedPracticeOrTest(String tmtReferenceCode) {
-    Get.toNamed(Routes.tmt_select_practice_or_test,
-        arguments: tmtReferenceCode);
+  void toSelectedPracticeOrTest(String tmtReferenceCode, HandsUsed handsUsed) {
+    Get.toNamed(Routes.tmt_select_practice_or_test, arguments: {
+      ToSelectedPracticeOrTestArguments.referenceCode: tmtReferenceCode,
+      ToSelectedPracticeOrTestArguments.handsUsed: handsUsed
+    });
   }
 
   void toTmtTest(TmtGameInitData tmtGameInitData) {
@@ -45,4 +47,9 @@ mixin NavigationMixin {
   void toTmtHistory() {
     Get.toNamed(Routes.tmt_user_history);
   }
+}
+
+class ToSelectedPracticeOrTestArguments {
+  static final referenceCode = 'referenceCode';
+  static final handsUsed = 'handsUsed';
 }

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Presentation Layer &mdash; MSDTmt  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Domain Layer" href="domain.html" />
+    <link rel="prev" title="Trail Making Test Module Overview" href="../tm_tst.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            MSDTmt
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Project Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Feature Modules</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../splash.html">Splash Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../home.html">Home Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tm_tst.html">Trail Making Test Module Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user.html">User Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../home/index.html">Home Module Documentation</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Trail Making Test Module Documentation</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Presentation Layer</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#components">Components</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="domain.html">Domain Layer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data.html">Data Layer</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user/index.html">User Module Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture.html">Feature-First Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../app_layers/index.html">Application Layers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">MSDTmt</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Feature Modules</a></li>
+          <li class="breadcrumb-item"><a href="../tm_tst.html">Trail Making Test Module Overview</a></li>
+      <li class="breadcrumb-item active">Presentation Layer</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/features/tm_tst/presentation.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="presentation-layer">
+<h1>Presentation Layer<a class="headerlink" href="#presentation-layer" title="Link to this heading"></a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>The Presentation Layer of the TMT module implements the user interface and interaction patterns for administering the Trail Making Test. It uses GetX for state management and follows a clean architecture pattern with clear separation between UI, state management, and business logic.</p>
+</section>
+<section id="components">
+<h2>Components<a class="headerlink" href="#components" title="Link to this heading"></a></h2>
+<section id="screens">
+<h3>Screens<a class="headerlink" href="#screens" title="Link to this heading"></a></h3>
+<p><strong>TmtTestHelpPage</strong></p>
+<p>Provides test instructions with contextual guidance:</p>
+<ul class="simple">
+<li><p>Separate help content for TMT-A and TMT-B tests</p></li>
+<li><p>Clear explanation of test objectives and procedures</p></li>
+<li><p>Option to proceed to practice or return to previous screen</p></li>
+<li><p>Support for different help modes (TMT_TEST_A, TMT_TEST_B, TMT_PRACTICE_A, TMT_PRACTICE_B)</p></li>
+</ul>
+<p><strong>TmtTestPracticePage</strong></p>
+<p>A training environment with simplified test parameters:</p>
+<ul class="simple">
+<li><p>Implements practice mode with 9 circles instead of 25</p></li>
+<li><p>Supports three practice modes (TMT_A_ONLY, TMT_B_ONLY, TMT_A_THEN_B)</p></li>
+<li><p>Provides interactive feedback during practice</p></li>
+<li><p>Allows unlimited attempts to reinforce proper test execution</p></li>
+</ul>
+<p><strong>TmtTestPage</strong></p>
+<p>The formal test execution screen:</p>
+<ul class="simple">
+<li><p>Implements full 15 or 25 circle test based on configuration</p></li>
+<li><p>Tracks timer data and displays in app bar</p></li>
+<li><p>Handles test state transitions between parts A and B</p></li>
+<li><p>Manages user interactions via gesture detection</p></li>
+<li><p>Adapts to orientation changes while preserving test state</p></li>
+</ul>
+<p><strong>TmtResultsScreen</strong></p>
+<p>Presents comprehensive test results:</p>
+<ul class="simple">
+<li><p>Displays completion times and error counts for both test parts</p></li>
+<li><p>Shows session count for longitudinal tracking</p></li>
+<li><p>Adapts layout based on device orientation and screen size</p></li>
+<li><p>Includes scrolling for compact screens with scroll indicator</p></li>
+<li><p>Prevents navigation back to preserve test integrity</p></li>
+</ul>
+<p><strong>TmtSelectModePracticeOrTest</strong></p>
+<p>Interface for selecting test mode and configuration:</p>
+<ul class="simple">
+<li><p>Offers choice between practice and formal test</p></li>
+<li><p>Displays informational dialogs explaining each mode</p></li>
+<li><p>Initiates hand selection dialog for formal tests</p></li>
+<li><p>Uses responsive layout for different orientations</p></li>
+</ul>
+</section>
+<section id="controllers">
+<h3>Controllers<a class="headerlink" href="#controllers" title="Link to this heading"></a></h3>
+<p><strong>BaseTmtTestFlowController</strong></p>
+<p>Abstract base controller defining the test flow interface:</p>
+<ul class="simple">
+<li><p>Manages test state transitions (READY, TMT_A_IN_PROGRESS, TMT_A_COMPLETED, TMT_B_IN_PROGRESS, TEST_COMPLETED)</p></li>
+<li><p>Defines abstract methods for concrete implementations</p></li>
+<li><p>Maintains the metrics controller for performance tracking</p></li>
+<li><p>Handles test initialization and configuration loading</p></li>
+</ul>
+<p><strong>TmtTestFlowStateController</strong></p>
+<p>Implements formal test flow management:</p>
+<ul class="simple">
+<li><p>Controls state transitions for the complete TMT test</p></li>
+<li><p>Preserves metrics from TMT-A for comprehensive reporting</p></li>
+<li><p>Initializes game configuration with user preferences</p></li>
+<li><p>Manages test metrics throughout the test execution</p></li>
+</ul>
+<p><strong>TmtPracticeFlowController</strong></p>
+<p>Specialized controller for practice mode:</p>
+<ul class="simple">
+<li><p>Simplifies test configuration for practice sessions</p></li>
+<li><p>Resets metrics between practice attempts</p></li>
+<li><p>Uses practice-specific circle counts and parameters</p></li>
+<li><p>Maintains clean state separation from formal tests</p></li>
+</ul>
+<p><strong>TmtResultReportController</strong></p>
+<p>Manages test result submission and reporting:</p>
+<ul class="simple">
+<li><p>Processes metrics into reportable result data</p></li>
+<li><p>Handles API communication for result submission</p></li>
+<li><p>Manages local result storage when offline</p></li>
+<li><p>Tracks request states (loading, success, error)</p></li>
+</ul>
+</section>
+<section id="id1">
+<h3>Components<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<p><strong>TmtGameBoardController</strong></p>
+<p>Core UI component managing the interactive test board:</p>
+<ul class="simple">
+<li><p>Renders circles based on test configuration</p></li>
+<li><p>Handles user touch interactions (pan start, update, end)</p></li>
+<li><p>Validates connections and detects errors</p></li>
+<li><p>Provides visual feedback for connections and errors</p></li>
+<li><p>Supports “cheat mode” for debugging and demonstrations</p></li>
+<li><p>Adapts to orientation changes and screen dimensions</p></li>
+</ul>
+<p><strong>TmtPainter</strong></p>
+<p>Custom painter for rendering the test interface:</p>
+<ul class="simple">
+<li><p>Draws circles with correct styling based on state</p></li>
+<li><p>Renders connection paths as user interacts</p></li>
+<li><p>Provides visual feedback for errors</p></li>
+<li><p>Handles start/end circle special styling</p></li>
+<li><p>Implements proper z-ordering of visual elements</p></li>
+<li><p>Optimizes redrawing for performance</p></li>
+</ul>
+<p><strong>TmtResultCard</strong></p>
+<p>Displays test results in a structured card format:</p>
+<ul class="simple">
+<li><p>Shows test part title (TMT A or TMT B)</p></li>
+<li><p>Presents duration and error count</p></li>
+<li><p>Adapts layout based on available space</p></li>
+<li><p>Uses responsive sizing for different devices</p></li>
+<li><p>Implements consistent styling with app theme</p></li>
+</ul>
+<p><strong>TmtSelectHandDialog</strong></p>
+<p>Dialog for selecting which hand will be used:</p>
+<ul class="simple">
+<li><p>Presents clear options for left or right hand</p></li>
+<li><p>Uses intuitive hand emojis for visual clarity</p></li>
+<li><p>Captures selection for result interpretation</p></li>
+<li><p>Ensures hand usage is recorded for clinical validity</p></li>
+</ul>
+<p><strong>TmtCustomAppBar</strong></p>
+<p>Specialized app bar for the test interface:</p>
+<ul class="simple">
+<li><p>Displays accurate timer during test execution</p></li>
+<li><p>Shows contextual help button with appropriate handling</p></li>
+<li><p>Adapts to test state changes</p></li>
+<li><p>Provides consistent navigation across test phases</p></li>
+</ul>
+</section>
+<section id="bindings">
+<h3>Bindings<a class="headerlink" href="#bindings" title="Link to this heading"></a></h3>
+<p><strong>TmtTESTBinding</strong></p>
+<p>Manages dependencies for formal test mode:</p>
+<ul class="simple">
+<li><p>Registers TmtTestFlowStateController</p></li>
+<li><p>Ensures proper initialization of test environment</p></li>
+</ul>
+<p><strong>TmtTESTPracticeBinding</strong></p>
+<p>Handles practice mode dependencies:</p>
+<ul class="simple">
+<li><p>Registers TmtPracticeFlowController</p></li>
+<li><p>Sets up practice-specific configuration</p></li>
+</ul>
+<p><strong>TmtResultBinding</strong></p>
+<p>Sets up result reporting dependencies:</p>
+<ul class="simple">
+<li><p>Registers repositories and services for result handling</p></li>
+<li><p>Configures result reporting use cases</p></li>
+<li><p>Establishes pending result management</p></li>
+</ul>
+<p><strong>TmtGameConfigBinding</strong></p>
+<p>Manages test configuration dependencies:</p>
+<ul class="simple">
+<li><p>Registers configuration repositories</p></li>
+<li><p>Sets up use cases for configuration persistence</p></li>
+<li><p>Ensures test parameters are properly loaded</p></li>
+</ul>
+</section>
+<section id="ui-flows">
+<h3>UI Flows<a class="headerlink" href="#ui-flows" title="Link to this heading"></a></h3>
+<p><strong>Test Help Flow</strong></p>
+<ol class="arabic simple">
+<li><p>User views contextual help for selected test part</p></li>
+<li><p>User can proceed to practice or return to selection screen</p></li>
+<li><p>Navigation maintains proper context between screens</p></li>
+</ol>
+<p><strong>Practice Flow</strong></p>
+<ol class="arabic simple">
+<li><p>User selects practice mode</p></li>
+<li><p>Practice test is generated with simplified parameters</p></li>
+<li><p>User completes practice with unlimited attempts</p></li>
+<li><p>Dialogs provide guidance and transition options</p></li>
+</ol>
+<p><strong>Formal Test Flow</strong></p>
+<ol class="arabic simple">
+<li><p>User selects test mode and hand preference</p></li>
+<li><p>TMT-A is generated and timed</p></li>
+<li><p>On completion, transition dialog is displayed</p></li>
+<li><p>TMT-B is generated and timed</p></li>
+<li><p>Results screen shows comprehensive metrics</p></li>
+</ol>
+<p><strong>Responsiveness</strong></p>
+<p>The presentation layer implements several responsive design patterns:</p>
+<ul class="simple">
+<li><p>Adaptive layouts based on device size and orientation</p></li>
+<li><p>Dynamic calculation of circle positions and sizes</p></li>
+<li><p>Orientation-aware component arrangements</p></li>
+<li><p>Screen-size dependent spacing and margins</p></li>
+<li><p>Tablet-specific optimizations for larger displays</p></li>
+</ul>
+<p>This comprehensive presentation layer delivers a clinically valid yet user-friendly implementation of the Trail Making Test that maintains assessment integrity while providing a smooth, intuitive user experience across different devices.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../tm_tst.html" class="btn btn-neutral float-left" title="Trail Making Test Module Overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="domain.html" class="btn btn-neutral float-right" title="Domain Layer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, xiaoyang peng.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

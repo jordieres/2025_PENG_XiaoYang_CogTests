@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import '../../../../utils/mixins/app_mixins.dart';
 import '../../../../utils/helpers/widget_max_width_calculator.dart';
+import '../../domain/entities/reference_validation_result_entity.dart';
 import '../components/home_card_button.dart';
 import '../components/home_page_header.dart';
 import '../components/reference_code_input.dart';
@@ -75,9 +76,13 @@ class _HomePageState extends State<HomePage> with NavigationMixin {
                                 .isValidated.value
                             ? _referenceCodeController.getFullReferenceCode()
                             : '',
+                        handsUsed: _referenceCodeController.isValidated.value
+                            ? _referenceCodeController.getHandsUsed()
+                            : HandsUsed.NONE,
                         onStartTest: _referenceCodeController.isValidated.value
                             ? () => toSelectedPracticeOrTest(
-                                _referenceCodeController.getFullReferenceCode())
+                                _referenceCodeController.getFullReferenceCode(),
+                                _referenceCodeController.getHandsUsed())
                             : null,
                       )),
                   const SizedBox(height: 24),

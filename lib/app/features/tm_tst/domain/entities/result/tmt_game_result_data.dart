@@ -1,9 +1,10 @@
 import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:display_metrics/display_metrics.dart';
+import 'package:get/get.dart';
 import 'package:msdtmt/app/features/tm_tst/domain/entities/result/tmt_game_init_data.dart';
-
+import '../../../../../utils/helpers/app_helpers.dart';
 import '../metric/tmt_metrics_controller.dart';
-
 
 class TmtGameResultData {
   final TmtGameInitData tmtGameInitData;
@@ -31,6 +32,7 @@ class TmtGameResultData {
   final double timeCompleteA; // in seconds
   final double timeCompleteB; // in seconds
   final String deviceModel;
+  final double diagonalInches;
 
   final double scoreA;
   final double scoreA1;
@@ -71,6 +73,7 @@ class TmtGameResultData {
     required this.timeCompleteA,
     required this.timeCompleteB,
     required this.deviceModel,
+    required this.diagonalInches,
     required this.scoreA,
     required this.scoreA1,
     required this.scoreA2,
@@ -86,10 +89,11 @@ class TmtGameResultData {
   });
 
   static Future<TmtGameResultData> fromMetricsController(
-    TmtMetricsController controller,
-    TmtGameInitData tmtGameInitData,
-  ) async {
+      TmtMetricsController controller,
+      TmtGameInitData tmtGameInitData,
+      ) async {
     String deviceModel = await _getDeviceModel();
+    double diagonalInches = await _getDiagonalInches();
 
     double scoreA1 = controller.testTimeMetrics.scoreA1;
     double scoreA2 = controller.testTimeMetrics.scoreA2;
@@ -108,25 +112,25 @@ class TmtGameResultData {
       averageLift: controller.testLiftMetric.calculateAverageLift(),
       averagePause: controller.testPauseMetric.calculateAveragePause(),
       averageRateBeforeLetters:
-          controller.bMetrics.calculateAverageRateBeforeLetters(),
+      controller.bMetrics.calculateAverageRateBeforeLetters(),
       averageRateBeforeNumbers:
-          controller.bMetrics.calculateAverageRateBeforeNumbers(),
+      controller.bMetrics.calculateAverageRateBeforeNumbers(),
       averageRateBetweenCircles:
-          controller.circleMetrics.calculateAverageRateBetweenCircles(),
+      controller.circleMetrics.calculateAverageRateBetweenCircles(),
       averageRateInsideCircles:
-          controller.circleMetrics.calculateAverageRateInsideCircles(),
+      controller.circleMetrics.calculateAverageRateInsideCircles(),
       averageTimeBeforeLetters:
-          controller.bMetrics.calculateAverageTimeBeforeLetters(),
+      controller.bMetrics.calculateAverageTimeBeforeLetters(),
       averageTimeBeforeNumbers:
-          controller.bMetrics.calculateAverageTimeBeforeNumbers(),
+      controller.bMetrics.calculateAverageTimeBeforeNumbers(),
       averageTimeBetweenCircles:
-          controller.circleMetrics.calculateAverageTimeBetweenCircles(),
+      controller.circleMetrics.calculateAverageTimeBetweenCircles(),
       averageTimeInsideCircles:
-          controller.circleMetrics.calculateAverageTimeInsideCircles(),
+      controller.circleMetrics.calculateAverageTimeInsideCircles(),
       averageTotalPressure:
-          controller.pressureSizeMetric.calculateAverageTotalPressure(),
+      controller.pressureSizeMetric.calculateAverageTotalPressure(),
       averageTotalSize:
-          controller.pressureSizeMetric.calculateAverageTotalSize(),
+      controller.pressureSizeMetric.calculateAverageTotalSize(),
       dateData: DateTime.now(),
       numberErrors: controller.numberError,
       numberErrorsA: controller.numberErrorA,
@@ -138,6 +142,7 @@ class TmtGameResultData {
       timeCompleteA: controller.testTimeMetrics.calculateTimeCompleteTmtA(),
       timeCompleteB: controller.testTimeMetrics.calculateTimeCompleteTmtB(),
       deviceModel: deviceModel,
+      diagonalInches: diagonalInches,
       scoreA: controller.testTimeMetrics.calculateTimeCompleteTmtA(),
       scoreA1: scoreA1,
       scoreA2: scoreA2,
@@ -161,11 +166,27 @@ class TmtGameResultData {
         return "${androidInfo.brand}_${androidInfo.model}";
       } else if (Platform.isIOS) {
         IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
-        return "${iosInfo.name}_${iosInfo.model}";
+        return "${iosInfo.model}_${iosInfo.utsname.machine}";
       }
     } catch (e) {
       return "unknown_device";
     }
     return "unknown_device";
+  }
+
+  static Future<double> _getDiagonalInches() async {
+    final context = Get.context;
+    if (context != null) {
+      final displayMetricsData =
+      await DisplayMetrics.ensureInitialized(context);
+      if (displayMetricsData != null) {
+        final diagonalInches = displayMetricsData.diagonal;
+        return DoubleHelper.roundToTwoDecimals(diagonalInches);
+      } else {
+        return -1.0;
+      }
+    } else {
+      return -1.0;
+    }
   }
 }

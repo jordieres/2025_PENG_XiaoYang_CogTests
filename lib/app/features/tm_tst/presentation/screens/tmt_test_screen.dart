@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:msdtmt/app/features/tm_tst/presentation/components/tmt_count_down_component.dart';
 import 'package:msdtmt/app/features/tm_tst/presentation/components/tmt_game_board_controller.dart';
 import 'package:msdtmt/app/features/tm_tst/presentation/controllers/tmt_test_flow_state_controller.dart';
-import 'package:msdtmt/app/utils/services/app_logger.dart';
 import 'package:msdtmt/app/utils/ui/ui_utils.dart';
 import '../../../../config/routes/app_pages.dart';
 import '../../../../config/routes/app_route_observer.dart';
@@ -31,6 +31,10 @@ class _TmtTestPageState extends State<TmtTestPage>
   Worker? _stateWorker;
   Worker? _routeObserverWorker;
 
+  bool _isCountdownActive = true;
+  bool _isResettingTmtA = false;
+  bool _isResettingTmtB = false;
+
   final TmtAppBarController _timerController = TmtAppBarController();
 
   @override
@@ -41,6 +45,7 @@ class _TmtTestPageState extends State<TmtTestPage>
     _tmtTestRouteChangeObserver();
     WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      _pauseTimer();
       _getArgument();
     });
   }
@@ -73,12 +78,14 @@ class _TmtTestPageState extends State<TmtTestPage>
   void _tmtTestRouteChangeObserver() {
     _routeObserverWorker = ever(appRouteObserver.currentRouteName, (routeName) {
       if (routeName == Routes.tmt_test) {
-        final currentTestState = _testTmtFlowStateController.testState.value;
-        if (currentTestState == TmtTestStateFlow.TMT_A_IN_PROGRESS ||
-            currentTestState == TmtTestStateFlow.READY) {
-          _resetTmtA();
-        } else if (currentTestState == TmtTestStateFlow.TMT_B_IN_PROGRESS) {
-          _resetTmtB();
+        if (!_isCountdownActive) {
+          final currentTestState = _testTmtFlowStateController.testState.value;
+          if (currentTestState == TmtTestStateFlow.TMT_A_IN_PROGRESS ||
+              currentTestState == TmtTestStateFlow.READY) {
+            _resetTmtA();
+          } else if (currentTestState == TmtTestStateFlow.TMT_B_IN_PROGRESS) {
+            _resetTmtB();
+          }
         }
       } else {
         _pauseTimer();
@@ -89,24 +96,25 @@ class _TmtTestPageState extends State<TmtTestPage>
   @override
   void didChangeMetrics() {
     // When change screen orientation
-    setState(() {
-      final currentStatus = _testTmtFlowStateController.testState.value;
-      if (currentStatus == TmtTestStateFlow.TMT_A_IN_PROGRESS ||
-          currentStatus == TmtTestStateFlow.READY) {
-        _resetTmtA();
-      } else if (currentStatus == TmtTestStateFlow.TMT_B_IN_PROGRESS) {
-        _resetTmtB();
-      }
-    });
+    if (!_isCountdownActive) {
+      setState(() {
+        final currentStatus = _testTmtFlowStateController.testState.value;
+        if (currentStatus == TmtTestStateFlow.TMT_A_IN_PROGRESS ||
+            currentStatus == TmtTestStateFlow.READY) {
+          _resetTmtA();
+        } else if (currentStatus == TmtTestStateFlow.TMT_B_IN_PROGRESS) {
+          _resetTmtB();
+        }
+      });
+    }
   }
 
   void _resetTmtA() {
     _testTmtFlowStateController.resetStatusTmtA();
     _testTmtFlowStateController.initializeGameConfig().then((bool isLoaded) {
       setState(() {
-        _boardController = TmtGameBoardController(
-            key: UniqueKey(), flowController: _testTmtFlowStateController);
-        _resetTimer();
+        _isCountdownActive = true;
+        _isResettingTmtA = true;
       });
     });
   }
@@ -115,9 +123,8 @@ class _TmtTestPageState extends State<TmtTestPage>
     _testTmtFlowStateController.resetStatusTmtB();
     _testTmtFlowStateController.initializeGameConfig().then((bool isLoaded) {
       setState(() {
-        _boardController = TmtGameBoardController(
-            key: UniqueKey(), flowController: _testTmtFlowStateController);
-        _setStartTime(_testTmtFlowStateController.getTmtATimeInSec());
+        _isCountdownActive = true;
+        _isResettingTmtB = true;
       });
     });
   }
@@ -133,13 +140,31 @@ class _TmtTestPageState extends State<TmtTestPage>
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _boardController = TmtGameBoardController(
-        key: UniqueKey(), flowController: _testTmtFlowStateController);
+
+    if (!_isCountdownActive) {
+      _boardController = TmtGameBoardController(
+          key: UniqueKey(), flowController: _testTmtFlowStateController);
+    }
+  }
+
+  void _onCountdownComplete() {
+    setState(() {
+      _isCountdownActive = false;
+      _boardController = TmtGameBoardController(
+          key: UniqueKey(), flowController: _testTmtFlowStateController);
+      _resumeTimer();
+      _resetFlags();
+    });
+  }
+
+  void _resetFlags() {
+    _isResettingTmtA = false;
+    _isResettingTmtB = false;
   }
 
   bool _isTestTypeA() {
     bool isA = _testTmtFlowStateController.testState.value ==
-            TmtTestStateFlow.TMT_A_IN_PROGRESS ||
+        TmtTestStateFlow.TMT_A_IN_PROGRESS ||
         _testTmtFlowStateController.testState.value == TmtTestStateFlow.READY;
     return isA;
   }
@@ -172,13 +197,11 @@ class _TmtTestPageState extends State<TmtTestPage>
         mode: DialogMode.singleButton,
         title: TMTGameText.tmtGamePartACompletedBody.tr,
         primaryButtonText:
-            TMTGameText.tmtGamePartBCompletedConfirmationButton.tr,
+        TMTGameText.tmtGamePartBCompletedConfirmationButton.tr,
         onPrimaryPressed: () {
           Get.back();
           setState(() {
-            _boardController = TmtGameBoardController(
-                key: UniqueKey(), flowController: _testTmtFlowStateController);
-            _resumeTimer();
+            _isCountdownActive = true;
           });
         },
       ),
@@ -198,7 +221,20 @@ class _TmtTestPageState extends State<TmtTestPage>
         isTestTypeA: _isTestTypeA(),
         controller: _timerController,
       ),
-      body: _boardController ?? Container(),
+      body: _isCountdownActive
+          ? _createCountdownComponent()
+          : _boardController ?? Container(),
     );
+  }
+
+  Widget _createCountdownComponent() {
+    if (_isResettingTmtA) {
+      _resetTimer();
+    } else if (_isResettingTmtB) {
+      _setStartTime(_testTmtFlowStateController.getTmtATimeInSec());
+    }
+    _pauseTimer();
+    return TmtCountdownComponent(
+        onCountdownComplete: _onCountdownComplete, testType: _getAppBarTitle());
   }
 }

@@ -29,9 +29,10 @@ class TmtResultModelConstant {
   static const String DATE_DATA = 'Date_Data';
   static const String NUMBER_ERRORS_A = 'Number_Errors_A';
   static const String NUMBER_ERRORS_B = 'Number_Errors_B';
-  static const String TIME_COMPLETE_A = 'Time_Complete_A';
-  static const String TIME_COMPLETE_B = 'Time_Complete_B';
+  static const String TIME_COMPLETE_A = 'Time_complete_A';
+  static const String TIME_COMPLETE_B = 'Time_complete_B';
   static const String DEVICE = 'Device';
+  static const String DIAGNONAL_INCHES = 'DiagInch';
   static const String SCORE_A = 'ScoreA';
   static const String SCORE_A1 = 'ScoreA1';
   static const String SCORE_A2 = 'ScoreA2';

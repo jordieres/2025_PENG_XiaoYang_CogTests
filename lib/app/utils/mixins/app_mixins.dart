@@ -5,9 +5,8 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:msdtmt/app/features/tm_tst/presentation/screens/tmt_test_practice_screen.dart';
 
 import '../../config/routes/app_pages.dart';
+import '../../features/home/domain/entities/reference_validation_result_entity.dart';
 import '../../features/tm_tst/domain/entities/result/tmt_game_init_data.dart';
-import '../../features/tm_tst/presentation/controllers/base_tmt_test_flow_contoller.dart';
-import '../../features/tm_tst/presentation/controllers/tmt_test_flow_state_controller.dart';
 import '../../features/tm_tst/presentation/screens/tmt_test_help.dart';
 
 part 'navigation_mixin.dart';

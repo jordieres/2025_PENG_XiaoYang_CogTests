@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Feature-First Architecture &mdash; MSDTmt  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Application Layers" href="app_layers/index.html" />
+    <link rel="prev" title="User Module Documentation" href="features/user/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            MSDTmt
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Project Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="features/index.html">Feature Modules</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Feature-First Architecture</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#architecture-overview">Architecture Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#main-organization">Main Organization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#dependency-rules">Dependency Rules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getx-integration">GetX Integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#folder-structure">Folder Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#benefits-of-feature-first-architecture">Benefits of Feature-First Architecture</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="app_layers/index.html">Application Layers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MSDTmt</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Feature-First Architecture</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/architecture.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="feature-first-architecture">
+<h1>Feature-First Architecture<a class="headerlink" href="#feature-first-architecture" title="Link to this heading"></a></h1>
+<section id="architecture-overview">
+<h2>Architecture Overview<a class="headerlink" href="#architecture-overview" title="Link to this heading"></a></h2>
+<p>The MS-dTMT project implements a Feature-First Architecture that incorporates Clean Architecture principles. In this approach, code is primarily organized by features rather than technical layers, promoting cohesion and modularity. Within each feature, we follow a layered structure based on Clean Architecture concepts.</p>
+<p>The application uses GetX as the primary framework for state management, dependency injection, and navigation, which integrates seamlessly with this architectural approach.</p>
+</section>
+<section id="main-organization">
+<h2>Main Organization<a class="headerlink" href="#main-organization" title="Link to this heading"></a></h2>
+<img alt="Architecture Diagram" class="align-center" src="_images/architecture-diagram.png" />
+<p><strong>Feature-First Structure</strong></p>
+<p>The codebase is organized by features, where each feature contains its own:</p>
+<ul class="simple">
+<li><p>Presentation layer (UI components)</p></li>
+<li><p>Domain layer (business logic)</p></li>
+<li><p>Data layer (data access)</p></li>
+</ul>
+<p>This organization makes the codebase more navigable, as related code is grouped together regardless of its technical role.</p>
+<p><strong>Clean Architecture Layers</strong></p>
+<p>Within each feature, we follow Clean Architecture principles with distinct layers:</p>
+<p><strong>Presentation Layer</strong></p>
+<ul class="simple">
+<li><p><strong>Views</strong>: Flutter Widgets that render the user interface</p></li>
+<li><p><strong>Controllers</strong>: GetX controllers that handle user input and manage UI state using reactive programming</p></li>
+<li><p><strong>Bindings</strong>: GetX bindings that manage dependency injection for controllers and services</p></li>
+</ul>
+<p><strong>Domain Layer</strong></p>
+<ul class="simple">
+<li><p><strong>Entities</strong>: Domain objects representing core business concepts and data structures</p></li>
+<li><p><strong>Use Cases</strong>: Application-specific business rules encapsulating all business logic</p></li>
+<li><p><strong>Repository Interfaces</strong>: Abstract definitions declaring data access methods without implementation details</p></li>
+</ul>
+<p><strong>Data Layer</strong></p>
+<ul class="simple">
+<li><p><strong>Repository Implementations</strong>: Concrete implementations of the repository interfaces defined in the domain layer</p></li>
+<li><dl class="simple">
+<dt><strong>Data Sources</strong>: Components that interact with external data providers:</dt><dd><ul>
+<li><p>Local data sources (SQLite, SharedPreferences)</p></li>
+<li><p>Remote data sources (REST API)</p></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p><strong>Models</strong>: Data transfer objects (DTOs) that handle serialization and deserialization</p></li>
+</ul>
+</section>
+<section id="dependency-rules">
+<h2>Dependency Rules<a class="headerlink" href="#dependency-rules" title="Link to this heading"></a></h2>
+<p>The architecture follows strict dependency rules to maintain separation and testability:</p>
+<ul class="simple">
+<li><p>Presentation layer depends on the domain layer</p></li>
+<li><p>Domain layer does not depend on any outer layers</p></li>
+<li><p>Data layer depends on the domain layer (to implement its interfaces)</p></li>
+</ul>
+<p>These dependencies always point inward, ensuring that inner layers remain independent of external frameworks and implementation details.</p>
+</section>
+<section id="getx-integration">
+<h2>GetX Integration<a class="headerlink" href="#getx-integration" title="Link to this heading"></a></h2>
+<p>GetX is integrated throughout the application:</p>
+<ul class="simple">
+<li><p><strong>State Management</strong>: Controllers use Rx variables and streams for reactive state updates</p></li>
+<li><p><strong>Dependency Injection</strong>: Services and controllers are registered and accessed through GetX service locator</p></li>
+<li><p><strong>Route Management</strong>: Navigation between screens is handled with GetX named routes</p></li>
+<li><p><strong>Bindings</strong>: Components are initialized and injected when routes are accessed</p></li>
+</ul>
+</section>
+<section id="folder-structure">
+<h2>Folder Structure<a class="headerlink" href="#folder-structure" title="Link to this heading"></a></h2>
+<p>The project follows a feature-first organization:</p>
+<ul class="simple">
+<li><p><strong>lib/</strong>: Application source code</p>
+<ul>
+<li><p><strong>app/</strong>: Main code of the application</p>
+<ul>
+<li><p><strong>features/</strong>: Code organized by feature modules</p>
+<ul>
+<li><p><strong>tm_tst/</strong>: Trail Making Test feature
+* <strong>presentation/</strong>: UI components, screens, controllers
+* <strong>domain/</strong>: Entities, use cases, repository interfaces
+* <strong>data/</strong>: Models, repository implementations, data sources</p></li>
+<li><p><strong>user/</strong>: User management feature
+* <em>(same structure as above)</em></p></li>
+<li><p><strong>home/</strong>: Home screen and navigation feature
+* <em>(same structure as above)</em></p></li>
+</ul>
+</li>
+<li><p><strong>config/</strong>: Application configuration
+* <strong>routes/</strong>: Route definitions
+* <strong>themes/</strong>: Theme configuration
+* <strong>translation/</strong>: Localization resources</p></li>
+<li><p><strong>utils/</strong>: Utility functions and helpers
+* <strong>services/</strong>: Common services (network, storage)
+* <strong>helpers/</strong>: Helper functions and extensions
+* <strong>mixins/</strong>: Shared functionality via mixins</p></li>
+<li><p><strong>shared_components/</strong>: Reusable UI components</p></li>
+<li><p><strong>constans/</strong>: Constant definitions</p></li>
+</ul>
+</li>
+<li><p><strong>main.dart</strong>: Application entry point</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="benefits-of-feature-first-architecture">
+<h2>Benefits of Feature-First Architecture<a class="headerlink" href="#benefits-of-feature-first-architecture" title="Link to this heading"></a></h2>
+<p>This architectural approach offers several advantages:</p>
+<ul class="simple">
+<li><p><strong>Cohesion</strong>: Related code stays together regardless of its layer</p></li>
+<li><p><strong>Discoverability</strong>: Easier to navigate and find relevant code</p></li>
+<li><p><strong>Scalability</strong>: New features can be added without modifying existing ones</p></li>
+<li><p><strong>Maintainability</strong>: Changes to one feature don’t affect others</p></li>
+<li><p><strong>Teamwork</strong>: Different teams can work on different features simultaneously</p></li>
+<li><p><strong>Testability</strong>: Features can be tested in isolation</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="features/user/index.html" class="btn btn-neutral float-left" title="User Module Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="app_layers/index.html" class="btn btn-neutral float-right" title="Application Layers" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, xiaoyang peng.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

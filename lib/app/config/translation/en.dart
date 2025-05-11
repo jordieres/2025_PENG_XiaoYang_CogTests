@@ -41,6 +41,9 @@ class EnglishMessages extends BaseMessages {
   @override
   String get tmtGameTmtHelpTmtSecondaryButtonText => "Start Formal Test";
 
+  @override
+  String get tmtGameCountdownMessage => 'Get ready! The test will start in...';
+
   //--------------------------------------------Home Header Text------------------------------------------------------
   @override
   String get homeHeaderSelectThemeTitle => "Select Theme";
@@ -94,17 +97,41 @@ class EnglishMessages extends BaseMessages {
 
   //--------------------------------------------TMT Select Hand Dialog Text------------------------------------------------------
   @override
-  String get tmtSelectHandDialogTitle => "Select your dominant hand";
+  String get tmtSelectHandDialogFirstTimeTitle => "Select TMT Test Hand";
 
   @override
-  String get tmtSelectHandDialogContent =>
-      "Use the hand you feel most comfortable with to take the test. This optimizes your TMT Test experience.";
+  String get tmtSelectHandDialogFirstTimeContent =>
+      "Please select which hand you would like to use for this TMT test. Future tests may require alternating hands to ensure a comprehensive assessment.";
 
   @override
-  String get tmtSelectHandDialogRightHandButtonText => "Right\nhand";
+  String get tmtSelectHandDialogLeftHandButtonText => "Left\nHand";
 
   @override
-  String get tmtSelectHandDialogLeftHandButtonText => "Left\nhand";
+  String get tmtSelectHandDialogRightHandButtonText => "Right\nHand";
+
+  @override
+  String get tmtSelectHandDialogRightHandOnlyTitle =>
+      "TMT Test: Please Use Right Hand";
+
+  @override
+  String get tmtSelectHandDialogRightHandOnlyContent =>
+      "You used your left hand in your previous TMT test. To ensure valid results, please use your right hand for this test.";
+
+  @override
+  String get tmtSelectHandDialogUseRightHandButton =>
+      "Start Test with Right Hand";
+
+  @override
+  String get tmtSelectHandDialogLeftHandOnlyTitle =>
+      "TMT Test: Please Use Left Hand";
+
+  @override
+  String get tmtSelectHandDialogLeftHandOnlyContent =>
+      "You used your right hand in your previous TMT test. To ensure valid results, please use your left hand for this test.";
+
+  @override
+  String get tmtSelectHandDialogUseLeftHandButton =>
+      "Start Test with Left Hand";
 
   //--------------------------------------------Select Mode Practice Or Test Screen Text------------------------------------------------------
   @override
@@ -315,6 +342,15 @@ class EnglishMessages extends BaseMessages {
 
   @override
   String get userResultHistoryScreenSecondsUnit => "s";
+
+  @override
+  String get userResultHistoryScreenHandUsedHeader => "Hand Used";
+
+  @override
+  String get userResultHistoryScreenRightHand => "Right";
+
+  @override
+  String get userResultHistoryScreenLeftHand => "Left";
 
   //--------------------------------------------Reference Code Input Text------------------------------------------------------
 

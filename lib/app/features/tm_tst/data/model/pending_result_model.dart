@@ -59,4 +59,12 @@ class PendingResultData {
       return 0.0;
     }
   }
+
+  String get handUsed {
+    try {
+      return resultModelJson[TmtResultModelConstant.HAND_USED] as String? ?? '';
+    } catch (e) {
+      return "";
+    }
+  }
 }
