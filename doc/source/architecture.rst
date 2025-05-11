@@ -1,57 +1,79 @@
-Architecture Design
-===================
+Feature-First Architecture
+=========================
 
 Architecture Overview
 ---------------------
 
-The MS-dTMT project adopts a layered architecture based on Domain-Driven Design (DDD), incorporating Clean Architecture principles. This architecture divides the application into different layers, each with specific responsibilities, ensuring code maintainability and testability.
+The MS-dTMT project implements a Feature-First Architecture that incorporates Clean Architecture principles. In this approach, code is primarily organized by features rather than technical layers, promoting cohesion and modularity. Within each feature, we follow a layered structure based on Clean Architecture concepts.
 
-Main Layers
------------
+The application uses GetX as the primary framework for state management, dependency injection, and navigation, which integrates seamlessly with this architectural approach.
+
+Main Organization
+----------------
 
 .. image:: _images/architecture-diagram.png
    :alt: Architecture Diagram
    :align: center
 
+**Feature-First Structure**
+
+The codebase is organized by features, where each feature contains its own:
+
+* Presentation layer (UI components)
+* Domain layer (business logic)
+* Data layer (data access)
+
+This organization makes the codebase more navigable, as related code is grouped together regardless of its technical role.
+
+**Clean Architecture Layers**
+
+Within each feature, we follow Clean Architecture principles with distinct layers:
+
 **Presentation Layer**
 
-The presentation layer is responsible for user interfaces and user interactions. It primarily includes:
-
 * **Views**: Flutter Widgets that render the user interface
-* **Controllers**: GetX controllers that handle user input and manage UI state
-* **ViewModels**: Provide data for the views, transforming domain data into a format usable by the view
+* **Controllers**: GetX controllers that handle user input and manage UI state using reactive programming
+* **Bindings**: GetX bindings that manage dependency injection for controllers and services
 
 **Domain Layer**
 
-The domain layer contains business logic and rules, forming the core of the application. It primarily includes:
-
-* **Entities**: Domain objects representing core business concepts
-* **Use Cases**: Application logic implementing specific business scenarios
-* **Repository Interfaces**: Abstract interfaces defining data access
+* **Entities**: Domain objects representing core business concepts and data structures
+* **Use Cases**: Application-specific business rules encapsulating all business logic
+* **Repository Interfaces**: Abstract definitions declaring data access methods without implementation details
 
 **Data Layer**
 
-The data layer is responsible for data access and storage. It primarily includes:
-
-* **Repository Implementations**: Implementations of repository interfaces defined in the domain layer
-* **Data Sources**: Local data sources (SQLite) and remote data sources (API)
-* **Models**: Data models used for serialization and deserialization
+* **Repository Implementations**: Concrete implementations of the repository interfaces defined in the domain layer
+* **Data Sources**: Components that interact with external data providers:
+    * Local data sources (SQLite, SharedPreferences)
+    * Remote data sources (REST API)
+* **Models**: Data transfer objects (DTOs) that handle serialization and deserialization
 
 Dependency Rules
 ----------------
 
-Dependencies always point toward the inner layers:
+The architecture follows strict dependency rules to maintain separation and testability:
 
 * Presentation layer depends on the domain layer
-* Domain layer does not depend on other layers
+* Domain layer does not depend on any outer layers
 * Data layer depends on the domain layer (to implement its interfaces)
 
-These dependency rules ensure the independence of the inner layer (domain layer), making business logic immune to changes in external technologies.
+These dependencies always point inward, ensuring that inner layers remain independent of external frameworks and implementation details.
+
+GetX Integration
+---------------
+
+GetX is integrated throughout the application:
+
+* **State Management**: Controllers use Rx variables and streams for reactive state updates
+* **Dependency Injection**: Services and controllers are registered and accessed through GetX service locator
+* **Route Management**: Navigation between screens is handled with GetX named routes
+* **Bindings**: Components are initialized and injected when routes are accessed
 
 Folder Structure
 ----------------
 
-The main folder structure of the project is as follows:
+The project follows a feature-first organization:
 
 * **lib/**: Application source code
 
@@ -59,15 +81,40 @@ The main folder structure of the project is as follows:
   
     * **features/**: Code organized by feature modules
     
-      * **feature_name/**: Individual feature module
+      * **tm_tst/**: Trail Making Test feature
+        * **presentation/**: UI components, screens, controllers
+        * **domain/**: Entities, use cases, repository interfaces
+        * **data/**: Models, repository implementations, data sources
       
-        * **presentation/**: UI components, controllers, and view models
-        * **domain/**: Domain entities, use cases, and repository interfaces
-        * **data/**: Data models, repository implementations, and data sources
+      * **user/**: User management feature
+        * *(same structure as above)*
+      
+      * **home/**: Home screen and navigation feature
+        * *(same structure as above)*
         
     * **config/**: Application configuration
+      * **routes/**: Route definitions
+      * **themes/**: Theme configuration
+      * **translation/**: Localization resources
+      
     * **utils/**: Utility functions and helpers
-    * **shared_components/**: Shared UI components
+      * **services/**: Common services (network, storage)
+      * **helpers/**: Helper functions and extensions
+      * **mixins/**: Shared functionality via mixins
+      
+    * **shared_components/**: Reusable UI components
     * **constans/**: Constant definitions
     
-  * **main.dart**: Application entry point 
+  * **main.dart**: Application entry point
+
+Benefits of Feature-First Architecture
+-------------------------------------
+
+This architectural approach offers several advantages:
+
+* **Cohesion**: Related code stays together regardless of its layer
+* **Discoverability**: Easier to navigate and find relevant code
+* **Scalability**: New features can be added without modifying existing ones
+* **Maintainability**: Changes to one feature don't affect others
+* **Teamwork**: Different teams can work on different features simultaneously
+* **Testability**: Features can be tested in isolation
