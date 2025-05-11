@@ -4,91 +4,78 @@ Home Module
 Overview
 --------
 
-The Home module is the main interface after user login, providing entry points and navigation for the application's main functions. It displays available cognitive tests, user information, and other important features.
+The Home module serves as the central entry point of the MS-dTMT application, providing a clean interface for accessing the Trail Making Test (TMT) functionality and managing user profiles. It implements a responsive design that adapts to different device sizes and orientations while maintaining consistent user experience.
 
 Module Structure
 ---------------
 
-The Home module follows the project's layered architecture, including the following components:
+The Home module follows a clean architecture with clear separation between presentation, domain, and data layers:
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Architectural Layers:
+
+   home/presentation
+   home/domain
+   home/data
+
+Key Components
+-------------
 
 **Presentation Layer**
 
-* **HomeScreen**: Main page interface, containing navigation menus and feature cards
-* **HomeController**: Manages the home page state and user interactions
-* **Widget Components**: Various UI components such as cards, buttons, and list items
+* **Screens**:
+  * **HomePage**: Main application interface with profile selection, reference code validation, and test access
+
+* **Controllers**:
+  * **ReferenceCodeController**: Manages reference code validation
+  * **SelectUserProfileController**: Handles user profile selection and management
+
+* **Components**:
+  * **HomeHeader**: Application branding, theme selection, and language switching
+  * **SelectUserDropdown**: User profile selection interface
+  * **ReferenceCodeInput**: Reference code entry and validation component
+  * **TmtTestButtonCard**: TMT test configuration and access
+  * **HomeCardButton**: Navigation buttons for profile and history access
+
+* **Bindings**:
+  * **HomeScreenBinding**: Core home screen dependencies
+  * **ReferenceValidationBinding**: Reference validation dependencies
+  * **SelectUserBinding**: User profile selection dependencies
 
 **Domain Layer**
 
-* **Use Cases**: Business logic for retrieving user data, test lists, etc.
-* **Entities**: Domain objects such as User, Test, etc.
+* **Entities**:
+  * **HomeUIConstantVariable**: UI constants for styling and layouts
+  * **ReferenceValidationResult**: Reference code validation result entity
+
+* **Repository Interfaces**:
+  * **ReferenceValidationRepository**: Interface for reference code validation
+
+* **Use Cases**:
+  * **ValidateReferenceCodeUseCase**: Business logic for validating reference codes
 
 **Data Layer**
 
-* **Repository Implementations**: Implements data access logic
-* **Data Sources**: Local and remote data sources
+* **Repository Implementations**:
+  * **ReferenceValidationRepositoryImpl**: Implements reference validation repository
 
 Main Features
 ------------
 
-* **Test List**: Displays available cognitive tests, including completion status and results
-* **User Information**: Shows basic information and statistics for the current user
-* **Navigation**: Provides navigation to other functional modules
-* **Notifications**: Displays system notifications and reminders
+* **User Profile Management**: Select, create, and manage user profiles
+* **Reference Code Validation**: Validate reference codes required for test access
+* **TMT Test Configuration**: Configure and access Trail Making Tests
+* **Theme and Language Selection**: Switch between light/dark themes and multiple languages
+* **Navigation**: Access user data and test history
 
-Interface Components
-------------------
+User Flow
+---------
 
-The home interface includes the following main components:
+1. **User Selection**: Select or create a user profile
+2. **Reference Validation**: Enter and validate a reference code
+3. **Test Configuration**: Configure the number of circles (15 or 25)
+4. **Test Access**: Start the Trail Making Test
+5. **Data Access**: View user profile data or test history
 
-* **AppBar**: Displays the application title, user avatar, and settings button
-* **Test Cards**: Shows available cognitive tests, including icons, names, and descriptions
-* **Bottom Navigation Bar**: Switches between different views
-* **User Summary Card**: Displays the user's test history and statistics
-
-Code Example
------------
-
-.. code-block:: dart
-
-   // HomeController: Manages the home page state and logic
-   class HomeController extends GetxController {
-     final UserUseCase _userUseCase;
-     final TestsUseCase _testsUseCase;
-     
-     // Observable state variables
-     final Rx<User> user = User.empty().obs;
-     final RxList<Test> availableTests = <Test>[].obs;
-     final RxBool isLoading = false.obs;
-     
-     HomeController(this._userUseCase, this._testsUseCase);
-     
-     // Initialize controller
-     @override
-     void onInit() {
-       super.onInit();
-       _loadInitialData();
-     }
-     
-     // Load initial data
-     Future<void> _loadInitialData() async {
-       isLoading.value = true;
-       try {
-         user.value = await _userUseCase.getCurrentUser();
-         availableTests.value = await _testsUseCase.getAvailableTests();
-       } catch (e) {
-         // Handle errors
-       } finally {
-         isLoading.value = false;
-       }
-     }
-     
-     // Navigate to test page
-     void navigateToTest(Test test) {
-       Get.toNamed('/test/${test.id}');
-     }
-   }
-
-Implementation Details
---------------------
-
-The Home module uses GetX for state management and dependency injection. The UI follows Material Design language, ensuring a good user experience and consistent appearance. The home page uses a reactive programming model, enabling the UI to automatically respond to state changes. 
+The Home module emphasizes accessibility, responsive design, and intuitive navigation to provide a seamless entry point to the application's functionality.
