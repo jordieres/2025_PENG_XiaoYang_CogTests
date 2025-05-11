@@ -296,7 +296,7 @@ All responses include a `status` field that indicates success (`"OK"`) or failur
 flutter run --debug
 ```
 
-#### Release Mode
+#### Build for Release
 
 ```bash
 flutter build apk --release
