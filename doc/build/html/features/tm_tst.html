@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trail Making Test Module Overview &mdash; MSDTmt  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Presentation Layer" href="tm_tst/presentation.html" />
+    <link rel="prev" title="Data Layer" href="home/data.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            MSDTmt
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Project Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Feature Modules</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="splash.html">Splash Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="home.html">Home Module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Trail Making Test Module Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-structure">Module Structure</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="tm_tst/presentation.html">Presentation Layer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tm_tst/domain.html">Domain Layer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="tm_tst/data.html">Data Layer</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#key-features">Key Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#test-flow">Test Flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ui-ux-design">UI/UX Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#technical-implementation">Technical Implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user.html">User Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="home/index.html">Home Module Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tm_tst/index.html">Trail Making Test Module Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/index.html">User Module Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Feature-First Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_layers/index.html">Application Layers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MSDTmt</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Feature Modules</a></li>
+      <li class="breadcrumb-item active">Trail Making Test Module Overview</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/features/tm_tst.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="trail-making-test-module-overview">
+<h1>Trail Making Test Module Overview<a class="headerlink" href="#trail-making-test-module-overview" title="Link to this heading"></a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>The Trail Making Test (TMT) module is a digital implementation of a standardized cognitive assessment used to evaluate visual attention, task-switching ability, and executive function. The test consists of two parts: TMT-A (connecting numbers in sequence) and TMT-B (alternating between numbers and letters).</p>
+</section>
+<section id="module-structure">
+<h2>Module Structure<a class="headerlink" href="#module-structure" title="Link to this heading"></a></h2>
+<p>The TMT module follows the project’s layered architecture with clear separation of concerns:</p>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Architectural Layers:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tm_tst/presentation.html">Presentation Layer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tm_tst/domain.html">Domain Layer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tm_tst/data.html">Data Layer</a></li>
+</ul>
+</div>
+</section>
+<section id="key-features">
+<h2>Key Features<a class="headerlink" href="#key-features" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Dynamic Test Generation</strong>: Creates tests with configurable number of circles (default 25 or simplified 15)</p></li>
+<li><p><strong>Practice Mode</strong>: Allows users to practice with 9 circles before formal testing</p></li>
+<li><p><strong>Hand Selection</strong>: Records which hand was used for test completion (left or right)</p></li>
+<li><p><strong>Comprehensive Metrics</strong>: Collects detailed performance data including:
+* Completion time for TMT-A and TMT-B
+* Error counts (overall and for each part)
+* Lift metrics (number of times finger is lifted during test)
+* Pause metrics (number and duration of pauses)
+* Pressure and size metrics (when supported by device)
+* Circle-specific metrics (time between and inside circles)</p></li>
+<li><p><strong>Results Analysis</strong>: Sections the test into 5 segments for detailed analysis</p></li>
+<li><p><strong>Offline Support</strong>: Stores results locally with synchronization when online</p></li>
+<li><p><strong>Reference Code</strong>: Links tests to specific reference codes for clinical use</p></li>
+<li><p><strong>User Profiles</strong>: Associates tests with user profiles for longitudinal tracking</p></li>
+</ul>
+</section>
+<section id="test-flow">
+<h2>Test Flow<a class="headerlink" href="#test-flow" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>Mode Selection</strong>: User chooses between practice and formal test modes</p></li>
+<li><p><strong>Hand Selection</strong>: User indicates which hand they will use</p></li>
+<li><p><strong>TMT-A Test</strong>: Connecting numbers in sequence (1-2-3…)</p></li>
+<li><p><strong>Intermediate Screen</strong>: Notification that Part A is complete</p></li>
+<li><p><strong>TMT-B Test</strong>: Alternating between numbers and letters (1-A-2-B…)</p></li>
+<li><p><strong>Results Screen</strong>: Displays completion time, errors, and other metrics</p></li>
+<li><p><strong>Data Synchronization</strong>: Results are saved locally and uploaded when online</p></li>
+</ol>
+</section>
+<section id="ui-ux-design">
+<h2>UI/UX Design<a class="headerlink" href="#ui-ux-design" title="Link to this heading"></a></h2>
+<p>The TMT interface prioritizes:</p>
+<ul class="simple">
+<li><p><strong>Distraction-free Environment</strong>: Clean interface to maintain test validity</p></li>
+<li><p><strong>Real-time Feedback</strong>: Visual indicators for correct and incorrect connections</p></li>
+<li><p><strong>Error Handling</strong>: Visual and logical handling of connection errors</p></li>
+<li><p><strong>Adaptability</strong>: Responsive design for different screen sizes and orientations</p></li>
+<li><p><strong>Accessibility</strong>: Configurable circle sizes and contrast options</p></li>
+</ul>
+</section>
+<section id="technical-implementation">
+<h2>Technical Implementation<a class="headerlink" href="#technical-implementation" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Responsive Circle Generation</strong>: Dynamically positions circles based on screen dimensions</p></li>
+<li><p><strong>Connectivity Validation</strong>: Ensures proper sequencing and detects errors</p></li>
+<li><p><strong>Touch Event Tracking</strong>: Records detailed interaction metrics</p></li>
+<li><p><strong>Path Drawing</strong>: Visualizes connection paths during test execution</p></li>
+<li><p><strong>Timer Management</strong>: Precise timing of overall and segment completion</p></li>
+<li><p><strong>State Management</strong>: Manages test flow states using GetX pattern</p></li>
+<li><p><strong>Data Persistence</strong>: Stores results in SQLite with cloud synchronization</p></li>
+<li><p><strong>Results Reporting</strong>: Formats data for clinical interpretation</p></li>
+</ul>
+<p>The TMT module provides clinicians with a valid digital alternative to the traditional paper-based test while adding the benefits of precise measurement, standardized administration, and advanced performance analytics.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="home/data.html" class="btn btn-neutral float-left" title="Data Layer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="tm_tst/presentation.html" class="btn btn-neutral float-right" title="Presentation Layer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, xiaoyang peng.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Utilities Layer &mdash; MSDTmt  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Shared Components Layer" href="shared_components.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            MSDTmt
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Project Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../features/index.html">Feature Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Feature-First Architecture</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Application Layers</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="config.html">Configuration Layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shared_components.html">Shared Components Layer</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Utilities Layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#key-components">Key Components</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#services">Services</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#network-services">Network Services</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ui-utilities">UI Utilities</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mixins">Mixins</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#helpers">Helpers</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#organization-structure">Organization Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#persistence-strategy">Persistence Strategy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#benefits-of-the-utilities-layer">Benefits of the Utilities Layer</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MSDTmt</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Application Layers</a></li>
+      <li class="breadcrumb-item active">Utilities Layer</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/app_layers/utils.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="utilities-layer">
+<h1>Utilities Layer<a class="headerlink" href="#utilities-layer" title="Link to this heading"></a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>The Utilities layer in the MS-dTMT application provides essential supporting functionality organized into distinct categories. These utilities handle device detection, UI helpers, storage, networking, and various application-wide services that support the core features of the application.</p>
+</section>
+<section id="key-components">
+<h2>Key Components<a class="headerlink" href="#key-components" title="Link to this heading"></a></h2>
+<section id="services">
+<h3>Services<a class="headerlink" href="#services" title="Link to this heading"></a></h3>
+<p><strong>LocalStorageServices</strong></p>
+<p>A centralized persistent storage system using Flutter’s SharedPreferences package that handles:</p>
+<ul class="simple">
+<li><p><strong>Pending TMT Test Results</strong>
+* Saves test results when offline using <code class="docutils literal notranslate"><span class="pre">savePendingResultList(List&lt;String&gt;)</span></code>
+* Retrieves pending results with <code class="docutils literal notranslate"><span class="pre">getPendingResultList()</span></code>
+* Clears completed results with <code class="docutils literal notranslate"><span class="pre">clearPendingResultList()</span></code></p></li>
+<li><p><strong>Theme Settings Management</strong>
+* Stores user theme preferences (dark/light) with <code class="docutils literal notranslate"><span class="pre">saveThemeSettings(bool,</span> <span class="pre">ThemeMode)</span></code>
+* Implements system theme following with <code class="docutils literal notranslate"><span class="pre">isFollowSystem</span></code> flag
+* Retrieves theme settings with type-safe returns via <code class="docutils literal notranslate"><span class="pre">loadThemeSettings()</span></code></p></li>
+<li><p><strong>User Profile Persistence</strong>
+* Manages current active user with <code class="docutils literal notranslate"><span class="pre">setCurrentProfileId(String)</span></code> and <code class="docutils literal notranslate"><span class="pre">getCurrentProfileId()</span></code>
+* Handles user switching and deletion with appropriate cleanup
+* Provides profile context across app restarts</p></li>
+<li><p><strong>Application Configuration</strong>
+* Stores TMT test configuration like circle count using <code class="docutils literal notranslate"><span class="pre">saveCircleNumber(int)</span></code>
+* Retrieves configuration with defaults via <code class="docutils literal notranslate"><span class="pre">getCircleNumber()</span></code>
+* Maintains consistent user experience across sessions</p></li>
+<li><p><strong>Storage Keys</strong>
+* Uses standardized key constants (<code class="docutils literal notranslate"><span class="pre">_pendingResultsKey</span></code>, <code class="docutils literal notranslate"><span class="pre">_themeKey</span></code>, etc.)
+* Implements safe type conversion and null handling
+* Ensures data integrity with appropriate storage patterns</p></li>
+</ul>
+<p>The LocalStorageServices class is implemented as a singleton to provide application-wide access while preventing multiple instances:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">static</span> <span class="n">final</span> <span class="n">LocalStorageServices</span> <span class="n">_localStorageServices</span> <span class="o">=</span> <span class="n">LocalStorageServices</span><span class="o">.</span><span class="n">_internal</span><span class="p">();</span>
+
+<span class="n">factory</span> <span class="n">LocalStorageServices</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">_localStorageServices</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="n">LocalStorageServices</span><span class="o">.</span><span class="n">_internal</span><span class="p">();</span>
+</pre></div>
+</div>
+<p><strong>AppLogger</strong></p>
+<p>A centralized logging system that provides:</p>
+<ul class="simple">
+<li><p>Named logger instances to categorize logs by component</p></li>
+<li><p>Multiple logging levels (fine, info, warning, severe, debug)</p></li>
+<li><p>Debug-mode specific logging functionality</p></li>
+<li><p>Stack trace and error recording for troubleshooting</p></li>
+<li><p>Initialization with environment-specific settings</p></li>
+</ul>
+<p><strong>Database Services</strong></p>
+<p>Database-related utilities including:</p>
+<ul class="simple">
+<li><p>UserDataBaseHelper for managing user profiles and test results</p></li>
+<li><p>Database migration utilities to handle schema changes</p></li>
+<li><p>Transaction management for data integrity</p></li>
+</ul>
+<p><strong>Native API Services</strong></p>
+<p>Bridges functionality to native platform APIs for device-specific features.</p>
+<p><strong>WorkManagerHandler</strong></p>
+<p>Manages background tasks for offline operation with:</p>
+<ul class="simple">
+<li><p>Task scheduling for pending test results with <code class="docutils literal notranslate"><span class="pre">scheduleResultsSending()</span></code></p></li>
+<li><p>Initialization of the worker system via <code class="docutils literal notranslate"><span class="pre">initializeWorkManager()</span></code></p></li>
+<li><p>Background task management for network operations</p></li>
+<li><p>Cancellation of pending tasks with <code class="docutils literal notranslate"><span class="pre">cancelWorkTask()</span></code></p></li>
+<li><p>Callback handling through the <code class="docutils literal notranslate"><span class="pre">callbackDispatcher()</span></code> function</p></li>
+</ul>
+</section>
+<section id="network-services">
+<h3>Network Services<a class="headerlink" href="#network-services" title="Link to this heading"></a></h3>
+<p><strong>API Error Handling</strong></p>
+<p>Implements robust error handling for network requests with:</p>
+<ul class="simple">
+<li><p>Error categorization (server, client, authentication, network)</p></li>
+<li><p>Status code interpretation</p></li>
+<li><p>Standardized error messages</p></li>
+<li><p>Error data extraction from various response formats</p></li>
+</ul>
+<p><strong>API Constants</strong></p>
+<p>Defines API endpoints, headers, and request configurations.</p>
+<p><strong>Result Data</strong></p>
+<p>Provides standardized response wrappers for network operations to ensure consistent handling of:</p>
+<ul class="simple">
+<li><p>Success responses with proper typing</p></li>
+<li><p>Error cases with contextual information</p></li>
+<li><p>Loading/progress states</p></li>
+</ul>
+</section>
+<section id="ui-utilities">
+<h3>UI Utilities<a class="headerlink" href="#ui-utilities" title="Link to this heading"></a></h3>
+<p><strong>AppSnackbar</strong></p>
+<p>Implements a custom snackbar with:</p>
+<ul class="simple">
+<li><p>Responsive sizing based on device type</p></li>
+<li><p>Consistent styling and animation</p></li>
+<li><p>Prevention of multiple overlapping instances</p></li>
+<li><p>Automatic dismissal with configurable duration</p></li>
+</ul>
+<p><strong>UI Extensions</strong></p>
+<p>Provides extensions for UI components to maintain consistent styling.</p>
+<p><strong>Bottom Sheet</strong></p>
+<p>Implements standardized bottom sheets for consistent presentation of modal content.</p>
+</section>
+<section id="mixins">
+<h3>Mixins<a class="headerlink" href="#mixins" title="Link to this heading"></a></h3>
+<p><strong>NavigationMixin</strong></p>
+<p>Centralizes navigation logic with methods for:</p>
+<ul class="simple">
+<li><p>Screen transitions between TMT test components</p></li>
+<li><p>User registration and profile flow navigation</p></li>
+<li><p>Result history access</p></li>
+<li><p>Practice and test mode selection</p></li>
+<li><p>Consistent navigation patterns throughout the app</p></li>
+</ul>
+<p><strong>ValidationInputMixin</strong></p>
+<p>Provides standardized form validation logic for input components.</p>
+<p><strong>App Mixins</strong></p>
+<p>Organizes all application mixins for easy access.</p>
+</section>
+<section id="helpers">
+<h3>Helpers<a class="headerlink" href="#helpers" title="Link to this heading"></a></h3>
+<p><strong>DeviceHelper</strong></p>
+<p>Provides device detection and responsive design support with:</p>
+<ul class="simple">
+<li><p>Device type categorization (largeTablet, mediumTablet, smallTablet, largePhone, mediumPhone, smallPhone)</p></li>
+<li><p>Screen metrics for adaptive layouts</p></li>
+<li><p>Device orientation handling</p></li>
+<li><p>Initialization and recalculation functions for screen changes</p></li>
+</ul>
+<p><strong>WidgetMaxWidthCalculator</strong></p>
+<p>Calculates optimal component widths based on:</p>
+<ul class="simple">
+<li><p>Device type</p></li>
+<li><p>Screen orientation (portrait/landscape)</p></li>
+<li><p>Different scaling factors for each device category</p></li>
+</ul>
+<p>This ensures proper content display across the wide range of devices supported by the application.</p>
+<p><strong>String and Double Helpers</strong></p>
+<p>Simple utilities for common string and numeric operations:</p>
+<ul class="simple">
+<li><p>Text formatting and manipulation</p></li>
+<li><p>Numeric precision control</p></li>
+<li><p>Type conversion</p></li>
+</ul>
+<p><strong>Type Utilities</strong></p>
+<p>Utilities for type checking and conversion operations.</p>
+<p><strong>App Helpers</strong></p>
+<p>General application utility functions used across different features.</p>
+</section>
+</section>
+<section id="organization-structure">
+<h2>Organization Structure<a class="headerlink" href="#organization-structure" title="Link to this heading"></a></h2>
+<p>The utils package is organized into a clear directory structure:</p>
+<dl class="simple">
+<dt><strong>/services/</strong></dt><dd><p>Contains utilities for backend and system services like logging, storage, and API access.</p>
+</dd>
+<dt><strong>/ui/</strong></dt><dd><p>Holds UI-related utilities including custom UI components and extensions.</p>
+</dd>
+<dt><strong>/mixins/</strong></dt><dd><p>Contains reusable behavior mixins that can be incorporated into various controllers and widgets.</p>
+</dd>
+<dt><strong>/helpers/</strong></dt><dd><p>Provides utility functions focused on specific tasks like device detection and component sizing.</p>
+</dd>
+</dl>
+</section>
+<section id="persistence-strategy">
+<h2>Persistence Strategy<a class="headerlink" href="#persistence-strategy" title="Link to this heading"></a></h2>
+<p>The application implements a multi-layered persistence strategy:</p>
+<ol class="arabic simple">
+<li><p><strong>Transient Settings (SharedPreferences)</strong>
+* Handled by LocalStorageServices for app preferences, theme settings, and active user
+* Provides quick access to lightweight configuration data
+* Used for cross-session persistence of UI state and user selections</p></li>
+<li><p><strong>Structured Data (SQLite)</strong>
+* Managed through UserDatabaseHelper for user profiles and test results
+* Provides relational data storage with transactions and queries
+* Supports complex data relationships and integrity constraints</p></li>
+<li><p><strong>Pending Data Handling</strong>
+* Combines SharedPreferences and WorkManager for offline operation
+* Stores test results when offline and schedules background sync
+* Implements automatic retry with exponential backoff</p></li>
+</ol>
+<p>The shared preference implementation ensures critical application state persists across sessions while maintaining a responsive user experience.</p>
+</section>
+<section id="benefits-of-the-utilities-layer">
+<h2>Benefits of the Utilities Layer<a class="headerlink" href="#benefits-of-the-utilities-layer" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>Cross-Cutting Concerns</strong>: Handles functionality that spans multiple features</p></li>
+<li><p><strong>Consistency</strong>: Ensures consistent behavior and appearance throughout the application</p></li>
+<li><p><strong>Code Reuse</strong>: Prevents duplication of common functionality</p></li>
+<li><p><strong>Maintainability</strong>: Centralizes core utilities for easier updates and bug fixes</p></li>
+<li><p><strong>Abstraction</strong>: Shields application features from low-level implementation details</p></li>
+</ol>
+<p>The Utilities layer provides the foundation that enables the application’s features to focus on their core functionality while relying on standardized utilities for common operations. This separation of concerns leads to a more maintainable and scalable codebase.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="shared_components.html" class="btn btn-neutral float-left" title="Shared Components Layer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, xiaoyang peng.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

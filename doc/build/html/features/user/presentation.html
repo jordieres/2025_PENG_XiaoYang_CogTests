@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Presentation Layer &mdash; MSDTmt  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Domain Layer" href="domain.html" />
+    <link rel="prev" title="User Module" href="../user.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            MSDTmt
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Project Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Feature Modules</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../splash.html">Splash Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../home.html">Home Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tm_tst.html">Trail Making Test Module Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user.html">User Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../home/index.html">Home Module Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tm_tst/index.html">Trail Making Test Module Documentation</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">User Module Documentation</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Presentation Layer</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#screens">Screens</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#controllers">Controllers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bindings">Bindings</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="domain.html">Domain Layer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data.html">Data Layer</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture.html">Feature-First Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../app_layers/index.html">Application Layers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">MSDTmt</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Feature Modules</a></li>
+          <li class="breadcrumb-item"><a href="../user.html">User Module</a></li>
+      <li class="breadcrumb-item active">Presentation Layer</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/features/user/presentation.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="presentation-layer">
+<h1>Presentation Layer<a class="headerlink" href="#presentation-layer" title="Link to this heading"></a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>The Presentation Layer of the User module implements the user interface components and interaction logic. It follows the GetX state management pattern to maintain a reactive UI while keeping the code clean and modular.</p>
+</section>
+<section id="screens">
+<h2>Screens<a class="headerlink" href="#screens" title="Link to this heading"></a></h2>
+<section id="registeruserscreen">
+<h3>RegisterUserScreen<a class="headerlink" href="#registeruserscreen" title="Link to this heading"></a></h3>
+<p>User registration screen (<code class="docutils literal notranslate"><span class="pre">lib/app/features/user/presentation/screen/register_user_screen.dart</span></code>):</p>
+<ul class="simple">
+<li><p>Implements form for new user registration with field validation</p></li>
+<li><p>Collects nickname, sex, birth date, and education level</p></li>
+<li><p>Prevents duplicate nicknames through real-time validation</p></li>
+<li><p>Provides date picker for birth date selection</p></li>
+<li><p>Uses responsive layout for different device sizes</p></li>
+</ul>
+</section>
+<section id="currentuserdatascreen">
+<h3>CurrentUserDataScreen<a class="headerlink" href="#currentuserdatascreen" title="Link to this heading"></a></h3>
+<p>Current user screen (<code class="docutils literal notranslate"><span class="pre">lib/app/features/user/presentation/screen/current_user_data_screen.dart</span></code>):</p>
+<ul class="simple">
+<li><p>Displays selected user profile information in read-only mode</p></li>
+<li><p>Extends RegisterUserScreenBase for consistent layout</p></li>
+<li><p>Provides profile deletion functionality with confirmation dialog</p></li>
+<li><p>Handles navigation back to home after profile deletion</p></li>
+<li><p>Shows error message if no profile is selected</p></li>
+</ul>
+</section>
+<section id="userresulthistoryscreen">
+<h3>UserResultHistoryScreen<a class="headerlink" href="#userresulthistoryscreen" title="Link to this heading"></a></h3>
+<p>Result history screen (<code class="docutils literal notranslate"><span class="pre">lib/app/features/user/presentation/screen/user_result_history_screen.dart</span></code>):</p>
+<ul class="simple">
+<li><p>Displays table of TMT test results for current user</p></li>
+<li><p>Shows date, reference code, TMT-A time, and TMT-B time</p></li>
+<li><p>Implements responsive layout with scrollable content</p></li>
+<li><p>Uses localized date formatting for different regions</p></li>
+<li><p>Handles empty state with appropriate message</p></li>
+</ul>
+</section>
+<section id="userscreenbase">
+<h3>UserScreenBase<a class="headerlink" href="#userscreenbase" title="Link to this heading"></a></h3>
+<p>Base screen (<code class="docutils literal notranslate"><span class="pre">lib/app/features/user/presentation/screen/user_screen_base.dart</span></code>):</p>
+<ul class="simple">
+<li><p>Provides shared layout and functionality for user screens</p></li>
+<li><p>Implements common form fields (nickname, sex, birth date, education)</p></li>
+<li><p>Creates consistent form validation rules</p></li>
+<li><p>Handles field spacing and responsive layout calculations</p></li>
+<li><p>Manages form state and focus navigation</p></li>
+</ul>
+</section>
+</section>
+<section id="controllers">
+<h2>Controllers<a class="headerlink" href="#controllers" title="Link to this heading"></a></h2>
+<section id="userprofilecontroller">
+<h3>UserProfileController<a class="headerlink" href="#userprofilecontroller" title="Link to this heading"></a></h3>
+<p>Profile controller (<code class="docutils literal notranslate"><span class="pre">lib/app/features/user/presentation/contoller/user_profile_controller.dart</span></code>):</p>
+<ul class="simple">
+<li><p>Manages user profile data retrieval and persistence</p></li>
+<li><p>Provides reactive state for UI components</p></li>
+<li><p>Handles profile loading, saving and deletion</p></li>
+<li><p>Coordinates with repository layer for data operations</p></li>
+<li><p>Manages current active profile selection</p></li>
+</ul>
+</section>
+<section id="testresultlocaldatacontroller">
+<h3>TestResultLocalDataController<a class="headerlink" href="#testresultlocaldatacontroller" title="Link to this heading"></a></h3>
+<p>Test result controller (<code class="docutils literal notranslate"><span class="pre">lib/app/features/user/presentation/contoller/test_result_controller.dart</span></code>):</p>
+<ul class="simple">
+<li><p>Manages loading and display of user test results</p></li>
+<li><p>Provides reactive state for test history UI</p></li>
+<li><p>Handles result loading by user ID and nickname</p></li>
+<li><p>Validates reference codes for duplicate detection</p></li>
+<li><p>Saves new test results to local storage</p></li>
+</ul>
+</section>
+</section>
+<section id="bindings">
+<h2>Bindings<a class="headerlink" href="#bindings" title="Link to this heading"></a></h2>
+<section id="userprofilebinding">
+<h3>UserProfileBinding<a class="headerlink" href="#userprofilebinding" title="Link to this heading"></a></h3>
+<p>User binding (<code class="docutils literal notranslate"><span class="pre">lib/app/features/user/presentation/binding/user_profile_binding.dart</span></code>):</p>
+<ul class="simple">
+<li><p>Registers dependencies for user profile management</p></li>
+<li><p>Creates and configures UserDatabaseHelper</p></li>
+<li><p>Sets up UserProfileDataSource with database helper</p></li>
+<li><p>Configures UserProfileRepository with data source</p></li>
+<li><p>Registers UserProfileController for UI state management</p></li>
+</ul>
+</section>
+<section id="userhistorybinding">
+<h3>UserHistoryBinding<a class="headerlink" href="#userhistorybinding" title="Link to this heading"></a></h3>
+<p>History binding (<code class="docutils literal notranslate"><span class="pre">lib/app/features/user/presentation/binding/user_history_binding.dart</span></code>):</p>
+<ul class="simple">
+<li><p>Registers dependencies for test result history</p></li>
+<li><p>Initializes database and data source components</p></li>
+<li><p>Sets up TestResultLocalDataRepository</p></li>
+<li><p>Registers TestResultLocalDataController</p></li>
+<li><p>Ensures dependencies are only registered once</p></li>
+</ul>
+</section>
+<section id="testresultlocaldatabinding">
+<h3>TestResultLocalDataBinding<a class="headerlink" href="#testresultlocaldatabinding" title="Link to this heading"></a></h3>
+<p>Result binding (<code class="docutils literal notranslate"><span class="pre">lib/app/features/user/presentation/binding/test_result_local_data_binding.dart</span></code>):</p>
+<ul class="simple">
+<li><p>Configures database helper for test results</p></li>
+<li><p>Sets up TestResultLocalDataSource with database helper</p></li>
+<li><p>Configures TestResultLocalDataRepository with data source</p></li>
+<li><p>Registers TestResultLocalDataController</p></li>
+<li><p>Manages dependency lifecycle for test result operations</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../user.html" class="btn btn-neutral float-left" title="User Module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="domain.html" class="btn btn-neutral float-right" title="Domain Layer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, xiaoyang peng.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

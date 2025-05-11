@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Domain Layer &mdash; MSDTmt  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Data Layer" href="data.html" />
+    <link rel="prev" title="Presentation Layer" href="presentation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            MSDTmt
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Project Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Feature Modules</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../splash.html">Splash Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../home.html">Home Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tm_tst.html">Trail Making Test Module Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user.html">User Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../home/index.html">Home Module Documentation</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Trail Making Test Module Documentation</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="presentation.html">Presentation Layer</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Domain Layer</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#components">Components</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#benefits-of-the-domain-layer">Benefits of the Domain Layer</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="data.html">Data Layer</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user/index.html">User Module Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture.html">Feature-First Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../app_layers/index.html">Application Layers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">MSDTmt</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Feature Modules</a></li>
+          <li class="breadcrumb-item"><a href="../tm_tst.html">Trail Making Test Module Overview</a></li>
+      <li class="breadcrumb-item active">Domain Layer</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/features/tm_tst/domain.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="domain-layer">
+<h1>Domain Layer<a class="headerlink" href="#domain-layer" title="Link to this heading"></a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>The Domain Layer of the TMT module contains the business logic and rules for the Trail Making Test, independent of UI implementation and data sources. It defines entities, repository interfaces, and use cases that encapsulate the core functionality of the cognitive assessment.</p>
+</section>
+<section id="components">
+<h2>Components<a class="headerlink" href="#components" title="Link to this heading"></a></h2>
+<section id="entities">
+<h3>Entities<a class="headerlink" href="#entities" title="Link to this heading"></a></h3>
+<p><strong>TmtGameCircle</strong></p>
+<p>Represents an individual circle in the test:</p>
+<ul class="simple">
+<li><p>Position (Offset) on the test board</p></li>
+<li><p>Text content (number or letter)</p></li>
+<li><p>Order within the sequence</p></li>
+<li><p>Type indicator (isNumber property)</p></li>
+<li><p>Methods for detecting point containment</p></li>
+<li><p>First circle status checking</p></li>
+</ul>
+<p><strong>TmtGameVariable</strong></p>
+<p>Contains static configuration parameters for the test:</p>
+<ul class="simple">
+<li><p>Circle radius and spacing values</p></li>
+<li><p>Connection distances and tolerances</p></li>
+<li><p>Board margins and visual parameters</p></li>
+<li><p>Error duration constants</p></li>
+<li><p>Default and alternative circle counts (25 or 15)</p></li>
+<li><p>Methods for calculating optimal parameters based on screen size</p></li>
+<li><p>Functions for practice mode vs. test mode setup</p></li>
+</ul>
+<p><strong>TmtGameHandUsed</strong></p>
+<p>Enum representing which hand was used during the test:</p>
+<ul class="simple">
+<li><p>LEFT (“I”)</p></li>
+<li><p>RIGHT (“D”)</p></li>
+<li><p>Value mapping for data persistence</p></li>
+<li><p>Factory method for reconstructing from stored values</p></li>
+</ul>
+<p><strong>TmtGameInitData</strong></p>
+<p>Encapsulates initial test configuration:</p>
+<ul class="simple">
+<li><p>Reference code identifier</p></li>
+<li><p>Hand used during the test</p></li>
+<li><p>Immutable structure for clean data passing</p></li>
+</ul>
+<p><strong>TmtGameResultData</strong></p>
+<p>Comprehensive result entity containing all test metrics:</p>
+<ul class="simple">
+<li><p>Test configuration data</p></li>
+<li><p>Timestamps for test parts</p></li>
+<li><p>Completion times for TMT-A and TMT-B</p></li>
+<li><p>Error counts (total, part A, part B)</p></li>
+<li><p>Lift and pause metrics</p></li>
+<li><p>Pressure and size measurements</p></li>
+<li><p>Device information</p></li>
+<li><p>Sectional scores (A1-A5, B1-B5)</p></li>
+<li><p>Methods for construction from metrics controller</p></li>
+</ul>
+</section>
+<section id="metrics-entities">
+<h3>Metrics Entities<a class="headerlink" href="#metrics-entities" title="Link to this heading"></a></h3>
+<p><strong>TmtMetricsController</strong></p>
+<p>Central metrics collection and calculation entity:</p>
+<ul class="simple">
+<li><p>Captures all test performance data</p></li>
+<li><p>Manages test timestamps and transitions</p></li>
+<li><p>Tracks errors and their distribution</p></li>
+<li><p>Maintains circle connection metrics</p></li>
+<li><p>Handles test event callbacks (start, end, pan actions)</p></li>
+<li><p>Provides copy mechanism for state preservation</p></li>
+<li><p>Calculates derived metrics and scores</p></li>
+</ul>
+<p><strong>TmtTestTimeMetric</strong></p>
+<p>Handles timing-related metrics:</p>
+<ul class="simple">
+<li><p>Records test start and end times</p></li>
+<li><p>Tracks segment completion times</p></li>
+<li><p>Calculates overall and segment durations</p></li>
+<li><p>Divides test into five equal sections for analysis</p></li>
+<li><p>Provides standardized time measurements</p></li>
+</ul>
+<p><strong>TmtTestLiftMetric</strong></p>
+<p>Tracks finger lift events:</p>
+<ul class="simple">
+<li><p>Counts number of lifts during test</p></li>
+<li><p>Measures duration of each lift</p></li>
+<li><p>Calculates average lift duration</p></li>
+<li><p>Provides insights into test continuity</p></li>
+</ul>
+<p><strong>TmtTestPauseMetric</strong></p>
+<p>Analyzes pauses during test execution:</p>
+<ul class="simple">
+<li><p>Detects pauses based on position and time threshold</p></li>
+<li><p>Counts pause occurrences</p></li>
+<li><p>Measures pause durations</p></li>
+<li><p>Calculates average pause duration</p></li>
+<li><p>Provides insights into hesitation patterns</p></li>
+</ul>
+<p><strong>TmtBMetrics</strong></p>
+<p>Specialized metrics for TMT-B alternation patterns:</p>
+<ul class="simple">
+<li><p>Tracks transitions between numbers and letters</p></li>
+<li><p>Measures time and rate before letters</p></li>
+<li><p>Measures time and rate before numbers</p></li>
+<li><p>Calculates average drawing rates</p></li>
+<li><p>Analyzes cognitive switching efficiency</p></li>
+</ul>
+<p><strong>TmtCircleMetrics</strong></p>
+<p>Analyzes drawing patterns between and inside circles:</p>
+<ul class="simple">
+<li><p>Measures time spent between circles</p></li>
+<li><p>Tracks drawing paths inside circles</p></li>
+<li><p>Calculates drawing rates and times</p></li>
+<li><p>Provides insights into motor control and planning</p></li>
+<li><p>Distinguishes between connection types</p></li>
+</ul>
+<p><strong>TmtPressureSizeMetric</strong></p>
+<p>Captures touch pressure and size data (when available):</p>
+<ul class="simple">
+<li><p>Records pressure variations during drawing</p></li>
+<li><p>Tracks touch size measurements</p></li>
+<li><p>Calculates average pressure and size</p></li>
+<li><p>Handles devices without pressure/size capabilities</p></li>
+<li><p>Provides insights into motor control</p></li>
+</ul>
+</section>
+<section id="use-cases">
+<h3>Use Cases<a class="headerlink" href="#use-cases" title="Link to this heading"></a></h3>
+<p><strong>TmtGameConfigUseCase</strong></p>
+<p>Manages test configuration persistence and retrieval:</p>
+<ul class="simple">
+<li><p>Saves circle number preference</p></li>
+<li><p>Retrieves stored configuration</p></li>
+<li><p>Loads configuration into active test</p></li>
+<li><p>Handles default values when needed</p></li>
+</ul>
+<p><strong>TmtGameCalculate</strong></p>
+<p>Implements geometric calculations for test validation:</p>
+<ul class="simple">
+<li><p>Determines if points are inside circles</p></li>
+<li><p>Validates connection distances</p></li>
+<li><p>Calculates board boundaries</p></li>
+<li><p>Computes closest points on circle perimeters</p></li>
+<li><p>Ensures spatial accuracy of interactions</p></li>
+</ul>
+<p><strong>ReportTmtResultUseCase</strong></p>
+<p>Handles test result submission and storage:</p>
+<ul class="simple">
+<li><p>Transforms metrics into reportable formats</p></li>
+<li><p>Submits results to remote server</p></li>
+<li><p>Handles offline storage for pending results</p></li>
+<li><p>Manages synchronization attempts</p></li>
+</ul>
+<p><strong>PendingResultUseCase</strong></p>
+<p>Manages results when network is unavailable:</p>
+<ul class="simple">
+<li><p>Saves pending results locally</p></li>
+<li><p>Retrieves and processes pending results</p></li>
+<li><p>Attempts resubmission when network available</p></li>
+<li><p>Handles successful submission cleanup</p></li>
+</ul>
+<p><strong>TmtResultScreenResponsiveCalculator</strong></p>
+<p>Calculates optimal layouts for result presentation:</p>
+<ul class="simple">
+<li><p>Determines spacing based on device properties</p></li>
+<li><p>Calculates card dimensions and margins</p></li>
+<li><p>Optimizes layouts for different orientations</p></li>
+<li><p>Ensures consistent presentation across devices</p></li>
+</ul>
+</section>
+<section id="repositories-interfaces">
+<h3>Repositories (Interfaces)<a class="headerlink" href="#repositories-interfaces" title="Link to this heading"></a></h3>
+<p><strong>TmtResultRepository</strong></p>
+<p>Interface for result data operations:</p>
+<ul class="simple">
+<li><p>Defines methods for reporting test results</p></li>
+<li><p>Abstracts data persistence implementation</p></li>
+<li><p>Enables dependency inversion</p></li>
+</ul>
+<p><strong>TmtGameConfigRepository</strong></p>
+<p>Interface for configuration persistence:</p>
+<ul class="simple">
+<li><p>Defines methods for saving circle count preference</p></li>
+<li><p>Defines methods for retrieving settings</p></li>
+<li><p>Abstracts storage mechanism</p></li>
+</ul>
+<p><strong>PendingResultRepository</strong></p>
+<p>Interface for managing offline results:</p>
+<ul class="simple">
+<li><p>Defines methods for saving pending results</p></li>
+<li><p>Defines methods for retrieving pending results</p></li>
+<li><p>Defines methods for deleting resolved results</p></li>
+<li><p>Abstracts synchronization mechanisms</p></li>
+</ul>
+</section>
+<section id="value-objects-and-constants">
+<h3>Value Objects and Constants<a class="headerlink" href="#value-objects-and-constants" title="Link to this heading"></a></h3>
+<p><strong>MetricStaticValues</strong></p>
+<p>Contains constants for metric calculations:</p>
+<ul class="simple">
+<li><p>Pause threshold duration (100ms)</p></li>
+<li><p>Position tolerance values</p></li>
+<li><p>Metric calculation thresholds</p></li>
+<li><p>Section boundary definitions</p></li>
+<li><p>Sentinel values for special cases</p></li>
+</ul>
+<p><strong>TmtGameType</strong></p>
+<p>Enum for test types:</p>
+<ul class="simple">
+<li><p>TMT_TEST_A</p></li>
+<li><p>TMT_TEST_B</p></li>
+<li><p>TMT_PRACTICE_A</p></li>
+<li><p>TMT_PRACTICE_B</p></li>
+<li><p>TMT_BOTH_PRACTICE</p></li>
+</ul>
+<p><strong>TmtGameCircleTextType</strong></p>
+<p>Enum for circle content types:</p>
+<ul class="simple">
+<li><p>NUMBER (for TMT-A)</p></li>
+<li><p>NUMBER_WITH_LETTER (for TMT-B)</p></li>
+</ul>
+</section>
+<section id="domain-services">
+<h3>Domain Services<a class="headerlink" href="#domain-services" title="Link to this heading"></a></h3>
+<p><strong>RandomGridSampler</strong></p>
+<p>Generates spatially distributed points for circle placement:</p>
+<ul class="simple">
+<li><p>Creates grid-based distribution algorithm</p></li>
+<li><p>Ensures minimum distance between points</p></li>
+<li><p>Adapts to available screen space</p></li>
+<li><p>Handles fallback strategies when optimal placement fails</p></li>
+<li><p>Provides deterministic yet apparently random layouts</p></li>
+</ul>
+<p><strong>ReorderCircles</strong></p>
+<p>Optimizes circle ordering for valid test sequences:</p>
+<ul class="simple">
+<li><p>Reorders circles based on connectable paths</p></li>
+<li><p>Ensures paths don’t overlap excessively</p></li>
+<li><p>Optimizes for clean visual presentation</p></li>
+<li><p>Applies clinical guidelines for test validity</p></li>
+<li><p>Handles regeneration of problematic placements</p></li>
+</ul>
+<p><strong>GenerateCircleWithData</strong></p>
+<p>Creates circle entities with appropriate properties:</p>
+<ul class="simple">
+<li><p>Assigns numbers or alternating numbers/letters</p></li>
+<li><p>Generates correct text representations</p></li>
+<li><p>Configures circle properties based on test type</p></li>
+<li><p>Creates complete set of test circles</p></li>
+</ul>
+</section>
+</section>
+<section id="benefits-of-the-domain-layer">
+<h2>Benefits of the Domain Layer<a class="headerlink" href="#benefits-of-the-domain-layer" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>Clinical Validity</strong>: Ensures the digital implementation follows standardized assessment protocols</p></li>
+<li><p><strong>Test Integrity</strong>: Guarantees consistent test parameters and scoring</p></li>
+<li><p><strong>Separation of Concerns</strong>: Isolates core test logic from presentation details</p></li>
+<li><p><strong>Enhanced Metrics</strong>: Collects detailed metrics impossible in paper-based tests</p></li>
+<li><p><strong>Algorithmic Purity</strong>: Contains complex test generation and validation logic in testable entities</p></li>
+</ol>
+<p>The domain layer provides a robust foundation for a clinically valid digital implementation of the Trail Making Test while enabling enhanced data collection and analysis beyond what traditional paper-based tests can offer.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="presentation.html" class="btn btn-neutral float-left" title="Presentation Layer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="data.html" class="btn btn-neutral float-right" title="Data Layer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, xiaoyang peng.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

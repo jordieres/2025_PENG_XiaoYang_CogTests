@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Presentation Layer &mdash; MSDTmt  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Domain Layer" href="domain.html" />
+    <link rel="prev" title="Home Module" href="../home.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            MSDTmt
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Project Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Feature Modules</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../splash.html">Splash Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../home.html">Home Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tm_tst.html">Trail Making Test Module Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user.html">User Module</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Home Module Documentation</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Presentation Layer</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#screens">Screens</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#components">Components</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#controllers">Controllers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bindings">Bindings</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="domain.html">Domain Layer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="data.html">Data Layer</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../tm_tst/index.html">Trail Making Test Module Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user/index.html">User Module Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture.html">Feature-First Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../app_layers/index.html">Application Layers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">MSDTmt</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Feature Modules</a></li>
+          <li class="breadcrumb-item"><a href="../home.html">Home Module</a></li>
+      <li class="breadcrumb-item active">Presentation Layer</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/features/home/presentation.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="presentation-layer">
+<h1>Presentation Layer<a class="headerlink" href="#presentation-layer" title="Link to this heading"></a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>The Presentation Layer of the Home module implements the user interface components and interaction logic. It follows the GetX state management pattern to maintain a reactive UI while keeping the code clean and modular.</p>
+</section>
+<section id="screens">
+<h2>Screens<a class="headerlink" href="#screens" title="Link to this heading"></a></h2>
+<section id="homepage">
+<h3>HomePage<a class="headerlink" href="#homepage" title="Link to this heading"></a></h3>
+<p>The main screen of the application (<code class="docutils literal notranslate"><span class="pre">lib/app/features/home/presentation/screens/home_page.dart</span></code>):</p>
+<ul class="simple">
+<li><p>Serves as the application’s entry point and central navigation hub</p></li>
+<li><p>Implements a responsive layout that adapts to different screen sizes and orientations</p></li>
+<li><p>Uses GetX for state management and dependency injection</p></li>
+<li><p>Manages system UI overlay styles for consistent theme application</p></li>
+</ul>
+<dl class="simple">
+<dt>Key features:</dt><dd><ul class="simple">
+<li><p>Profile selection interface</p></li>
+<li><p>Reference code validation</p></li>
+<li><p>TMT test access and configuration</p></li>
+<li><p>Navigation to user data and test history screens</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+</section>
+<section id="components">
+<h2>Components<a class="headerlink" href="#components" title="Link to this heading"></a></h2>
+<section id="homeheader">
+<h3>HomeHeader<a class="headerlink" href="#homeheader" title="Link to this heading"></a></h3>
+<p>Header component (<code class="docutils literal notranslate"><span class="pre">lib/app/features/home/presentation/components/home_page_header.dart</span></code>):</p>
+<ul class="simple">
+<li><p>Displays the Madrid health logo</p></li>
+<li><p>Provides theme switching functionality (light/dark modes)</p></li>
+<li><p>Includes language selection (English, Spanish, Chinese)</p></li>
+<li><p>Uses SVG assets for consistent rendering across devices</p></li>
+</ul>
+</section>
+<section id="selectuserdropdown">
+<h3>SelectUserDropdown<a class="headerlink" href="#selectuserdropdown" title="Link to this heading"></a></h3>
+<p>User selection component (<code class="docutils literal notranslate"><span class="pre">lib/app/features/home/presentation/components/select_user_dropdown.dart</span></code>):</p>
+<ul class="simple">
+<li><p>Displays current user with greeting when a profile is selected</p></li>
+<li><p>Shows “Create profile” prompt when no profile exists</p></li>
+<li><p>Opens user selection dialog for profile management</p></li>
+<li><p>Adapts its appearance based on screen orientation</p></li>
+<li><p>Automatically refreshes after profile changes</p></li>
+<li><p>Observes route changes to detect new user registrations</p></li>
+</ul>
+</section>
+<section id="referencecodeinput">
+<h3>ReferenceCodeInput<a class="headerlink" href="#referencecodeinput" title="Link to this heading"></a></h3>
+<p>Reference code component (<code class="docutils literal notranslate"><span class="pre">lib/app/features/home/presentation/components/reference_code_input.dart</span></code>):</p>
+<ul class="simple">
+<li><p>Implements a dual-field input for reference code format (prefix-suffix)</p></li>
+<li><p>Provides validation feedback with error messaging</p></li>
+<li><p>Uses custom text formatters for input standardization</p></li>
+<li><p>Features edit and confirm actions</p></li>
+<li><p>Adapts its appearance based on validation state and active status</p></li>
+<li><p>Implements focus management for smooth input experience</p></li>
+</ul>
+</section>
+<section id="tmttestbuttoncard">
+<h3>TmtTestButtonCard<a class="headerlink" href="#tmttestbuttoncard" title="Link to this heading"></a></h3>
+<p>TMT test button component (<code class="docutils literal notranslate"><span class="pre">lib/app/features/home/presentation/components/tmt_test_button_card.dart</span></code>):</p>
+<ul class="simple">
+<li><p>Provides prominent button for starting the TMT test</p></li>
+<li><p>Includes dropdown to select circle count (15 or 25 circles)</p></li>
+<li><p>Offers help dialog explaining circle count options</p></li>
+<li><p>Adapts its appearance based on reference code validation status</p></li>
+<li><p>Saves circle count preference for future sessions</p></li>
+<li><p>Features responsive layout for different screen sizes</p></li>
+</ul>
+</section>
+<section id="homecardbutton">
+<h3>HomeCardButton<a class="headerlink" href="#homecardbutton" title="Link to this heading"></a></h3>
+<p>Card button component (<code class="docutils literal notranslate"><span class="pre">lib/app/features/home/presentation/components/home_card_button.dart</span></code>):</p>
+<ul class="simple">
+<li><p>Reusable button component with card-like appearance</p></li>
+<li><p>Supports different height configurations</p></li>
+<li><p>Implements touch feedback effects</p></li>
+<li><p>Displays lock icon in disabled state</p></li>
+<li><p>Adapts appearance based on theme (light/dark)</p></li>
+</ul>
+</section>
+</section>
+<section id="controllers">
+<h2>Controllers<a class="headerlink" href="#controllers" title="Link to this heading"></a></h2>
+<section id="referencecodecontroller">
+<h3>ReferenceCodeController<a class="headerlink" href="#referencecodecontroller" title="Link to this heading"></a></h3>
+<p>Reference validation controller (<code class="docutils literal notranslate"><span class="pre">lib/app/features/home/presentation/controllers/reference_code_controller.dart</span></code>):</p>
+<ul class="simple">
+<li><p>Manages reference code validation state</p></li>
+<li><p>Coordinates with domain layer validation use case</p></li>
+<li><p>Maintains validation flags (isValidating, isValidated)</p></li>
+<li><p>Stores validated reference code</p></li>
+<li><p>Provides error message handling and display</p></li>
+<li><p>Implements validation reset functionality</p></li>
+</ul>
+</section>
+<section id="selectuserprofilecontroller">
+<h3>SelectUserProfileController<a class="headerlink" href="#selectuserprofilecontroller" title="Link to this heading"></a></h3>
+<p>User profile controller (<code class="docutils literal notranslate"><span class="pre">lib/app/features/home/presentation/controllers/select_user_profile_controller.dart</span></code>):</p>
+<ul class="simple">
+<li><p>Extends base UserProfileController with home-specific functionality</p></li>
+<li><p>Maintains list of available user profiles</p></li>
+<li><p>Handles current profile selection and switching</p></li>
+<li><p>Provides profile search capability</p></li>
+<li><p>Manages profile deletion with confirmation</p></li>
+<li><p>Shows success/error feedback via snackbars</p></li>
+<li><p>Implements refresh mechanism after profile changes</p></li>
+</ul>
+</section>
+</section>
+<section id="bindings">
+<h2>Bindings<a class="headerlink" href="#bindings" title="Link to this heading"></a></h2>
+<section id="homescreenbinding">
+<h3>HomeScreenBinding<a class="headerlink" href="#homescreenbinding" title="Link to this heading"></a></h3>
+<p>Home screen binding (<code class="docutils literal notranslate"><span class="pre">lib/app/features/home/presentation/binding/home_screen_binding.dart</span></code>):</p>
+<ul class="simple">
+<li><p>Minimal implementation for core home dependencies</p></li>
+</ul>
+</section>
+<section id="referencevalidationbinding">
+<h3>ReferenceValidationBinding<a class="headerlink" href="#referencevalidationbinding" title="Link to this heading"></a></h3>
+<p>Reference validation binding (<code class="docutils literal notranslate"><span class="pre">lib/app/features/home/presentation/binding/reference_validation_biding.dart</span></code>):</p>
+<ul class="simple">
+<li><p>Sets up database helper</p></li>
+<li><p>Configures test result data source</p></li>
+<li><p>Initializes reference validation repository</p></li>
+<li><p>Sets up validation use case</p></li>
+<li><p>Creates reference code controller</p></li>
+</ul>
+</section>
+<section id="selectuserbinding">
+<h3>SelectUserBinding<a class="headerlink" href="#selectuserbinding" title="Link to this heading"></a></h3>
+<p>User selection binding (<code class="docutils literal notranslate"><span class="pre">lib/app/features/home/presentation/binding/select_user_profile_binding.dart</span></code>):</p>
+<ul class="simple">
+<li><p>Sets up database helper if not already registered</p></li>
+<li><p>Configures user profile data source</p></li>
+<li><p>Initializes user profile repository</p></li>
+<li><p>Creates select user controller instance</p></li>
+</ul>
+<p>The presentation layer implements a cohesive, responsive interface while maintaining clean separation from business logic and data access layers.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../home.html" class="btn btn-neutral float-left" title="Home Module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="domain.html" class="btn btn-neutral float-right" title="Domain Layer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, xiaoyang peng.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

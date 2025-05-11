@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home Module &mdash; MSDTmt  documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Presentation Layer" href="home/presentation.html" />
+    <link rel="prev" title="Splash Module" href="splash.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            MSDTmt
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../overview.html">Project Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Feature Modules</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="splash.html">Splash Module</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Home Module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-structure">Module Structure</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="home/presentation.html">Presentation Layer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="home/domain.html">Domain Layer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="home/data.html">Data Layer</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#key-components">Key Components</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#main-features">Main Features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#user-flow">User Flow</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tm_tst.html">Trail Making Test Module Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user.html">User Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="home/index.html">Home Module Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tm_tst/index.html">Trail Making Test Module Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user/index.html">User Module Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../architecture.html">Feature-First Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../app_layers/index.html">Application Layers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MSDTmt</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">Feature Modules</a></li>
+      <li class="breadcrumb-item active">Home Module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/features/home.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="home-module">
+<h1>Home Module<a class="headerlink" href="#home-module" title="Link to this heading"></a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>The Home module serves as the central entry point of the MS-dTMT application, providing a clean interface for accessing the Trail Making Test (TMT) functionality and managing user profiles. It implements a responsive design that adapts to different device sizes and orientations while maintaining consistent user experience.</p>
+</section>
+<section id="module-structure">
+<h2>Module Structure<a class="headerlink" href="#module-structure" title="Link to this heading"></a></h2>
+<p>The Home module follows a clean architecture with clear separation between presentation, domain, and data layers:</p>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Architectural Layers:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="home/presentation.html">Presentation Layer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="home/domain.html">Domain Layer</a></li>
+<li class="toctree-l1"><a class="reference internal" href="home/data.html">Data Layer</a></li>
+</ul>
+</div>
+</section>
+<section id="key-components">
+<h2>Key Components<a class="headerlink" href="#key-components" title="Link to this heading"></a></h2>
+<p><strong>Presentation Layer</strong></p>
+<ul class="simple">
+<li><p><strong>Screens</strong>:
+* <strong>HomePage</strong>: Main application interface with profile selection, reference code validation, and test access</p></li>
+<li><p><strong>Controllers</strong>:
+* <strong>ReferenceCodeController</strong>: Manages reference code validation
+* <strong>SelectUserProfileController</strong>: Handles user profile selection and management</p></li>
+<li><p><strong>Components</strong>:
+* <strong>HomeHeader</strong>: Application branding, theme selection, and language switching
+* <strong>SelectUserDropdown</strong>: User profile selection interface
+* <strong>ReferenceCodeInput</strong>: Reference code entry and validation component
+* <strong>TmtTestButtonCard</strong>: TMT test configuration and access
+* <strong>HomeCardButton</strong>: Navigation buttons for profile and history access</p></li>
+<li><p><strong>Bindings</strong>:
+* <strong>HomeScreenBinding</strong>: Core home screen dependencies
+* <strong>ReferenceValidationBinding</strong>: Reference validation dependencies
+* <strong>SelectUserBinding</strong>: User profile selection dependencies</p></li>
+</ul>
+<p><strong>Domain Layer</strong></p>
+<ul class="simple">
+<li><p><strong>Entities</strong>:
+* <strong>HomeUIConstantVariable</strong>: UI constants for styling and layouts
+* <strong>ReferenceValidationResult</strong>: Reference code validation result entity</p></li>
+<li><p><strong>Repository Interfaces</strong>:
+* <strong>ReferenceValidationRepository</strong>: Interface for reference code validation</p></li>
+<li><p><strong>Use Cases</strong>:
+* <strong>ValidateReferenceCodeUseCase</strong>: Business logic for validating reference codes</p></li>
+</ul>
+<p><strong>Data Layer</strong></p>
+<ul class="simple">
+<li><p><strong>Repository Implementations</strong>:
+* <strong>ReferenceValidationRepositoryImpl</strong>: Implements reference validation repository</p></li>
+</ul>
+</section>
+<section id="main-features">
+<h2>Main Features<a class="headerlink" href="#main-features" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>User Profile Management</strong>: Select, create, and manage user profiles</p></li>
+<li><p><strong>Reference Code Validation</strong>: Validate reference codes required for test access</p></li>
+<li><p><strong>TMT Test Configuration</strong>: Configure and access Trail Making Tests</p></li>
+<li><p><strong>Theme and Language Selection</strong>: Switch between light/dark themes and multiple languages</p></li>
+<li><p><strong>Navigation</strong>: Access user data and test history</p></li>
+</ul>
+</section>
+<section id="user-flow">
+<h2>User Flow<a class="headerlink" href="#user-flow" title="Link to this heading"></a></h2>
+<ol class="arabic simple">
+<li><p><strong>User Selection</strong>: Select or create a user profile</p></li>
+<li><p><strong>Reference Validation</strong>: Enter and validate a reference code</p></li>
+<li><p><strong>Test Configuration</strong>: Configure the number of circles (15 or 25)</p></li>
+<li><p><strong>Test Access</strong>: Start the Trail Making Test</p></li>
+<li><p><strong>Data Access</strong>: View user profile data or test history</p></li>
+</ol>
+<p>The Home module emphasizes accessibility, responsive design, and intuitive navigation to provide a seamless entry point to the application’s functionality.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="splash.html" class="btn btn-neutral float-left" title="Splash Module" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="home/presentation.html" class="btn btn-neutral float-right" title="Presentation Layer" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, xiaoyang peng.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

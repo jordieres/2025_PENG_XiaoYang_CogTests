@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Data Layer &mdash; MSDTmt  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="User Module" href="../user.html" />
+    <link rel="prev" title="Domain Layer" href="domain.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            MSDTmt
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../overview.html">Project Overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Feature Modules</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../splash.html">Splash Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../home.html">Home Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tm_tst.html">Trail Making Test Module Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user.html">User Module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../home/index.html">Home Module Documentation</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Trail Making Test Module Documentation</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="presentation.html">Presentation Layer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="domain.html">Domain Layer</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Data Layer</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#components">Components</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user/index.html">User Module Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../architecture.html">Feature-First Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../app_layers/index.html">Application Layers</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">MSDTmt</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Feature Modules</a></li>
+          <li class="breadcrumb-item"><a href="../tm_tst.html">Trail Making Test Module Overview</a></li>
+      <li class="breadcrumb-item active">Data Layer</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/features/tm_tst/data.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="data-layer">
+<h1>Data Layer<a class="headerlink" href="#data-layer" title="Link to this heading"></a></h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>The Data Layer of the TMT module is responsible for persistence, retrieval, and communication with external services. It implements the repository interfaces defined in the domain layer, handling local storage, API communication, and offline synchronization strategies to ensure test results are reliably captured and preserved.</p>
+</section>
+<section id="components">
+<h2>Components<a class="headerlink" href="#components" title="Link to this heading"></a></h2>
+<section id="repository-implementations">
+<h3>Repository Implementations<a class="headerlink" href="#repository-implementations" title="Link to this heading"></a></h3>
+<p><strong>TmtResultRepositoryImpl</strong></p>
+<p>Implements TmtResultRepository interface for reporting test results:</p>
+<ul class="simple">
+<li><p>Retrieves current user profile for result association</p></li>
+<li><p>Transforms and submits test results to API service</p></li>
+<li><p>Handles error cases and logging</p></li>
+<li><p>Delegates to appropriate data sources</p></li>
+<li><p>Returns properly structured result data</p></li>
+</ul>
+<p><strong>PendingResultRepositoryImpl</strong></p>
+<p>Implements PendingResultRepository interface for offline result management:</p>
+<ul class="simple">
+<li><p>Saves test results locally when network unavailable</p></li>
+<li><p>Retrieves pending results for later synchronization</p></li>
+<li><p>Manages deletion of successfully reported results</p></li>
+<li><p>Maintains timestamp information for synchronization priority</p></li>
+<li><p>Interfaces with LocalStorageServices for persistence</p></li>
+</ul>
+<p><strong>TmtGameConfigRepositoryImpl</strong></p>
+<p>Implements TmtGameConfigRepository interface for test configuration:</p>
+<ul class="simple">
+<li><p>Stores user preferences for circle count</p></li>
+<li><p>Retrieves configuration parameters</p></li>
+<li><p>Uses LocalStorageServices for persistent settings</p></li>
+<li><p>Manages default values when settings not found</p></li>
+</ul>
+</section>
+<section id="models">
+<h3>Models<a class="headerlink" href="#models" title="Link to this heading"></a></h3>
+<p><strong>TmtResultModel</strong></p>
+<p>Data transfer model for test results:</p>
+<ul class="simple">
+<li><p>Maps domain entity properties to API-compatible format</p></li>
+<li><p>Handles date formatting for server requirements</p></li>
+<li><p>Manages optional fields based on circle count</p></li>
+<li><p>Converts domain metrics to transferable format</p></li>
+<li><p>Handles serialization to JSON for API requests</p></li>
+</ul>
+<p><strong>TmtUserModel</strong></p>
+<p>Data transfer model for user information:</p>
+<ul class="simple">
+<li><p>Maps user profile data to required API format</p></li>
+<li><p>Formats demographic information for result context</p></li>
+<li><p>Handles date formatting for birthdate</p></li>
+<li><p>Provides conversion between domain and API formats</p></li>
+</ul>
+<p><strong>PendingResultData</strong></p>
+<p>Model for storing offline results:</p>
+<ul class="simple">
+<li><p>Contains JSON representations of result and user data</p></li>
+<li><p>Stores timestamp for synchronization ordering</p></li>
+<li><p>Provides extraction methods for key information</p></li>
+<li><p>Simplifies serialization for local storage</p></li>
+</ul>
+</section>
+<section id="data-sources">
+<h3>Data Sources<a class="headerlink" href="#data-sources" title="Link to this heading"></a></h3>
+<p><strong>GenerateCircleWithData</strong></p>
+<p>Data source for circle generation:</p>
+<ul class="simple">
+<li><p>Creates circles with appropriate labels based on test type</p></li>
+<li><p>Handles number-only (TMT-A) or alternating number-letter (TMT-B) generation</p></li>
+<li><p>Assigns correct sequence order values</p></li>
+<li><p>Maps raw position data to domain entities</p></li>
+</ul>
+<p><strong>RandomGridSampler</strong></p>
+<p>Advanced data source for optimal circle positioning:</p>
+<ul class="simple">
+<li><p>Implements grid-based placement algorithm</p></li>
+<li><p>Ensures minimum distances between circle centers</p></li>
+<li><p>Adapts to available screen dimensions</p></li>
+<li><p>Provides fallback strategies for challenging constraints</p></li>
+<li><p>Optimizes circle distribution for valid test patterns</p></li>
+</ul>
+<p><strong>ReorderCircles</strong></p>
+<p>Data source for optimizing circle sequences:</p>
+<ul class="simple">
+<li><p>Analyzes potential connection paths between circles</p></li>
+<li><p>Reorders circles to create valid test sequences</p></li>
+<li><p>Identifies and resolves circle visibility and accessibility issues</p></li>
+<li><p>Implements optimal distance calculation strategies</p></li>
+<li><p>Handles regeneration of problematic placements</p></li>
+</ul>
+<p><strong>SimpleGenerateRandomCircle</strong></p>
+<p>Basic circle generation fallback:</p>
+<ul class="simple">
+<li><p>Provides simplified random placement algorithm</p></li>
+<li><p>Ensures minimum distance between circles</p></li>
+<li><p>Validates circle positions against boundaries</p></li>
+<li><p>Used as fallback when advanced algorithms fail</p></li>
+</ul>
+</section>
+<section id="api-services">
+<h3>API Services<a class="headerlink" href="#api-services" title="Link to this heading"></a></h3>
+<p>The TMT module interacts with these API services (via dependency injection):</p>
+<p><strong>RestApiServices</strong></p>
+<ul class="simple">
+<li><p><cite>reportTmtResults</cite>: Sends test results to the server</p></li>
+<li><p><cite>reportTmtResultsWithJson</cite>: Alternative payload format for sending results</p></li>
+<li><p><cite>validateReferenceCode</cite>: Verifies that a reference code is valid</p></li>
+</ul>
+<p>These services are injected into the repositories rather than being directly implemented in the TMT module.</p>
+</section>
+<section id="local-storage">
+<h3>Local Storage<a class="headerlink" href="#local-storage" title="Link to this heading"></a></h3>
+<p>The module relies on <cite>LocalStorageServices</cite> with these specific methods:</p>
+<ul class="simple">
+<li><p><cite>getPendingResultList</cite>: Retrieves stored pending results</p></li>
+<li><p><cite>savePendingResultList</cite>: Persists pending results</p></li>
+<li><p><cite>clearPendingResultList</cite>: Removes all pending results</p></li>
+<li><p><cite>saveCircleNumber</cite>: Stores user preference for circle count</p></li>
+<li><p><cite>getCircleNumber</cite>: Retrieves circle count configuration</p></li>
+</ul>
+</section>
+<section id="work-management">
+<h3>Work Management<a class="headerlink" href="#work-management" title="Link to this heading"></a></h3>
+<p>The data layer interacts with the <cite>WorkManagerHandler</cite> to:</p>
+<ul class="simple">
+<li><p>Schedule background synchronization of pending results</p></li>
+<li><p>Cancel scheduled tasks when no longer needed</p></li>
+<li><p>Manage network-dependent operations efficiently</p></li>
+<li><p>Enable offline-first operation with reliable sync</p></li>
+</ul>
+</section>
+<section id="offline-strategy">
+<h3>Offline Strategy<a class="headerlink" href="#offline-strategy" title="Link to this heading"></a></h3>
+<p>The TMT module implements a robust offline-first approach:</p>
+<ol class="arabic simple">
+<li><p>Results are always saved locally first</p></li>
+<li><p>If network is available, immediate synchronization is attempted</p></li>
+<li><p>For offline usage, results are stored in pending queue</p></li>
+<li><p>Background work is scheduled for later synchronization</p></li>
+<li><p>On successful sync, pending entries are removed</p></li>
+<li><p>Network errors trigger re-queuing for later attempts</p></li>
+</ol>
+</section>
+<section id="data-flow">
+<h3>Data Flow<a class="headerlink" href="#data-flow" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p><strong>Test Completion</strong>:
+- TmtMetricsController collects performance data
+- TmtGameResultData is constructed with comprehensive metrics
+- TmtResultModel transforms domain data to transferable format</p></li>
+<li><p><strong>Result Submission</strong>:
+- ReportTmtResultUseCase invokes repository implementation
+- Current user profile is retrieved and transformed to TmtUserModel
+- Result is submitted to API service</p></li>
+<li><p><strong>Offline Handling</strong>:
+- Network errors are detected and handled
+- PendingResultUseCase saves result for later submission
+- WorkManagerHandler schedules background synchronization</p></li>
+<li><p><strong>Configuration Management</strong>:
+- User preferences for circle count are persisted
+- TmtGameConfigUseCase retrieves settings before test generation
+- Default values are used when settings are not available</p></li>
+</ol>
+</section>
+<section id="security-considerations">
+<h3>Security Considerations<a class="headerlink" href="#security-considerations" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>User data is associated with results only at submission time</p></li>
+<li><p>Demographic data is limited to necessary clinical context</p></li>
+<li><p>Local result storage uses platform-appropriate encryption</p></li>
+<li><p>Network transmission uses secure connection mechanisms</p></li>
+<li><p>Personal identifiers are managed through reference codes</p></li>
+</ul>
+</section>
+<section id="performance-optimizations">
+<h3>Performance Optimizations<a class="headerlink" href="#performance-optimizations" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Efficient local storage structure for quick retrieval</p></li>
+<li><p>Batch processing of pending results during synchronization</p></li>
+<li><p>Minimal storage footprint for offline data</p></li>
+<li><p>Lazy loading of historical results</p></li>
+<li><p>Efficient serialization formats for persistence</p></li>
+</ul>
+<p>The data layer ensures that valuable clinical assessment data is reliably persisted, properly formatted for analysis, and securely transmitted to backend systems while maintaining a seamless user experience regardless of network availability.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="domain.html" class="btn btn-neutral float-left" title="Domain Layer" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../user.html" class="btn btn-neutral float-right" title="User Module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, xiaoyang peng.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
