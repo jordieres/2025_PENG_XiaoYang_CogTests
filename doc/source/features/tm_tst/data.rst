@@ -7,10 +7,10 @@ Overview
 The Data Layer of the TMT module is responsible for persistence, retrieval, and communication with external services. It implements the repository interfaces defined in the domain layer, handling local storage, API communication, and offline synchronization strategies to ensure test results are reliably captured and preserved.
 
 Components
----------
+----------
 
 Repository Implementations
-^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **TmtResultRepositoryImpl**
 
@@ -42,7 +42,7 @@ Implements TmtGameConfigRepository interface for test configuration:
 - Manages default values when settings not found
 
 Models
-^^^^^
+^^^^^^
 
 **TmtResultModel**
 
@@ -73,7 +73,7 @@ Model for storing offline results:
 - Simplifies serialization for local storage
 
 Data Sources
-^^^^^^^^^^
+^^^^^^^^^^^^
 
 **GenerateCircleWithData**
 
@@ -114,7 +114,7 @@ Basic circle generation fallback:
 - Used as fallback when advanced algorithms fail
 
 API Services
-^^^^^^^^^^
+^^^^^^^^^^^^
 
 The TMT module interacts with these API services (via dependency injection):
 
@@ -127,7 +127,7 @@ The TMT module interacts with these API services (via dependency injection):
 These services are injected into the repositories rather than being directly implemented in the TMT module.
 
 Local Storage
-^^^^^^^^^^^
+^^^^^^^^^^^^^
 
 The module relies on `LocalStorageServices` with these specific methods:
 
@@ -138,7 +138,7 @@ The module relies on `LocalStorageServices` with these specific methods:
 - `getCircleNumber`: Retrieves circle count configuration
 
 Work Management
-^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
 
 The data layer interacts with the `WorkManagerHandler` to:
 
@@ -148,7 +148,7 @@ The data layer interacts with the `WorkManagerHandler` to:
 - Enable offline-first operation with reliable sync
 
 Offline Strategy
-^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
 
 The TMT module implements a robust offline-first approach:
 
@@ -160,7 +160,7 @@ The TMT module implements a robust offline-first approach:
 6. Network errors trigger re-queuing for later attempts
 
 Data Flow
-^^^^^^^^
+^^^^^^^^^
 
 1. **Test Completion**:
    - TmtMetricsController collects performance data
@@ -183,7 +183,7 @@ Data Flow
    - Default values are used when settings are not available
 
 Security Considerations
-^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
 
 - User data is associated with results only at submission time
 - Demographic data is limited to necessary clinical context
@@ -192,7 +192,7 @@ Security Considerations
 - Personal identifiers are managed through reference codes
 
 Performance Optimizations
-^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 - Efficient local storage structure for quick retrieval
 - Batch processing of pending results during synchronization

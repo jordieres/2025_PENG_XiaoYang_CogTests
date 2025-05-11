@@ -1,13 +1,13 @@
 Architecture Design
-=================
+===================
 
 Architecture Overview
--------------------
+---------------------
 
 The MS-dTMT project adopts a layered architecture based on Domain-Driven Design (DDD), incorporating Clean Architecture principles. This architecture divides the application into different layers, each with specific responsibilities, ensuring code maintainability and testability.
 
 Main Layers
-----------
+-----------
 
 .. image:: _images/architecture-diagram.png
    :alt: Architecture Diagram
@@ -38,7 +38,7 @@ The data layer is responsible for data access and storage. It primarily includes
 * **Models**: Data models used for serialization and deserialization
 
 Dependency Rules
---------------
+----------------
 
 Dependencies always point toward the inner layers:
 
@@ -49,7 +49,7 @@ Dependencies always point toward the inner layers:
 These dependency rules ensure the independence of the inner layer (domain layer), making business logic immune to changes in external technologies.
 
 Folder Structure
---------------
+----------------
 
 The main folder structure of the project is as follows:
 

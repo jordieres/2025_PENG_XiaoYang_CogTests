@@ -7,7 +7,7 @@ Overview
 The Home module serves as the central entry point of the MS-dTMT application, providing a clean interface for accessing the Trail Making Test (TMT) functionality and managing user profiles. It implements a responsive design that adapts to different device sizes and orientations while maintaining consistent user experience.
 
 Module Structure
----------------
+----------------
 
 The Home module follows a clean architecture with clear separation between presentation, domain, and data layers:
 
@@ -20,7 +20,7 @@ The Home module follows a clean architecture with clear separation between prese
    home/data
 
 Key Components
--------------
+--------------
 
 **Presentation Layer**
 
@@ -61,7 +61,7 @@ Key Components
   * **ReferenceValidationRepositoryImpl**: Implements reference validation repository
 
 Main Features
-------------
+-------------
 
 * **User Profile Management**: Select, create, and manage user profiles
 * **Reference Code Validation**: Validate reference codes required for test access

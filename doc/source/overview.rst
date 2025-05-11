@@ -1,13 +1,13 @@
 Project Overview
-==============
+================
 
 Project Introduction
--------------------
+--------------------
 
 MS-dTMT is a cognitive testing application developed with Flutter, primarily used for conducting Digital Trail Making Tests. The application provides a solution for standardized cognitive assessment on mobile devices, enabling researchers and clinicians to conveniently collect cognitive function data.
 
 Main Features
-------------
+-------------
 
 * **Cognitive Testing**: Implementation of standardized cognitive assessment tools like the Trail Making Test (TMT)
 * **User Management**: Support for user registration, login, and profile management
@@ -16,7 +16,7 @@ Main Features
 * **Data Synchronization**: Synchronization of data to the server when an internet connection is available
 
 Technology Stack
---------------
+----------------
 
 * **Frontend Framework**: Flutter (Dart)
 * **State Management**: GetX and Provider
@@ -26,7 +26,7 @@ Technology Stack
 * **Dependency Injection**: GetX service management
 
 Project Architecture
-------------------
+--------------------
 
 The project employs a clear layered architecture based on Domain-Driven Design (DDD) principles:
 

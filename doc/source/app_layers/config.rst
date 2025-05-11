@@ -1,5 +1,5 @@
 Configuration Layer
-==================
+===================
 
 Overview
 --------
@@ -7,10 +7,10 @@ Overview
 The Configuration layer manages application-wide settings, themes, routes, and translations for the MS-dTMT application. This layer centralizes configuration management, making it easier to adjust application behavior across different environments and providing consistent styling throughout the app.
 
 Key Components
--------------
+--------------
 
 Theme Configuration
-^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^
 
 **AppColors**
 
@@ -90,7 +90,7 @@ The CustomInputDecoration class provides consistent styling for form input field
 - Text styles for input, hint, and read-only states
 
 Routing Configuration
-^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
 
 **AppRoutes**
 
@@ -121,7 +121,7 @@ AppRouteObserver monitors navigation events throughout the application:
 - Enables components to react to navigation changes
 
 Translation Configuration
-^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **AppTranslations**
 
@@ -144,7 +144,7 @@ The configuration includes structured message classes for different features:
 These classes organize translations by feature area, making maintenance easier.
 
 Benefits of the Configuration Layer
-----------------------------------
+-----------------------------------
 
 1. **Consistency**: Ensures visual and behavioral consistency throughout the application
 2. **Maintainability**: Centralizes configuration, making updates simpler and more reliable

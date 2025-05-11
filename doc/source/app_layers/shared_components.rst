@@ -1,5 +1,5 @@
 Shared Components Layer
-======================
+=======================
 
 Overview
 --------
@@ -7,10 +7,10 @@ Overview
 The Shared Components layer contains reusable UI components used across different features of the MS-dTMT application. These components ensure consistency in the user interface, reduce code duplication, and speed up development by providing ready-to-use solutions for common UI patterns.
 
 Key Components
--------------
+--------------
 
 Custom Buttons
-^^^^^^^^^^^^^
+^^^^^^^^^^^^^^
 
 **CustomPrimaryButton**
 
@@ -37,7 +37,7 @@ The CustomSecondaryButton is a text-based button used for secondary actions with
 This button is typically used for actions like "Cancel", "Back", or other secondary options that don't represent the main flow.
 
 Navigation Components
-^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
 
 **CustomAppBar**
 
@@ -53,7 +53,7 @@ The CustomAppBar provides a consistent navigation header across the application 
 This component ensures navigation consistency and provides users with familiar patterns throughout the application.
 
 Dialog Components
-^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^
 
 **CustomDialog**
 
@@ -86,7 +86,7 @@ Features include:
 These dialog components provide consistent user interaction patterns for common dialog scenarios.
 
 Text Components
-^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
 
 **HeaderText**
 
@@ -100,7 +100,7 @@ The HeaderText component is used for section headings across the application wit
 This component maintains visual hierarchy in screens and ensures consistent section identification.
 
 Benefits of Shared Components
-----------------------------
+-----------------------------
 
 1. **Consistency**: Ensures a cohesive user interface with consistent patterns
 2. **Efficiency**: Speeds up development by reusing pre-built components

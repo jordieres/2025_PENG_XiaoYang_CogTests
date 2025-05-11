@@ -1,16 +1,16 @@
 Presentation Layer
-=================
+==================
 
 Overview
 --------
 
-The Presentation Layer of the User module implements the user interface components and manages state using GetX pattern for reactive UI responses.
+The Presentation Layer of the User module implements the user interface components and interaction logic. It follows the GetX state management pattern to maintain a reactive UI while keeping the code clean and modular.
 
 Screens
 -------
 
 RegisterUserScreen
-^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^
 
 User registration screen (``lib/app/features/user/presentation/screen/register_user_screen.dart``):
 
@@ -21,7 +21,7 @@ User registration screen (``lib/app/features/user/presentation/screen/register_u
 - Uses responsive layout for different device sizes
 
 CurrentUserDataScreen
-^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
 
 Current user screen (``lib/app/features/user/presentation/screen/current_user_data_screen.dart``):
 
@@ -32,7 +32,7 @@ Current user screen (``lib/app/features/user/presentation/screen/current_user_da
 - Shows error message if no profile is selected
 
 UserResultHistoryScreen
-^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
 
 Result history screen (``lib/app/features/user/presentation/screen/user_result_history_screen.dart``):
 
@@ -43,7 +43,7 @@ Result history screen (``lib/app/features/user/presentation/screen/user_result_h
 - Handles empty state with appropriate message
 
 UserScreenBase
-^^^^^^^^^^^^
+^^^^^^^^^^^^^^
 
 Base screen (``lib/app/features/user/presentation/screen/user_screen_base.dart``):
 
@@ -54,10 +54,10 @@ Base screen (``lib/app/features/user/presentation/screen/user_screen_base.dart``
 - Manages form state and focus navigation
 
 Controllers
-----------
+-----------
 
 UserProfileController
-^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
 
 Profile controller (``lib/app/features/user/presentation/contoller/user_profile_controller.dart``):
 
@@ -68,7 +68,7 @@ Profile controller (``lib/app/features/user/presentation/contoller/user_profile_
 - Manages current active profile selection
 
 TestResultLocalDataController
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Test result controller (``lib/app/features/user/presentation/contoller/test_result_controller.dart``):
 
@@ -82,7 +82,7 @@ Bindings
 --------
 
 UserProfileBinding
-^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^
 
 User binding (``lib/app/features/user/presentation/binding/user_profile_binding.dart``):
 
@@ -93,7 +93,7 @@ User binding (``lib/app/features/user/presentation/binding/user_profile_binding.
 - Registers UserProfileController for UI state management
 
 UserHistoryBinding
-^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^
 
 History binding (``lib/app/features/user/presentation/binding/user_history_binding.dart``):
 
@@ -104,7 +104,7 @@ History binding (``lib/app/features/user/presentation/binding/user_history_bindi
 - Ensures dependencies are only registered once
 
 TestResultLocalDataBinding
-^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Result binding (``lib/app/features/user/presentation/binding/test_result_local_data_binding.dart``):
 

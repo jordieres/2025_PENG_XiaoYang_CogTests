@@ -1,5 +1,5 @@
 Trail Making Test Module Overview
-===============================
+=================================
 
 Overview
 --------
@@ -7,7 +7,7 @@ Overview
 The Trail Making Test (TMT) module is a digital implementation of a standardized cognitive assessment used to evaluate visual attention, task-switching ability, and executive function. The test consists of two parts: TMT-A (connecting numbers in sequence) and TMT-B (alternating between numbers and letters).
 
 Module Structure
----------------
+----------------
 
 The TMT module follows the project's layered architecture with clear separation of concerns:
 
@@ -20,7 +20,7 @@ The TMT module follows the project's layered architecture with clear separation 
    tm_tst/data
 
 Key Features
------------
+------------
 
 * **Dynamic Test Generation**: Creates tests with configurable number of circles (default 25 or simplified 15)
 * **Practice Mode**: Allows users to practice with 9 circles before formal testing
@@ -38,7 +38,7 @@ Key Features
 * **User Profiles**: Associates tests with user profiles for longitudinal tracking
 
 Test Flow
---------
+---------
 
 1. **Mode Selection**: User chooses between practice and formal test modes
 2. **Hand Selection**: User indicates which hand they will use
@@ -49,7 +49,7 @@ Test Flow
 7. **Data Synchronization**: Results are saved locally and uploaded when online
 
 UI/UX Design
------------
+------------
 
 The TMT interface prioritizes:
 
@@ -60,7 +60,7 @@ The TMT interface prioritizes:
 * **Accessibility**: Configurable circle sizes and contrast options
 
 Technical Implementation
----------------------
+------------------------
 
 * **Responsive Circle Generation**: Dynamically positions circles based on screen dimensions
 * **Connectivity Validation**: Ensures proper sequencing and detects errors

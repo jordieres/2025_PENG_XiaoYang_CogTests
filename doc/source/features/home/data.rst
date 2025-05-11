@@ -7,10 +7,10 @@ Overview
 The Data Layer in the Home module is responsible for implementing the repository interfaces defined in the domain layer. It handles the actual data operations, whether retrieving from local storage, communicating with APIs, or processing in-memory data.
 
 Repository Implementations
--------------------------
+--------------------------
 
 ReferenceValidationRepositoryImpl
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Implementation of reference validation repository (``lib/app/features/home/data/repositories/reference_validation_repository_impl.dart``):
 
@@ -51,12 +51,12 @@ Implementation of reference validation repository (``lib/app/features/home/data/
 - Returns properly formatted results for domain layer consumption
 
 Data Sources
------------
+------------
 
 The Home module utilizes several data sources to fulfill its repository requirements:
 
 TestResultLocalDataSource
-^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The local data source for test results (implemented in User module):
 
@@ -70,7 +70,7 @@ The local data source for test results (implemented in User module):
 - Manages database queries and transactions
 
 RestApiServices
-^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
 
 The remote API service (shared service):
 
@@ -100,7 +100,7 @@ The data flow for reference code validation follows these steps:
 This layered approach ensures clean separation of concerns, with each component handling its specific responsibility in the data flow.
 
 Database Structure
-----------------
+------------------
 
 The reference validation functionality relies on the user test results table:
 

@@ -1,13 +1,13 @@
 Presentation Layer
-================
+==================
 
 Overview
 --------
 
-The Presentation Layer of the TMT module implements the user interface and interaction logic for the Trail Making Test. It follows the GetX pattern for state management and employs a component-based approach for UI elements. This layer handles test rendering, user interactions, and visual feedback while delegating core business logic to the domain layer.
+The Presentation Layer of the TMT module implements the user interface and interaction patterns for administering the Trail Making Test. It uses GetX for state management and follows a clean architecture pattern with clear separation between UI, state management, and business logic.
 
 Components
----------
+----------
 
 Screens
 ^^^^^^^
@@ -60,7 +60,7 @@ Interface for selecting test mode and configuration:
 - Uses responsive layout for different orientations
 
 Controllers
-^^^^^^^^^^
+^^^^^^^^^^^
 
 **BaseTmtTestFlowController**
 
@@ -99,7 +99,7 @@ Manages test result submission and reporting:
 - Tracks request states (loading, success, error)
 
 Components
-^^^^^^^^^
+^^^^^^^^^^
 
 **TmtGameBoardController**
 
@@ -152,7 +152,7 @@ Specialized app bar for the test interface:
 - Provides consistent navigation across test phases
 
 Bindings
-^^^^^^^
+^^^^^^^^
 
 **TmtTESTBinding**
 
@@ -185,7 +185,7 @@ Manages test configuration dependencies:
 - Ensures test parameters are properly loaded
 
 UI Flows
-^^^^^^^
+^^^^^^^^
 
 **Test Help Flow**
 

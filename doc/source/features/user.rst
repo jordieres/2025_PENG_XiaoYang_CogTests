@@ -7,7 +7,7 @@ Overview
 The User module manages user profiles and test result history in the MS-dTMT application. It provides functionality for creating, viewing, and managing user profiles along with storing and displaying their test performance results.
 
 Module Structure
----------------
+----------------
 
 The User module follows a clean architecture approach with three distinct layers:
 
@@ -20,7 +20,7 @@ The User module follows a clean architecture approach with three distinct layers
    user/data
 
 Key Features
------------
+------------
 
 - User profile creation and management
 - Selection of active user from multiple profiles
@@ -29,10 +29,10 @@ Key Features
 - Deletion of user profiles with associated test results
 
 Core Components
--------------
+---------------
 
 Presentation Layer
-^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^
 
 - **Screens**:
   - ``RegisterUserScreen``: Form for creating new user profiles
@@ -49,7 +49,7 @@ Presentation Layer
   - ``UserHistoryBinding``: Dependency injection for history components
 
 Domain Layer
-^^^^^^^^^^^
+^^^^^^^^^^^^
 
 - **Entities**:
   - ``UserProfile``: Core domain entity with user identification and demographic information
@@ -71,7 +71,7 @@ Data Layer
   - ``TestResultLocalDataSource``: Interface for test result storage operations
 
 Database Design
---------------
+---------------
 
 The User module utilizes SQLite database with the following tables:
 
@@ -90,7 +90,7 @@ The User module utilizes SQLite database with the following tables:
   - tmtBTime (REAL)
 
 User Registration Flow
---------------------
+----------------------
 
 1. User enters profile information (nickname, sex, birth date, education level)
 2. System validates input (required fields, unique nickname)
@@ -102,7 +102,7 @@ User Registration Flow
    - Sets as current active user
 
 Integration Points
-----------------
+------------------
 
 The User module integrates with:
 

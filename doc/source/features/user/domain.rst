@@ -1,16 +1,16 @@
 Domain Layer
-===========
+============
 
 Overview
 --------
 
-The Domain Layer contains business logic independent of UI and data sources. It defines entities, repository interfaces, and business rules for the user module.
+The Domain Layer of the User module contains the business logic and rules that are independent of UI implementation and data sources. It defines entities, repository interfaces, and use cases that encapsulate the core functionality of the user feature.
 
 Entities
 --------
 
 UserProfile
-^^^^^^^^^
+^^^^^^^^^^^
 
 User profile entity (``lib/app/features/user/domain/entities/user_profile.dart``):
 
@@ -26,7 +26,7 @@ User profile entity (``lib/app/features/user/domain/entities/user_profile.dart``
   * withUserId constructor for existing users
 
 UserTestLocalDataResult
-^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
 
 Test result entity (``lib/app/features/user/domain/entities/user_test_local_data_result.dart``):
 
@@ -37,10 +37,10 @@ Test result entity (``lib/app/features/user/domain/entities/user_test_local_data
   * ``tmtBTime``: double representing completion time for TMT-B test
 
 Repository Interfaces
---------------------
+---------------------
 
 UserProfileRepository
-^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
 
 User repository interface (``lib/app/features/user/domain/repository/user_profile_repository.dart``):
 
@@ -54,7 +54,7 @@ User repository interface (``lib/app/features/user/domain/repository/user_profil
   * ``setCurrentProfile(String userId)``: Void future method
 
 TestResultLocalDataRepository
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Test result repository interface (``lib/app/features/user/domain/repository/test_result_local_data_repository.dart``):
 

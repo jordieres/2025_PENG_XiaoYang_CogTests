@@ -4,13 +4,13 @@ Data Layer
 Overview
 --------
 
-The Data Layer implements domain repository interfaces, manages database interactions, and handles conversion between database models and domain entities.
+The Data Layer in the User module is responsible for implementing the repository interfaces defined in the domain layer. It handles the actual data operations, whether retrieving from local storage, communicating with APIs, or processing in-memory data.
 
 Models
 ------
 
 UserProfileModel
-^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
 
 User profile model (``lib/app/features/user/data/model/user_profile_model.dart``):
 
@@ -28,7 +28,7 @@ User profile model (``lib/app/features/user/data/model/user_profile_model.dart``
 - Includes fromEntity() factory to convert domain entity to data model
 
 UserTestResultLocalDataModel
-^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Test result model (``lib/app/features/user/data/model/user_test_result_local_data_model.dart``):
 
@@ -44,10 +44,10 @@ Test result model (``lib/app/features/user/data/model/user_test_result_local_dat
 - Includes fromEntity() factory to convert domain entity to data model
 
 Data Sources
------------
+------------
 
 UserProfileDataSource
-^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
 
 Profile data source interface (``lib/app/features/user/data/datasources/user_profle_data_soruce.dart``):
 
@@ -63,7 +63,7 @@ Profile data source interface (``lib/app/features/user/data/datasources/user_pro
   * ``getCurrentProfile()``: Gets current active profile
 
 UserProfileDataSourceImpl
-^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Implementation (``lib/app/features/user/data/datasources/user_profle_data_soruce.dart``):
 
@@ -74,7 +74,7 @@ Implementation (``lib/app/features/user/data/datasources/user_profle_data_soruce
   * Uses LocalStorageServices for current user preferences
 
 TestResultLocalDataSource
-^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Test result data source interface (``lib/app/features/user/data/datasources/test_result_data_soruce.dart``):
 
@@ -85,7 +85,7 @@ Test result data source interface (``lib/app/features/user/data/datasources/test
   * ``isReferenceCodeUsed()``: Checks for reference code duplicates
 
 TestResultDataSourceImpl
-^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 Implementation (``lib/app/features/user/data/datasources/test_result_data_soruce.dart``):
 
@@ -96,10 +96,10 @@ Implementation (``lib/app/features/user/data/datasources/test_result_data_soruce
   * Integrates with UserDatabaseHelper for database access
 
 Repository Implementations
-------------------------
+--------------------------
 
 UserProfileRepositoryImpl
-^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Implementation (``lib/app/features/user/domain/repository/user_profile_repository.dart``):
 
@@ -111,7 +111,7 @@ Implementation (``lib/app/features/user/domain/repository/user_profile_repositor
   * Coordinates profile and test result deletion
 
 TestResultLocalDataRepositoryImpl
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Implementation (``lib/app/features/user/domain/repository/test_result_local_data_repository.dart``):
 

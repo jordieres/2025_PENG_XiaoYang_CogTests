@@ -1,5 +1,5 @@
 Utilities Layer
-==============
+===============
 
 Overview
 --------
@@ -7,10 +7,10 @@ Overview
 The Utilities layer in the MS-dTMT application provides essential supporting functionality organized into distinct categories. These utilities handle device detection, UI helpers, storage, networking, and various application-wide services that support the core features of the application.
 
 Key Components
--------------
+--------------
 
 Services
-^^^^^^^
+^^^^^^^^
 
 **LocalStorageServices**
 
@@ -84,7 +84,7 @@ Manages background tasks for offline operation with:
 * Callback handling through the ``callbackDispatcher()`` function
 
 Network Services
-^^^^^^^
+^^^^^^^^^^^^^^^^
 
 **API Error Handling**
 
@@ -108,7 +108,7 @@ Provides standardized response wrappers for network operations to ensure consist
 * Loading/progress states
 
 UI Utilities
-^^^^^^
+^^^^^^^^^^^^
 
 **AppSnackbar**
 
@@ -128,7 +128,7 @@ Provides extensions for UI components to maintain consistent styling.
 Implements standardized bottom sheets for consistent presentation of modal content.
 
 Mixins
-^^^^^
+^^^^^^
 
 **NavigationMixin**
 
@@ -149,7 +149,7 @@ Provides standardized form validation logic for input components.
 Organizes all application mixins for easy access.
 
 Helpers
-^^^^^^
+^^^^^^^
 
 **DeviceHelper**
 
@@ -187,7 +187,7 @@ Utilities for type checking and conversion operations.
 General application utility functions used across different features.
 
 Organization Structure
---------------------
+----------------------
 
 The utils package is organized into a clear directory structure:
 
@@ -204,7 +204,7 @@ The utils package is organized into a clear directory structure:
   Provides utility functions focused on specific tasks like device detection and component sizing.
 
 Persistence Strategy
-------------------
+--------------------
 
 The application implements a multi-layered persistence strategy:
 
@@ -226,7 +226,7 @@ The application implements a multi-layered persistence strategy:
 The shared preference implementation ensures critical application state persists across sessions while maintaining a responsive user experience.
 
 Benefits of the Utilities Layer
--------------------------
+-------------------------------
 
 1. **Cross-Cutting Concerns**: Handles functionality that spans multiple features
 2. **Consistency**: Ensures consistent behavior and appearance throughout the application

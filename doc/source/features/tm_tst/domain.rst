@@ -1,16 +1,16 @@
 Domain Layer
-===========
+============
 
 Overview
 --------
 
-The Domain Layer contains the core business logic and entities of the Trail Making Test module, independent of UI implementation or data persistence mechanisms. It defines the test rules, metrics collection, and result calculation algorithms that constitute a valid cognitive assessment tool.
+The Domain Layer of the TMT module contains the business logic and rules for the Trail Making Test, independent of UI implementation and data sources. It defines entities, repository interfaces, and use cases that encapsulate the core functionality of the cognitive assessment.
 
 Components
----------
+----------
 
 Entities
-^^^^^^^
+^^^^^^^^
 
 **TmtGameCircle**
 
@@ -67,7 +67,7 @@ Comprehensive result entity containing all test metrics:
 - Methods for construction from metrics controller
 
 Metrics Entities
-^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^
 
 **TmtMetricsController**
 
@@ -141,7 +141,7 @@ Captures touch pressure and size data (when available):
 - Provides insights into motor control
 
 Use Cases
-^^^^^^^^
+^^^^^^^^^
 
 **TmtGameConfigUseCase**
 
@@ -190,7 +190,7 @@ Calculates optimal layouts for result presentation:
 - Ensures consistent presentation across devices
 
 Repositories (Interfaces)
-^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **TmtResultRepository**
 
@@ -218,7 +218,7 @@ Interface for managing offline results:
 - Abstracts synchronization mechanisms
 
 Value Objects and Constants
-^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 **MetricStaticValues**
 
@@ -248,7 +248,7 @@ Enum for circle content types:
 - NUMBER_WITH_LETTER (for TMT-B)
 
 Domain Services
-^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^
 
 **RandomGridSampler**
 
@@ -280,7 +280,7 @@ Creates circle entities with appropriate properties:
 - Creates complete set of test circles
 
 Benefits of the Domain Layer
--------------------------
+----------------------------
 
 1. **Clinical Validity**: Ensures the digital implementation follows standardized assessment protocols
 2. **Test Integrity**: Guarantees consistent test parameters and scoring

@@ -1,5 +1,5 @@
 Presentation Layer
-=================
+==================
 
 Overview
 --------
@@ -39,7 +39,7 @@ Header component (``lib/app/features/home/presentation/components/home_page_head
 - Uses SVG assets for consistent rendering across devices
 
 SelectUserDropdown
-^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^
 
 User selection component (``lib/app/features/home/presentation/components/select_user_dropdown.dart``):
 
@@ -51,7 +51,7 @@ User selection component (``lib/app/features/home/presentation/components/select
 - Observes route changes to detect new user registrations
 
 ReferenceCodeInput
-^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^
 
 Reference code component (``lib/app/features/home/presentation/components/reference_code_input.dart``):
 
@@ -63,7 +63,7 @@ Reference code component (``lib/app/features/home/presentation/components/refere
 - Implements focus management for smooth input experience
 
 TmtTestButtonCard
-^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^
 
 TMT test button component (``lib/app/features/home/presentation/components/tmt_test_button_card.dart``):
 
@@ -75,7 +75,7 @@ TMT test button component (``lib/app/features/home/presentation/components/tmt_t
 - Features responsive layout for different screen sizes
 
 HomeCardButton
-^^^^^^^^^^^^^
+^^^^^^^^^^^^^^
 
 Card button component (``lib/app/features/home/presentation/components/home_card_button.dart``):
 
@@ -86,10 +86,10 @@ Card button component (``lib/app/features/home/presentation/components/home_card
 - Adapts appearance based on theme (light/dark)
 
 Controllers
-----------
+-----------
 
 ReferenceCodeController
-^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
 
 Reference validation controller (``lib/app/features/home/presentation/controllers/reference_code_controller.dart``):
 
@@ -101,7 +101,7 @@ Reference validation controller (``lib/app/features/home/presentation/controller
 - Implements validation reset functionality
 
 SelectUserProfileController
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 User profile controller (``lib/app/features/home/presentation/controllers/select_user_profile_controller.dart``):
 
@@ -117,14 +117,14 @@ Bindings
 --------
 
 HomeScreenBinding
-^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^
 
 Home screen binding (``lib/app/features/home/presentation/binding/home_screen_binding.dart``):
 
 - Minimal implementation for core home dependencies
 
 ReferenceValidationBinding
-^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Reference validation binding (``lib/app/features/home/presentation/binding/reference_validation_biding.dart``):
 
@@ -135,7 +135,7 @@ Reference validation binding (``lib/app/features/home/presentation/binding/refer
 - Creates reference code controller
 
 SelectUserBinding
-^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^
 
 User selection binding (``lib/app/features/home/presentation/binding/select_user_profile_binding.dart``):
 

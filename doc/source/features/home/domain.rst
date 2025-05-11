@@ -1,5 +1,5 @@
 Domain Layer
-===========
+============
 
 Overview
 --------
@@ -10,7 +10,7 @@ Entities
 --------
 
 HomeUIConstantVariable
-^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
 
 UI constants entity (``lib/app/features/home/domain/entities/home_ui_constant_variable.dart``):
 
@@ -35,7 +35,7 @@ UI constants entity (``lib/app/features/home/domain/entities/home_ui_constant_va
   * ``lockIconWidget``: Positioned lock widget for disabled elements
 
 ReferenceValidationResult
-^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Validation result entity (``lib/app/features/home/domain/entities/reference_validation_result_entity.dart``):
 
@@ -47,10 +47,10 @@ Validation result entity (``lib/app/features/home/domain/entities/reference_vali
   * ``errorMessage``: Optional error information
 
 Repository Interfaces
---------------------
+---------------------
 
 ReferenceValidationRepository
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Repository interface (``lib/app/features/home/domain/repository/reference_validation_repository.dart``):
 
@@ -65,7 +65,7 @@ Use Cases
 ---------
 
 ValidateReferenceCodeUseCase
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Validation use case (``lib/app/features/home/domain/usecases/validate_reference_code_use_case.dart``):
 
