@@ -18,6 +18,10 @@ This project follows Clean Architecture with a Feature-First structure. Code is 
 
 It uses GetX for state management, dependency injection, routing, and utilities.
 
+For more detailed documentation, please visit our online documentation hosted on ReadTheDocs: [MSDTmt documentacion](https://2025-peng-xiaoyang-cogtests.readthedocs.io/en/latest/).
+
+This documentation is automatically published and updated on ReadTheDocs. It provides comprehensive information about the project's architecture, implementation details, and usage guidelines.
+
 ### Project Directory Structure
 
 The project follows a typical Feature-First directory organization with Clean Architecture layers:
@@ -165,14 +169,51 @@ This architecture ensures that:
 - The Clean Architecture implementation is inspired by [Flutter Template](https://github.com/firgia/Flutter_Template)
 - The feature architecture is inspired by [Flutter GetX Clean Architecture](https://github.com/phamdinhduc795397/flutter-getx-clean-architecture)
 
+
+## Generating Documentation with Sphinx
+
+### Windows
+
+1. Install Sphinx:
+```bash
+pip install sphinx sphinx_rtd_theme
+```
+
+2. Navigate to the doc directory:
+```bash
+cd doc
+```
+
+3. Generate the documentation:
+```bash
+make.bat html
+```
+
+### Linux/macOS
+
+1. Install Sphinx:
+```bash
+pip install sphinx sphinx_rtd_theme
+```
+
+2. Navigate to the doc directory:
+```bash
+cd doc
+```
+
+3. Generate the documentation:
+```bash
+make html
+```
+
 ## Documentation
 
 ### Viewing Project Documentation
 
-The project's detailed documentation is located in the `doc/build/html/index.html` file. This documentation provides comprehensive information about the project's architecture, features, and implementation details.
+After generating the documentation using Sphinx (see above), the project's detailed documentation will be located in the `docs/build/html/index.html` file. This documentation provides comprehensive information about the project's architecture, features, and implementation details.
 
 To access the documentation:
-1. Navigate to the `doc/build/html` directory
+1. Navigate to the `docs/build/html` directory
 2. Open the `index.html` file in any web browser
 3. Browse through the complete documentation to understand all aspects of the project
 
@@ -183,7 +224,7 @@ The documentation includes detailed descriptions of:
 - User interfaces
 - Testing methodologies
 
-For developers who want to understand or modify the documentation source, the RST files are available in the `doc/source` directory.
+For developers who want to understand or modify the documentation source, the RST files are available in the `docs` directory.
 
 ## Running the Project
 
@@ -336,42 +377,6 @@ flutter build appbundle --release
 Output location:
 - **Windows**: `.\build\app\outputs\bundle\release\`
 - **macOS/Linux**: `./build/app/outputs/bundle/release/`
-
-## Generating Documentation with Sphinx
-
-### Windows
-
-1. Install Sphinx:
-```bash
-pip install sphinx sphinx_rtd_theme
-```
-
-2. Navigate to the doc directory:
-```bash
-cd doc
-```
-
-3. Generate the documentation:
-```bash
-make.bat html
-```
-
-### Linux/macOS
-
-1. Install Sphinx:
-```bash
-pip install sphinx sphinx_rtd_theme
-```
-
-2. Navigate to the doc directory:
-```bash
-cd doc
-```
-
-3. Generate the documentation:
-```bash
-make html
-```
 
 ## Other Development Commands
 
