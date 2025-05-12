@@ -23,3 +23,11 @@ aimed at providing a convenient and reliable solution for cognitive function ass
    architecture
    app_layers/index
 
+
+API Reference (Dart/Flutter)
+============================
+
+The comprehensive API documentation for this Flutter project, generated using ``dart doc``, provides detailed information about all classes, methods, and properties used in the application.
+
+`View API Documentation <../../api/index.html>`_
+

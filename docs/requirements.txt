@@ -1,0 +1,14 @@
+# Core Sphinx documentation generator
+sphinx==8.2.3
+
+# Read the Docs theme
+sphinx-rtd-theme==3.0.2
+
+# Optional but recommended
+sphinx-autobuild==2024.2.4
+
+# For markdown support (optional)
+myst-parser==4.0.0
+
+# For better cross-referencing
+sphinx-autodoc-typehints==2.5.0
