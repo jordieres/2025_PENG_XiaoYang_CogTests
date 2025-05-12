@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the postProcessReorder method from the ReorderCircles class, for the Dart programming language.">
+  <title>postProcessReorder method - ReorderCircles class - reorder_circles library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">msdtmt</a></li>
+    <li><a href="../../app_features_tm_tst_data_datasources_reorder_circles/app_features_tm_tst_data_datasources_reorder_circles-library.html">app\features\tm_tst\data\datasources\reorder_circles.dart</a></li>
+    <li><a href="../../app_features_tm_tst_data_datasources_reorder_circles/ReorderCircles-class.html">ReorderCircles</a></li>
+    <li class="self-crumb">postProcessReorder method</li>
+  </ol>
+  <div class="self-name">postProcessReorder</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <div class="toggle" id="theme-button" title="Toggle brightness">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        dark_mode
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        light_mode
+      </span>
+    </label>
+  </div>
+</header>
+<main>
+<div
+    id="dartdoc-main-content"
+    class="main-content"
+    data-above-sidebar="app_features_tm_tst_data_datasources_reorder_circles&#47;ReorderCircles-class-sidebar.html"
+    data-below-sidebar="">
+    <div>
+<h1><span class="kind-method">postProcessReorder</span> method 
+</h1></div>
+
+    <section class="multi-line-signature">
+      
+<span class="returntype">void</span>
+<span class="name ">postProcessReorder</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="postProcessReorder-param-circles"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../app_features_tm_tst_data_datasources_random_grid_sampler/CircleGenerator-class.html">CircleGenerator</a></span>&gt;</span></span> <span class="parameter-name">circles</span></span></li>
+</ol>)
+
+      
+
+    </section>
+    
+<section class="desc markdown">
+  <p>1: Create an auxiliary list to hold the circles in their final sorted order.
+2: Get first circle randomly, set its order to 1.
+3: For each circle, count the number of points it can directly connect to.
+4: Select the circle with the fewest connectable points, record its original order, and set its order to 2.
+5: Find the circle in the original list that originally had order 2 and swap its order with the selected circle.
+6: Add the selected circle to the auxiliary list, remove it from the original list, and remove its offset from the connectable lists of the remaining circles.
+7: Repeat steps 3–5: starting from the circle just set to order 2, continue assigning orders 3, 4, …, n by selecting the circle with the least connectable points.
+8: If a circle has an empty connectable list (i.e. no connectable points), attempt to regenerate its position.</p>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">void postProcessReorder(List&lt;CircleGenerator&gt; circles) {
+  for (int i = 0; i &lt; circles.length; i++) {
+    circles[i].order = i + 1;
+  }
+
+  &#47;&#47; ============ 2) Count connectable points ============
+  for (CircleGenerator c in circles) {
+    c.connectableOffsets = _buildConnectableOffsets(c, circles);
+  }
+
+  _getFirstCircle(circles);
+
+  &#47;&#47;============ 3) Sort by connectable points ============
+  circles.sort((a, b) =&gt;
+      a.connectableOffsets.length.compareTo(b.connectableOffsets.length));
+
+  &#47;&#47; ============ Repeat for remaining circles ============
+  _reorderDependNumberOfConnectableOffsets(circles);
+
+  &#47;&#47; If there are still circles left, add them to the end of the list
+  while (circles.isNotEmpty) {
+    aux.add(circles.removeAt(0));
+  }
+
+  circles.clear();
+  circles.addAll(aux);
+
+  circles.sort((a, b) =&gt; a.order.compareTo(b.order));
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../../index.html">msdtmt</a></li>
+    <li><a href="../../app_features_tm_tst_data_datasources_reorder_circles/app_features_tm_tst_data_datasources_reorder_circles-library.html">reorder_circles</a></li>
+    <li><a href="../../app_features_tm_tst_data_datasources_reorder_circles/ReorderCircles-class.html">ReorderCircles</a></li>
+    <li class="self-crumb">postProcessReorder method</li>
+</ol>
+
+    <h5>ReorderCircles class</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-->
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+</div><!--/.sidebar-offcanvas-->
+</main>
+<footer>
+  <span class="no-break">
+    msdtmt
+      1.1.0+3
+  </span>
+  
+</footer>
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+

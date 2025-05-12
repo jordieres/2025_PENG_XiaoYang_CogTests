@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the migrateV1ToV2 method from the UserDatabaseMigration class, for the Dart programming language.">
+  <title>migrateV1ToV2 method - UserDatabaseMigration class - user_data_base_migration library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+  
+</head>
+
+<body data-base-href="../../" data-using-base-href="false" class="light-theme">
+<div id="overlay-under-drawer"></div>
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">msdtmt</a></li>
+    <li><a href="../../app_utils_services_user_data_base_migration/app_utils_services_user_data_base_migration-library.html">app\utils\services\user_data_base_migration.dart</a></li>
+    <li><a href="../../app_utils_services_user_data_base_migration/UserDatabaseMigration-class.html">UserDatabaseMigration</a></li>
+    <li class="self-crumb">migrateV1ToV2 static method</li>
+  </ol>
+  <div class="self-name">migrateV1ToV2</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <div class="toggle" id="theme-button" title="Toggle brightness">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        dark_mode
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        light_mode
+      </span>
+    </label>
+  </div>
+</header>
+<main>
+<div
+    id="dartdoc-main-content"
+    class="main-content"
+    data-above-sidebar="app_utils_services_user_data_base_migration&#47;UserDatabaseMigration-class-sidebar.html"
+    data-below-sidebar="">
+    <div>
+<h1><span class="kind-method">migrateV1ToV2</span> static method 
+</h1></div>
+
+    <section class="multi-line-signature">
+      
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter">void</span>&gt;</span></span>
+<span class="name ">migrateV1ToV2</span>(<wbr><ol class="parameter-list single-line"> <li><span class="parameter" id="migrateV1ToV2-param-db"><span class="type-annotation"><a href="https://pub.dev/documentation/sqflite_common/2.5.4+6/sqflite/Database-class.html">Database</a></span> <span class="parameter-name">db</span></span></li>
+</ol>)
+
+      
+
+    </section>
+    
+<section class="desc markdown">
+  <p>Migrates the database from version 1 to version 2.
+Adds resultId as primary key and handUsed column to the user_test_results table.</p>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">static Future&lt;void&gt; migrateV1ToV2(Database db) async {
+  &#47;&#47; 1. Create temporary table with new structure
+  await db.execute(&#39;&#39;&#39;
+    CREATE TABLE ${DatabaseConstants.userTestResultsTable}_temp(
+      ${DatabaseConstants.resultIdColumn} TEXT PRIMARY KEY,
+      ${DatabaseConstants.referenceCodeColumn} TEXT NOT NULL,
+      ${DatabaseConstants.userIdColumn} TEXT NOT NULL,
+      ${DatabaseConstants.dateColumn} TEXT NOT NULL,
+      ${DatabaseConstants.tmtATimeColumn} REAL NOT NULL,
+      ${DatabaseConstants.tmtBTimeColumn} REAL NOT NULL,
+      ${DatabaseConstants.handUsedColumn} TEXT NOT NULL,
+      FOREIGN KEY (${DatabaseConstants.userIdColumn}) REFERENCES ${DatabaseConstants.userProfilesTable}(${DatabaseConstants.userIdColumn})
+    )
+  &#39;&#39;&#39;);
+
+  &#47;&#47; 2. Copy existing data and generate UUIDs and default value for handUsed
+  final uuid = Uuid();
+  final existingData = await db.query(DatabaseConstants.userTestResultsTable);
+
+  for (var row in existingData) {
+    final newId = uuid.v4();
+    final newRow = Map&lt;String, Object?&gt;.from(row);
+    newRow[DatabaseConstants.resultIdColumn] = newId;
+    newRow[DatabaseConstants.handUsedColumn] = &#39;D&#39;; &#47;&#47; Default value
+
+    await db.insert(&#39;${DatabaseConstants.userTestResultsTable}_temp&#39;, newRow);
+  }
+
+  &#47;&#47; 3. Drop original table
+  await db.execute(&#39;DROP TABLE ${DatabaseConstants.userTestResultsTable}&#39;);
+
+  &#47;&#47; 4. Rename temporary table to original name
+  await db.execute(
+      &#39;ALTER TABLE ${DatabaseConstants.userTestResultsTable}_temp RENAME TO ${DatabaseConstants.userTestResultsTable}&#39;);
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="../../index.html">msdtmt</a></li>
+    <li><a href="../../app_utils_services_user_data_base_migration/app_utils_services_user_data_base_migration-library.html">user_data_base_migration</a></li>
+    <li><a href="../../app_utils_services_user_data_base_migration/UserDatabaseMigration-class.html">UserDatabaseMigration</a></li>
+    <li class="self-crumb">migrateV1ToV2 static method</li>
+</ol>
+
+    <h5>UserDatabaseMigration class</h5>
+    <div id="dartdoc-sidebar-left-content"></div>
+  </div><!--/.sidebar-offcanvas-->
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+</div><!--/.sidebar-offcanvas-->
+</main>
+<footer>
+  <span class="no-break">
+    msdtmt
+      1.1.0+3
+  </span>
+  
+</footer>
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
+
+</body>
+</html>
+
