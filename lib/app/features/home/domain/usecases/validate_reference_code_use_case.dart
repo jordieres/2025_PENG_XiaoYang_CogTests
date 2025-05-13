@@ -1,3 +1,5 @@
+import 'package:msdtmt/app/utils/services/app_logger.dart';
+
 import '../../../../utils/helpers/app_helpers.dart';
 import '../../../../utils/services/net/rest_api_services.dart';
 import '../entities/reference_validation_result_entity.dart';
@@ -11,14 +13,14 @@ class ValidateReferenceCodeUseCase {
   });
 
   Future<ReferenceValidationResult> execute(String referenceCode) async {
-    /* if (await repository.isReferenceCodeUsedLocally(referenceCode)) {
+    if (await repository.isReferenceCodeUsedLocally(referenceCode)) {
       return ReferenceValidationResult(
         isValid: false,
         isUsedLocally: true,
-        numberExists: 1,
+        numberExists: 2,
         handsUsed: HandsUsed.NONE,
       );
-    }*/ //TODO changed check numbers
+    }
 
     final resultData =
         await repository.validateReferenceCodeRemotely(referenceCode);

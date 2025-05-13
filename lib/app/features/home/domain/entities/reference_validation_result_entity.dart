@@ -23,6 +23,8 @@ enum HandsUsed {
 }
 
 class ReferenceValidationResult {
+  static const  MAX_NUMBER_EXISTS = 2;
+
   final bool isValid;
   final bool isUsedLocally;
   final int numberExists;
@@ -38,6 +40,6 @@ class ReferenceValidationResult {
   });
 
   canUse() {
-    return numberExists >= 2 || handsUsed == HandsUsed.BOTH;
+    return numberExists >= MAX_NUMBER_EXISTS || handsUsed == HandsUsed.BOTH;
   }
 }

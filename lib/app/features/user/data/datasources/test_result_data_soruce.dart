@@ -4,6 +4,7 @@ import 'package:uuid/uuid.dart';
 import '../../../../constans/database_constants.dart';
 import '../../../../utils/services/user_data_base_helper.dart';
 import '../../../../utils/services/local_storage_services.dart';
+import '../../../home/domain/entities/reference_validation_result_entity.dart';
 import '../model/user_test_result_local_data_model.dart';
 
 abstract class TestResultLocalDataSource {
@@ -93,6 +94,7 @@ class TestResultDataSourceImpl implements TestResultLocalDataSource {
       [referenceCode, currentProfileId],
     ));
 
-    return count != null && count > 0; //TODO put 2
+    return count != null &&
+        count >= ReferenceValidationResult.MAX_NUMBER_EXISTS;
   }
 }
