@@ -29,5 +29,8 @@ API Reference (Dart/Flutter)
 
 The comprehensive API documentation for this Flutter project, generated using ``dart doc``, provides detailed information about all classes, methods, and properties used in the application.
 
-`View API Documentation <../../api/index.html>`_
+.. raw:: html
+
+   <a href="_static/index.html" target="_blank">View API Documentation</a>
+
 
