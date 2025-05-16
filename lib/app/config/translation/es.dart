@@ -37,13 +37,26 @@ class SpanishMessages extends BaseMessages {
       "Se mostrarán números y letras contenidos en círculos. Por favor, conecta con tu dedo los círculos alternando entre números y letras en orden ascendente / alfabético. Empieza en el número 1, luego la letra A. Luego el número 2, y luego la letra B. Responde con precisión lo más deprisa que puedas.";
 
   @override
-  String get tmtGameTmtHelpTmtPrimaryButtonText => "Quiero practicar";
-
-  @override
   String get tmtGameTmtHelpTmtSecondaryButtonText => "Inicar Test Formal";
 
   @override
   String get tmtGameCountdownMessage => "¡Prepárate! La prueba comenzará en...";
+
+  @override
+  String get tmtGameTmtHelpGeneralTitle => "Bienvenido al Test dTMT";
+
+  @override
+  String get tmtGameTmtHelpGeneralDescription =>
+      "Bienvenido al test dTMT. Esta prueba consta de dos partes (Parte A y Parte B). Cada parte comenzará con una breve fase de entrenamiento para familiarizarte con la tarea, seguida inmediatamente por el test cronometrado correspondiente.\n\nImportante:\n\n• Cada fase de entrenamiento (Prueba A y Prueba B) se realizará una sola vez.\n\n• Una vez finalizada la Prueba A, pasarás directamente al Test A, el cual no se podrá repetir.\n\n• De igual manera, al finalizar la Prueba B, pasarás directamente al Test B, que tampoco se podrá repetir.\n\n• Esto asegura la validez de los resultados y evita el efecto del aprendizaje por repetición en los tests.";
+
+  @override
+  String get tmtGameTmtHelpGeneralButtonText => "Comenzar";
+
+  @override
+  String get tmtGameTmtHelpTmtAButtonText => "Comenzar Prueba A";
+
+  @override
+  String get tmtGameTmtHelpTmtBButtonText => "Comenzar Prueba B";
 
   //--------------------------------------------Home Header Text------------------------------------------------------
   @override

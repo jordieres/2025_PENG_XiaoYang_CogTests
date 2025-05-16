@@ -14,11 +14,18 @@ class TMTGameText {
   static String tmtGameTmtHelpTmtBTitle = 'tmt_game_tmt_help_tmt_b_title';
   static String tmtGameTmtHelpTmtBDescription =
       'tmt_game_tmt_help_tmt_b_description';
-  static String tmtGameTmtHelpTmtPrimaryButtonText =
-      'tmt_game_tmt_help_tmt_primary_button_text';
   static String tmtGameTmtHelpTmtSecondaryButtonText =
       'tmt_game_tmt_help_tmt_secondary_button_text';
   static String tmtGameCountdownMessage = 'tmt_game_countdown_message';
+  static String tmtGameTmtHelpGeneralTitle = 'tmt_game_tmt_help_general_title';
+  static String tmtGameTmtHelpGeneralDescription =
+      'tmt_game_tmt_help_general_description';
+  static String tmtGameTmtHelpGeneralButtonText =
+      'tmt_game_tmt_help_general_button_text';
+  static String tmtGameTmtHelpTmtAButtonText =
+      'tmt_game_tmt_help_tmt_a_button_text';
+  static String tmtGameTmtHelpTmtBButtonText =
+      'tmt_game_tmt_help_tmt_b_button_text';
 }
 
 class HomeHeaderText {
@@ -256,11 +263,19 @@ abstract class BaseMessages {
 
   String get tmtGameTmtHelpTmtBDescription;
 
-  String get tmtGameTmtHelpTmtPrimaryButtonText;
-
   String get tmtGameTmtHelpTmtSecondaryButtonText;
 
   String get tmtGameCountdownMessage;
+
+  String get tmtGameTmtHelpGeneralTitle;
+
+  String get tmtGameTmtHelpGeneralDescription;
+
+  String get tmtGameTmtHelpGeneralButtonText;
+
+  String get tmtGameTmtHelpTmtAButtonText;
+
+  String get tmtGameTmtHelpTmtBButtonText;
 
   //--------------------------------------------Home Header Text------------------------------------------------------
   String get homeHeaderSelectThemeTitle;
@@ -552,11 +567,16 @@ abstract class BaseMessages {
         TMTGameText.tmtGameTmtHelpTmtBTitle: tmtGameTmtHelpTmtBTitle,
         TMTGameText.tmtGameTmtHelpTmtBDescription:
             tmtGameTmtHelpTmtBDescription,
-        TMTGameText.tmtGameTmtHelpTmtPrimaryButtonText:
-            tmtGameTmtHelpTmtPrimaryButtonText,
         TMTGameText.tmtGameTmtHelpTmtSecondaryButtonText:
             tmtGameTmtHelpTmtSecondaryButtonText,
         TMTGameText.tmtGameCountdownMessage: tmtGameCountdownMessage,
+        TMTGameText.tmtGameTmtHelpGeneralTitle: tmtGameTmtHelpGeneralTitle,
+        TMTGameText.tmtGameTmtHelpGeneralDescription:
+            tmtGameTmtHelpGeneralDescription,
+        TMTGameText.tmtGameTmtHelpGeneralButtonText:
+            tmtGameTmtHelpGeneralButtonText,
+        TMTGameText.tmtGameTmtHelpTmtAButtonText: tmtGameTmtHelpTmtAButtonText,
+        TMTGameText.tmtGameTmtHelpTmtBButtonText: tmtGameTmtHelpTmtBButtonText,
 
         //--------------------------------------------Home Header Text------------------------------------------------------
         HomeHeaderText.selectThemeTitle: homeHeaderSelectThemeTitle,

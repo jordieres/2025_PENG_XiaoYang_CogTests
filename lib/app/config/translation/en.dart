@@ -35,14 +35,29 @@ class EnglishMessages extends BaseMessages {
   String get tmtGameTmtHelpTmtBDescription =>
       "Numbers and letters contained in circles will be shown. Please connect with your finger the circles alternating between numbers and letters in ascending/alphabetical order. Start at number 1, then letter A. Then number 2, then letter B. Respond accurately as fast as you can.";
 
-  @override
-  String get tmtGameTmtHelpTmtPrimaryButtonText => "I want to practice";
+
 
   @override
   String get tmtGameTmtHelpTmtSecondaryButtonText => "Start Formal Test";
 
   @override
   String get tmtGameCountdownMessage => 'Get ready! The test will start in...';
+
+  @override
+  String get tmtGameTmtHelpGeneralTitle => "Welcome to dTMT Test";
+
+  @override
+  String get tmtGameTmtHelpGeneralDescription =>
+      "Welcome to the dTMT test. This test consists of two parts (Part A and Part B). Each part will begin with a brief training phase to familiarize you with the task, followed immediately by the corresponding timed test.\n\nImportant:\n\n• Each training phase (Test A and Test B) will be performed only once.\n\n• Once Test A is completed, you will proceed directly to Test A, which cannot be repeated.\n\n• Similarly, when you complete Test B, you will proceed directly to Test B, which also cannot be repeated.\n\n• This ensures the validity of the results and avoids the effect of learning by repetition in the tests.";
+
+  @override
+  String get tmtGameTmtHelpGeneralButtonText => "Start";
+
+  @override
+  String get tmtGameTmtHelpTmtAButtonText => "Start Test A";
+
+  @override
+  String get tmtGameTmtHelpTmtBButtonText => "Start Test B";
 
   //--------------------------------------------Home Header Text------------------------------------------------------
   @override

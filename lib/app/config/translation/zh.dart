@@ -34,13 +34,26 @@ class ChineseMessages extends BaseMessages {
       "将显示包含数字和字母的圆圈。请用手指连接按升序/字母顺序交替的数字和字母的圆圈。 从数字1开始，然后是字母A。 然后是数字2，然后是字母B。 尽可能快地准确响应。";
 
   @override
-  String get tmtGameTmtHelpTmtPrimaryButtonText => "我想要练习";
-
-  @override
   String get tmtGameTmtHelpTmtSecondaryButtonText => "开始正式的测试";
 
   @override
   String get tmtGameCountdownMessage => "准备好！测试将在以下时间开始...";
+
+  @override
+  String get tmtGameTmtHelpGeneralTitle => "欢迎参加dTMT测试";
+
+  @override
+  String get tmtGameTmtHelpGeneralDescription =>
+      "欢迎参加dTMT测试。此测试由两部分组成（A部分和B部分）。每部分将以简短的培训阶段开始，以熟悉任务，然后立即进行相应的计时测试。\n\n重要提示：\n\n• 每个培训阶段（测试A和测试B）只会执行一次。\n\n• 一旦完成测试A，您将直接进入测试A，该测试无法重复。\n\n• 同样，当您完成测试B时，您将直接进入测试B，该测试也无法重复。\n\n• 这确保了结果的有效性，并避免了测试中重复学习的效果。";
+
+  @override
+  String get tmtGameTmtHelpGeneralButtonText => "开始";
+
+  @override
+  String get tmtGameTmtHelpTmtAButtonText => "开始测试 A";
+
+  @override
+  String get tmtGameTmtHelpTmtBButtonText => "开始测试 B";
 
   //--------------------------------------------Home Header Text------------------------------------------------------
   @override
