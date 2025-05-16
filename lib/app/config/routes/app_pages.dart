@@ -10,7 +10,6 @@ import '../../features/home/presentation/binding/select_user_profile_binding.dar
 import '../../features/splash/splash_screen.dart';
 import '../../features/tm_tst/presentation/bindings/tmt_game_config_biding.dart';
 import '../../features/tm_tst/presentation/bindings/tmt_test_practice_binding.dart';
-import '../../features/tm_tst/presentation/screens/tmt_select_mode_practice_or_test.dart';
 import '../../features/tm_tst/presentation/screens/tmt_test_help.dart';
 import '../../features/tm_tst/presentation/screens/tmt_test_practice_screen.dart';
 import '../../features/tm_tst/presentation/screens/tmt_test_result_screen.dart';
@@ -67,10 +66,6 @@ class AppPages {
       name: _Paths.tmt_practice,
       page: () => const TmtTestPracticePage(),
       binding: TmtTESTPracticeBinding(),
-    ),
-    GetPage(
-      name: _Paths.tmt_select_practice_or_test,
-      page: () => SelectModePracticeOrTest(),
     ),
     GetPage(
       name: _Paths.register_user,
