@@ -128,7 +128,7 @@ class _CustomSplashScreenState extends State<CustomSplashScreen> {
             ),
             SizedBox(height: 20),
             Text(
-              'Version $_appVersion($_buildNumber)',
+              'Version $_appVersion',
               style: _splashTextStyle.copyWith(
                 fontSize: 14,
                 color: Colors.white.withAlpha(180),
