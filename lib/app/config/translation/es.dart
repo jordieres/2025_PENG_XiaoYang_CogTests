@@ -53,10 +53,10 @@ class SpanishMessages extends BaseMessages {
   String get tmtGameTmtHelpGeneralButtonText => "Comenzar";
 
   @override
-  String get tmtGameTmtHelpTmtAButtonText => "Comenzar Prueba A";
+  String get tmtGameTmtHelpTmtAButtonText => "Comenzar Práctica Parte A";
 
   @override
-  String get tmtGameTmtHelpTmtBButtonText => "Comenzar Prueba B";
+  String get tmtGameTmtHelpTmtBButtonText => "Comenzar Práctica Parte B";
 
   //--------------------------------------------Home Header Text------------------------------------------------------
   @override
@@ -82,32 +82,32 @@ class SpanishMessages extends BaseMessages {
 
   //--------------------------------------------TMT Practice Text------------------------------------------------------
   @override
-  String get tmtGamePracticeTmtAThenBDialogTitle =>
-      "¿Repetir esta práctica TMT A o avanzar al siguiente desafío?";
-
-  @override
-  String get tmtGamePracticeTmtAThenBDialogCancelButtonText => "Avanzar";
-
-  @override
-  String get tmtGamePracticeTmtAThenBDialogPrimaryButtonText => "Repetir";
-
-  @override
-  String get tmtGamePracticeOnlyTmtAOrTmtBDialogTitle =>
-      "¿Estás listo para empezar el test TMT?";
-
-  @override
-  String get tmtGamePracticeOnlyTmtAOrTmtBDialogCancelButtonText =>
-      "Sí, empezar";
-
-  @override
-  String get tmtGamePracticeOnlyTmtAOrTmtBDialogPrimaryButtonText =>
-      "No, repetir";
-
-  @override
   String get tmtGamePracticeTmtAPageTitle => "Práctica TMT A";
 
   @override
   String get tmtGamePracticeTmtBPageTitle => "Práctica TMT B";
+
+  @override
+  String get tmtGamePracticeCompletedADialogTitle =>
+      "¡Práctica Parte A Terminada!";
+
+  @override
+  String get tmtGamePracticeCompletedADialogContent =>
+      "Has completado el entrenamiento de la Parte A. Ahora comenzarás el Test A. Recuerda, esta parte es cronometrada y no se puede repetir.";
+
+  @override
+  String get tmtGamePracticeCompletedADialogButtonText => "Iniciar Test A";
+
+  @override
+  String get tmtGamePracticeCompletedBDialogTitle =>
+      "¡Práctica Parte B Terminada!";
+
+  @override
+  String get tmtGamePracticeCompletedBDialogContent =>
+      "Has completado el entrenamiento de la Parte B. Ahora comenzarás el Test B. Recuerda, esta parte es cronometrada y no se puede repetir.";
+
+  @override
+  String get tmtGamePracticeCompletedBDialogButtonText => "Iniciar Test B";
 
   //--------------------------------------------TMT Select Hand Dialog Text------------------------------------------------------
   @override

@@ -50,10 +50,10 @@ class ChineseMessages extends BaseMessages {
   String get tmtGameTmtHelpGeneralButtonText => "开始";
 
   @override
-  String get tmtGameTmtHelpTmtAButtonText => "开始测试 A";
+  String get tmtGameTmtHelpTmtAButtonText => "开始 A 部分练习";
 
   @override
-  String get tmtGameTmtHelpTmtBButtonText => "开始测试 B";
+  String get tmtGameTmtHelpTmtBButtonText => "开始 B 部分练习";
 
   //--------------------------------------------Home Header Text------------------------------------------------------
   @override
@@ -79,28 +79,30 @@ class ChineseMessages extends BaseMessages {
 
   //--------------------------------------------TMT Practice Text------------------------------------------------------
   @override
-  String get tmtGamePracticeTmtAThenBDialogTitle => "重复这个TMT A练习还是继续下一个挑战？";
-
-  @override
-  String get tmtGamePracticeTmtAThenBDialogCancelButtonText => "继续";
-
-  @override
-  String get tmtGamePracticeTmtAThenBDialogPrimaryButtonText => "重复";
-
-  @override
-  String get tmtGamePracticeOnlyTmtAOrTmtBDialogTitle => "你准备好开始TMT测试了吗？";
-
-  @override
-  String get tmtGamePracticeOnlyTmtAOrTmtBDialogCancelButtonText => "是的，开始";
-
-  @override
-  String get tmtGamePracticeOnlyTmtAOrTmtBDialogPrimaryButtonText => "不，我要重复";
-
-  @override
   String get tmtGamePracticeTmtAPageTitle => "TMT A 练习";
 
   @override
   String get tmtGamePracticeTmtBPageTitle => "TMT B 练习";
+
+  @override
+  String get tmtGamePracticeCompletedADialogTitle => "练习 A 部分完成！";
+
+  @override
+  String get tmtGamePracticeCompletedADialogContent =>
+      "您已完成 A 部分的训练。现在您将开始测试 A。请记住，此部分是计时的，不能重复。";
+
+  @override
+  String get tmtGamePracticeCompletedADialogButtonText => "开始测试 A";
+
+  @override
+  String get tmtGamePracticeCompletedBDialogTitle => "练习 B 部分完成！";
+
+  @override
+  String get tmtGamePracticeCompletedBDialogContent =>
+      "您已完成 B 部分的训练。现在您将开始测试 B。请记住，此部分是计时的，不能重复。";
+
+  @override
+  String get tmtGamePracticeCompletedBDialogButtonText => "开始测试 B";
 
   //--------------------------------------------TMT Select Hand Dialog Text------------------------------------------------------
   @override
