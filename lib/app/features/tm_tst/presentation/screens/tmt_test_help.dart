@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../config/themes/app_text_style_base.dart';
 import '../../../../config/translation/app_translations.dart';
+import '../../../../constans/app_constants.dart';
 import '../../../../shared_components/custom_app_bar.dart';
 import '../../../../shared_components/custom_primary_button.dart';
 import '../../../../utils/helpers/app_helpers.dart';
@@ -27,9 +28,11 @@ class _TmtTestHelpPageState extends State<TmtTestHelpPage> {
   HandsUsed handsUsed = HandsUsed.NONE;
   late TmtTestNavigationFlowController tmtTestNewFlowController;
 
-  // Nuevas propiedades para el indicador de desplazamiento
   final ScrollController _scrollController = ScrollController();
   bool _showScrollIndicator = false;
+
+  final double imageAnimationHeight = 200;
+  final double imageSpacing = 30;
 
   @override
   void initState() {
@@ -41,16 +44,13 @@ class _TmtTestHelpPageState extends State<TmtTestHelpPage> {
       tmtHelpMode = TmtHelpMode.TMT_TEST_A;
     }
 
-    // Configurar el verificador de estado de desplazamiento
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _checkScrollStatus();
     });
 
-    // Añadir listener al controlador de desplazamiento
     _scrollController.addListener(_onScroll);
   }
 
-  // Verificar si hay contenido que se puede desplazar
   void _checkScrollStatus() {
     if (!mounted || !_scrollController.hasClients) {
       Future.delayed(const Duration(milliseconds: 50), _checkScrollStatus);
@@ -65,7 +65,6 @@ class _TmtTestHelpPageState extends State<TmtTestHelpPage> {
     }
   }
 
-  // Actualizar la visibilidad del indicador al desplazarse
   void _onScroll() {
     if (!mounted || !_scrollController.hasClients) return;
 
@@ -85,7 +84,6 @@ class _TmtTestHelpPageState extends State<TmtTestHelpPage> {
     }
   }
 
-  // Desplazarse hacia abajo cuando se hace clic en el indicador
   void _scrollToBottom() {
     if (_scrollController.hasClients) {
       _scrollController.animateTo(
@@ -96,7 +94,6 @@ class _TmtTestHelpPageState extends State<TmtTestHelpPage> {
     }
   }
 
-  // Construir el indicador de desplazamiento
   Widget _buildScrollIndicator() {
     final Color bgColor = Theme.of(context).scaffoldBackgroundColor;
     return Stack(
@@ -173,6 +170,40 @@ class _TmtTestHelpPageState extends State<TmtTestHelpPage> {
     }
   }
 
+  String? _getAnimationPath(TmtHelpMode tmtHelpMode) {
+    if (tmtHelpMode == TmtHelpMode.TMT_TEST_GENERAL) {
+      return null;
+    }
+    TmtGameHandUsed handUsed;
+    try {
+      handUsed = tmtTestNewFlowController.tmtGameInitData.tmtGameHandUsed;
+    } catch (e) {
+      handUsed = TmtGameHandUsed.LEFT;
+    }
+
+    if (tmtHelpMode == TmtHelpMode.TMT_TEST_A) {
+      return handUsed == TmtGameHandUsed.LEFT
+          ? GifPath.tmtAAnimationLeftHand
+          : GifPath.tmtAAnimationRightHand;
+    } else if (tmtHelpMode == TmtHelpMode.TMT_TEST_B) {
+      return handUsed == TmtGameHandUsed.LEFT
+          ? GifPath.tmtBAnimationLeftHand
+          : GifPath.tmtBAnimationRightHand;
+    }
+
+    return null;
+  }
+
+  double _calculateContentSpacing(
+      double constraintsHeight, double textHeight, bool hasAnimation) {
+    final buttonsHeight = DeviceHelper.isTablet ? 130.0 : 120.0;
+    final animationHeight =
+    hasAnimation ? imageAnimationHeight + imageSpacing : 0.0;
+    final availableSpace =
+        constraintsHeight - textHeight - buttonsHeight - animationHeight;
+    return availableSpace > 40 ? availableSpace / 2.5 : 40.0;
+  }
+
   void _toPracticePage(TmtHelpMode tmtHelpMode) {
     switch (tmtHelpMode) {
       case TmtHelpMode.TMT_TEST_GENERAL:
@@ -198,12 +229,14 @@ class _TmtTestHelpPageState extends State<TmtTestHelpPage> {
           children: [
             LayoutBuilder(
               builder: (context, constraints) {
-                final buttonsHeight = DeviceHelper.isTablet ? 130.0 : 120.0;
                 final textWidget = Text(
                   _getHelpDescription(tmtHelpMode),
                   textAlign: TextAlign.left,
                   style: TextStyleBase.bodyL,
                 );
+
+                final String? animationPath = _getAnimationPath(tmtHelpMode);
+                final bool hasAnimation = animationPath != null;
 
                 final TextPainter textPainter = TextPainter(
                   text: TextSpan(
@@ -214,10 +247,11 @@ class _TmtTestHelpPageState extends State<TmtTestHelpPage> {
                   textAlign: TextAlign.left,
                 )..layout(maxWidth: constraints.maxWidth - 48);
 
-                final textHeight = textPainter.height;
-                final availableSpace =
-                    constraints.maxHeight - textHeight - buttonsHeight;
-                final spacing = availableSpace / 2;
+                final spacing = _calculateContentSpacing(
+                  constraints.maxHeight,
+                  textPainter.height,
+                  hasAnimation,
+                );
 
                 return SingleChildScrollView(
                   controller: _scrollController,
@@ -236,7 +270,19 @@ class _TmtTestHelpPageState extends State<TmtTestHelpPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               textWidget,
-                              SizedBox(height: spacing > 0 ? spacing : 40),
+                              if (hasAnimation) ...[
+                                SizedBox(height: imageSpacing),
+                                Center(
+                                  child: SizedBox(
+                                    height: imageAnimationHeight,
+                                    child: Image.asset(
+                                      animationPath,
+                                      fit: BoxFit.contain,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                              SizedBox(height: spacing),
                               Center(
                                 child: SizedBox(
                                   child: Column(
@@ -250,7 +296,7 @@ class _TmtTestHelpPageState extends State<TmtTestHelpPage> {
                                       ),
                                       SizedBox(
                                           height:
-                                              DeviceHelper.isTablet ? 18 : 12),
+                                          DeviceHelper.isTablet ? 18 : 12),
                                     ],
                                   ),
                                 ),
@@ -284,7 +330,7 @@ class _TmtTestHelpPageState extends State<TmtTestHelpPage> {
 
   Future<void> _handleTestModeSelection() async {
     TmtGameHandUsed? selectedHand =
-        await showTmtSelectHandDialogGetX(handsUsed);
+    await showTmtSelectHandDialogGetX(handsUsed);
     if (selectedHand != null) {
       tmtTestNewFlowController.saveTmtGameInitData(selectedHand);
     }
