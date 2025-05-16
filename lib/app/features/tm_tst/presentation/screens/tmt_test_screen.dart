@@ -10,9 +10,11 @@ import '../../../../config/themes/AppColors.dart';
 import '../../../../config/translation/app_translations.dart';
 import '../../../../shared_components/custom_dialog.dart';
 import '../../../../utils/mixins/app_mixins.dart';
-import '../../domain/entities/result/tmt_game_init_data.dart';
 import '../components/tmt_test_app_bar.dart';
 import '../controllers/base_tmt_test_flow_contoller.dart';
+import '../newscreens/tmt_test_navigation_flow.dart';
+
+enum TmtType { tmtA, tmtB }
 
 class TmtTestPage extends StatefulWidget {
   const TmtTestPage({super.key});
@@ -25,9 +27,10 @@ class TmtTestPage extends StatefulWidget {
 
 class _TmtTestPageState extends State<TmtTestPage>
     with WidgetsBindingObserver, NavigationMixin {
+  late TmtTestNavigationFlowController tmtTestNewFlowController;
   TmtGameBoardController? _boardController;
   late TmtTestFlowStateController _testTmtFlowStateController;
-  late TmtGameInitData tmtGameInitData;
+  TmtType? _tmtType;
   Worker? _stateWorker;
   Worker? _routeObserverWorker;
 
@@ -41,18 +44,23 @@ class _TmtTestPageState extends State<TmtTestPage>
   void initState() {
     super.initState();
     _testTmtFlowStateController = Get.find<TmtTestFlowStateController>();
+    tmtTestNewFlowController = Get.find<TmtTestNavigationFlowController>();
+    _getArgument();
     _tmtTestFlowStateObserver();
     _tmtTestRouteChangeObserver();
     WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _pauseTimer();
-      _getArgument();
     });
   }
 
   void _getArgument() {
     try {
-      tmtGameInitData = Get.arguments as TmtGameInitData;
+      _tmtType = Get.arguments as TmtType?;
+      if (_tmtType == TmtType.tmtB) {
+        _testTmtFlowStateController.testState.value =
+            TmtTestStateFlow.TMT_B_IN_PROGRESS;
+      }
     } catch (e) {
       AppSnackbar.showCustomSnackbar(context, "Error argument");
       navigateToHome();
@@ -70,7 +78,7 @@ class _TmtTestPageState extends State<TmtTestPage>
         }
       } else if (state == TmtTestStateFlow.TEST_COMPLETED) {
         _pauseTimer();
-        navigateToResultScreen(tmtGameInitData);
+        tmtTestNewFlowController.advanceState();
       }
     });
   }
@@ -163,9 +171,7 @@ class _TmtTestPageState extends State<TmtTestPage>
   }
 
   bool _isTestTypeA() {
-    bool isA = _testTmtFlowStateController.testState.value ==
-        TmtTestStateFlow.TMT_A_IN_PROGRESS ||
-        _testTmtFlowStateController.testState.value == TmtTestStateFlow.READY;
+    bool isA = _tmtType == TmtType.tmtA;
     return isA;
   }
 
@@ -197,12 +203,13 @@ class _TmtTestPageState extends State<TmtTestPage>
         mode: DialogMode.singleButton,
         title: TMTGameText.tmtGamePartACompletedBody.tr,
         primaryButtonText:
-        TMTGameText.tmtGamePartBCompletedConfirmationButton.tr,
+            TMTGameText.tmtGamePartBCompletedConfirmationButton.tr,
         onPrimaryPressed: () {
           Get.back();
-          setState(() {
+          /*setState(() {
             _isCountdownActive = true;
-          });
+          });*/
+          tmtTestNewFlowController.advanceState();
         },
       ),
     );

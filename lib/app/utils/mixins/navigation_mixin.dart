@@ -1,4 +1,4 @@
-part of app_mixins;
+part of 'app_mixins.dart';
 
 mixin NavigationMixin {
   void navigateAllToHome() {
@@ -9,12 +9,16 @@ mixin NavigationMixin {
     Get.offNamed(Routes.home);
   }
 
-  void tmtTestToHelp(TmtHelpMode tmtHelpMode) {
-    Get.toNamed(Routes.tmt_help, arguments: tmtHelpMode);
+  void tmtTestToHelp(TmtHelpMode tmtHelpMode, [bool isCloseCurrent = false]) {
+    if (isCloseCurrent) {
+      Get.offNamed(Routes.tmt_help, arguments: tmtHelpMode);
+    } else {
+      Get.toNamed(Routes.tmt_help, arguments: tmtHelpMode);
+    }
   }
 
   void navigateToPractice(TMTTestPracticeMode tmtTestPracticeMode) {
-    Get.toNamed(Routes.tmt_practice, arguments: tmtTestPracticeMode);
+    Get.offNamed(Routes.tmt_practice, arguments: tmtTestPracticeMode);
   }
 
   void navigateToResultScreen(TmtGameInitData tmtGameInitData) {
@@ -33,15 +37,8 @@ mixin NavigationMixin {
     Get.toNamed(Routes.current_user_data);
   }
 
-  void toSelectedPracticeOrTest(String tmtReferenceCode, HandsUsed handsUsed) {
-    Get.toNamed(Routes.tmt_select_practice_or_test, arguments: {
-      ToSelectedPracticeOrTestArguments.referenceCode: tmtReferenceCode,
-      ToSelectedPracticeOrTestArguments.handsUsed: handsUsed
-    });
-  }
-
-  void toTmtTest(TmtGameInitData tmtGameInitData) {
-    Get.toNamed(Routes.tmt_test, arguments: tmtGameInitData);
+  void toTmtTest(TmtType tmtType) {
+    Get.offNamed(Routes.tmt_test, arguments: tmtType);
   }
 
   void toTmtHistory() {

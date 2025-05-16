@@ -11,7 +11,7 @@ import '../../../../utils/mixins/app_mixins.dart';
 import '../../../home/domain/entities/reference_validation_result_entity.dart';
 import '../../domain/entities/result/tmt_game_hand_used.dart';
 import '../components/tmt_select_hand_dialog.dart';
-import '../newscreens/new_tmt_test_flow_contoller.dart';
+import '../newscreens/tmt_test_navigation_flow.dart';
 
 enum TmtHelpMode { TMT_TEST_GENERAL, TMT_TEST_A, TMT_TEST_B }
 

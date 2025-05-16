@@ -8,7 +8,7 @@ import '../../../../utils/mixins/app_mixins.dart';
 import '../components/tmt_game_board_controller.dart';
 import '../controllers/base_tmt_test_flow_contoller.dart';
 import '../controllers/tmt_practice_flow_state_contoller.dart';
-import '../newscreens/new_tmt_test_flow_contoller.dart';
+import '../newscreens/tmt_test_navigation_flow.dart';
 
 enum TMTTestPracticeMode { TMT_A_ONLY, TMT_B_ONLY }
 
