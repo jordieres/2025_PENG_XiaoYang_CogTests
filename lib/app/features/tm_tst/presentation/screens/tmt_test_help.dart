@@ -25,7 +25,6 @@ class TmtTestHelpPage extends StatefulWidget with NavigationMixin {
 class _TmtTestHelpPageState extends State<TmtTestHelpPage> {
   late TmtHelpMode tmtHelpMode;
   String tmtGameCodeId = "";
-  HandsUsed handsUsed = HandsUsed.NONE;
   late TmtTestNavigationFlowController tmtTestNewFlowController;
 
   final ScrollController _scrollController = ScrollController();
@@ -390,8 +389,9 @@ class _TmtTestHelpPageState extends State<TmtTestHelpPage> {
   }
 
   Future<void> _handleTestModeSelection() async {
-    TmtGameHandUsed? selectedHand =
-        await showTmtSelectHandDialogGetX(handsUsed);
+    final handUsed = tmtTestNewFlowController.tmtGameBeforeData.handsUsed;
+
+    TmtGameHandUsed? selectedHand = await showTmtSelectHandDialogGetX(handUsed);
     if (selectedHand != null) {
       tmtTestNewFlowController.saveTmtGameInitData(selectedHand);
     }
