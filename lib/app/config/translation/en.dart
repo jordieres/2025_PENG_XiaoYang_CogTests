@@ -27,15 +27,17 @@ class EnglishMessages extends BaseMessages {
   @override
   String get tmtGameTmtHelpTmtADescription =>
       "Numbers contained in circles will be shown. Please connect with your finger the circles with the numbers in ascending order, starting from the lowest number and continuing with the next in order. "
-          "\n\n• Start at 1, then 2, then 3, and so on.( 1 → 2 → 3 → ...) "
-          "\n\n• Respond accurately as fast as you can.";
+      "\n\n• Start at 1, then 2, then 3, and so on.( 1 → 2 → 3 → ...) "
+      "\n\n• Respond accurately as fast as you can.";
 
   @override
-  String get tmtGameTmtHelpTmtBTitle => "TMT B Help";
+  String get tmtGameTmtHelpTmtBTitle => "Instructions: TMT Part B";
 
   @override
   String get tmtGameTmtHelpTmtBDescription =>
-      "Numbers and letters contained in circles will be shown. Please connect with your finger the circles alternating between numbers and letters in ascending/alphabetical order. Start at number 1, then letter A. Then number 2, then letter B. Respond accurately as fast as you can.";
+      "Numbers and letters contained in circles will be shown. Please connect with your finger the circles alternating between numbers and letters in ascending/alphabetical order. "
+      "\n\n• Start at number 1, then letter A. Then number 2, then letter B.(1 → A → 2 → B → ...) "
+      "\n\n• Respond accurately as fast as you can.";
 
   @override
   String get tmtGameTmtHelpTmtSecondaryButtonText => "Start Formal Test";
@@ -89,7 +91,8 @@ class EnglishMessages extends BaseMessages {
   String get tmtGamePracticeTmtBPageTitle => "TMT B Practice";
 
   @override
-  String get tmtGamePracticeCompletedADialogTitle => "Practice Part A Completed!";
+  String get tmtGamePracticeCompletedADialogTitle =>
+      "Practice Part A Completed!";
 
   @override
   String get tmtGamePracticeCompletedADialogContent =>
@@ -99,7 +102,8 @@ class EnglishMessages extends BaseMessages {
   String get tmtGamePracticeCompletedADialogButtonText => "Start Test A";
 
   @override
-  String get tmtGamePracticeCompletedBDialogTitle => "Practice Part B Completed!";
+  String get tmtGamePracticeCompletedBDialogTitle =>
+      "Practice Part B Completed!";
 
   @override
   String get tmtGamePracticeCompletedBDialogContent =>

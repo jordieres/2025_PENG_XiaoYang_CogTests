@@ -32,11 +32,13 @@ class SpanishMessages extends BaseMessages {
       "\n\n• Responde con precisión lo más deprisa que puedas.";
 
   @override
-  String get tmtGameTmtHelpTmtBTitle => "TMT B Ayuda";
+  String get tmtGameTmtHelpTmtBTitle => "Instrucciones: TMT Parte B";
 
   @override
   String get tmtGameTmtHelpTmtBDescription =>
-      "Se mostrarán números y letras contenidos en círculos. Por favor, conecta con tu dedo los círculos alternando entre números y letras en orden ascendente / alfabético. Empieza en el número 1, luego la letra A. Luego el número 2, y luego la letra B. Responde con precisión lo más deprisa que puedas.";
+      "Se mostrarán números y letras contenidos en círculos. Por favor, conecta con tu dedo los círculos alternando entre números y letras en orden ascendente / alfabético. "
+      "\n\n• Empieza en el número 1, luego la letra A. Luego el número 2, y luego la letra B. (1 → A → 2 → B → ...) "
+      "\n\n• Responde con precisión lo más deprisa que puedas.";
 
   @override
   String get tmtGameTmtHelpTmtSecondaryButtonText => "Inicar Test Formal";

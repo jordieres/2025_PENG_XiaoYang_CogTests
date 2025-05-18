@@ -29,11 +29,13 @@ class ChineseMessages extends BaseMessages {
           "\n\n• 尽可能快地准确响应。";
 
   @override
-  String get tmtGameTmtHelpTmtBTitle => "TMT B 帮助";
+  String get tmtGameTmtHelpTmtBTitle => "说明：TMT B 部分";
 
   @override
   String get tmtGameTmtHelpTmtBDescription =>
-      "将显示包含数字和字母的圆圈。请用手指连接按升序/字母顺序交替的数字和字母的圆圈。 从数字1开始，然后是字母A。 然后是数字2，然后是字母B。 尽可能快地准确响应。";
+      "将显示包含数字和字母的圆圈。请用手指连接按升序/字母顺序交替的数字和字母的圆圈。 "
+          "\n\n• 从数字1开始，然后是字母A。 然后是数字2，然后是字母B。(1 → A → 2 → B → ...) "
+          "\n\n• 尽可能快地准确响应。";
 
   @override
   String get tmtGameTmtHelpTmtSecondaryButtonText => "开始正式的测试";
