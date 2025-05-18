@@ -20,11 +20,13 @@ class ChineseMessages extends BaseMessages {
   String get tmtGameTmtScreenAppBarTime => "时间: ";
 
   @override
-  String get tmtGameTmtHelpTmtATitle => "TMT A 帮助";
+  String get tmtGameTmtHelpTmtATitle => "说明：TMT A 部分";
 
   @override
   String get tmtGameTmtHelpTmtADescription =>
-      "将显示包含数字的圆圈。请用手指连接按升序排列的圆圈，从最低的数字开始，然后按顺序继续。 从1开始，然后是2，然后是3，依此类推。 尽可能快地准确响应。";
+      "将显示包含数字的圆圈。请用手指连接按升序排列的圆圈，从最低的数字开始，然后按顺序继续。 "
+          "\n\n• 从1开始，然后是2，然后是3，依此类推。( 1 → 2 → 3 → ...) "
+          "\n\n• 尽可能快地准确响应。";
 
   @override
   String get tmtGameTmtHelpTmtBTitle => "TMT B 帮助";

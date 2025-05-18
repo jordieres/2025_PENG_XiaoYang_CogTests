@@ -23,11 +23,13 @@ class SpanishMessages extends BaseMessages {
   String get tmtGameTmtScreenAppBarTime => "Tiempo: ";
 
   @override
-  String get tmtGameTmtHelpTmtATitle => "TMT A Ayuda";
+  String get tmtGameTmtHelpTmtATitle => "Instrucciones: TMT Parte A";
 
   @override
   String get tmtGameTmtHelpTmtADescription =>
-      "Se mostrarán números contenidos en círculos. Por favor, conecta con tu dedo los círculos con los números en orden ascendente, empezando desde el número más bajo y continuando con el siguiente en orden. Empieza en 1, luego 2, luego 3, y continúa. Responde con precisión lo más deprisa que puedas.";
+      "Se mostrarán números contenidos en círculos. Por favor, conecta con tu dedo los círculos con los números en orden ascendente, empezando desde el número más bajo y continuando con el siguiente en orden. "
+      "\n\n• Empieza en 1, luego 2, luego 3, y continúa. ( 1 → 2 → 3 → ...) "
+      "\n\n• Responde con precisión lo más deprisa que puedas.";
 
   @override
   String get tmtGameTmtHelpTmtBTitle => "TMT B Ayuda";

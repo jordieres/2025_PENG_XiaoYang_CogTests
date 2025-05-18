@@ -31,7 +31,7 @@ class _TmtTestHelpPageState extends State<TmtTestHelpPage> {
   final ScrollController _scrollController = ScrollController();
   bool _showScrollIndicator = false;
 
-  final double imageAnimationHeight = 200;
+  final double imageAnimationHeight = 256;
   final double imageSpacing = 30;
 
   @override
@@ -198,24 +198,54 @@ class _TmtTestHelpPageState extends State<TmtTestHelpPage> {
       double constraintsHeight, double textHeight, bool hasAnimation) {
     final buttonsHeight = DeviceHelper.isTablet ? 130.0 : 120.0;
     final animationHeight =
-    hasAnimation ? imageAnimationHeight + imageSpacing : 0.0;
+        hasAnimation ? imageAnimationHeight + imageSpacing : 0.0;
     final availableSpace =
         constraintsHeight - textHeight - buttonsHeight - animationHeight;
     return availableSpace > 40 ? availableSpace / 2.5 : 40.0;
   }
 
-  void _toPracticePage(TmtHelpMode tmtHelpMode) {
-    switch (tmtHelpMode) {
-      case TmtHelpMode.TMT_TEST_GENERAL:
-        _handleTestModeSelection();
-        break;
-      case TmtHelpMode.TMT_TEST_A:
-        tmtTestNewFlowController.advanceState();
-        break;
-      case TmtHelpMode.TMT_TEST_B:
-        tmtTestNewFlowController.advanceState();
-        break;
+  Widget _buildCustomPrimaryButton() {
+    final isInActiveTestState =
+        tmtTestNewFlowController.tmtTestFlowState.value ==
+                TmtTestNavigationFlow.TMT_A_IN_PROGRESS ||
+            tmtTestNewFlowController.tmtTestFlowState.value ==
+                TmtTestNavigationFlow.TMT_B_IN_PROGRESS;
+
+    String buttonText;
+    if (isInActiveTestState) {
+      buttonText = "Volver";
+    } else {
+      switch (tmtHelpMode) {
+        case TmtHelpMode.TMT_TEST_GENERAL:
+          buttonText = TMTGameText.tmtGameTmtHelpGeneralButtonText.tr;
+          break;
+        case TmtHelpMode.TMT_TEST_A:
+          buttonText = TMTGameText.tmtGameTmtHelpTmtAButtonText.tr;
+          break;
+        case TmtHelpMode.TMT_TEST_B:
+          buttonText = TMTGameText.tmtGameTmtHelpTmtBButtonText.tr;
+          break;
+      }
     }
+
+    return CustomPrimaryButton(
+      text: buttonText,
+      onPressed: () {
+        if (isInActiveTestState) {
+          Get.back();
+        } else {
+          switch (tmtHelpMode) {
+            case TmtHelpMode.TMT_TEST_GENERAL:
+              _handleTestModeSelection();
+              break;
+            case TmtHelpMode.TMT_TEST_A:
+            case TmtHelpMode.TMT_TEST_B:
+              tmtTestNewFlowController.advanceState();
+              break;
+          }
+        }
+      },
+    );
   }
 
   @override
@@ -272,12 +302,22 @@ class _TmtTestHelpPageState extends State<TmtTestHelpPage> {
                               textWidget,
                               if (hasAnimation) ...[
                                 SizedBox(height: imageSpacing),
-                                Center(
-                                  child: SizedBox(
-                                    height: imageAnimationHeight,
+                                Container(
+                                  width: double.infinity,
+                                  height: imageAnimationHeight,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(16.0),
+                                    border: Border.all(
+                                      color: Colors.grey.withAlpha(76),
+                                      width: 1,
+                                    ),
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(16.0),
                                     child: Image.asset(
                                       animationPath,
-                                      fit: BoxFit.contain,
+                                      width: double.infinity,
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
                                 ),
@@ -288,15 +328,10 @@ class _TmtTestHelpPageState extends State<TmtTestHelpPage> {
                                   child: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      CustomPrimaryButton(
-                                        text: _getButtonText(tmtHelpMode),
-                                        onPressed: () {
-                                          _toPracticePage(tmtHelpMode);
-                                        },
-                                      ),
+                                      _buildCustomPrimaryButton(),
                                       SizedBox(
                                           height:
-                                          DeviceHelper.isTablet ? 18 : 12),
+                                              DeviceHelper.isTablet ? 18 : 12),
                                     ],
                                   ),
                                 ),
@@ -317,20 +352,9 @@ class _TmtTestHelpPageState extends State<TmtTestHelpPage> {
     );
   }
 
-  String _getButtonText(TmtHelpMode tmtHelpMode) {
-    switch (tmtHelpMode) {
-      case TmtHelpMode.TMT_TEST_GENERAL:
-        return TMTGameText.tmtGameTmtHelpGeneralButtonText.tr;
-      case TmtHelpMode.TMT_TEST_A:
-        return TMTGameText.tmtGameTmtHelpTmtAButtonText.tr;
-      case TmtHelpMode.TMT_TEST_B:
-        return TMTGameText.tmtGameTmtHelpTmtBButtonText.tr;
-    }
-  }
-
   Future<void> _handleTestModeSelection() async {
     TmtGameHandUsed? selectedHand =
-    await showTmtSelectHandDialogGetX(handsUsed);
+        await showTmtSelectHandDialogGetX(handsUsed);
     if (selectedHand != null) {
       tmtTestNewFlowController.saveTmtGameInitData(selectedHand);
     }
