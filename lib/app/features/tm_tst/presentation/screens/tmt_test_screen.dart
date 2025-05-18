@@ -206,9 +206,6 @@ class _TmtTestPageState extends State<TmtTestPage>
             TMTGameText.tmtGamePartBCompletedConfirmationButton.tr,
         onPrimaryPressed: () {
           Get.back();
-          /*setState(() {
-            _isCountdownActive = true;
-          });*/
           tmtTestNewFlowController.advanceState();
         },
       ),
@@ -227,6 +224,9 @@ class _TmtTestPageState extends State<TmtTestPage>
         title: _getAppBarTitle(),
         isTestTypeA: _isTestTypeA(),
         controller: _timerController,
+        initialSeconds: _tmtType == TmtType.tmtB
+            ? _testTmtFlowStateController.getTmtATimeInSec()
+            : 0,
       ),
       body: _isCountdownActive
           ? _createCountdownComponent()
@@ -237,7 +237,7 @@ class _TmtTestPageState extends State<TmtTestPage>
   Widget _createCountdownComponent() {
     if (_isResettingTmtA) {
       _resetTimer();
-    } else if (_isResettingTmtB) {
+    } else if (_isResettingTmtB || _tmtType == TmtType.tmtB) {
       _setStartTime(_testTmtFlowStateController.getTmtATimeInSec());
     }
     _pauseTimer();

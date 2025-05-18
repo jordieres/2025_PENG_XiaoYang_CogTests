@@ -5,10 +5,8 @@ import 'package:msdtmt/app/features/tm_tst/domain/entities/metric/tmt_pressure_s
 import 'package:msdtmt/app/features/tm_tst/domain/entities/metric/tmt_test_lift_metric.dart';
 import 'package:msdtmt/app/features/tm_tst/domain/entities/metric/tmt_test_pause_metric.dart';
 import 'package:msdtmt/app/features/tm_tst/domain/entities/metric/tmt_test_time_metric.dart';
-import 'package:msdtmt/app/utils/services/app_logger.dart';
-
 import '../../../presentation/controllers/base_tmt_test_flow_contoller.dart';
-import '../../../presentation/controllers/tmt_test_flow_state_controller.dart';
+import '../../../presentation/newscreens/tmt_test_navigation_flow.dart';
 import '../tmt_game/tmt_game_circle.dart';
 
 /// All calculation here are in milliseconds
@@ -30,6 +28,9 @@ class TmtMetricsController {
   TmtBMetrics bMetrics = TmtBMetrics();
   TmtPressureSizeMetric pressureSizeMetric = TmtPressureSizeMetric();
 
+  TmtTestNavigationFlow currentTmtTestNavigationFlow =
+      TmtTestNavigationFlow.START;
+
   TmtMetricsController copy() {
     TmtMetricsController controller = TmtMetricsController();
     controller.isFinishTest = isFinishTest;
@@ -48,20 +49,25 @@ class TmtMetricsController {
     return controller;
   }
 
-  void onTestStart(TmtTestStateFlow tmtTestState) {
-    switch (tmtTestState) {
-      case TmtTestStateFlow.READY:
-      case TmtTestStateFlow.TMT_A_IN_PROGRESS:
+  void onTestStart(TmtTestNavigationFlow tmtTestNavigationFlow) {
+    switch (tmtTestNavigationFlow) {
+      case TmtTestNavigationFlow.START:
+        testTimeMetrics.timeStartTest = DateTime.now();
+        break;
+      case TmtTestNavigationFlow.TMT_A_IN_PROGRESS:
         final currentTestTime = DateTime.now();
-        testTimeMetrics.timeStartTest = currentTestTime;
         testTimeMetrics.timeStartTmtA = currentTestTime;
         break;
-      case TmtTestStateFlow.TMT_B_IN_PROGRESS:
+      case TmtTestNavigationFlow.TMT_B_IN_PROGRESS:
         testTimeMetrics.timeStartTmtB = DateTime.now();
         break;
       default:
         break;
     }
+  }
+
+  void setTimeStartTest(DateTime timeStartTest) {
+    testTimeMetrics.timeStartTest = timeStartTest;
   }
 
   void onTestEnd(Offset lastDragOffset, TmtTestStateFlow tmtTestState) {
@@ -84,12 +90,18 @@ class TmtMetricsController {
 
   // Finger touch screen
   void onPanStart(DragStartDetails details) {
+    if (!_isInStateToMeasureMetrics()) {
+      return;
+    }
     testLiftMetric.onEndLift();
     testPauseMetric.onStartPause(details.localPosition);
   }
 
   // Finger move screen
   void onPanUpdate(DragUpdateDetails details, List<TmtGameCircle> circles) {
+    if (!_isInStateToMeasureMetrics()) {
+      return;
+    }
     final currentPosition = details.localPosition;
     testPauseMetric.checkPauseStatus(currentPosition);
 
@@ -105,36 +117,51 @@ class TmtMetricsController {
 
   // Finger lift screen
   void onPanEnd(DragEndDetails details) {
+    if (!_isInStateToMeasureMetrics()) {
+      return;
+    }
     testLiftMetric.onStartLift();
     testPauseMetric.onEndPause();
     circleMetrics.dragEndInsideCircle(details.localPosition);
   }
 
-  void onConnectNextCircleCorrect(int circleIndex,
-      TmtGameCircle circleConnectPoint, TmtTestStateFlow tmtTestState) {
+  void onConnectNextCircleCorrect(
+      int circleIndex,
+      TmtGameCircle circleConnectPoint,
+      TmtTestNavigationFlow tmtTestNavigationFlow) {
+    if (!_isInStateToMeasureMetrics()) {
+      return;
+    }
     circleMetrics.onConnectNextCircleCorrect(
         circleIndex, circleConnectPoint.offset);
 
     int circleNumber = circleIndex + 1;
-    if (tmtTestState == TmtTestStateFlow.TMT_A_IN_PROGRESS ||
-        tmtTestState == TmtTestStateFlow.READY) {
+    if (tmtTestNavigationFlow == TmtTestNavigationFlow.TMT_A_IN_PROGRESS) {
       testTimeMetrics.recordTmtACircleTime(circleNumber);
-    } else if (tmtTestState == TmtTestStateFlow.TMT_B_IN_PROGRESS) {
+    } else if (tmtTestNavigationFlow ==
+        TmtTestNavigationFlow.TMT_B_IN_PROGRESS) {
       testTimeMetrics.recordTmtBCircleTime(circleNumber);
       bMetrics.onConnectLetterCircle(circleConnectPoint);
     }
   }
 
-  void onConnectNextCircleError(TmtTestStateFlow tmtTestState) {
+  void onConnectNextCircleError(TmtTestNavigationFlow tmtTestNavigationFlow) {
+    if (!_isInStateToMeasureMetrics()) {
+      return;
+    }
     numberError++;
-    if (tmtTestState == TmtTestStateFlow.TMT_A_IN_PROGRESS) {
+    if (tmtTestNavigationFlow == TmtTestNavigationFlow.TMT_A_IN_PROGRESS) {
       numberErrorA++;
-    } else if (tmtTestState == TmtTestStateFlow.TMT_B_IN_PROGRESS) {
+    } else if (tmtTestNavigationFlow ==
+        TmtTestNavigationFlow.TMT_B_IN_PROGRESS) {
       numberErrorB++;
     }
   }
 
   void onPointerMove(PointerMoveEvent event) {
+    if (!_isInStateToMeasureMetrics()) {
+      return;
+    }
     if (event.pressure != TmtPressureSizeMetric.noHavePressureCharacteristic) {
       pressureSizeMetric.addPressureValue(event.pressure);
     }
@@ -142,5 +169,11 @@ class TmtMetricsController {
     if (event.size != TmtPressureSizeMetric.noHaveSizeCharacteristic) {
       pressureSizeMetric.addSizeValue(event.size);
     }
+  }
+
+  bool _isInStateToMeasureMetrics() {
+    return currentTmtTestNavigationFlow ==
+            TmtTestNavigationFlow.TMT_A_IN_PROGRESS ||
+        currentTmtTestNavigationFlow == TmtTestNavigationFlow.TMT_B_IN_PROGRESS;
   }
 }

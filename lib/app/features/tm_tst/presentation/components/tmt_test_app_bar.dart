@@ -22,12 +22,14 @@ class TmtCustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String title;
   final bool isTestTypeA;
   final TmtAppBarController? controller;
+  final int initialSeconds;
 
   const TmtCustomAppBar({
     Key? key,
     required this.title,
     required this.isTestTypeA,
     this.controller,
+    this.initialSeconds = 0,
   }) : super(key: key);
 
   @override
@@ -40,15 +42,17 @@ class TmtCustomAppBar extends StatefulWidget implements PreferredSizeWidget {
 class _TmtCustomAppBarState extends State<TmtCustomAppBar>
     with NavigationMixin {
   Timer? _timer;
-  int _elapsedSeconds = 0;
+  late int _elapsedSeconds;
   bool _isPaused = false;
-  int _initialSeconds = 0;
+  late int _initialSeconds;
 
   bool get isDarkMode => Get.isDarkMode;
 
   @override
   void initState() {
     super.initState();
+    _initialSeconds = widget.initialSeconds;
+    _elapsedSeconds = widget.initialSeconds;
     _startTimer();
 
     if (widget.controller != null) {
@@ -123,19 +127,19 @@ class _TmtCustomAppBarState extends State<TmtCustomAppBar>
       IconButton(
         icon: isDarkMode
             ? SvgPicture.asset(
-                ImageVectorPath.help,
-                width: 30,
-                height: 30,
-                colorFilter: ColorFilter.mode(
-                  AppColors.darkText,
-                  BlendMode.srcIn,
-                ),
-              )
+          ImageVectorPath.help,
+          width: 30,
+          height: 30,
+          colorFilter: ColorFilter.mode(
+            AppColors.darkText,
+            BlendMode.srcIn,
+          ),
+        )
             : SvgPicture.asset(
-                ImageVectorPath.help,
-                width: 30,
-                height: 30,
-              ),
+          ImageVectorPath.help,
+          width: 30,
+          height: 30,
+        ),
         onPressed: () {
           _navigateToHelpScreen();
         },
@@ -187,7 +191,7 @@ class _TmtCustomAppBarState extends State<TmtCustomAppBar>
 
   void _navigateToHelpScreen() {
     final helpMode =
-        widget.isTestTypeA ? TmtHelpMode.TMT_TEST_A : TmtHelpMode.TMT_TEST_B;
+    widget.isTestTypeA ? TmtHelpMode.TMT_TEST_A : TmtHelpMode.TMT_TEST_B;
     tmtTestToHelp(helpMode);
   }
 }

@@ -1,10 +1,14 @@
+import 'dart:ui';
+
 import 'package:get/get.dart';
 import 'package:msdtmt/app/utils/services/app_logger.dart';
 import 'package:msdtmt/app/features/tm_tst/domain/entities/result/tmt_game_hand_used.dart';
 
 import '../../../../utils/mixins/app_mixins.dart';
+import '../../domain/entities/metric/tmt_metrics_controller.dart';
 import '../../domain/entities/result/tmt_game_init_data.dart';
 import '../../domain/entities/tmt_game/tmt_game_before_data.dart';
+import '../controllers/base_tmt_test_flow_contoller.dart';
 import '../screens/tmt_test_help.dart';
 import '../screens/tmt_test_practice_screen.dart';
 import '../screens/tmt_test_screen.dart';
@@ -27,13 +31,44 @@ class TmtTestNavigationFlowController extends GetxController
   late TmtGameInitData tmtGameInitData;
   late TmtGameBeforeData tmtGameBeforeData;
 
-  /*TmtMetricsController metricsController = TmtMetricsController();
-  TmtMetricsController metricsControllerTmtA = TmtMetricsController();*/
+  TmtMetricsController metricsController = TmtMetricsController();
+  late TmtMetricsController _metricsControllerTmtA;
+
+  void begin(TmtGameBeforeData tmtGameBeforeData) {
+    this.tmtGameBeforeData = tmtGameBeforeData;
+    tmtTestFlowState.value = TmtTestNavigationFlow.START;
+    _handleStateChangeForNavigation(tmtTestFlowState.value);
+  }
+
+  void testStart() {
+    metricsController.onTestStart(tmtTestFlowState.value);
+  }
+
+  void testEnd(Offset lastDragOffset, TmtTestStateFlow tmtTestState) {
+    metricsController.onTestEnd(lastDragOffset, tmtTestState);
+  }
+
+  void handleResetTmtA() {
+    final timeStartTest = metricsController.testTimeMetrics.timeStartTest;
+    final newMetricsController = TmtMetricsController();
+    newMetricsController.setTimeStartTest(timeStartTest ?? DateTime.now());
+    metricsController = newMetricsController;
+  }
+
+  void handleResetTmtB() {
+    metricsController = _metricsControllerTmtA.copy();
+  }
+
+  int getTmtATimeInSec() {
+    return _metricsControllerTmtA.testTimeMetrics
+        .calculateTimeCompleteTmtA()
+        .toInt();
+  }
 
   void _handleStateChangeForNavigation(TmtTestNavigationFlow newState) {
     switch (newState) {
       case TmtTestNavigationFlow.START:
-        //Get.offAllNamed(Routes.home);
+        metricsController.onTestStart(tmtTestFlowState.value);
         break;
       case TmtTestNavigationFlow.TMT_A_PRACTICE_IN_PROCESS:
         navigateToPractice(TMTTestPracticeMode.TMT_A_ONLY);
@@ -42,6 +77,7 @@ class TmtTestNavigationFlowController extends GetxController
         toTmtTest(TmtType.tmtA);
         break;
       case TmtTestNavigationFlow.TMT_A_COMPLETED:
+        _metricsControllerTmtA = metricsController.copy();
         tmtTestToHelp(TmtHelpMode.TMT_TEST_B, true);
         break;
       case TmtTestNavigationFlow.TMT_B_PRACTICE_IN_PROCESS:
@@ -54,6 +90,7 @@ class TmtTestNavigationFlowController extends GetxController
         navigateToResultScreen(tmtGameInitData);
         break;
     }
+    metricsController.currentTmtTestNavigationFlow = newState;
   }
 
   void advanceState() {
@@ -91,9 +128,5 @@ class TmtTestNavigationFlowController extends GetxController
       tmtGameHandUsed: tmtGameHandUsed,
       tmtGameCodeId: tmtGameBeforeData.tmtGameCodeId,
     );
-  }
-
-  void saveTmtGameBeforeData(TmtGameBeforeData tmtGameBeforeData) {
-    this.tmtGameBeforeData = tmtGameBeforeData;
   }
 }

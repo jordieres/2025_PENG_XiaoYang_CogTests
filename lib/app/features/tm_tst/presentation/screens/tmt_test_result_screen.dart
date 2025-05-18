@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:msdtmt/app/features/user/presentation/contoller/test_result_controller.dart';
-import '../../../../config/routes/app_pages.dart';
 import '../../../../config/themes/AppTextStyle.dart';
 import '../../../../config/themes/app_text_style_base.dart';
 import '../../../../config/translation/app_translations.dart';
@@ -16,7 +15,7 @@ import '../../domain/entities/result/tmt_game_init_data.dart';
 import '../../domain/usecases/tmt_result/tmt_result_screen_responsive_calculator.dart';
 import '../components/tmt_result_card.dart';
 import '../controllers/tmt_result_report_controller.dart';
-import '../controllers/tmt_test_flow_state_controller.dart';
+import '../newscreens/tmt_test_navigation_flow.dart';
 
 class TmtResultsScreen extends StatefulWidget {
   const TmtResultsScreen({super.key});
@@ -39,7 +38,7 @@ class _TmtResultsScreenState extends State<TmtResultsScreen>
 
   late ResultLayoutMetrics _metrics;
 
-  late TmtTestFlowStateController _testController;
+  late TmtTestNavigationFlowController _tmtTestNavigationFlowController;
   late TmtResultReportController _resultController;
   late TestResultLocalDataController _testResultLocalDataController;
 
@@ -57,7 +56,7 @@ class _TmtResultsScreenState extends State<TmtResultsScreen>
   @override
   void initState() {
     super.initState();
-    _testController = Get.find<TmtTestFlowStateController>();
+    _tmtTestNavigationFlowController = Get.find<TmtTestNavigationFlowController>();
     _resultController = Get.find<TmtResultReportController>();
     _testResultLocalDataController = Get.find<TestResultLocalDataController>();
 
@@ -118,7 +117,7 @@ class _TmtResultsScreenState extends State<TmtResultsScreen>
   }
 
   void _loadTestResults() {
-    final metrics = _testController.metricsController;
+    final metrics = _tmtTestNavigationFlowController.metricsController;
 
     _timeCompleteA =
         metrics.testTimeMetrics.calculateTimeCompleteTmtA().toInt();
@@ -137,7 +136,7 @@ class _TmtResultsScreenState extends State<TmtResultsScreen>
     try {
       tmtGameInitData = Get.arguments as TmtGameInitData;
       await _resultController.reportResults(
-          _testController.metricsController, tmtGameInitData);
+          _tmtTestNavigationFlowController.metricsController, tmtGameInitData);
       _resultsSent = true;
     } catch (e) {
       AppLogger.severe(_loggerTag, "Error sending results", e);
