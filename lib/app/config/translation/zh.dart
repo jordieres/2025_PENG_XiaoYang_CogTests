@@ -44,7 +44,7 @@ class ChineseMessages extends BaseMessages {
 
   @override
   String get tmtGameTmtHelpGeneralDescription =>
-      "欢迎参加dTMT测试。此测试由两部分组成（A部分和B部分）。每部分将以简短的培训阶段开始，以熟悉任务，然后立即进行相应的计时测试。\n\n重要提示：\n\n• 每个培训阶段（测试A和测试B）只会执行一次。\n\n• 一旦完成测试A，您将直接进入测试A，该测试无法重复。\n\n• 同样，当您完成测试B时，您将直接进入测试B，该测试也无法重复。\n\n• 这确保了结果的有效性，并避免了测试中重复学习的效果。";
+      "欢迎参加dTMT测试。此测试由两部分组成（A部分和B部分）。每部分将以简短的培训阶段开始，以熟悉任务，然后立即进行相应的计时测试。\n\n重要提示：\n\n• 每个培训阶段（练习A和练习B）只会执行一次。\n\n• 一旦完成练习A，您将直接进入测试A，该测试无法重复。\n\n• 同样，当您完成练习B时，您将直接进入测试B，该测试也无法重复。\n\n• 这确保了结果的有效性，并避免了测试中重复学习的效果。";
 
   @override
   String get tmtGameTmtHelpGeneralButtonText => "开始";
