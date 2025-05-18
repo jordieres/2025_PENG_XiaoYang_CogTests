@@ -59,6 +59,9 @@ class ChineseMessages extends BaseMessages {
   @override
   String get tmtGameTmtHelpTmtBButtonText => "开始 B 部分练习";
 
+  @override
+  String get tmtGameTmtHelpTmtAButtonBackTest => "返回";
+
   //--------------------------------------------Home Header Text------------------------------------------------------
   @override
   String get homeHeaderSelectThemeTitle => "选择主题";

@@ -62,6 +62,9 @@ class SpanishMessages extends BaseMessages {
   @override
   String get tmtGameTmtHelpTmtBButtonText => "Comenzar Práctica Parte B";
 
+  @override
+  String get tmtGameTmtHelpTmtAButtonBackTest => "Volver";
+
   //--------------------------------------------Home Header Text------------------------------------------------------
   @override
   String get homeHeaderSelectThemeTitle => "Seleccionar Tema";

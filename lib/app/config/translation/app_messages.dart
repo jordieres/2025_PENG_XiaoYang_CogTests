@@ -26,6 +26,8 @@ class TMTGameText {
       'tmt_game_tmt_help_tmt_a_button_text';
   static String tmtGameTmtHelpTmtBButtonText =
       'tmt_game_tmt_help_tmt_b_button_text';
+  static String tmtGameTmtHelpTmtAButtonBackTest =
+      'tmt_game_tmt_help_tmt_a_button_back_test';
 }
 
 class HomeHeaderText {
@@ -275,6 +277,8 @@ abstract class BaseMessages {
   String get tmtGameTmtHelpTmtAButtonText;
 
   String get tmtGameTmtHelpTmtBButtonText;
+
+  String get tmtGameTmtHelpTmtAButtonBackTest;
 
   //--------------------------------------------Home Header Text------------------------------------------------------
   String get homeHeaderSelectThemeTitle;
@@ -576,6 +580,8 @@ abstract class BaseMessages {
             tmtGameTmtHelpGeneralButtonText,
         TMTGameText.tmtGameTmtHelpTmtAButtonText: tmtGameTmtHelpTmtAButtonText,
         TMTGameText.tmtGameTmtHelpTmtBButtonText: tmtGameTmtHelpTmtBButtonText,
+        TMTGameText.tmtGameTmtHelpTmtAButtonBackTest:
+            tmtGameTmtHelpTmtAButtonBackTest,
 
         //--------------------------------------------Home Header Text------------------------------------------------------
         HomeHeaderText.selectThemeTitle: homeHeaderSelectThemeTitle,

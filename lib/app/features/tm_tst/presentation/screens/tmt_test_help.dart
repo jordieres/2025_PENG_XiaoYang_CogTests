@@ -234,7 +234,7 @@ class _TmtTestHelpPageState extends State<TmtTestHelpPage> {
 
     String buttonText;
     if (isInActiveTestState) {
-      buttonText = "Volver";
+      buttonText = TMTGameText.tmtGameTmtHelpTmtAButtonBackTest.tr;
     } else {
       switch (tmtHelpMode) {
         case TmtHelpMode.TMT_TEST_GENERAL:
@@ -336,7 +336,7 @@ class _TmtTestHelpPageState extends State<TmtTestHelpPage> {
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(16.0),
                                     border: Border.all(
-                                      color: Colors.grey.withOpacity(0.3),
+                                      color: Colors.grey.withAlpha(76),
                                       width: 1,
                                     ),
                                   ),
