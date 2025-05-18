@@ -62,7 +62,7 @@ class TmtTestNavigationFlowController extends GetxController
   int getTmtATimeInSec() {
     return _metricsControllerTmtA.testTimeMetrics
         .calculateTimeCompleteTmtA()
-        .toInt();
+        .round();
   }
 
   void _handleStateChangeForNavigation(TmtTestNavigationFlow newState) {
