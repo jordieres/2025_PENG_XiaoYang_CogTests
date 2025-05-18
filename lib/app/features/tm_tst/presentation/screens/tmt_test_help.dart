@@ -31,24 +31,37 @@ class _TmtTestHelpPageState extends State<TmtTestHelpPage> {
   final ScrollController _scrollController = ScrollController();
   bool _showScrollIndicator = false;
 
-  final double imageAnimationHeight = 256;
   final double imageSpacing = 30;
+  final double maxImageHeight = 330;
 
   @override
   void initState() {
     super.initState();
     try {
       tmtHelpMode = Get.arguments as TmtHelpMode;
-      tmtTestNewFlowController = Get.find<TmtTestNavigationFlowController>();
     } catch (e) {
       tmtHelpMode = TmtHelpMode.TMT_TEST_A;
     }
-
+    try {
+      tmtTestNewFlowController = Get.find<TmtTestNavigationFlowController>();
+    } catch (e) {
+      tmtTestNewFlowController = TmtTestNavigationFlowController();
+    }
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _checkScrollStatus();
     });
 
     _scrollController.addListener(_onScroll);
+  }
+
+  double _getAspectRatio(double screenWidth) {
+    if (screenWidth > 1000) {
+      return 2;
+    } else if (DeviceHelper.isTablet) {
+      return 16 / 9;
+    } else {
+      return 4 / 3;
+    }
   }
 
   void _checkScrollStatus() {
@@ -194,13 +207,21 @@ class _TmtTestHelpPageState extends State<TmtTestHelpPage> {
     return null;
   }
 
-  double _calculateContentSpacing(
+  double _calculateContentSpacing(double constraintsWidth,
       double constraintsHeight, double textHeight, bool hasAnimation) {
     final buttonsHeight = DeviceHelper.isTablet ? 130.0 : 120.0;
-    final animationHeight =
-        hasAnimation ? imageAnimationHeight + imageSpacing : 0.0;
+
+    final actualWidth = constraintsWidth - 48;
+    final aspectRatio = _getAspectRatio(constraintsWidth);
+    final rawImageHeight = actualWidth / aspectRatio;
+
+    final calculatedImageHeight = hasAnimation
+        ? (rawImageHeight > maxImageHeight ? maxImageHeight : rawImageHeight) +
+            imageSpacing
+        : 0.0;
+
     final availableSpace =
-        constraintsHeight - textHeight - buttonsHeight - animationHeight;
+        constraintsHeight - textHeight - buttonsHeight - calculatedImageHeight;
     return availableSpace > 40 ? availableSpace / 2.5 : 40.0;
   }
 
@@ -267,6 +288,7 @@ class _TmtTestHelpPageState extends State<TmtTestHelpPage> {
 
                 final String? animationPath = _getAnimationPath(tmtHelpMode);
                 final bool hasAnimation = animationPath != null;
+                final aspectRatio = _getAspectRatio(constraints.maxWidth);
 
                 final TextPainter textPainter = TextPainter(
                   text: TextSpan(
@@ -278,10 +300,17 @@ class _TmtTestHelpPageState extends State<TmtTestHelpPage> {
                 )..layout(maxWidth: constraints.maxWidth - 48);
 
                 final spacing = _calculateContentSpacing(
+                  constraints.maxWidth,
                   constraints.maxHeight,
                   textPainter.height,
                   hasAnimation,
                 );
+
+                final actualWidth = constraints.maxWidth - 48;
+                final rawImageHeight = actualWidth / aspectRatio;
+                final imageHeight = rawImageHeight > maxImageHeight
+                    ? maxImageHeight
+                    : rawImageHeight;
 
                 return SingleChildScrollView(
                   controller: _scrollController,
@@ -304,20 +333,28 @@ class _TmtTestHelpPageState extends State<TmtTestHelpPage> {
                                 SizedBox(height: imageSpacing),
                                 Container(
                                   width: double.infinity,
-                                  height: imageAnimationHeight,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(16.0),
                                     border: Border.all(
-                                      color: Colors.grey.withAlpha(76),
+                                      color: Colors.grey.withOpacity(0.3),
                                       width: 1,
                                     ),
                                   ),
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(16.0),
-                                    child: Image.asset(
-                                      animationPath,
-                                      width: double.infinity,
-                                      fit: BoxFit.cover,
+                                    child: ConstrainedBox(
+                                      constraints: BoxConstraints(
+                                        maxHeight: imageHeight,
+                                      ),
+                                      child: AspectRatio(
+                                        aspectRatio: aspectRatio,
+                                        child: FittedBox(
+                                          fit: BoxFit.fill,
+                                          child: Image.asset(
+                                            animationPath,
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -361,5 +398,9 @@ class _TmtTestHelpPageState extends State<TmtTestHelpPage> {
     setState(() {
       tmtHelpMode = TmtHelpMode.TMT_TEST_A;
     });
+
+    if (_scrollController.hasClients) {
+      _scrollController.jumpTo(0);
+    }
   }
 }
