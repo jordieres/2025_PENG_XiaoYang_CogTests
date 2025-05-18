@@ -1,7 +1,5 @@
 import 'package:msdtmt/app/features/tm_tst/domain/entities/metric/metric_static_values.dart';
 
-import '../tmt_game/tmt_game_variable.dart';
-
 class TmtTestTimeMetric {
   DateTime? timeStartTest;
   DateTime? timeStartTmtA;
@@ -83,15 +81,12 @@ class TmtTestTimeMetric {
     _scoresCalculated = false;
   }
 
-  /// Rest 3 seconds because of the countdown at the beginning of the TMT test Part B.
-  ///  No need to rest for the countdown at the beginning of Part A
-  ///  because Part A starts before the countdown finishes.
+  /// Time pressed button start test until the end of the test
   double calculateTimeCompleteTest() {
     return timeEndTest != null && timeStartTest != null
         ? (timeEndTest!.difference(timeStartTest!).abs().inMilliseconds /
-                    MetricStaticValues.SEND_METRIC_THRESHOLD_MS)
-                .toDouble() -
-            TmtGameVariables.TMT_COUNTDOWN_TO_START_DURATION
+                MetricStaticValues.SEND_METRIC_THRESHOLD_MS)
+            .toDouble()
         : 0.0;
   }
 
