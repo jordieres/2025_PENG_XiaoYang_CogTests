@@ -51,12 +51,15 @@ class TmtTestNavigationFlowController extends GetxController
   void handleResetTmtA() {
     final timeStartTest = metricsController.testTimeMetrics.timeStartTest;
     final newMetricsController = TmtMetricsController();
+    newMetricsController
+        .setCurrentTmtTestNavigationFlow(tmtTestFlowState.value);
     newMetricsController.setTimeStartTest(timeStartTest ?? DateTime.now());
     metricsController = newMetricsController;
   }
 
   void handleResetTmtB() {
     metricsController = _metricsControllerTmtA.copy();
+    metricsController.setCurrentTmtTestNavigationFlow(tmtTestFlowState.value);
   }
 
   int getTmtATimeInSec() {
@@ -90,7 +93,7 @@ class TmtTestNavigationFlowController extends GetxController
         navigateToResultScreen(tmtGameInitData);
         break;
     }
-    metricsController.currentTmtTestNavigationFlow = newState;
+    metricsController.setCurrentTmtTestNavigationFlow(tmtTestFlowState.value);
   }
 
   void advanceState() {

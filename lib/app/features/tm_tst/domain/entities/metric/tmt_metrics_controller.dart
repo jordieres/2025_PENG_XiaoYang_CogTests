@@ -28,7 +28,7 @@ class TmtMetricsController {
   TmtBMetrics bMetrics = TmtBMetrics();
   TmtPressureSizeMetric pressureSizeMetric = TmtPressureSizeMetric();
 
-  TmtTestNavigationFlow currentTmtTestNavigationFlow =
+  TmtTestNavigationFlow _currentTmtTestNavigationFlow =
       TmtTestNavigationFlow.START;
 
   TmtMetricsController copy() {
@@ -47,6 +47,11 @@ class TmtMetricsController {
     controller.bMetrics = bMetrics.copy();
     controller.pressureSizeMetric = pressureSizeMetric.copy();
     return controller;
+  }
+
+  void setCurrentTmtTestNavigationFlow(
+      TmtTestNavigationFlow tmtTestNavigationFlow) {
+    _currentTmtTestNavigationFlow = tmtTestNavigationFlow;
   }
 
   void onTestStart(TmtTestNavigationFlow tmtTestNavigationFlow) {
@@ -172,8 +177,8 @@ class TmtMetricsController {
   }
 
   bool _isInStateToMeasureMetrics() {
-    return currentTmtTestNavigationFlow ==
+    return _currentTmtTestNavigationFlow ==
             TmtTestNavigationFlow.TMT_A_IN_PROGRESS ||
-        currentTmtTestNavigationFlow == TmtTestNavigationFlow.TMT_B_IN_PROGRESS;
+        _currentTmtTestNavigationFlow == TmtTestNavigationFlow.TMT_B_IN_PROGRESS;
   }
 }
