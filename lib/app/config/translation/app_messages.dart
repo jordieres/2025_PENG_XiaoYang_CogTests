@@ -14,11 +14,20 @@ class TMTGameText {
   static String tmtGameTmtHelpTmtBTitle = 'tmt_game_tmt_help_tmt_b_title';
   static String tmtGameTmtHelpTmtBDescription =
       'tmt_game_tmt_help_tmt_b_description';
-  static String tmtGameTmtHelpTmtPrimaryButtonText =
-      'tmt_game_tmt_help_tmt_primary_button_text';
   static String tmtGameTmtHelpTmtSecondaryButtonText =
       'tmt_game_tmt_help_tmt_secondary_button_text';
   static String tmtGameCountdownMessage = 'tmt_game_countdown_message';
+  static String tmtGameTmtHelpGeneralTitle = 'tmt_game_tmt_help_general_title';
+  static String tmtGameTmtHelpGeneralDescription =
+      'tmt_game_tmt_help_general_description';
+  static String tmtGameTmtHelpGeneralButtonText =
+      'tmt_game_tmt_help_general_button_text';
+  static String tmtGameTmtHelpTmtAButtonText =
+      'tmt_game_tmt_help_tmt_a_button_text';
+  static String tmtGameTmtHelpTmtBButtonText =
+      'tmt_game_tmt_help_tmt_b_button_text';
+  static String tmtGameTmtHelpTmtAButtonBackTest =
+      'tmt_game_tmt_help_tmt_a_button_back_test';
 }
 
 class HomeHeaderText {
@@ -32,23 +41,22 @@ class HomeHeaderText {
 }
 
 class TMTGamePracticesText {
-  static String tmtGamePracticeTmtAThenBDialogTitle =
-      'tmt_game_practice_tmt_a_then_b_dialog_title';
-  static String tmtGamePracticeTmtAThenBDialogCancelButtonText =
-      'tmt_game_practice_tmt_a_then_b_dialog_cancel_button_text';
-  static String tmtGamePracticeTmtAThenBDialogPrimaryButtonText =
-      'tmt_game_practice_tmt_a_then_b_dialog_primary_button_text';
-  static String tmtGamePracticeOnlyTmtAOrTmtBDialogTitle =
-      'tmt_game_practice_only_tmt_a_or_tmt_b_dialog_title';
-  static String tmtGamePracticeOnlyTmtAOrTmtBDialogCancelButtonText =
-      'tmt_game_practice_only_tmt_a_or_tmt_b_dialog_cancel_button_text';
-  static String tmtGamePracticeOnlyTmtAOrTmtBDialogPrimaryButtonText =
-      'tmt_game_practice_only_tmt_a_or_tmt_b_dialog_primary_button_text';
-
   static String tmtGamePracticeTmtAPageTitle =
       'tmt_game_practice_tmt_a_page_title';
   static String tmtGamePracticeTmtBPageTitle =
       'tmt_game_practice_tmt_b_page_title';
+  static String tmtGamePracticeCompletedADialogTitle =
+      'tmt_game_practice_completed_a_dialog_title';
+  static String tmtGamePracticeCompletedADialogContent =
+      'tmt_game_practice_completed_a_dialog_content';
+  static String tmtGamePracticeCompletedADialogButtonText =
+      'tmt_game_practice_completed_a_dialog_button_text';
+  static String tmtGamePracticeCompletedBDialogTitle =
+      'tmt_game_practice_completed_b_dialog_title';
+  static String tmtGamePracticeCompletedBDialogContent =
+      'tmt_game_practice_completed_b_dialog_content';
+  static String tmtGamePracticeCompletedBDialogButtonText =
+      'tmt_game_practice_completed_b_dialog_button_text';
 }
 
 class TmtSelectHandDialogText {
@@ -256,11 +264,21 @@ abstract class BaseMessages {
 
   String get tmtGameTmtHelpTmtBDescription;
 
-  String get tmtGameTmtHelpTmtPrimaryButtonText;
-
   String get tmtGameTmtHelpTmtSecondaryButtonText;
 
   String get tmtGameCountdownMessage;
+
+  String get tmtGameTmtHelpGeneralTitle;
+
+  String get tmtGameTmtHelpGeneralDescription;
+
+  String get tmtGameTmtHelpGeneralButtonText;
+
+  String get tmtGameTmtHelpTmtAButtonText;
+
+  String get tmtGameTmtHelpTmtBButtonText;
+
+  String get tmtGameTmtHelpTmtAButtonBackTest;
 
   //--------------------------------------------Home Header Text------------------------------------------------------
   String get homeHeaderSelectThemeTitle;
@@ -279,21 +297,21 @@ abstract class BaseMessages {
 
   //--------------------------------------------TMT Practice Text------------------------------------------------------
 
-  String get tmtGamePracticeTmtAThenBDialogTitle;
-
-  String get tmtGamePracticeTmtAThenBDialogCancelButtonText;
-
-  String get tmtGamePracticeTmtAThenBDialogPrimaryButtonText;
-
-  String get tmtGamePracticeOnlyTmtAOrTmtBDialogTitle;
-
-  String get tmtGamePracticeOnlyTmtAOrTmtBDialogCancelButtonText;
-
-  String get tmtGamePracticeOnlyTmtAOrTmtBDialogPrimaryButtonText;
-
   String get tmtGamePracticeTmtAPageTitle;
 
   String get tmtGamePracticeTmtBPageTitle;
+
+  String get tmtGamePracticeCompletedADialogTitle;
+
+  String get tmtGamePracticeCompletedADialogContent;
+
+  String get tmtGamePracticeCompletedADialogButtonText;
+
+  String get tmtGamePracticeCompletedBDialogTitle;
+
+  String get tmtGamePracticeCompletedBDialogContent;
+
+  String get tmtGamePracticeCompletedBDialogButtonText;
 
   //--------------------------------------------TMT Select Hand Dialog Text------------------------------------------------------
   String get tmtSelectHandDialogFirstTimeTitle;
@@ -552,11 +570,18 @@ abstract class BaseMessages {
         TMTGameText.tmtGameTmtHelpTmtBTitle: tmtGameTmtHelpTmtBTitle,
         TMTGameText.tmtGameTmtHelpTmtBDescription:
             tmtGameTmtHelpTmtBDescription,
-        TMTGameText.tmtGameTmtHelpTmtPrimaryButtonText:
-            tmtGameTmtHelpTmtPrimaryButtonText,
         TMTGameText.tmtGameTmtHelpTmtSecondaryButtonText:
             tmtGameTmtHelpTmtSecondaryButtonText,
         TMTGameText.tmtGameCountdownMessage: tmtGameCountdownMessage,
+        TMTGameText.tmtGameTmtHelpGeneralTitle: tmtGameTmtHelpGeneralTitle,
+        TMTGameText.tmtGameTmtHelpGeneralDescription:
+            tmtGameTmtHelpGeneralDescription,
+        TMTGameText.tmtGameTmtHelpGeneralButtonText:
+            tmtGameTmtHelpGeneralButtonText,
+        TMTGameText.tmtGameTmtHelpTmtAButtonText: tmtGameTmtHelpTmtAButtonText,
+        TMTGameText.tmtGameTmtHelpTmtBButtonText: tmtGameTmtHelpTmtBButtonText,
+        TMTGameText.tmtGameTmtHelpTmtAButtonBackTest:
+            tmtGameTmtHelpTmtAButtonBackTest,
 
         //--------------------------------------------Home Header Text------------------------------------------------------
         HomeHeaderText.selectThemeTitle: homeHeaderSelectThemeTitle,
@@ -568,24 +593,23 @@ abstract class BaseMessages {
         HomeHeaderText.chinese: languageNameChinese,
 
         //--------------------------------------------TMT Practice Text------------------------------------------------------
-        TMTGamePracticesText.tmtGamePracticeTmtAThenBDialogTitle:
-            tmtGamePracticeTmtAThenBDialogTitle,
-        TMTGamePracticesText.tmtGamePracticeTmtAThenBDialogCancelButtonText:
-            tmtGamePracticeTmtAThenBDialogCancelButtonText,
-        TMTGamePracticesText.tmtGamePracticeTmtAThenBDialogPrimaryButtonText:
-            tmtGamePracticeTmtAThenBDialogPrimaryButtonText,
-        TMTGamePracticesText.tmtGamePracticeOnlyTmtAOrTmtBDialogTitle:
-            tmtGamePracticeOnlyTmtAOrTmtBDialogTitle,
-        TMTGamePracticesText
-                .tmtGamePracticeOnlyTmtAOrTmtBDialogCancelButtonText:
-            tmtGamePracticeOnlyTmtAOrTmtBDialogCancelButtonText,
-        TMTGamePracticesText
-                .tmtGamePracticeOnlyTmtAOrTmtBDialogPrimaryButtonText:
-            tmtGamePracticeOnlyTmtAOrTmtBDialogPrimaryButtonText,
         TMTGamePracticesText.tmtGamePracticeTmtAPageTitle:
             tmtGamePracticeTmtAPageTitle,
         TMTGamePracticesText.tmtGamePracticeTmtBPageTitle:
             tmtGamePracticeTmtBPageTitle,
+        TMTGamePracticesText.tmtGamePracticeCompletedADialogTitle:
+            tmtGamePracticeCompletedADialogTitle,
+        TMTGamePracticesText.tmtGamePracticeCompletedADialogContent:
+            tmtGamePracticeCompletedADialogContent,
+        TMTGamePracticesText.tmtGamePracticeCompletedADialogButtonText:
+            tmtGamePracticeCompletedADialogButtonText,
+        TMTGamePracticesText.tmtGamePracticeCompletedBDialogTitle:
+            tmtGamePracticeCompletedBDialogTitle,
+        TMTGamePracticesText.tmtGamePracticeCompletedBDialogContent:
+            tmtGamePracticeCompletedBDialogContent,
+        TMTGamePracticesText.tmtGamePracticeCompletedBDialogButtonText:
+            tmtGamePracticeCompletedBDialogButtonText,
+
         //--------------------------------------------TMT Select Hand Dialog Text------------------------------------------------------
         TmtSelectHandDialogText.firstTimeTitle:
             tmtSelectHandDialogFirstTimeTitle,

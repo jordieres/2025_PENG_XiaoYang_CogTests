@@ -23,27 +23,47 @@ class SpanishMessages extends BaseMessages {
   String get tmtGameTmtScreenAppBarTime => "Tiempo: ";
 
   @override
-  String get tmtGameTmtHelpTmtATitle => "TMT A Ayuda";
+  String get tmtGameTmtHelpTmtATitle => "Instrucciones: TMT Parte A";
 
   @override
   String get tmtGameTmtHelpTmtADescription =>
-      "Se mostrarán números contenidos en círculos. Por favor, conecta con tu dedo los círculos con los números en orden ascendente, empezando desde el número más bajo y continuando con el siguiente en orden. Empieza en 1, luego 2, luego 3, y continúa. Responde con precisión lo más deprisa que puedas.";
+      "Se mostrarán números contenidos en círculos. Por favor, conecta con tu dedo los círculos con los números en orden ascendente, empezando desde el número más bajo y continuando con el siguiente en orden. "
+      "\n\n• Empieza en 1, luego 2, luego 3, y continúa. ( 1 → 2 → 3 → ...) "
+      "\n\n• Responde con precisión lo más deprisa que puedas.";
 
   @override
-  String get tmtGameTmtHelpTmtBTitle => "TMT B Ayuda";
+  String get tmtGameTmtHelpTmtBTitle => "Instrucciones: TMT Parte B";
 
   @override
   String get tmtGameTmtHelpTmtBDescription =>
-      "Se mostrarán números y letras contenidos en círculos. Por favor, conecta con tu dedo los círculos alternando entre números y letras en orden ascendente / alfabético. Empieza en el número 1, luego la letra A. Luego el número 2, y luego la letra B. Responde con precisión lo más deprisa que puedas.";
-
-  @override
-  String get tmtGameTmtHelpTmtPrimaryButtonText => "Quiero practicar";
+      "Se mostrarán números y letras contenidos en círculos. Por favor, conecta con tu dedo los círculos alternando entre números y letras en orden ascendente / alfabético. "
+      "\n\n• Empieza en el número 1, luego la letra A. Luego el número 2, y luego la letra B. (1 → A → 2 → B → ...) "
+      "\n\n• Responde con precisión lo más deprisa que puedas.";
 
   @override
   String get tmtGameTmtHelpTmtSecondaryButtonText => "Inicar Test Formal";
 
   @override
   String get tmtGameCountdownMessage => "¡Prepárate! La prueba comenzará en...";
+
+  @override
+  String get tmtGameTmtHelpGeneralTitle => "Bienvenido al Test dTMT";
+
+  @override
+  String get tmtGameTmtHelpGeneralDescription =>
+      "Bienvenido al test dTMT. Esta prueba consta de dos partes (Parte A y Parte B). Cada parte comenzará con una breve fase de entrenamiento para familiarizarte con la tarea, seguida inmediatamente por el test cronometrado correspondiente.\n\nImportante:\n\n• Cada fase de entrenamiento (Práctica A y Práctica B) se realizará una sola vez.\n\n• Una vez finalizada la Práctica A, pasarás directamente al Test A, el cual no se podrá repetir.\n\n• De igual manera, al finalizar la Práctica B, pasarás directamente al Test B, que tampoco se podrá repetir.\n\n• Esto asegura la validez de los resultados y evita el efecto del aprendizaje por repetición en los tests.";
+
+  @override
+  String get tmtGameTmtHelpGeneralButtonText => "Comenzar";
+
+  @override
+  String get tmtGameTmtHelpTmtAButtonText => "Comenzar Práctica Parte A";
+
+  @override
+  String get tmtGameTmtHelpTmtBButtonText => "Comenzar Práctica Parte B";
+
+  @override
+  String get tmtGameTmtHelpTmtAButtonBackTest => "Volver";
 
   //--------------------------------------------Home Header Text------------------------------------------------------
   @override
@@ -69,32 +89,32 @@ class SpanishMessages extends BaseMessages {
 
   //--------------------------------------------TMT Practice Text------------------------------------------------------
   @override
-  String get tmtGamePracticeTmtAThenBDialogTitle =>
-      "¿Repetir esta práctica TMT A o avanzar al siguiente desafío?";
-
-  @override
-  String get tmtGamePracticeTmtAThenBDialogCancelButtonText => "Avanzar";
-
-  @override
-  String get tmtGamePracticeTmtAThenBDialogPrimaryButtonText => "Repetir";
-
-  @override
-  String get tmtGamePracticeOnlyTmtAOrTmtBDialogTitle =>
-      "¿Estás listo para empezar el test TMT?";
-
-  @override
-  String get tmtGamePracticeOnlyTmtAOrTmtBDialogCancelButtonText =>
-      "Sí, empezar";
-
-  @override
-  String get tmtGamePracticeOnlyTmtAOrTmtBDialogPrimaryButtonText =>
-      "No, repetir";
-
-  @override
   String get tmtGamePracticeTmtAPageTitle => "Práctica TMT A";
 
   @override
   String get tmtGamePracticeTmtBPageTitle => "Práctica TMT B";
+
+  @override
+  String get tmtGamePracticeCompletedADialogTitle =>
+      "¡Práctica Parte A Terminada!";
+
+  @override
+  String get tmtGamePracticeCompletedADialogContent =>
+      "Has completado el entrenamiento de la Parte A. Ahora comenzarás el Test A. Recuerda, esta parte es cronometrada y no se puede repetir.";
+
+  @override
+  String get tmtGamePracticeCompletedADialogButtonText => "Iniciar Test A";
+
+  @override
+  String get tmtGamePracticeCompletedBDialogTitle =>
+      "¡Práctica Parte B Terminada!";
+
+  @override
+  String get tmtGamePracticeCompletedBDialogContent =>
+      "Has completado el entrenamiento de la Parte B. Ahora comenzarás el Test B. Recuerda, esta parte es cronometrada y no se puede repetir.";
+
+  @override
+  String get tmtGamePracticeCompletedBDialogButtonText => "Iniciar Test B";
 
   //--------------------------------------------TMT Select Hand Dialog Text------------------------------------------------------
   @override

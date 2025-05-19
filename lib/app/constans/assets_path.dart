@@ -25,3 +25,11 @@ class ImageVectorPath {
   static const help = "$_folderPath/help.svg";
   static const homeMadridIcon = "$_folderPath/home_salud_madrid_icon.svg";
 }
+
+class GifPath {
+  static const _folderPath = "assets/gif";
+  static const tmtAAnimationLeftHand = "$_folderPath/tmt_a_left_hand.gif";
+  static const tmtBAnimationLeftHand = "$_folderPath/tmt_b_left_hand.gif";
+  static const tmtAAnimationRightHand = "$_folderPath/tmt_a_right_hand.gif";
+  static const tmtBAnimationRightHand = "$_folderPath/tmt_b_right_hand.gif";
+}

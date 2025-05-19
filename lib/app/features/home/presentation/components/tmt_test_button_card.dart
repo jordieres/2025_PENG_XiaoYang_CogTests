@@ -129,9 +129,6 @@ class _TmtTestButtonCardState extends State<TmtTestButtonCard>
               ? () {
                   if (widget.onStartTest != null) {
                     widget.onStartTest!();
-                  } else {
-                    toSelectedPracticeOrTest(
-                        widget.referenceCode, widget.handsUsed);
                   }
                 }
               : null,

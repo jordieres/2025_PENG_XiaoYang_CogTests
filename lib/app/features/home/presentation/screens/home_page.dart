@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:msdtmt/app/features/tm_tst/presentation/screens/tmt_test_help.dart';
 import '../../../../utils/mixins/app_mixins.dart';
 import '../../../../utils/helpers/widget_max_width_calculator.dart';
+import '../../../tm_tst/domain/entities/tmt_game/tmt_game_before_data.dart';
+import '../../../tm_tst/presentation/newscreens/tmt_test_navigation_flow.dart';
 import '../../domain/entities/reference_validation_result_entity.dart';
 import '../components/home_card_button.dart';
 import '../components/home_page_header.dart';
@@ -80,9 +83,7 @@ class _HomePageState extends State<HomePage> with NavigationMixin {
                             ? _referenceCodeController.getHandsUsed()
                             : HandsUsed.NONE,
                         onStartTest: _referenceCodeController.isValidated.value
-                            ? () => toSelectedPracticeOrTest(
-                                _referenceCodeController.getFullReferenceCode(),
-                                _referenceCodeController.getHandsUsed())
+                            ? () => {_initTmtTest()}
                             : null,
                       )),
                   const SizedBox(height: 24),
@@ -122,5 +123,22 @@ class _HomePageState extends State<HomePage> with NavigationMixin {
         ),
       ),
     );
+  }
+
+  _initTmtTest() {
+    if (Get.isRegistered<TmtTestNavigationFlowController>()) {
+      Get.delete<TmtTestNavigationFlowController>(force: true);
+    }
+    final TmtTestNavigationFlowController tmtTestNewFlowController =
+        TmtTestNavigationFlowController();
+
+    final tmtGameBeforeData = TmtGameBeforeData(
+      tmtGameCodeId: _referenceCodeController.getFullReferenceCode(),
+      handsUsed: _referenceCodeController.getHandsUsed(),
+    );
+    tmtTestNewFlowController.begin(tmtGameBeforeData);
+
+    Get.put(tmtTestNewFlowController);
+    tmtTestToHelp(TmtHelpMode.TMT_TEST_GENERAL);
   }
 }

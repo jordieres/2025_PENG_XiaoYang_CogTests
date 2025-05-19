@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:msdtmt/app/features/tm_tst/presentation/screens/tmt_test_help.dart';
-import '../../../../config/routes/app_pages.dart';
 import '../../../../config/themes/AppColors.dart';
 import '../../../../config/translation/app_translations.dart';
 import '../../../../shared_components/custom_app_bar.dart';
@@ -10,8 +8,9 @@ import '../../../../utils/mixins/app_mixins.dart';
 import '../components/tmt_game_board_controller.dart';
 import '../controllers/base_tmt_test_flow_contoller.dart';
 import '../controllers/tmt_practice_flow_state_contoller.dart';
+import '../newscreens/tmt_test_navigation_flow.dart';
 
-enum TMTTestPracticeMode { TMT_A_ONLY, TMT_B_ONLY, TMT_A_THEN_B }
+enum TMTTestPracticeMode { TMT_A_ONLY, TMT_B_ONLY }
 
 class TmtTestPracticePage extends StatefulWidget {
   const TmtTestPracticePage({super.key});
@@ -28,6 +27,7 @@ class _TmtPracticePageState extends State<TmtTestPracticePage>
   TmtGameBoardController? _boardController;
   late TmtPracticeFlowController _practiceController;
   Worker? _stateWorker;
+  late TmtTestNavigationFlowController tmtTestNewFlowController;
 
   @override
   void initState() {
@@ -40,6 +40,7 @@ class _TmtPracticePageState extends State<TmtTestPracticePage>
     _practiceController = Get.find<TmtPracticeFlowController>();
     try {
       tmtTestPracticeMode = Get.arguments as TMTTestPracticeMode;
+      tmtTestNewFlowController = Get.find<TmtTestNavigationFlowController>();
     } catch (e) {
       tmtTestPracticeMode = TMTTestPracticeMode.TMT_A_ONLY;
     }
@@ -51,9 +52,6 @@ class _TmtPracticePageState extends State<TmtTestPracticePage>
       case TMTTestPracticeMode.TMT_B_ONLY:
         _practiceController.testState.value = TmtTestStateFlow.TMT_A_COMPLETED;
         break;
-      case TMTTestPracticeMode.TMT_A_THEN_B:
-        _practiceController.testState.value = TmtTestStateFlow.READY;
-        break;
     }
   }
 
@@ -61,17 +59,12 @@ class _TmtPracticePageState extends State<TmtTestPracticePage>
     _stateWorker = ever(_practiceController.testState, (state) {
       if (!mounted) return;
       if (state == TmtTestStateFlow.TMT_A_COMPLETED) {
-        if (tmtTestPracticeMode == TMTTestPracticeMode.TMT_A_THEN_B) {
-          if (mounted) {
-            _showPartACompletedDialog();
-          }
-        } else if (tmtTestPracticeMode == TMTTestPracticeMode.TMT_A_ONLY) {
-          _showPracticeCompletedDialog();
+        if (tmtTestPracticeMode == TMTTestPracticeMode.TMT_A_ONLY) {
+          _showPracticeCompletedADialog();
         }
       } else if (state == TmtTestStateFlow.TEST_COMPLETED) {
-        if (tmtTestPracticeMode == TMTTestPracticeMode.TMT_B_ONLY ||
-            tmtTestPracticeMode == TMTTestPracticeMode.TMT_A_THEN_B) {
-          _showPracticeCompletedDialog();
+        if (tmtTestPracticeMode == TMTTestPracticeMode.TMT_B_ONLY) {
+          _showPracticeCompletedBDialog();
         }
       }
     });
@@ -84,77 +77,43 @@ class _TmtPracticePageState extends State<TmtTestPracticePage>
         key: UniqueKey(), flowController: _practiceController);
   }
 
-  void _resetTmtA() {
-    _practiceController.resetStatusTmtA();
-    setState(() {
-      _boardController = TmtGameBoardController(
-          key: UniqueKey(), flowController: _practiceController);
-    });
-  }
-
-  void _resetTmtB() {
-    _practiceController.resetStatusTmtB();
-    setState(() {
-      _boardController = TmtGameBoardController(
-          key: UniqueKey(), flowController: _practiceController);
-    });
-  }
-
   @override
   void dispose() {
     _stateWorker?.dispose();
     super.dispose();
   }
 
-  void _showPartACompletedDialog() {
+  void _showPracticeCompletedADialog() {
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (context) => CustomDialog(
-        mode: DialogMode.confirmCancel,
-        title: TMTGamePracticesText.tmtGamePracticeTmtAThenBDialogTitle.tr,
-        cancelButtonText: TMTGamePracticesText
-            .tmtGamePracticeTmtAThenBDialogCancelButtonText.tr,
-        primaryButtonText: TMTGamePracticesText
-            .tmtGamePracticeTmtAThenBDialogPrimaryButtonText.tr,
-        onCancelPressed: () {
-          Get.back();
-          Get.offNamedUntil(Routes.tmt_help,
-              ModalRoute.withName(Routes.tmt_select_practice_or_test),
-              arguments: TmtHelpMode.TMT_TEST_B);
-        },
+        mode: DialogMode.singleButton,
+        title: TMTGamePracticesText.tmtGamePracticeCompletedADialogTitle.tr,
+        content: TMTGamePracticesText.tmtGamePracticeCompletedADialogContent.tr,
+        primaryButtonText:
+            TMTGamePracticesText.tmtGamePracticeCompletedADialogButtonText.tr,
         onPrimaryPressed: () {
           Get.back();
-          _resetTmtA();
+          tmtTestNewFlowController.advanceState();
         },
       ),
     );
   }
 
-  void _showPracticeCompletedDialog() {
+  void _showPracticeCompletedBDialog() {
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (context) => CustomDialog(
-        mode: DialogMode.confirmCancel,
-        title: TMTGamePracticesText.tmtGamePracticeOnlyTmtAOrTmtBDialogTitle.tr,
-        cancelButtonText: TMTGamePracticesText
-            .tmtGamePracticeOnlyTmtAOrTmtBDialogCancelButtonText.tr,
-        primaryButtonText: TMTGamePracticesText
-            .tmtGamePracticeOnlyTmtAOrTmtBDialogPrimaryButtonText.tr,
-        onCancelPressed: () {
-          Get.back(); //close dialog
-          Get.back(); // close practice screen
-          Get.back(); // close help screen
-        },
+        mode: DialogMode.singleButton,
+        title: TMTGamePracticesText.tmtGamePracticeCompletedBDialogTitle.tr,
+        content: TMTGamePracticesText.tmtGamePracticeCompletedBDialogContent.tr,
+        primaryButtonText:
+            TMTGamePracticesText.tmtGamePracticeCompletedBDialogButtonText.tr,
         onPrimaryPressed: () {
           Get.back();
-          if (tmtTestPracticeMode == TMTTestPracticeMode.TMT_A_ONLY ||
-              tmtTestPracticeMode == TMTTestPracticeMode.TMT_A_THEN_B) {
-            _resetTmtA();
-          } else {
-            _resetTmtB();
-          }
+          tmtTestNewFlowController.advanceState();
         },
       ),
     );
@@ -176,7 +135,6 @@ class _TmtPracticePageState extends State<TmtTestPracticePage>
   String _getHelpTitle(TMTTestPracticeMode practiceMode) {
     switch (practiceMode) {
       case TMTTestPracticeMode.TMT_A_ONLY:
-      case TMTTestPracticeMode.TMT_A_THEN_B:
         return TMTGamePracticesText.tmtGamePracticeTmtAPageTitle.tr;
       case TMTTestPracticeMode.TMT_B_ONLY:
         return TMTGamePracticesText.tmtGamePracticeTmtBPageTitle.tr;

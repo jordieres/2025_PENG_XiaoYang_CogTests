@@ -20,27 +20,47 @@ class ChineseMessages extends BaseMessages {
   String get tmtGameTmtScreenAppBarTime => "时间: ";
 
   @override
-  String get tmtGameTmtHelpTmtATitle => "TMT A 帮助";
+  String get tmtGameTmtHelpTmtATitle => "说明：TMT A 部分";
 
   @override
   String get tmtGameTmtHelpTmtADescription =>
-      "将显示包含数字的圆圈。请用手指连接按升序排列的圆圈，从最低的数字开始，然后按顺序继续。 从1开始，然后是2，然后是3，依此类推。 尽可能快地准确响应。";
+      "将显示包含数字的圆圈。请用手指连接按升序排列的圆圈，从最低的数字开始，然后按顺序继续。 "
+          "\n\n• 从1开始，然后是2，然后是3，依此类推。( 1 → 2 → 3 → ...) "
+          "\n\n• 尽可能快地准确响应。";
 
   @override
-  String get tmtGameTmtHelpTmtBTitle => "TMT B 帮助";
+  String get tmtGameTmtHelpTmtBTitle => "说明：TMT B 部分";
 
   @override
   String get tmtGameTmtHelpTmtBDescription =>
-      "将显示包含数字和字母的圆圈。请用手指连接按升序/字母顺序交替的数字和字母的圆圈。 从数字1开始，然后是字母A。 然后是数字2，然后是字母B。 尽可能快地准确响应。";
-
-  @override
-  String get tmtGameTmtHelpTmtPrimaryButtonText => "我想要练习";
+      "将显示包含数字和字母的圆圈。请用手指连接按升序/字母顺序交替的数字和字母的圆圈。 "
+          "\n\n• 从数字1开始，然后是字母A。 然后是数字2，然后是字母B。(1 → A → 2 → B → ...) "
+          "\n\n• 尽可能快地准确响应。";
 
   @override
   String get tmtGameTmtHelpTmtSecondaryButtonText => "开始正式的测试";
 
   @override
   String get tmtGameCountdownMessage => "准备好！测试将在以下时间开始...";
+
+  @override
+  String get tmtGameTmtHelpGeneralTitle => "欢迎参加dTMT测试";
+
+  @override
+  String get tmtGameTmtHelpGeneralDescription =>
+      "欢迎参加dTMT测试。此测试由两部分组成（A部分和B部分）。每部分将以简短的培训阶段开始，以熟悉任务，然后立即进行相应的计时测试。\n\n重要提示：\n\n• 每个培训阶段（练习A和练习B）只会执行一次。\n\n• 一旦完成练习A，您将直接进入测试A，该测试无法重复。\n\n• 同样，当您完成练习B时，您将直接进入测试B，该测试也无法重复。\n\n• 这确保了结果的有效性，并避免了测试中重复学习的效果。";
+
+  @override
+  String get tmtGameTmtHelpGeneralButtonText => "开始";
+
+  @override
+  String get tmtGameTmtHelpTmtAButtonText => "开始 A 部分练习";
+
+  @override
+  String get tmtGameTmtHelpTmtBButtonText => "开始 B 部分练习";
+
+  @override
+  String get tmtGameTmtHelpTmtAButtonBackTest => "返回";
 
   //--------------------------------------------Home Header Text------------------------------------------------------
   @override
@@ -66,28 +86,30 @@ class ChineseMessages extends BaseMessages {
 
   //--------------------------------------------TMT Practice Text------------------------------------------------------
   @override
-  String get tmtGamePracticeTmtAThenBDialogTitle => "重复这个TMT A练习还是继续下一个挑战？";
-
-  @override
-  String get tmtGamePracticeTmtAThenBDialogCancelButtonText => "继续";
-
-  @override
-  String get tmtGamePracticeTmtAThenBDialogPrimaryButtonText => "重复";
-
-  @override
-  String get tmtGamePracticeOnlyTmtAOrTmtBDialogTitle => "你准备好开始TMT测试了吗？";
-
-  @override
-  String get tmtGamePracticeOnlyTmtAOrTmtBDialogCancelButtonText => "是的，开始";
-
-  @override
-  String get tmtGamePracticeOnlyTmtAOrTmtBDialogPrimaryButtonText => "不，我要重复";
-
-  @override
   String get tmtGamePracticeTmtAPageTitle => "TMT A 练习";
 
   @override
   String get tmtGamePracticeTmtBPageTitle => "TMT B 练习";
+
+  @override
+  String get tmtGamePracticeCompletedADialogTitle => "练习 A 部分完成！";
+
+  @override
+  String get tmtGamePracticeCompletedADialogContent =>
+      "您已完成 A 部分的训练。现在您将开始测试 A。请记住，此部分是计时的，不能重复。";
+
+  @override
+  String get tmtGamePracticeCompletedADialogButtonText => "开始测试 A";
+
+  @override
+  String get tmtGamePracticeCompletedBDialogTitle => "练习 B 部分完成！";
+
+  @override
+  String get tmtGamePracticeCompletedBDialogContent =>
+      "您已完成 B 部分的训练。现在您将开始测试 B。请记住，此部分是计时的，不能重复。";
+
+  @override
+  String get tmtGamePracticeCompletedBDialogButtonText => "开始测试 B";
 
   //--------------------------------------------TMT Select Hand Dialog Text------------------------------------------------------
   @override
