@@ -243,7 +243,7 @@ class _UserResultHistoryScreenState extends State<UserResultHistoryScreen> {
           Expanded(
             flex: 2,
             child: Text(
-              '${result.tmtATime.toStringAsFixed(0)}$secondsUnit',
+              '${result.tmtATime.round()}$secondsUnit',
               style: AppTextStyle.tmtResultHistoryTabletContentText,
               textAlign: TextAlign.center,
             ),
@@ -251,7 +251,7 @@ class _UserResultHistoryScreenState extends State<UserResultHistoryScreen> {
           Expanded(
             flex: 2,
             child: Text(
-              '${result.tmtBTime.toStringAsFixed(0)}$secondsUnit',
+              '${result.tmtBTime.round()}$secondsUnit',
               style: AppTextStyle.tmtResultHistoryTabletContentText,
               textAlign: TextAlign.center,
             ),

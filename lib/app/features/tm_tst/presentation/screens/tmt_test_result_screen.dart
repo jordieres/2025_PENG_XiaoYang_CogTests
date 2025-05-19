@@ -56,7 +56,8 @@ class _TmtResultsScreenState extends State<TmtResultsScreen>
   @override
   void initState() {
     super.initState();
-    _tmtTestNavigationFlowController = Get.find<TmtTestNavigationFlowController>();
+    _tmtTestNavigationFlowController =
+        Get.find<TmtTestNavigationFlowController>();
     _resultController = Get.find<TmtResultReportController>();
     _testResultLocalDataController = Get.find<TestResultLocalDataController>();
 
@@ -88,11 +89,13 @@ class _TmtResultsScreenState extends State<TmtResultsScreen>
   }
 
   void _saveTestResultToLocal() {
+    final metrics = _tmtTestNavigationFlowController.metricsController;
+
     _testResultLocalDataController.saveTestResult(UserTestLocalDataResult(
       referenceCode: tmtGameInitData.tmtGameCodeId,
       date: DateTime.now(),
-      tmtATime: _timeCompleteA.toDouble(),
-      tmtBTime: _timeCompleteB.toDouble(),
+      tmtATime: metrics.testTimeMetrics.calculateTimeCompleteTmtA(),
+      tmtBTime: metrics.testTimeMetrics.calculateTimeCompleteTmtB(),
       handUsed: tmtGameInitData.tmtGameHandUsed.value,
     ));
   }
@@ -120,9 +123,9 @@ class _TmtResultsScreenState extends State<TmtResultsScreen>
     final metrics = _tmtTestNavigationFlowController.metricsController;
 
     _timeCompleteA =
-        metrics.testTimeMetrics.calculateTimeCompleteTmtA().toInt();
+        metrics.testTimeMetrics.calculateTimeCompleteTmtA().round();
     _timeCompleteB =
-        metrics.testTimeMetrics.calculateTimeCompleteTmtB().toInt();
+        metrics.testTimeMetrics.calculateTimeCompleteTmtB().round();
     _errorsA = metrics.numberErrorA;
     _errorsB = metrics.numberErrorB;
 
