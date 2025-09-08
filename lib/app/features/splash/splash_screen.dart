@@ -85,57 +85,61 @@ class _CustomSplashScreenState extends State<CustomSplashScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFF4090E5),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Spacer(flex: 3),
-            Text(
-              'MS-dTMT',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 54,
-                fontWeight: FontWeight.bold,
+        child: SafeArea(
+          top: true,
+          bottom: true,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Spacer(flex: 3),
+              Text(
+                'MS-dTMT',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 54,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            Spacer(flex: 2),
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'Designed by:',
-                  style: _splashTextStyle,
-                ),
-                SizedBox(height: 8),
-                Image.asset(
-                  ImageSplashPath.universityLogo,
-                  height: 100,
-                ),
-                SizedBox(height: 8),
-                Text(
-                  'With the support from:',
-                  style: _splashTextStyle,
-                ),
-                SizedBox(height: 8),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: Image.asset(
-                    ImageSplashPath.supportLogo,
-                    height: 32,
-                    width: WidgetMaxWidthCalculator.getMaxWidth(context),
+              Spacer(flex: 2),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'Designed by:',
+                    style: _splashTextStyle,
                   ),
-                ),
-              ],
-            ),
-            SizedBox(height: 20),
-            Text(
-              'Version $_appVersion',
-              style: _splashTextStyle.copyWith(
-                fontSize: 14,
-                color: Colors.white.withAlpha(180),
+                  SizedBox(height: 8),
+                  Image.asset(
+                    ImageSplashPath.universityLogo,
+                    height: 100,
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    'With the support from:',
+                    style: _splashTextStyle,
+                  ),
+                  SizedBox(height: 8),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: Image.asset(
+                      ImageSplashPath.supportLogo,
+                      height: 32,
+                      width: WidgetMaxWidthCalculator.getMaxWidth(context),
+                    ),
+                  ),
+                ],
               ),
-            ),
-            SizedBox(height: 12),
-          ],
+              SizedBox(height: 20),
+              Text(
+                'Version $_appVersion',
+                style: _splashTextStyle.copyWith(
+                  fontSize: 14,
+                  color: Colors.white.withAlpha(180),
+                ),
+              ),
+              SizedBox(height: 12),
+            ],
+          ),
         ),
       ),
     );

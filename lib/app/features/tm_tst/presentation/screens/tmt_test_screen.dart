@@ -217,21 +217,24 @@ class _TmtTestPageState extends State<TmtTestPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: isDarkMode
-          ? AppColors.testTMTBoardBackgroundDark
-          : AppColors.testTMTBoardBackground,
-      appBar: TmtCustomAppBar(
-        title: _getAppBarTitle(),
-        isTestTypeA: _isTestTypeA(),
-        controller: _timerController,
-        initialSeconds: _tmtType == TmtType.tmtB
-            ? _testTmtFlowStateController.getTmtATimeInSec()
-            : 0,
-      ),
-      body: _isCountdownActive
-          ? _createCountdownComponent()
-          : _boardController ?? Container(),
-    );
+        backgroundColor: isDarkMode
+            ? AppColors.testTMTBoardBackgroundDark
+            : AppColors.testTMTBoardBackground,
+        appBar: TmtCustomAppBar(
+          title: _getAppBarTitle(),
+          isTestTypeA: _isTestTypeA(),
+          controller: _timerController,
+          initialSeconds: _tmtType == TmtType.tmtB
+              ? _testTmtFlowStateController.getTmtATimeInSec()
+              : 0,
+        ),
+        body: SafeArea(
+          top: false,
+          bottom: true,
+          child: _isCountdownActive
+              ? _createCountdownComponent()
+              : _boardController ?? Container(),
+        ));
   }
 
   Widget _createCountdownComponent() {

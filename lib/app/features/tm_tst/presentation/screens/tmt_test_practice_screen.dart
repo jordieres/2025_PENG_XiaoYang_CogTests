@@ -128,7 +128,11 @@ class _TmtPracticePageState extends State<TmtTestPracticePage>
       appBar: CustomAppBar(
         title: _getHelpTitle(tmtTestPracticeMode),
       ),
-      body: _boardController ?? Container(),
+      body: SafeArea(
+        top: false,
+        bottom: true,
+        child: _boardController ?? Container(),
+      ),
     );
   }
 
