@@ -42,7 +42,7 @@ class AppTheme {
         side: BorderSide(color: AppColors.getPrimaryBlueColor()),
       ),
     ),
-    dialogTheme: DialogTheme(
+    dialogTheme: DialogThemeData(
       backgroundColor: Colors.white,
       titleTextStyle: TextStyle(color: AppColors.customDialogTitleColor),
       contentTextStyle: TextStyle(color: AppColors.customDialogContentColor),
@@ -90,7 +90,7 @@ class AppTheme {
         side: BorderSide(color: AppColors.getPrimaryBlueDarkColor()),
       ),
     ),
-    dialogTheme: DialogTheme(
+    dialogTheme: DialogThemeData(
       backgroundColor: AppColors.darkSurface,
       titleTextStyle: TextStyle(color: AppColors.customDialogTitleColorDark),
       contentTextStyle: TextStyle(color: AppColors.customDialogContentColorDark),
