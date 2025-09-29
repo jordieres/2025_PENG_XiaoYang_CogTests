@@ -1,3 +1,5 @@
+## [1.7.0]
+- Feat: Updated Flutter to 3.35.4
 
 ## [1.4.0]
 - Feat: Android 15 Compatibility & Edge-to-Edge UI
