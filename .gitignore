@@ -41,3 +41,6 @@ doc/api/
 *.js.deps
 *.js.map
 
+.env
+.env.*
+!.env.example
